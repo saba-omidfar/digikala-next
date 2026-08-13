@@ -51,7 +51,6 @@
     "react-number-format": "^5.4.4",
     "react-popper": "^2.3.0",
     "react-query": "^3.39.3",
-    "react-spring-bottom-sheet": "^3.4.1",
     "react-tooltip": "^5.28.0",
     "react-window": "^1.8.11",
     "request": "^2.88.2",
