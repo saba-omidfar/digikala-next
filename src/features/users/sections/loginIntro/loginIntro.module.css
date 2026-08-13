@@ -1,0 +1,37 @@
+.title {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  color: #0c0c0c;
+}
+
+.title_text {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  text-align: right;
+}
+
+@media screen and (max-width: 1024px) {
+  .title {
+    font-size: 16px;
+  }
+
+  .title_text {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .title {
+    font-size: 12px;
+  }
+
+  .title_text {
+    font-size: 9px;
+  }
+}

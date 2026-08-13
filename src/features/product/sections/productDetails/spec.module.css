@@ -1,0 +1,159 @@
+.spec {
+  grid-area: spec;
+  border-top: 0 solid #e0e0e2;
+}
+
+.spec_header_title_container {
+  padding: 12px 0;
+}
+
+.spec_header_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  text-align: right;
+  overflow-wrap: break-word;
+  flex-grow: 1;
+}
+
+.spec_wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: auto;
+  padding-bottom: 0;
+  margin-top: 8px;
+  margin-bottom: 0;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.spec_item_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: #f0f0f1;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.spec_item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 150px;
+}
+
+.review_attr_title,
+.review_attr_value {
+  font-size: 12px;
+  line-height: 22.5px;
+  text-align: right;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  word-break: break-all;
+}
+
+.review_attr_title {
+  font-weight: 400;
+}
+
+.review_attr_value {
+  font-weight: 700;
+}
+
+.review_attr_title {
+  color: #81858b;
+}
+
+.review_attr_value {
+  color: #3f4064;
+}
+
+.spec_see_more_btn {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 40px;
+  border: 1px solid #e0e0e2;
+  background-color: transparent;
+  color: #0c0c0c;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  border-radius: 8px;
+  outline: none;
+  overflow: hidden;
+  transition: top 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.spec_see_more_btn_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.spec_see_more_icon_container {
+  display: flex;
+  margin-right: 8px;
+}
+
+.spec_see_more_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #0c0c0c;
+}
+
+.spec_hr {
+  border-color: #7c7c7d !important;
+  border-top: 1px solid;
+  flex-grow: 1;
+}
+
+.spec_icon_container {
+  margin: 12px 0;
+  border-radius: 8px;
+}
+
+.spec_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #81858b;
+}
+
+.spec_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  margin-right: 8px;
+  color: #81858b;
+  text-align: right;
+}
+
+@media screen and (max-width: 1024px) {
+  .spec {
+    border-top: 8px solid #f0f0f1;
+  }
+
+  .spec_wrapper {
+    display: flex;
+    width: max-content;
+    padding-left: 0;
+    gap: 4px;
+  }
+
+  .spec_icon_container {
+    margin: 12px 20px;
+  }
+}

@@ -1,0 +1,93 @@
+.info_row_container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.info_row {
+  position: relative;
+  padding-top: 8px;
+}
+
+.icon_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 8px;
+  background-color: #f0f0f1;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  padding: 16px 0;
+  gap: 4px;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.no_border {
+  border-bottom: none !important;
+}
+
+.title {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 2.15;
+  color: #0c0c0c;
+}
+
+.chevron_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.trailing_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.badge_container {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 21.6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 8px;
+  border-radius: 16px;
+}
+
+.trusted_badge {
+  color: #0081b9;
+  background-color: rgb(0, 157, 176, 0.1);
+}
+
+.selected_badge {
+  color: #00a049;
+  background-color: rgb(0, 160, 73, 0.1);
+}
+
+@media screen and (max-width: 360px) {
+  .title {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+}

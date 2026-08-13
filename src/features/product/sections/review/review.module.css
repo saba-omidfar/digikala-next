@@ -1,0 +1,135 @@
+.review_product_text {
+  line-height: 2.15;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  font-size: 12px;
+  font-weight: normal;
+  padding: 0 20px;
+  margin: 0;
+}
+
+.review_product_btn {
+  width: fit-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #424750;
+  padding: 6px 16px 6px 12px;
+  border-radius: 16px;
+  outline: none;
+  overflow: hidden;
+  transition: top 0.3s ease-in-out;
+}
+
+.review_product_btn_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.review_product_table {
+  border-collapse: collapse;
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+.review_product_table_tr:not(:last-child) {
+  border-bottom: 1px solid #e0e0e2;
+}
+
+.review_product_table_th {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 2.15;
+  color: #424750;
+  vertical-align: top;
+  text-align: right;
+  padding: 6px 8px;
+  background-color: #f0f0f1;
+  white-space: nowrap;
+}
+
+.review_product_table_td {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 2.15;
+  vertical-align: top;
+  text-align: right;
+  padding: 6px 8px;
+  width: 100%;
+  color: #424750;
+}
+
+.expert_review_title {
+  width: 100%;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 23.4px;
+  text-align: right;
+  padding: 0 20px;
+  margin-bottom: 0;
+}
+
+.expert_review_description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  padding: 0 20px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.expert_review_pic {
+  max-height: 400px;
+  border-radius: 8px;
+  background-color: #f0f0f1;
+  margin: 0 20px;
+  overflow: hidden;
+}
+
+.expert_review_img_container {
+  line-height: 0;
+  mix-blend-mode: multiply;
+}
+
+.expert_review_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 1024px) {
+  .review_product_btn {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .review_product_text {
+    font-size: 10px;
+  }
+
+  .review_product_btn {
+    font-size: 8.8px;
+  }
+
+  .review_product_table_th,
+  .review_product_table_td,
+  .expert_review_description {
+    font-size: 9.6px;
+  }
+
+  .expert_review_title {
+    font-size: 10.4px;
+    line-height: 18.74px;
+  }
+}

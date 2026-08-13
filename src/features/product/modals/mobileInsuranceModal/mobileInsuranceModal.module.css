@@ -1,0 +1,158 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 8px;
+  opacity: 1;
+}
+
+.header_title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #3f4064;
+}
+
+.close_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+  cursor: pointer;
+}
+
+.content_container {
+  padding-bottom: 64px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.content {
+  padding: 16px 0;
+}
+
+.content_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.1;
+  margin-bottom: 0;
+}
+
+.digipay_title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #424750;
+  margin-bottom: 0;
+}
+
+.digipay_logo_icon_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+}
+
+.digipay_logo_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #0040ff;
+}
+
+.digipay_icon {
+  width: 20px;
+  height: 20px;
+  fill: #0040ff;
+}
+
+.covers_container {
+  padding: 8px;
+  background-color: #f2f2f2;
+  border-radius: 16px;
+  margin-top: 16px;
+}
+
+.cover_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #424750;
+  margin-bottom: 4px;
+}
+
+.cover_description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #424750;
+  margin-right: 16px;
+  list-style-type: disc;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  background-color: #fff;
+}
+
+.footer_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  flex-basis: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-left: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  height: 48px;
+  border: 1px solid #ef4056;
+  background-color: #ef4056;
+  color: #fff;
+}
+
+.disabled_btn {
+  background-color: transparent;
+  color: #ef4056;
+}
+
+.footer_disabled_btn {
+  background-color: #e0e0e2;
+  border: 1px solid #e0e0e2;
+  color: #fff;
+}
+
+.btn_content_loading {
+  top: 200%;
+  visibility: hidden;
+}
+
+@media screen and (max-width: 360px) {
+  .header_title,
+  .content_title,
+  .cover_title,
+  .footer_btn {
+    font-size: 11.2px;
+  }
+
+  .digipay_title,
+  .cover_description {
+    font-size: 9.6px;
+  }
+}

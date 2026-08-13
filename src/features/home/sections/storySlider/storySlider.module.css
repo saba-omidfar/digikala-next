@@ -1,0 +1,19 @@
+.content {
+  width: 100%;
+  max-width: 1336px;
+  margin: 0 auto;
+}
+
+.storySlider_content_container {
+  padding-top: 16px;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    padding: 0 16px;
+  }
+
+  .storySlider {
+    padding: 0;
+  }
+}

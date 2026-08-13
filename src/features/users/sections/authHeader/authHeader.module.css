@@ -1,0 +1,35 @@
+.form_header {
+  position: relative;
+}
+
+.page_title {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.reset_login {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.arrow_icon {
+  width: 24px;
+  height: 24px;
+}
+
+.header_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 162px;
+  height: 25px;
+}

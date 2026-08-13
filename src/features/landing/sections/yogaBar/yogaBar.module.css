@@ -1,0 +1,125 @@
+.yogabar_container {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #f0f0f1;
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.yogabar_item_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  padding: 8px 20px;
+  border-left: 1px solid #f0f0f1;
+}
+
+.yogabar_title_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.yogabar_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #23254e;
+  margin-bottom: 0;
+}
+
+.widget_yoga__content {
+  display: grid;
+  background-color: #f0f0f1;
+  flex: 1 1 0%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+}
+
+.widget_yoga__big_item {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  grid-column: span 2 / span 2;
+  overflow: hidden;
+}
+
+.widget_yoga__item_link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  padding: 8px;
+}
+
+.widget_yoga__img_container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.widget_yoga__img {
+  object-fit: contain;
+  display: inline-block;
+  aspect-ratio: 1 / 1;
+}
+
+.see_more_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.see_more_url {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #ef4056;
+}
+
+.trailing_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #ef4056;
+}
+
+@media screen and (max-width: 1024px) {
+  .yogabar_container {
+    flex-direction: column;
+  }
+
+  .yogabar_item_container {
+    border-left: 0;
+  }
+
+  .widget_yoga__content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .widget_yoga__content {
+    border-bottom: 1px solid #f0f0f1;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .yogabar_title {
+    font-size: 11px;
+  }
+
+  .see_more_url {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,164 @@
+.content_container {
+  flex: 1 1 0%;
+  margin: 16px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1336px;
+  padding: 0 8px;
+  text-align: center;
+  gap: 16px;
+  margin: 0 auto;
+}
+
+.title {
+  width: max-content;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 2.1;
+  color: #23254e;
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1024px;
+  gap: 24px;
+  margin: 0 auto;
+}
+
+.content_20215,
+.content_8491,
+.content_20016,
+.content_7236,
+.content_7237,
+.content_7240,
+.content_7617 {
+  gap: 44px !important;
+}
+
+.content_20244,
+.content_7233,
+.content_9578 {
+  gap: 48px !important;
+}
+
+.link_20215,
+.link_8491,
+.link_20016,
+.link_7236,
+.link_7237,
+.link_7240,
+.link_7617 {
+  width: 130px !important;
+}
+
+.link_20244,
+.link_7233,
+.link_9578 {
+  width: 160px !important;
+}
+
+.item_link {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 120px;
+  gap: 8px;
+  color: #0c0c0c;
+}
+
+.img_container {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  line-height: 0;
+}
+
+.img_container_20215,
+.img_container_8491,
+.img_container_20016,
+.img_container_7236,
+.img_container_7237,
+.img_container_7240,
+.img_container_7617 {
+  width: 130px;
+  height: 130px;
+  border-radius: 12px;
+  line-height: 0;
+}
+
+.img_container_20244,
+.img_container_7233,
+.img_container_9578 {
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  line-height: 0;
+}
+
+.item_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: unset;
+  border-radius: 12px;
+}
+
+.item_text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: auto;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  text-align: center;
+  margin: 0 auto;
+  color: #3f4064;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    max-width: 768px;
+  }
+
+  .content {
+    max-width: 640px;
+    gap: 24px;
+  }
+
+  .item_link {
+    width: 90px;
+  }
+
+  .item_text {
+    font-size: 11px;
+  }
+
+  .item_img,
+  .big_item_link {
+    width: 90px;
+    height: 90px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .item_text {
+    font-size: 8.8px;
+  }
+
+  .title {
+    font-size: 14.4px;
+  }
+}

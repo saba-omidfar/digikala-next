@@ -1,0 +1,134 @@
+.empty_cart_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 16px;
+  padding-top: 16px;
+  padding-bottom: 48px;
+}
+
+.empty_cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 24px;
+}
+
+.empty_cart_img_container {
+  width: 120px;
+  height: 120px;
+  line-height: 0;
+}
+
+.empty_cart_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.empty_cart_title_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty_cart_title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0px;
+  line-height: 27px;
+  color: rgb(31, 31, 31);
+  direction: rtl;
+  text-align: right;
+  padding-top: 3px;
+}
+
+.empty_cart_subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 25.2px;
+  color: rgb(132, 132, 132);
+  direction: rtl;
+  text-align: right;
+  padding-top: 4px;
+}
+
+.cart_section_content_container {
+  position: relative;
+  border: 1px solid #e0e0e2;
+  border-style: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cart_items_container {
+  position: relative;
+  border: 1px solid #e0e0e2;
+  border-style: none;
+  border-radius: 8px;
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+.list_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 40px;
+  gap: 8px;
+  border-radius: 8px;
+  padding-block: 8px;
+  padding-inline: 8px;
+  border: 1px solid rgb(22, 114, 221);
+  cursor: pointer;
+}
+
+.list_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: rgb(22, 114, 221);
+}
+
+.list_title {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 18.9px;
+  color: rgb(22, 114, 221);
+  direction: rtl;
+  text-align: right;
+  padding-top: 2px;
+}
+
+@media screen and (max-width: 1024px) {
+  .empty_cart {
+    border: 0;
+    padding: 0;
+  }
+
+  .empty_cart_title {
+    font-size: 16px;
+  }
+
+  .empty_cart_subtitle {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .empty_cart_title {
+    font-size: 13px;
+  }
+
+  .empty_cart_subtitle {
+    font-size: 9px;
+  }
+}

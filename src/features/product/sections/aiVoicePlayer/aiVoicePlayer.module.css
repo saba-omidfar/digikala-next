@@ -1,0 +1,136 @@
+.ai_voice_container {
+  position: relative;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.ai_voice_pill {
+  position: relative;
+  inset: 0;
+  display: flex;
+  border-radius: 9999px;
+  padding: 4px 0;
+  background-color: rgba(236, 237, 255, 0.7);
+  z-index: 3;
+}
+
+.icon_container {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+  margin-left: 16px;
+}
+
+.play_icon {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #7f53ef;
+}
+
+.ai_voice_title_container {
+  flex: 1 1 0%;
+}
+
+.ai_voice_title,
+.ai_voice_subtitle {
+  display: flex;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #424750;
+  border-radius: 16px;
+  white-space: nowrap;
+}
+
+.ai_voice_title {
+  font-size: 13px;
+}
+
+.ai_voice_subtitle {
+  font-size: 11px;
+}
+
+.forward_icon_container {
+  margin: 0 12px;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 0.3s;
+}
+
+.play_icon_container {
+  position: relative;
+  left: 0;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 9999px;
+  margin-left: 12px;
+  z-index: 2;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 0.3s;
+}
+
+.rewind_icon_container {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+  z-index: 1;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 0.3s;
+}
+
+.ai_voice__border_detailed {
+  position: absolute;
+  inset: 0;
+  background-color: #fff;
+  border-radius: 9999px;
+  z-index: 2;
+}
+
+.ai_voice__border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: -1px;
+  right: -1px;
+  background: linear-gradient(
+    270deg,
+    rgba(127, 83, 239, 0.2),
+    #7f53ef,
+    rgba(127, 83, 239, 0.2)
+  );
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  border-radius: 9999px;
+  z-index: 1;
+}
+
+.progress__pi {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: -2px;
+  right: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  direction: ltr;
+  border-radius: 9999px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.progress__bar {
+  height: 100%;
+  background: linear-gradient(180deg, #8f4aec, #6860f3, #2586ff);
+}

@@ -1,0 +1,274 @@
+.comment_container {
+  margin-top: 0;
+  padding: 12px 0;
+  border-top: 1px solid #e0e0e2;
+}
+
+.comment_container:first-child {
+  border-top: none !important;
+}
+
+.comment_info_container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 8px;
+}
+
+.comment_date_container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  margin-left: 12px;
+}
+
+.comment_date {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #767981;
+  white-space: nowrap;
+}
+
+.comment_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  text-align: right;
+}
+
+.comment_body {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #0c0c0c;
+  margin-bottom: 4px;
+  text-align: right;
+  overflow-wrap: break-word;
+}
+
+.see_more_btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  color: #1672dd;
+  margin-top: 8px;
+  line-height: 2.17;
+  cursor: pointer;
+}
+
+.chevron_left_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #1672dd;
+}
+
+.comment_img {
+  display: inline-block;
+  line-height: 0;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.comment_seller_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #3f4064;
+}
+
+.dot_icon {
+  width: 16px;
+  height: 16px;
+  fill: #e0e0e2;
+}
+
+.size_icon {
+  width: 18px;
+  height: 18px;
+  fill: #424750;
+}
+
+.comment_seller_name {
+  display: inline;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #212121;
+}
+
+.comment_seller_size {
+  display: inline;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  flex-grow: 1;
+  margin-left: 8px;
+  color: #62666d;
+}
+
+.comment_purchased_item_color {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  padding: 2px;
+  border: 1px solid rgba(3, 10, 22, 0.1);
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+.comment_purchased_item_color_name {
+  display: inline;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #62666d;
+}
+
+.comment_feedback_container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: #81858b;
+  padding-top: 4px;
+  margin-right: auto;
+}
+
+.comment_feedback_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #424750;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 8px;
+  outline: none;
+  overflow: hidden;
+  transition: top 0.3s ease-in-out;
+}
+
+.comment_feedback_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.comment_more_vert_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #a1a3a8;
+}
+
+.more_icon {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+  cursor: pointer;
+}
+
+.dot_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #e0e0e2;
+}
+
+.true_to_size_container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.true_to_size_icon {
+  width: 16px;
+  height: 16px;
+}
+
+.true_to_size_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.comment_advantage_icon_container,
+.comment_disadvantage_icon_container {
+  display: flex;
+  margin-left: 8px;
+}
+
+.comment_advantage_icon,
+.comment_disadvantage_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.comment_advantage_icon {
+  color: #00a049;
+}
+
+.comment_disadvantage_icon {
+  color: #d32f2f;
+}
+
+.comment_advantage_text,
+.comment_disadvantage_text {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+}
+
+@media screen and (max-width: 1024px) {
+  .comment_date_container {
+    margin-left: 0;
+  }
+
+  .comment_body {
+    font-size: 12px;
+  }
+
+  .comment_date,
+  .comment_seller_name,
+  .comment_seller_size,
+  .comment_purchased_item_color_name {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .comment_author,
+  .comment_body {
+    font-size: 9.6px;
+  }
+
+  .comment_seller_name,
+  .comment_purchased_item_color_name,
+  .comment_date,
+  .comment_author_role {
+    font-size: 8px;
+  }
+
+  .comment_feedback_btn {
+    font-size: 8px;
+    line-height: 10px;
+  }
+
+  .comment_title,
+  .see_more_btn {
+    font-size: 9.6px;
+  }
+}

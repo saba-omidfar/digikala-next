@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  flex-shrink: 0;
+  flex-grow: 1;
+  padding-bottom: 55px;
+  background-color: #fff;
+}

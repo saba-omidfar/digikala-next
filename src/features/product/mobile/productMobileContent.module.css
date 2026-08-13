@@ -1,0 +1,306 @@
+.base_layout__container {
+  width: 100%;
+  padding-top: 408px;
+}
+
+.base_layout__content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: #fff;
+  user-select: none;
+}
+
+.base_layout__content > * {
+  flex-grow: 1;
+}
+
+.breadcrumb_container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.breadcrumb_seller_container {
+  display: flex;
+  padding: 8px 0;
+  align-items: center;
+  margin-right: auto;
+}
+
+.breadcrumb_seller_link {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  line-height: 2.17;
+  font-weight: normal;
+  color: #a1a3a8;
+}
+
+.breadcrumb_seller_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #a1a3a8;
+}
+
+/* Start Mobile Styles */
+
+.breadcrumb_container {
+  width: 100%;
+  position: absolute;
+  top: 50px;
+  transition: 0.1s;
+  opacity: 1;
+  background-color: #fff;
+  pointer-events: none;
+  scrollbar-width: none;
+  overflow: auto;
+  z-index: -1;
+}
+
+.header {
+  width: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+}
+
+/* Start Mobile Style */
+.gallery_container {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 48px;
+  z-index: 1;
+}
+
+.gallery_content {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  height: 100vh;
+  max-height: 100vh;
+}
+
+/* Start Content Section Styles */
+
+.content_container {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #f0f0f1;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding-bottom: 12px;
+  animation: introAnimation 1.5s ease-in-out 0.7s;
+  transform: translateY(var(--pdp-info-title-height));
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0px 0px 12px rgba(3, 10, 22, 0.1);
+  z-index: 3;
+  overflow: hidden;
+}
+
+.spec_ads_container {
+  position: relative;
+  width: 100%;
+  height: 92px;
+  background-color: #fff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.spec_clock_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.add_comment_icon,
+.ask_question_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.seller_info_title_icon,
+.product_available_title_icon,
+.shipping_today_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.shipping_today_container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin-bottom: 20px;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding: 12px 16px;
+  background-color: rgba(16, 40, 255, 0.08);
+  gap: 4px;
+  border-radius: 8px;
+  overflow: hidden;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 0.3s;
+  transition-property: all;
+}
+
+.shipping_today_container::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  height: 100%;
+  top: 0;
+  width: 4px;
+  background: #1028ff;
+}
+
+.shipping_today_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+}
+
+.variation_colors_header_title {
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 2.1;
+}
+
+.variation_selected_color_circle {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #e0e0e2;
+  border-radius: 50%;
+}
+
+.spec_btn {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 40px;
+  border: 1px solid #e0e0e2;
+  background-color: transparent;
+  color: #0c0c0c;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  border-radius: 8px;
+  outline: none;
+  background: none;
+  overflow: hidden;
+  transition: top 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.seller_performance_text {
+  color: #fff;
+  line-height: 125%;
+  font-size: 12px;
+  font-weight: normal;
+  padding: 2px 8px;
+  border-radius: 16px;
+}
+
+.seller_performance_text {
+  background-color: #00a049;
+}
+
+.ask_question_icon_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: #f0f0f1;
+  border-radius: 50%;
+  margin-left: 12px;
+}
+
+.ask_question_chevron_icon {
+  width: 24px;
+  height: 24px;
+  color: #424750;
+}
+
+.ask_question_title {
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 2.15;
+  color: #424242;
+}
+
+.ask_question_text {
+  font-size: 10px;
+  font-weight: normal;
+  line-height: 2.15;
+  color: #a1a3a8;
+}
+
+.questions_wrapper {
+  display: flex;
+  scrollbar-width: none;
+  padding-right: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f1;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.ask_question_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  cursor: pointer;
+}
+
+@keyframes introAnimation {
+  50% {
+    transform: translateY();
+  }
+
+  100% {
+    transform: translateY();
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .price_badge_sold,
+  .variant_info_comments_text,
+  .product_available_text {
+    font-size: 9.6px;
+  }
+
+  .shipping_today_text,
+  .dkp {
+    font-size: 10px;
+  }
+
+  .dkp_title {
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .timer {
+    font-size: 9.6px;
+  }
+}

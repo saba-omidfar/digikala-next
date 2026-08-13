@@ -1,0 +1,66 @@
+.brands_container {
+  min-height: 360px;
+  height: 360px;
+  padding-top: 4px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.brands_form {
+  position: sticky;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.brands_input_container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+  padding: 0 8px;
+}
+
+.brands_input {
+  width: 100%;
+  line-height: 2.15;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 0 8px;
+  color: #a1a3a8;
+  caret-color: #ef4056;
+  border: none;
+}
+
+.brands_input_icon_container {
+  display: flex;
+  margin-left: 8px;
+}
+
+.brands_input_icon,
+.clear_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+  cursor: pointer;
+}
+
+.brands_input_icon,
+.clear_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+  cursor: pointer;
+}
+
+.selected_brands_title {
+  font-size: 11px;
+  line-height: 2.17;
+  font-weight: 400;
+  color: #81858b;
+}

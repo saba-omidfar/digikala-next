@@ -1,0 +1,262 @@
+.modal_layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  background-color: #fff;
+  max-width: 100vw;
+  height: 80vh;
+  border-radius: 8px;
+  padding-top: 54px;
+  overflow-y: auto;
+}
+
+.modal_header {
+  border-radius: 8px;
+  width: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 0 20px;
+  z-index: 1;
+}
+
+.modal_header_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  word-wrap: break-word;
+}
+
+.modal_header__title {
+  flex-grow: 1;
+  overflow-wrap: break-word;
+  padding: 12px 0;
+}
+
+.header_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.header_icon {
+  width: 24px;
+  height: 24px;
+  fill: #ef4056;
+}
+
+.modal_header__title_text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  flex-grow: 1;
+  color: #0c0c0c;
+}
+
+.modal_close_btn {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+  cursor: pointer;
+}
+
+.modal_content_container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 16px 20px;
+}
+
+.modal_content {
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.services_container {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  row-gap: 12px;
+}
+
+.services_item_link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 80px;
+  user-select: none;
+}
+
+.services_item_img {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  line-height: 0;
+}
+
+.services_item_caption {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+  margin-top: 4px;
+  padding: 0 16px;
+  color: #3f4064;
+  text-align: center;
+}
+
+.ventures_title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #81858b;
+  margin-top: 24px;
+  margin-bottom: 0;
+}
+
+.ventures_container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ventures_item {
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid #e0e0e2;
+  padding: 12px;
+  border-radius: 16px;
+}
+
+.ventures_item_img {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  line-height: 0;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+.ventures_item__content_title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #3f4064;
+}
+
+.ventures_item__content_caption {
+  font-size: 12px;
+  line-height: 2.17;
+  color: #81858b;
+}
+
+.ventures_item__content_icon_container {
+  display: flex;
+  margin-right: 16px;
+}
+
+.ventures_item__content_icon {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .modal_layout {
+    max-width: 100vw;
+    max-height: 100vh;
+    min-width: 100vw;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .services_item_link {
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  .services_container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .services_item_caption {
+    padding: 0 12px;
+    font-size: 10px;
+  }
+
+  .ventures_title {
+    font-size: 13px;
+  }
+
+  .ventures_container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ventures_item {
+    display: flex;
+    align-items: flex-start;
+    border: none;
+    border-color: #ddd;
+    border-bottom: 1px solid #f0f0f1;
+    border-radius: 0;
+    padding: 12px 0;
+  }
+
+  .ventures_item__content_title {
+    font-size: 12px;
+  }
+
+  .ventures_item__content_caption {
+    font-size: 11px;
+  }
+
+  .modal_header__title_text {
+    font-size: 14px;
+    line-height: 2.1;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .content_header {
+    font-size: 10px;
+  }
+
+  .modal_header__title_text {
+    font-size: 11px;
+  }
+
+  .modal_close_btn {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ventures_item__content_icon {
+    color: #a1a3a8;
+    width: 18px;
+    height: 18px;
+  }
+
+  .services_item_caption,
+  .ventures_item__content_caption {
+    font-size: 9px;
+  }
+
+  .ventures_title {
+    font-size: 9px;
+    font-weight: normal;
+  }
+
+  .ventures_item__content_title {
+    font-size: 10px;
+  }
+}

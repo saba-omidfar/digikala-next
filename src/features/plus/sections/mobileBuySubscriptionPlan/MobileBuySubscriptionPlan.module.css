@@ -1,0 +1,46 @@
+.content {
+  width: 100%;
+  max-width: 1280px;
+  padding-top: 32px;
+  margin: 0 auto;
+}
+
+.plans_container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2px;
+}
+
+.plans_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  color: #424750;
+  text-align: center;
+  margin: 0 16px 24px;
+}
+
+.purchase_plan {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .content {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .purchase_plan {
+    margin: 0 16px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .plans_title {
+    font-size: 12.8px;
+    line-height: 16px;
+  }
+}

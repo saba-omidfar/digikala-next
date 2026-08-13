@@ -1,0 +1,246 @@
+.content,
+.landing_content {
+  width: 100%;
+  max-width: 1336px;
+  margin: 0 auto;
+}
+
+.landing_content {
+  padding: 0 8px;
+}
+
+.brands_container {
+  position: relative;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 16px;
+  padding: 24px 0;
+}
+
+.landing_brands_container {
+  position: relative;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 16px;
+  padding-right: 12px;
+}
+
+.main_section_title_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.index_section_title_container {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  margin-left: 16px;
+  margin-right: 16px;
+  gap: 2px;
+}
+
+.main_section_title,
+.index_section_title {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 2.1;
+  color: #0c0c0c;
+  margin-bottom: 0;
+}
+
+.brand_icon_container {
+  display: flex;
+  margin-left: 8px;
+}
+
+.brand_icon {
+  width: 24px;
+  height: 24px;
+  fill: #f9bc00;
+}
+
+.icon_container {
+  width: 24px;
+  height: 24px;
+  line-height: 0;
+}
+
+.icon {
+  width: 100%;
+  object-fit: cover;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #0c0c0c;
+  margin-bottom: 0;
+}
+
+.slider_container {
+  margin-top: 12px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.brand_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 4px 16px;
+  overflow: hidden;
+}
+
+.brand_img_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  position: relative;
+}
+
+.landing_brand_img_container {
+  width: 220px;
+  height: 165px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin: 0 auto;
+  line-height: 0;
+}
+
+.brand_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.brand_slide {
+  width: auto !important;
+  height: auto;
+}
+
+.landing_brand_slide {
+  width: fit-content !important;
+  height: auto;
+}
+
+.landing_link_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 8px;
+  margin-bottom: 12px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.brand_slide + .brand_slide,
+.landing_brand_slide + .landing_brand_slide {
+  border-right: 1px solid #f1f2f4;
+}
+
+.slider :global(.popularBrands-swiper-button-prev),
+.slider :global(.popularBrands-swiper-button-next) {
+  position: absolute !important;
+  top: 66% !important;
+  transform: translateY(-66%) !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  color: #3f4064 !important;
+  font-size: 12px !important;
+  z-index: 4;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: opacity 0.3 ease-in-out;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+.slider :global(.popularBrands-swiper-button-prev) {
+  right: 8px !important;
+}
+
+.slider :global(.popularBrands-swiper-button-next) {
+  left: 8px !important;
+}
+
+.slider :global(.popularBrands-swiper-button-prev):hover .swiper_btn_icon,
+.slider :global(.popularBrands-swiper-button-next):hover .swiper_btn_icon {
+  opacity: 1;
+}
+
+.slider :global(.popularBrands-swiper-button-prev.swiper-button-disabled),
+.slider :global(.popularBrands-swiper-button-next.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    padding: 0;
+  }
+
+  .landing_content {
+    width: 768px;
+  }
+
+  .brands_container {
+    border: none;
+    padding: 0;
+  }
+
+  .slider .slider :global(.popularBrands-swiper-button-prev),
+  .slider .slider :global(.popularBrands-swiper-button-next) {
+    display: none !important;
+  }
+
+  .brand_img_container {
+    width: 70px;
+    height: 70px;
+  }
+
+  .main_section_title {
+    font-size: 18px;
+  }
+
+  .index_section_title {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .title {
+    font-size: 16px;
+  }
+
+  .main_section_title {
+    font-size: 14.4px;
+  }
+
+  .landing_brand_img_container {
+    width: 180px;
+    height: 135px;
+  }
+
+  .index_section_title {
+    font-size: 11.2px;
+    line-height: 20.16px;
+  }
+}

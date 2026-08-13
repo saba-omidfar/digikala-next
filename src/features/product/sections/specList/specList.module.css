@@ -1,0 +1,87 @@
+.spec_list_container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 8px;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+  overflow: auto;
+}
+
+.spec_list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  scrollbar-width: none;
+  overflow: auto;
+}
+
+.first_spec,
+.last_spec {
+  padding-right: 8px;
+}
+
+.spec_item_border {
+  border: 1px solid #e0e0e2;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.spec_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.spec_item_textUp,
+.spec_item_textDown {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 50vw;
+}
+
+.spec_item_textUp {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13.75px;
+  color: #62666d;
+}
+
+.spec_item_textDown {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+}
+
+.spec_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+@media screen and (max-width: 1024px) {
+  .spec_list_container {
+    padding-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .spec_item_textUp {
+    font-size: 8.8px;
+    line-height: 11px;
+  }
+
+  .spec_item_textDown {
+    font-size: 9.6px;
+    line-height: 12px;
+  }
+}

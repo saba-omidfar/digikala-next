@@ -1,0 +1,28 @@
+.feature_link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 12px 0;
+  text-align: center;
+}
+
+.fearure_img_container {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  line-height: 0;
+}
+
+.fearure_img {
+  object-fit: cover;
+}
+
+.fearure_caption {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+  margin-bottom: 0;
+}

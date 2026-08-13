@@ -1,0 +1,30 @@
+.layout_Desktop__container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1336px;
+  background-color: #fff;
+  padding: 24px 24px 0;
+}
+
+.layout_Desktop__content {
+  width: 100%;
+  max-width: 1676px;
+  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.layout_Desktop__slider_content {
+  padding: 0;
+  width: 100%;
+  flex: 1 1 0%;
+}
+
+@media screen and (max-width: 1024px) {
+  .layout_Desktop__container {
+    padding: 0;
+  }
+}

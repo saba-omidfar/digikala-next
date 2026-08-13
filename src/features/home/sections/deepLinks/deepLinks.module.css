@@ -1,0 +1,136 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #fff;
+  margin-top: 16px;
+}
+
+.service_caption {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+  margin-top: 4px;
+  color: #3f4064;
+  text-align: center;
+}
+
+.services__read_more_text {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #3f4064;
+  text-align: center;
+}
+
+.service_link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 96px;
+  margin: 0;
+}
+
+.service_img_container {
+  width: 52px;
+  height: 52px;
+  line-height: 0;
+}
+
+.service_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.services__read_more_btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.services__read_more_bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background-color: #f0f0f1;
+  border-radius: 50%;
+}
+
+.services__read_more_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 1024px) {
+  .content {
+    width: 100%;
+    max-width: 1336px;
+    margin: 24px auto 0;
+    padding: 0 16px;
+  }
+
+  .container {
+    justify-content: space-around;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    padding: 0;
+  }
+
+  .container {
+    padding: 0;
+    margin-top: 16px;
+    gap: 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  .service_link {
+    width: 60px;
+  }
+
+  .margin_right {
+    margin-right: 4px;
+  }
+
+  .service_caption {
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 19.8px;
+    color: #3f4064;
+    text-align: center;
+    width: 100%;
+    margin-top: 4px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+  }
+
+  .margin_right {
+    margin-right: 4px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .services_slider_miniProgress {
+    display: flex;
+  }
+
+  .service_caption {
+    font-size: 8px;
+    line-height: 14.4px;
+  }
+}

@@ -1,0 +1,243 @@
+.add_to_cart_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: inherit;
+  /* width: 100%; */
+  height: 48px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  background-color: #ef4056;
+  border: 1px solid #ef4056;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  transition: top 0.3s ease-in-out;
+}
+
+.loading_active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+.disabled_btn {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.add_to_cart_text_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 4px;
+}
+
+.btn_content_loading {
+  top: 200%;
+  visibility: hidden;
+}
+
+.footer_add_to_cart_text,
+.add_to_cart_text {
+  position: relative;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17.5px;
+}
+
+.loading_overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.add_to_cart_subtext {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13.75px;
+}
+
+.cart_item_quantity__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 999px;
+  width: 102px;
+  max-width: 102px;
+  min-height: 40px;
+  max-height: 40px;
+  color: #ef4056;
+  background-color: #fff;
+  padding: 0 8px;
+  z-index: 1;
+}
+
+.fresh_product_quantity__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  width: 102px;
+  max-width: 102px;
+  min-height: 44px;
+  max-height: 44px;
+  background-color: #fff;
+  color: #029a49;
+  padding: 0 8px;
+  z-index: 1;
+}
+
+.product_quantity_icon {
+  width: 18px;
+  height: 18px;
+  fill: #ef4056;
+  cursor: pointer;
+}
+
+.product_quantity_number_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.product_quantity_number {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+  max-height: 20px;
+}
+
+.footer_product_quantity_number {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+}
+
+.quantity_number_caption {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #c0c2c5;
+}
+
+.add_btn_container {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  color: #ef4056;
+}
+
+.fresh_add_btn_container {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  color: #05ba58;
+}
+
+.add_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #0c0c0c;
+  border: 1px solid #fff;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0px 0px 12px rgba(3, 10, 22, 0.15);
+  z-index: 2;
+}
+
+.add_btn_icon_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add_btn_icon_size {
+  width: 32px;
+  height: 32px;
+}
+
+.add_btn_icon {
+  width: 16px;
+  height: 16px;
+  fill: #ef4056;
+}
+
+.fresh_add_btn_icon {
+  width: 24px;
+  height: 24px;
+  fill: #05ba58;
+}
+
+@media screen and (max-width: 1024px) {
+  .add_to_cart_text {
+    font-size: 11px;
+    line-height: 2.17;
+  }
+
+  .add_to_cart_text {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .add_btn_icon_container {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .add_to_cart_text {
+    font-size: 11.2px;
+  }
+
+  .footer_add_to_cart_text {
+    font-size: 11.2px;
+    line-height: 14px;
+  }
+
+  .quantity_number_caption {
+    font-size: 8px;
+  }
+
+  .footer_product_quantity_number {
+    font-size: 12.8px;
+  }
+}

@@ -1,0 +1,151 @@
+.container {
+  width: 100%;
+  max-width: 1336px;
+  margin: 0 auto;
+}
+
+.content {
+  display: block;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 16px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+
+.header_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 16px 12px;
+}
+
+.header_logo_container {
+  width: 24px;
+  height: 24px;
+  line-height: 0;
+  margin-left: 8px;
+}
+
+.logo_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.header_text_container {
+  width: 108px;
+  height: 20px;
+  max-width: 220px;
+  max-height: 26px;
+  line-height: 0;
+  margin-left: 16px;
+}
+
+.header_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #fff;
+  margin-right: auto;
+}
+
+.products_container {
+  display: flex;
+  width: 100%;
+  gap: 2px;
+  margin-top: 4px;
+  scrollbar-width: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.padding_right {
+  padding-right: 8px;
+}
+
+.logo_container {
+  width: 145px;
+  height: 115px;
+  line-height: 0;
+  margin-top: 8px;
+}
+
+.logo {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.see_all_btn {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #fff;
+  margin-top: 4px;
+}
+
+.chevron_icon {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+}
+
+.amazing_last_slide {
+  width: auto;
+  height: auto;
+}
+
+.show_all_card_btn {
+  min-width: 140px;
+  background-color: #fff;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  overflow: hidden;
+}
+
+.arrow_icon_container {
+  padding: 4px;
+  border: 2px solid #424750;
+  border-radius: 50%;
+}
+
+.arrow_icon {
+  width: 32px;
+  height: 32px;
+  fill: #424750;
+}
+
+.show_all_card__text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+  margin-top: 12px;
+}
+
+.padding_left {
+  padding-left: 20px;
+  height: 100%;
+}
+
+.padding_right_slide {
+  padding-right: 8px;
+  flex-shrink: 1;
+}
+
+.paddingRight {
+  padding-right: 8px;
+}
+
+@media screen and (max-width: 360px) {
+  .header_link,
+  .show_all_card__text {
+    font-size: 9.6px;
+  }
+}

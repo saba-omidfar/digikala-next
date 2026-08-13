@@ -1,0 +1,15 @@
+.content_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 1;
+  width: 100%;
+  background-color: #fff;
+}
+
+.content_container > * {
+  width: 100%;
+  max-width: 100%;
+  flex-grow: 1;
+}

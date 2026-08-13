@@ -1,0 +1,41 @@
+.breadcrumb_nav {
+  padding-top: 2px;
+  padding-bottom: 6px;
+  min-width: 0;
+  flex-grow: 1;
+}
+
+.breadcrumb_link {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 2.15;
+  color: #81858b;
+  text-decoration-line: underline;
+  text-underline-offset: 6px;
+  white-space: nowrap;
+  padding: 3px 0;
+}
+
+.padding_right {
+  padding-right: 16px;
+}
+
+.chevron_icon_container {
+  display: flex;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.chevron_icon {
+  width: 12px;
+  height: 12px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #424750;
+}
+
+@media screen and (max-width: 360px) {
+  .breadcrumb_link {
+    font-size: 9.6px;
+  }
+}

@@ -1,0 +1,679 @@
+/* .success__container {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 12px;
+  padding-top: 32px !important;
+  opacity: 1;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.3));
+  touch-action: none;
+  pointer-events: none;
+  animation: fadeIn 0.1s ease-out forwards;
+  z-index: 3;
+}
+
+.success_content__container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  gap: 4px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px -6px rgba(0, 0, 0, 0.02), 0 0 2px 0 rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.35s ease-out forwards;
+  pointer-events: auto;
+
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.success_content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px 4px 1px 12px;
+}
+
+.success_content__btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #ef4056;
+  cursor: pointer;
+}
+
+.success__close_btn {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424242;
+}
+
+.success_animation__btn_container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.success_animation__btn {
+  width: 24px;
+  height: 24px;
+}
+
+.success__title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #107e18;
+  margin-top: 2px;
+}
+
+.cart_link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #0c0c0c;
+}
+
+.cart_text_container {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.cart_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #424750;
+}
+
+.chevron_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.insurance_container_padding {
+  padding: 0 12px 8px;
+}
+
+.insurance_container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 4px;
+  gap: 8px;
+}
+
+.insurance_input_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 4px 0;
+  border-radius: 8px;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.insurance_label {
+  display: flex;
+  align-items: center;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.insurance_input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.input_checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: all;
+  transition-duration: 0.15s;
+  cursor: pointer;
+}
+
+.active_checkbox {
+  border: 2px solid #0d4485;
+  background-color: #0d4485;
+}
+
+.disabled_checkbox {
+  border: 2px solid #3f4064;
+  background-color: #fff;
+}
+
+.checkbox_hide_icon_container {
+  display: none; 
+}
+
+.checkbox_active_icon_container {
+  display: flex;
+}
+
+.hide_check_icon {
+  width: 10px;
+  height: 10px;
+  font-size: 10px;
+  font-weight: normal;
+  color: #fff;
+}
+
+.insurance_title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #424750;
+}
+
+.insurance_infos_container {
+  display: flex;
+  gap: 4px;
+}
+
+.insurance_discount_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.insurance_discount {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #fff;
+  padding: 2px 8px 0;
+  border-radius: 8px;
+  background-color: #e6123d;
+}
+
+.insurance_price_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.insurance_price {
+  margin-top: 4px;
+}
+
+.price_icon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.info_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  border-radius: 8px;
+  color: #ef4056;
+}
+
+
+.price_before_discount {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  text-decoration-line: line-through;
+  color: #c0c2c5;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .success_content__container {
+    max-width: 351px;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .success__title {
+    font-size: 12px;
+  }
+} */
+
+.add_to_cart_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 32px;
+  pointer-events: none;
+  background: none;
+  z-index: 10;
+  animation: 0.1s ease-out 0s 1 normal forwards running fadeIn;
+}
+
+.add_to_cart_content {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: auto;
+  max-height: 518px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 40px 0 rgba(0, 0, 0, 0.161);
+  opacity: 1;
+  transform: translateY(0px);
+  transition:
+    inset 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    height,
+    max-height,
+    border-radius,
+    bottom,
+    left,
+    right,
+    top;
+  animation: 0.35s ease-out 0s 1 normal forwards running slideUp;
+  pointer-events: auto;
+}
+
+.drag_indicator {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  touch-action: none;
+  cursor: grab;
+}
+
+.drag_indicator_pill {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #c0c2c5;
+}
+
+.header_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f1;
+  touch-action: none;
+  cursor: grab;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  gap: 4px;
+}
+
+.close_icon_container {
+  display: flex;
+  cursor: pointer;
+}
+
+.close_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.success_animation__btn_container {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0%;
+  gap: 4px;
+}
+
+.success_animation__btn {
+  width: 24px;
+  height: 24px;
+}
+
+.success__title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 27px;
+  color: #107e18;
+}
+
+.cart_link_container {
+  padding: 6px 8px;
+  background-color: #f0f0f1;
+  border-radius: 9999px;
+}
+
+.cart_link_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #212121;
+  padding: 0 7px;
+}
+
+.chevron_icon {
+  width: 18px;
+  height: 18px;
+  fill: #212121;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none;
+  overflow-y: auto;
+}
+
+.services_container {
+  border-bottom: 1px solid #f0f0f1;
+  padding: 0 12px;
+}
+
+.services_header {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 4px;
+}
+
+.services_title {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 18.75px;
+  padding-top: 12px;
+  text-align: right;
+}
+
+.insurance_container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 4px;
+  gap: 8px;
+}
+
+.insurance_input_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.insurance_label {
+  display: flex;
+  align-items: center;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.insurance_input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.input_checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: all;
+  transition-duration: 0.15s;
+  cursor: pointer;
+}
+
+.active_checkbox {
+  border: 2px solid #0d4485;
+  background-color: #0d4485;
+}
+
+.disabled_checkbox {
+  border: 2px solid #3f4064;
+  background-color: #fff;
+}
+
+.checkbox_hide_icon_container {
+  display: none;
+}
+
+.checkbox_active_icon_container {
+  display: flex;
+}
+
+.checkbox_icon {
+  width: 10px;
+  height: 10px;
+  fill: #fff;
+}
+
+.insurance_title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #424750;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.insurance_infos_container {
+  display: flex;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.insurance_discount_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.insurance_discount {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #fff;
+  padding: 2px 8px 0;
+  border-radius: 8px;
+  background-color: #e6123d;
+}
+
+.insurance_price_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.insurance_price {
+  margin-top: 4px;
+}
+
+.price_icon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.info_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #0040ff;
+}
+
+.suppliment_recommendations {
+  transition: height 1.5s ease;
+}
+
+.suppliment_recommendations_title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 18.75px;
+  padding: 16px 12px 4px;
+  text-align: right;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@media screen and (min-width: 768) {
+  .drag_indicator {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .add_to_cart_container {
+    bottom: 70px;
+    background: rgba(12, 12, 12, 0.3);
+  }
+
+  .add_to_cart_content {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-height: 438px;
+    box-shadow: 0px 0px 12px rgba(3, 10, 22, 0.15);
+  }
+
+  .header_container {
+    margin-bottom: -4px;
+  }
+
+  .success__title {
+    font-size: 13px;
+    line-height: 23.4px;
+  }
+
+  .suppliment_recommendations_title {
+    font-size: 13px;
+    line-height: 16.25px;
+  }
+
+  .cart_link_text {
+    font-size: 11px;
+    line-height: 13.75px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .success__title,
+  .suppliment_recommendations_title {
+    font-size: 10.4px;
+    line-height: 18.72px;
+  }
+
+  .services_title {
+    font-size: 10.4px;
+    line-height: 13px;
+  }
+
+  .insurance_title,
+  .insurance_price_container {
+    font-size: 8.8px;
+  }
+
+  .insurance_discount {
+    font-size: 8.8px;
+    line-height: 11px;
+  }
+
+  .input_checkbox {
+    width: 14px;
+    height: 14px;
+  }
+
+  .checkbox_icon {
+    width: 10px;
+    height: 10px;
+    font-size: 10px;
+  }
+
+  .cart_link_text {
+    font-size: 8.8px;
+    line-height: 11px;
+  }
+}

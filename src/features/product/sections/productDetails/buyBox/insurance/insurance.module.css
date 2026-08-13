@@ -1,0 +1,259 @@
+.insurance_container {
+  margin-bottom: 8px;
+}
+
+.insurance_title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28.8px;
+  padding: 12px 0;
+  text-align: right;
+}
+
+.insurance_input_container {
+  display: flex;
+  background-color: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e0e0e2;
+  border-radius: 8px;
+}
+
+.insurance_label {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border-left: 1px solid #e0e0e2;
+  cursor: pointer;
+}
+
+.insurance_input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: all;
+  transition-duration: 0.15s;
+  cursor: pointer;
+}
+
+.active_checkbox {
+  border: 2px solid #0d4485;
+  background-color: #0d4485;
+}
+
+.disabled_checkbox {
+  border: 2px solid #3f4064;
+  background-color: #fff;
+}
+
+.checkbox_hide_icon_container {
+  display: none;
+}
+
+.checkbox_active_icon_container {
+  display: flex;
+}
+
+.checkbox_icon {
+  width: 10px;
+  height: 10px;
+  fill: #fff;
+}
+
+.insurance_infos {
+  padding: 8px;
+  flex-grow: 1;
+}
+
+.insurance_name {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #3f4064;
+  text-align: right;
+}
+
+.insurance_price_box {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.insurance_price_right_box {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.product_price__discount_wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 34px;
+  margin-left: 4px;
+  background-color: #d32f2f;
+  padding: 0 4px;
+  color: #fff;
+  border-radius: 16px;
+}
+
+.product_price__discount {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.price_before_discount {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  text-decoration-line: line-through;
+  color: #c0c2c5;
+}
+
+.final_price_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #3f4064;
+  gap: 4px;
+}
+
+.price_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #3f4064;
+}
+
+.insurance_details_container {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #1672dd;
+  cursor: pointer;
+}
+
+.chevron_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+@media screen and (max-width: 1024px) {
+  .insurance_container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+
+  .insurance_input_container {
+    width: 100%;
+    padding: 10px 12px;
+    gap: 12px;
+  }
+
+  .active_insurance_input_container {
+    border-color: #1672dd;
+  }
+
+  .insurance_infos {
+    padding: 0;
+  }
+
+  .insurance_price_right_box {
+    gap: 4px;
+  }
+
+  .product_price__discount_wrapper {
+    width: auto;
+    height: auto;
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-left: 2px;
+    background-color: #ef4056;
+  }
+
+  .product_price__discount {
+    font-size: 11px;
+    line-height: 13.75px;
+  }
+
+  .price_before_discount {
+    font-size: 11px;
+  }
+
+  .insurance_name {
+    line-height: 21.6px;
+  }
+
+  .final_price_container {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .insurance_label {
+    padding: 3px;
+    border-left: 0;
+  }
+
+  .insurance_details_container {
+    color: #424750;
+  }
+
+  .insurance_title {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .insurance_title {
+    font-size: 12.8px;
+    line-height: 23.04px;
+  }
+
+  .insurance_name {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+
+  .product_price__discount {
+    font-size: 8.8px;
+    line-height: 11px;
+  }
+
+  .price_before_discount {
+    font-size: 8.8px;
+  }
+
+  .final_price_container {
+    font-size: 12.8px;
+    line-height: 16px;
+  }
+
+  .insurance_details_container {
+    font-size: 9.6px;
+  }
+}

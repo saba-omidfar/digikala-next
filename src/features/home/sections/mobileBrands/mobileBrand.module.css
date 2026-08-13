@@ -1,0 +1,111 @@
+.section_title_container {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  margin-left: 16px;
+  margin-right: 16px;
+  gap: 2px;
+}
+
+.section_title {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 2.1;
+  color: #0c0c0c;
+  margin-bottom: 0;
+}
+
+.brand_icon_container {
+  display: flex;
+  margin-left: 6px;
+}
+
+.icon_container {
+  width: 24px;
+  height: 24px;
+  line-height: 0;
+}
+
+.icon {
+  display: inline-block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.section_title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 25.2px;
+  color: #0c0c0c;
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.brands_container {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.padding_right {
+  padding-right: 8px;
+}
+
+.brand_link {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90px;
+  height: 124px;
+  gap: 6px;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.brand_bg {
+  padding: 6px;
+  background-color: #f0f0f1;
+}
+
+.brand_logo_container {
+  width: 78px;
+  height: 78px;
+  line-height: 0;
+  mix-blend-mode: multiply;
+}
+
+.brand_logo {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.brand_title {
+  width: 100%;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 19.8px;
+  color: #424750;
+  padding: 0 8px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+@media screen and (max-width: 360px) {
+  .section_title {
+    font-size: 11.2px;
+    line-height: 20.16px;
+  }
+
+  .brand_title {
+    font-size: 8.8px;
+    line-height: 15.84px;
+  }
+}

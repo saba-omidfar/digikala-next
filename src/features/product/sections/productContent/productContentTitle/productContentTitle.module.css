@@ -1,0 +1,35 @@
+.content_title_container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  overflow-wrap: break-word;
+}
+
+.content_title_padding {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.content_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  text-align: right;
+  flex-grow: 1;
+  margin-bottom: 0;
+}
+
+.content_title_description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  text-align: right;
+}
+
+.content_title_line {
+  margin-top: 8px;
+  background-color: #ef394e;
+  width: 72px;
+  height: 2px;
+}

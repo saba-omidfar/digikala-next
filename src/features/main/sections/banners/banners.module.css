@@ -1,0 +1,45 @@
+.top_banners_container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.middle_banners_container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.top_banner {
+  height: 100%;
+  border-radius: 16px;
+  line-height: 0;
+  aspect-ratio: 100 / 75;
+}
+
+.middle_banner {
+  height: 100%;
+  border-radius: 16px;
+  line-height: 0;
+  aspect-ratio: 100 / 40;
+}
+
+.banner_image {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+@media screen and (max-width: 1024px) {
+  .middle_banners_container {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin: 0 20px;
+  }
+
+  .top_banners_container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0 20px;
+  }
+}

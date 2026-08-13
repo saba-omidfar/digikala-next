@@ -1,0 +1,159 @@
+.seller_popper {
+  border: 1px solid #e0e0e2;
+  width: 400px;
+  max-height: 80vh;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.14),
+    0 4px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  z-index: 3;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease;
+}
+
+.seller_popper__seller_section {
+  width: 400px;
+  max-height: 80vh;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #e0e0e2;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.14),
+    0 4px 4px rgba(0, 0, 0, 0.1);
+  z-index: 3;
+  overflow-y: auto;
+}
+
+.popper__animated_active {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.popper__animated_inactive {
+  animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+.seller_popper_content {
+  position: relative;
+  background-color: #fff;
+  padding: 16px 20px;
+}
+
+.seller_popper_content_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+}
+
+.seller_popper_content_membership {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  text-align: right;
+  cursor: pointer;
+}
+
+.seller_popper_content_score,
+.seller_popper_performance {
+  font-size: 33px;
+  font-weight: 700;
+  line-height: 2.1;
+}
+
+.seller_popper_content_customer_satisfaction {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+}
+
+.seller_popper_content_customer_score {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+}
+
+.seller_popper_successBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 16px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.seller_info_details__successBar {
+  height: 16px;
+  border-left: 2px solid #fff;
+}
+
+.seller_info_details__successBar_hint {
+  height: 16px;
+  border-left: none;
+  background-color: #f9a825;
+}
+
+.seller_popper_successBar_caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 4px;
+  padding-bottom: 20px;
+  font-size: 10px;
+  border-bottom: 1px solid #f0f0f1;
+  color: #81858b;
+  line-height: 2.17;
+}
+
+.seller_popper_performance_caption {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+}
+
+.seller_popper_footer_text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #81858b;
+}
+
+.seller_popper_footer_caption {
+  font-size: 10px;
+  line-height: 2.1;
+  color: #81858b;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

@@ -1,0 +1,43 @@
+.plus_bg {
+  background-color: #f6f5fe;
+}
+
+.buy_subscription_btn {
+  display: flex;
+  justify-content: center;
+  margin: 0 16px;
+}
+
+.subscription_sentinel {
+  width: 100%;
+  height: 1px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 32.5px;
+  color: #424750;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+@media screen and (max-width: 1024px) {
+  .title {
+    font-size: 22px;
+    line-height: 27.5px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .title {
+    font-size: 17.6px;
+    line-height: 22px;
+  }
+}

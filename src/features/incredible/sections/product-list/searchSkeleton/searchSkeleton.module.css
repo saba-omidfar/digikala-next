@@ -1,0 +1,53 @@
+.skeleton_container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.skeleton_icon_container {
+  position: relative;
+  max-width: 100%;
+  border-radius: 50%;
+  background-color: #e0e0e2;
+  overflow: hidden;
+}
+
+.skeleton_icon {
+  width: 24px;
+  height: 24px;
+  background-color: #f0f0f1;
+}
+
+.skeleton_title_container {
+  position: relative;
+  border-radius: 4px;
+  margin-right: 40px;
+  margin-top: -30px;
+  max-width: 100%;
+  background-color: #e0e0e2;
+  overflow: hidden;
+}
+
+.skeleton_title {
+  width: 123px;
+  height: 20px;
+  background-color: #f0f0f1;
+}
+
+.skeleton_subtitle_container {
+  position: relative;
+  border-radius: 4px;
+  margin-right: 40px;
+  max-width: 100%;
+  background-color: #e0e0e2;
+  overflow: hidden;
+}
+
+.skeleton_subtitle {
+  width: 210px;
+  height: 16px;
+  background-color: #f0f0f1;
+}

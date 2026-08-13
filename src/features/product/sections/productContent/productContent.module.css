@@ -1,0 +1,4 @@
+.product_content_container {
+  flex-grow: 1;
+  min-width: 0;
+}

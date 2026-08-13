@@ -1,0 +1,56 @@
+.timer_container {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.timer_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 40px;
+  height: 100%;
+  /* padding: 4px 12px; */
+  /* border-radius: 8px; */
+  background-color: #fff;
+}
+
+/* .incredible_timer_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  background-color: #fff;
+} */
+
+/* .timer_min_box {
+  margin: 0 12px;
+} */
+
+.timer_value {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 2.15;
+}
+
+.timer_title {
+  font-size: 7px;
+}
+
+.timer_seperator {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #fff;
+  width: 4px;
+}
+
+@media screen and (max-width: 1024px) {
+  .timer_value {
+    font-size: 13px;
+  }
+}

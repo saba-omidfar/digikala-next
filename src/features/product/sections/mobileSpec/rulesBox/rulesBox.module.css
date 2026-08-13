@@ -1,0 +1,21 @@
+.rules_container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 20px 16px 8px;
+}
+
+.rules_header {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28.8px;
+  color: #212121;
+}
+
+@media screen and (max-width: 360px) {
+  .rules_header {
+    font-size: 12.8px;
+    line-height: 23.04px;
+  }
+}

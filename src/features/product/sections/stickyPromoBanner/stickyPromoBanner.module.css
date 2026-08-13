@@ -1,0 +1,84 @@
+.promo_banner_container {
+  position: relative;
+  margin-bottom: -8px;
+  width: 100%;
+}
+
+.time_line_container {
+  display: flex;
+  position: absolute;
+  top: -1px;
+  right: -3px;
+  height: 40px;
+  width: calc(100% + 6px);
+  border-top-left-radius: 19px;
+  border-top-right-radius: 19px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.time_line {
+  display: inline-block;
+  height: 100%;
+  transition: 1s;
+}
+
+.badge_logo_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  top: 3px;
+  padding: 12px;
+  padding-bottom: 20px !important;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 2.15;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  z-index: 2;
+}
+
+.badge_logo {
+  line-height: 0;
+}
+
+.badge_logo_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.price_badge_sold {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.15;
+}
+
+.timer_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.timer {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+}
+
+.timer_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+@media screen and (max-width: 360px) {
+  .price_badge_sold,
+  .timer {
+    font-size: 9.6px;
+  }
+}

@@ -1,0 +1,45 @@
+.video {
+  margin-top: -16px;
+  margin-bottom: -20px;
+}
+
+.logo_container {
+  width: 148px;
+  height: 60px;
+  line-height: 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 32.5px;
+  color: #23254e;
+  margin: 16px 16px 0;
+}
+
+.img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 1024px) {
+  .logo_container {
+    width: 78px;
+    height: 32px;
+  }
+
+  .title {
+    font-size: 22px;
+    line-height: 27.5px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .title {
+    font-size: 17.6px;
+    line-height: 22px;
+  }
+}

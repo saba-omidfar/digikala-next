@@ -1,0 +1,15 @@
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
+import LoginPage from "@/features/users/pages/login/LoginPage";
+
+export default async function Page() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (token) {
+    redirect("/");
+  }
+
+  return <LoginPage />;
+}

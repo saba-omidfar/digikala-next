@@ -1,0 +1,134 @@
+.container {
+  background-color: #fff;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: 1px solid #e0e0e2;
+}
+
+.title_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 2.1;
+  margin-right: 8px;
+  margin-bottom: 0;
+}
+
+.promotional_grid__items {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.product_link {
+  position: relative;
+  display: block;
+  height: 100%;
+  padding: 12px 8px;
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f1;
+  border-left: 1px solid #f0f0f1;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.product_image__mini_badges {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  transform: translateX(5px) translateY(-6px);
+  z-index: 1;
+}
+
+.product_image_container {
+  width: 150px;
+  height: 150px;
+  line-height: 0;
+}
+
+.product_image {
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.product_price_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+  gap: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #3f4064;
+}
+
+.product_price_icon {
+  width: 16px;
+  height: 16px;
+  color: #424750;
+}
+
+@media screen and (min-width: 1280px) {
+  .promotional_grid__items > :nth-child(6n) {
+    border-left: none;
+  }
+}
+
+@media screen and (max-width: 1280px) and (min-width: 1024px) {
+  .promotional_grid__items {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .promotional_grid__items > :nth-child(5n) {
+    border-left: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    border: none;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .promotional_grid__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .promotional_grid__items > :nth-child(2n) {
+    border-left: none;
+  }
+
+  .promotional_grid__items > :nth-child(odd):nth-last-child(-n + 2),
+  .promotional_grid__items > :nth-child(odd):nth-last-child(-n + 2) ~ * {
+    border-bottom: none;
+  }
+
+  .product_price_container {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .product_price_container {
+    font-size: 11.2px;
+  }
+
+  .title {
+    font-size: 14.4px;
+  }
+}

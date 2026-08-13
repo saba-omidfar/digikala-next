@@ -1,0 +1,39 @@
+.layout {
+  background-color: #fff;
+  padding-top: 16px;
+  padding-bottom: 12px;
+  overflow: auto;
+}
+
+.selector_menu_item {
+  display: block;
+  width: 100%;
+  padding: 8px 20px;
+}
+
+.selector_menu_item:hover {
+  background-color: #f0f0f1;
+}
+
+.selector_menu {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.flag_icon_container {
+  display: flex;
+  margin-left: 16px;
+}
+
+.flag_icon {
+  width: 24px;
+  height: 24px;
+  fill: #e6123d;
+}
+
+.selector_menu_item_text {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 2.15;
+}

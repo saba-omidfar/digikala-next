@@ -1,0 +1,40 @@
+.content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 8px 20px;
+  z-index: 1;
+}
+
+.plus_icon_container {
+  display: flex;
+  margin-top: 4px;
+  margin-left: 8px;
+}
+
+.plus_icon {
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+  font-weight: normal;
+  color: #b12ba4;
+}
+
+.plus_img_container {
+  width: 78px;
+  height: 32px;
+  line-height: 0;
+}
+
+.plus_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    display: none;
+  }
+}

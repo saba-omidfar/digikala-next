@@ -1,0 +1,12 @@
+.middle_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  border-bottom: 4px solid #f0f0f1;
+  border-top: 1px solid #f0f0f1;
+  padding-top: 12px;
+  padding-bottom: 28px;
+  padding-left: 12px;
+  padding-right: 12px;
+}

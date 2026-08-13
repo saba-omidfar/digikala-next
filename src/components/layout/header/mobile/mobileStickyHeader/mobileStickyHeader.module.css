@@ -1,0 +1,86 @@
+.mobile_sticky_header_container {
+  position: sticky;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.mobile_sticky_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: 64px;
+  background-color: #fff;
+  padding: 16px 20px;
+  z-index: 2;
+}
+
+.mobile_sticky_header_item_active {
+  background-color: rgba(239, 64, 86, 0.1);
+  border: none;
+  color: #ef4056;
+}
+
+.search_icon_container {
+  position: relative;
+  margin-left: 24px;
+}
+
+.share_icon,
+.search_icon,
+.arrow_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+.mobile_sticky_header_title {
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  margin-right: 20px;
+  margin-bottom: 0;
+}
+
+.best_selling_mobile_header__bg_container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  opacity: 0.3;
+  line-height: 0;
+}
+
+.best_selling_mobile_header__bg {
+  display: inline-block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.best_selling_title {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #ef394e;
+}
+
+@media screen and (max-width: 360px) {
+  .mobile_sticky_header_title {
+    font-size: 13px;
+  }
+
+  .best_selling_title {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,126 @@
+.content {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #f0f0f1;
+  border-radius: 16px;
+  padding-bottom: 20px;
+  margin: 0 auto;
+}
+
+.title_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #23254e;
+}
+
+.see_more_link {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #ef4056;
+}
+
+.chevron_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #ef4056;
+  cursor: pointer;
+}
+
+.article_slider_container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.article_slider {
+  padding: 0 20px;
+}
+
+.article_slide {
+  height: auto;
+}
+
+.content :global(.articles__next-btn),
+.content :global(.articles__prev-btn) {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border: 1px solid #f0f0f1;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 5;
+}
+
+.content :global(.articles__next-btn.swiper-button-disabled),
+.content :global(.articles__prev-btn.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+.content :global(.articles__next-btn) {
+  left: 8px;
+}
+
+.content :global(.articles__prev-btn) {
+  right: 8px;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  fill: #ef4056;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    border: none;
+  }
+
+  .title_container {
+    padding: 0;
+    padding-bottom: 16px;
+  }
+
+  .article_slider {
+    padding: 0;
+  }
+
+  .article_slide {
+    width: 300px !important;
+  }
+
+  .content :global(.articles__next-btn),
+  .content :global(.articles__prev-btn) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .title,
+  .see_more_link {
+    font-size: 11px;
+  }
+}

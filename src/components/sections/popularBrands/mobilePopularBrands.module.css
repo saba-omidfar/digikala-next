@@ -1,0 +1,66 @@
+.brands_container {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  scrollbar-width: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.brand_link {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90px;
+  height: 124px;
+  gap: 6px;
+  border: 1px solid #e0e0e2;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.brand_bg {
+  padding: 6px;
+  background-color: #f0f0f1;
+}
+
+.brand_logo_container {
+  width: 78px;
+  height: 78px;
+  line-height: 0;
+  mix-blend-mode: multiply;
+}
+
+.brand_logo {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.brand_title {
+  width: 100%;
+  padding: 0 8px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 19.8px;
+  color: #424750;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.paddingRight {
+  padding-right: 8px;
+}
+
+@media screen and (max-width: 360px) {
+  .brand_title {
+    font-size: 8.8px;
+    line-height: 15.84px;
+  }
+}

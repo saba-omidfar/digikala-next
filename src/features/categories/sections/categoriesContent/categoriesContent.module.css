@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-bottom: 55px;
+}
+
+.content {
+  display: flex;
+  flex-grow: 0;
+  height: calc(var(--window-inner-height) - 56px - 60px);
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.main_menu_items_container {
+  flex-shrink: 0;
+  width: 90px;
+  background-color: #f0f0f1;
+  padding-bottom: 40px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}

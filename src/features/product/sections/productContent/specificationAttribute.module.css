@@ -1,0 +1,33 @@
+.specification_attribute_values_box {
+  display: flex;
+  width: 100%;
+  text-align: right;
+}
+
+.specification_attribute_value_title {
+  width: 200px;
+  padding: 12px 8px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #81858b;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.specification_attribute_value_desc_container {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f1;
+  flex-grow: 1;
+}
+
+.specification_attribute_value_desc {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #0c0c0c;
+  overflow-wrap: break-word;
+}

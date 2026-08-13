@@ -1,0 +1,72 @@
+.filter_modal_sortItem {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.filter_modal_sortItem_bb {
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.filter_modal_sort_title {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #3f4064;
+}
+
+.filter_modal_sortItem_img {
+  width: 18px;
+  height: 18px;
+  line-height: 0;
+  position: relative;
+}
+
+.filter_modal_switch {
+  display: inline-block;
+  position: relative;
+  min-width: 32px;
+  cursor: pointer;
+  margin-right: 16px;
+  width: 40px;
+  height: 20px;
+}
+
+.filter_modal_switch_caption {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #81858b;
+}
+
+@media screen and (min-width: 1024px) {
+  .filter_modal_sort_title {
+    max-width: 164px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .filter_modal_sort_title {
+    font-size: 13px;
+  }
+
+  .filter_modal_sortItem {
+    padding: 12px 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .filter_modal_switch_caption {
+    font-size: 10px;
+  }
+}

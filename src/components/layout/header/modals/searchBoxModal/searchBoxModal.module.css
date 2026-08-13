@@ -1,0 +1,256 @@
+.search_result_container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 616px;
+  min-height: 256px;
+  max-height: 70vh;
+  opacity: 0;
+  border: 1px solid #e0e0e2;
+  background-color: #fff;
+  border-radius: 24px;
+  /* transform-origin: top center; */
+  /* transform: translateY(-10px) scale(0.98); */
+  transition:
+    opacity 0.2s ease-in,
+    transform 0.2s ease-in;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 30px;
+  overflow: hidden;
+}
+
+.popper_animated__visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header {
+  padding: 8px;
+}
+
+.search_box_container {
+  display: flex;
+  align-items: center;
+  width: 600px;
+  min-width: 0;
+  height: 44px;
+  background-color: #f0f0f1;
+  border-radius: 9999px;
+  padding: 0 16px;
+  white-space: nowrap;
+}
+
+.search_box_container:not(.search_box_container_ic_open):hover {
+  background-color: #ecedef;
+}
+
+.search_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-shrink: 0;
+  gap: 8px;
+  min-width: 0;
+}
+
+.search_icon {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+  cursor: pointer;
+}
+
+.search_input_container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+}
+
+.search_input {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  padding: 0 8px;
+  caret-color: #0d4485;
+  background-color: transparent;
+  border: none;
+  transition: all 0.15s ease;
+}
+
+.search_box_container__active {
+  border-bottom: 1px solid #1672dd;
+}
+
+.search_box {
+  width: 100%;
+  border-radius: 9999px;
+}
+
+.close_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #a1a3a8;
+  cursor: pointer;
+}
+
+.search_icon {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+}
+
+.search_result_banner_content_container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.search_result_banner_content {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.search_result_banner_container {
+  aspect-ratio: 100 / 40;
+  border-radius: 8px;
+  line-height: 0;
+  height: 100%;
+}
+
+.search_result_banner {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.search_history_icon,
+.delete_icon,
+.search_trend_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #a1a3a8;
+  cursor: pointer;
+}
+
+.last_searchSlider__container,
+.fav_searchSlider__container {
+  position: relative;
+}
+
+.results_container {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.search_history {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.trending_search {
+  margin-bottom: 10px;
+}
+
+.section_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section_title {
+  font-size: 14px;
+  font-weight: 400;
+  color: #0c0c0c;
+}
+
+.chips_container {
+  --max-rows: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 72px;
+  overflow: hidden;
+}
+.chip_wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  height: 32px;
+  border: 1px solid #e0e0e2;
+  border-radius: 20px;
+  background-color: #fff;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.trend_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-inline-end: 4px;
+}
+
+.trend_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.chip_label {
+  font-size: 14px;
+  color: #23254e;
+  white-space: nowrap;
+}
+
+.banner_wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.banner_link {
+  display: block;
+  width: 100%;
+  margin-inline: auto;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.banner_img {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .earch_result_container {
+    display: none;
+  }
+}

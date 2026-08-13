@@ -1,0 +1,53 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.header_title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.1;
+  background-color: #fff;
+}
+
+.close_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.content {
+  padding: 0 16px;
+}
+
+.sort_item_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #f0f0f1;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  cursor: pointer;
+}
+
+.sort_title {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+}
+
+.check_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+}

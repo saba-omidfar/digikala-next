@@ -1,0 +1,58 @@
+.buy_subscription_fixed_btn {
+  position: fixed;
+  bottom: 54px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #e0e0e2;
+  z-index: 1;
+}
+
+.buy_subscription_btn {
+  display: flex;
+  flex-direction: column;
+  margin: 0 16px;
+}
+
+.purchase_plan_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+  background-color: #b12ba4;
+  border: 1px solid #b12ba4;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 96px;
+  margin-top: 32px;
+  margin-bottom: 24px;
+  transition: top 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.purchase_plan_fixed_btn {
+  margin: 16px;
+  z-index: 1;
+}
+
+.chevron_icon_container {
+  display: flex;
+  margin-right: 8px;
+}
+
+.chevron_icon {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
+}
+
+@media screen and (max-width: 360px) {
+  .purchase_plan_btn {
+    font-size: 11.2px;
+  }
+}

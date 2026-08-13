@@ -1,0 +1,80 @@
+.club_info {
+  width: 100%;
+  display: flex;
+  border-top: 1px solid #e0e0e2;
+  padding: 12px 0;
+}
+
+.club_info_icon_container {
+  display: flex;
+  margin-left: 12px;
+}
+
+.club_info_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #b12ba4;
+}
+
+.club_info_title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+}
+
+.list_item__bullet_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 24px;
+  min-width: 24px;
+  margin-left: 12px;
+}
+
+.list_item__plus_bullet {
+  width: 5px;
+  height: 5px;
+  fill: #b12ba4 !important;
+}
+
+.list_item__bullet_line_top {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: calc(50% - 5px);
+  display: block;
+  background-color: #e0e0e2;
+  transform: translateX(-50%);
+}
+
+.list_item__bullet_line_bottom {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 1px;
+  height: calc(50% - 5px);
+  display: block;
+  background-color: #e0e0e2;
+  transform: translateX(-50%);
+}
+
+.delivery_express_icon {
+  width: 16px;
+  height: 16px;
+  fill: #b12ba4;
+}
+
+.club_info_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  white-space: nowrap;
+  margin-right: 4px;
+}

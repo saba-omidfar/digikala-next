@@ -1,0 +1,322 @@
+.modal_layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+  background-color: #fff;
+  padding-top: 78px;
+  overflow-y: hidden;
+}
+
+.modal_header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.more_icon {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+}
+
+.comment_author {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #424242;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.comment_author_role_badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 2.17;
+  padding-right: 0;
+  border-radius: 100px;
+  border-style: none;
+  border: 1px solid transparent;
+}
+
+.comment_author_role {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.comment_date {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #767981;
+}
+
+.modal_close_btn {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+  cursor: pointer;
+}
+
+.modal_content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 16px 20px;
+}
+
+.comment_body_container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.comment_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #0c0c0c;
+  margin-bottom: 4px;
+  overflow-wrap: break-word;
+}
+
+.comment_body {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #0c0c0c;
+  overflow-wrap: break-word;
+  margin-bottom: 4px;
+}
+
+.comment_advantage_icon,
+.comment_disadvantage_icon {
+  width: 16px;
+  height: 16px;
+}
+
+.comment_advantage_icon {
+  fill: #00a049;
+}
+
+.comment_disadvantage_icon {
+  fill: #d32f2f;
+}
+
+.comment_advantage_text {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.comment_file_container {
+  width: 50px;
+  height: 50px;
+  line-height: 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-left: 8px;
+}
+
+.comment_file {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.comment_more_vert_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #a1a3a8;
+}
+
+.comment_seller_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #3f4064;
+}
+
+.comment_seller_name {
+  display: inline;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+}
+
+.dotOutline_name_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #e0e0e2;
+}
+
+.dotOutline_comment_author_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #e0e0e2;
+}
+
+.comment__purchased_item_color {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  padding: 2px;
+  margin-left: 8px;
+  border: 1px solid rgba(3, 10, 22, 0.1);
+  border-radius: 50%;
+}
+
+.comment__purchased_item_name {
+  display: inline;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+}
+
+.comment_feedback_container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: #81858b;
+  padding-top: 4px;
+  margin-right: auto;
+}
+
+.comment_feedback_count {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 125%;
+  color: #424750;
+}
+
+.comment_feedback_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #a1a3a8;
+  font-size: 11px;
+  font-weight: normal;
+  line-height: 2.17;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 8px;
+  outline: none;
+  overflow: hidden;
+  transition: top 0.3s ease-in-out;
+}
+
+.comment_feedback_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.dot_icon_container,
+.size_icon_container {
+  display: flex;
+  margin: 0 4px;
+}
+
+.dot_icon {
+  width: 16px;
+  height: 16px;
+  fill: #a1a3a8;
+  color: #a1a3a8;
+}
+
+.size_icon {
+  width: 16px;
+  height: 16px;
+  fill: #424750;
+}
+
+.size_text {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #626262;
+  flex-grow: 0;
+  margin-left: 8px;
+}
+
+.purchased_item__color {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  padding: 2px;
+  border: 1px solid rgba(3, 10, 22, 0.1);
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+.purchased_item__text {
+  display: inline;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #626262;
+  margin-left: 4px;
+}
+
+.true_to_size_container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.true_to_size_icon {
+  width: 16px;
+  height: 16px;
+}
+
+.true_to_size_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+@media screen and (max-width: 360px) {
+  .comment_body {
+    font-size: 9.6px;
+  }
+
+  .comment_date {
+    font-size: 8px;
+    line-height: 14.4px;
+  }
+
+  .comment_seller_name,
+  .size_text,
+  .purchased_item__text {
+    font-size: 8px;
+  }
+
+  .comment_title {
+    font-size: 11.2px;
+  }
+}

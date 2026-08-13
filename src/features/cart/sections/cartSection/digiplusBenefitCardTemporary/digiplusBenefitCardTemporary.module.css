@@ -1,0 +1,130 @@
+.digiplus_benefit_container {
+  padding: 0;
+  background-color: #fff;
+  margin-bottom: 12px;
+}
+
+.digiplus_benefit {
+  display: grid;
+  position: relative;
+  border: 1px solid #b12ba4;
+  padding: 16px;
+  padding-top: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.digiplus_benefit_item_1 {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+}
+
+.digiplus_benefit_logo_container {
+  width: 100px;
+  height: 30px;
+  line-height: 0;
+  margin-left: 20px;
+}
+
+.digiplus_benefit_item_2 {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+}
+
+.digiplus_benefit_item_2_text {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+  padding: 8px 0;
+  color: #3f4064;
+}
+
+.digiplus_benefit_item_3 {
+  margin-right: 16px;
+  margin-bottom: 12px;
+  grid-row-end: 4;
+  grid-row-start: 1;
+  grid-column-start: 2;
+}
+
+.digiplus_benefit_item_3_img {
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  line-height: 0;
+  margin-left: 4px;
+}
+
+.digiplus_benefit_item_4 {
+  grid-row-end: 4;
+  grid-row-start: 3;
+  grid-column-start: 1;
+}
+
+.digiplus_benefit_item_4_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #b12ba4;
+  color: #b12ba4;
+  padding: 8px 16px;
+  margin-top: 0;
+  height: 40px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  background: none;
+  outline: none;
+  overflow: hidden;
+}
+
+.trailing_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #b12ba4;
+}
+
+.digiplus_benefit_bg_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 0;
+  z-index: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .digiplus_benefit_container {
+    background-color: #f0f0f1;
+    padding: 8px;
+  }
+
+  .digiplus_benefit {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .digiplus_benefit_item_4_btn {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .digiplus_benefit_item_2_text {
+    font-size: 11px;
+    font-weight: 400;
+  }
+
+  .digiplus_benefit_item_3 {
+    margin: 0;
+  }
+
+  .digiplus_benefit_item_4_btn {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,48 @@
+.checkbox_label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.checkbox_fa_title {
+  font-size: 15px;
+  line-height: 2.15;
+  font-weight: 700;
+  color: #3f4064;
+}
+
+.checkbox_eng_title {
+  direction: ltr;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #81858b;
+}
+
+.check_icon {
+  width: 10px;
+  height: 10px;
+  fill: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+  .checkbox_fa_title {
+    font-size: 13px;
+  }
+
+  .checkbox_eng_title {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .checkbox_fa_title {
+    font-size: 10.4px;
+  }
+
+  .checkbox_eng_title {
+    font-size: 8.8px;
+  }
+}

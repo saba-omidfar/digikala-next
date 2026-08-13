@@ -1,0 +1,152 @@
+.content_container {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1280px;
+  padding: 24px 24px 0;
+}
+
+.content {
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 24px;
+  margin: 0 auto;
+}
+
+.content_font_size {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+}
+
+.video_player_btn {
+  height: 472px;
+  overflow: hidden;
+}
+
+.video_player_btn :global(.video-js),
+.video_player_btn :global(.vjs-tech),
+.video_player_btn :global([class*="-dimensions"]) {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.video_player_btn :global(.video-js) video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.answer_layout__body {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  padding: 20px 96px;
+}
+
+.quote_container {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+  background-color: #e0e0e2;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 0;
+}
+
+.answer_img_container {
+  margin: 16px;
+  line-height: 0;
+}
+
+.answer_img {
+  display: inline-block;
+  border-radius: 16px;
+  object-fit: contain;
+  width: 100%;
+  overflow: hidden;
+}
+
+.answer_helpfull_container {
+  padding: 20px 0;
+  margin: 8px 0;
+}
+
+.answer_helpfull {
+  padding: 16px 24px 24px;
+  background-color: #f0f0f1;
+  border-radius: 8px;
+}
+
+.answer_helpfull_title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+}
+
+.answer_helpfull_btns_container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.answer_helpfull_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  border: 1px solid #0c0c0c;
+  background-color: transparent;
+  color: #0c0c0c;
+}
+
+.answer_helpfull_icon_container {
+  display: flex;
+  margin-right: 8px;
+}
+
+.answer_helpfull_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #0c0c0c;
+}
+
+@media screen and (max-width: 1024px) {
+  .content_container {
+    padding: 0 20px;
+  }
+
+  .content {
+    padding: 0;
+    margin: 0;
+  }
+
+  .answer_layout__body {
+    font-size: 12px;
+    padding: 0;
+    padding-bottom: 20px !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .content_font_size {
+    font-size: 9.6px;
+  }
+
+  .answer_layout__body {
+    font-size: 9.6px;
+  }
+}

@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.content {
+  width: 100%;
+  flex: 1 1 0%;
+  margin: 16px auto;
+  padding: 0 16px;
+}
+
+.empty_space {
+  width: 100%;
+  max-width: 1336px;
+  align-items: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .empty_space {
+    max-width: 768px;
+    margin: 16px auto;
+  }
+}

@@ -1,0 +1,95 @@
+.mega_menu_parent_container {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+}
+
+.mega_menu_parent_container:not(:last-child) {
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.mega_menu_parent {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #0c0c0c;
+  padding: 12px 0;
+  overflow-wrap: break-word;
+}
+
+.mega_menu_parent_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+  cursor: pointer;
+}
+
+.mega_menu_leaf_container {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+}
+
+.mega_menu_leaf {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mega_menu_leaf__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #0c0c0c;
+  padding: 8px;
+  text-align: center;
+}
+
+.category_item_img_bg {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background-color: #f0f0f1;
+  margin-bottom: 8px;
+  border-radius: 50%;
+}
+
+.mega_menu_leaf_img_container {
+  width: 45px;
+  height: 45px;
+  line-height: 0;
+}
+
+.mega_menu_leaf_img {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  mix-blend-mode: darken;
+  object-fit: contain;
+}
+
+.grid_layout_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 360px) {
+  .mega_menu_leaf__link {
+    font-size: 8px;
+  }
+
+  .mega_menu_parent {
+    font-size: 10px;
+  }
+}

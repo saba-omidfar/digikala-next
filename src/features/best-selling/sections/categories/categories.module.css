@@ -1,0 +1,41 @@
+.best_selling_categories_container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 8px 20px 12px;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  scrollbar-width: none;
+  overflow-x: auto;
+}
+
+.best_selling_category_link {
+  display: inherit;
+  color: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+}
+
+.best_selling_category_chip {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+  text-align: center;
+  white-space: nowrap;
+  margin: 8px;
+  padding: 8px 12px;
+  border-radius: 10rem;
+  background: #fff;
+  color: #3f4064;
+  border: 1px solid #e0e0e2;
+}
+
+.best_selling_category_chip__active {
+  background: rgba(224, 83, 83, 0.05);
+  color: #ef4056;
+  border: 1px solid #e6123d;
+}

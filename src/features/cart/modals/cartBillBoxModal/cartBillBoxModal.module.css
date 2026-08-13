@@ -1,0 +1,257 @@
+.sheet :global([data-rsbs-header]) {
+  padding-top: 12px;
+  box-shadow: none;
+}
+
+.header_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-top: 12px;
+  margin-top: 4px;
+  z-index: 2;
+}
+
+.close_icon_container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+}
+
+.close_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: rgb(51, 51, 51);
+}
+
+.header_title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0px;
+  line-height: 21.6px;
+  color: rgb(31, 31, 31);
+  direction: rtl;
+  text-align: right;
+  padding-top: 1px;
+}
+
+.content_container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 16px;
+}
+
+.content {
+  padding-bottom: 16px;
+}
+
+.content_header_container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-bottom: 8px;
+}
+
+.content_header {
+  display: flex;
+  flex-direction: column;
+  padding-inline: 12px;
+  padding-block: 10px;
+  gap: 8px;
+  border-radius: 8px;
+  min-height: 40px;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.info_icon_container {
+  display: flex;
+  margin-top: 2px;
+}
+
+.info_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: rgb(31, 31, 31);
+}
+
+.content_header_text {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 21.6px;
+  color: rgb(31, 31, 31);
+  direction: rtl;
+  text-align: right;
+  padding-top: 3px;
+}
+
+.checkout_sidebar_row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 8px 24px;
+}
+
+.row_title {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #62666d;
+  margin-right: 4px;
+}
+
+.confetti_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: rgb(46, 123, 50);
+}
+
+.row_text {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 18.9px;
+  color: rgb(92, 92, 92);
+  direction: rtl;
+  text-align: right;
+  padding-top: 1px;
+}
+
+.row_value_text {
+  display: inline-flex;
+  align-items: center;
+  height: 14px;
+  gap: 2px;
+}
+
+.row_value {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 21.6px;
+  color: rgb(92, 92, 92);
+  direction: rtl;
+  text-align: right;
+  padding-top: 4px;
+}
+
+.old_price {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 14px;
+}
+
+.old_price_text {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgb(162, 162, 162);
+  letter-spacing: 0px;
+  line-height: 19.8px;
+  direction: rtl;
+  text-align: right;
+  padding-top: 3px;
+  text-decoration-line: line-through;
+}
+
+.checkout_sidebar_link {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  border-radius: 16px;
+  background-color: #fff;
+  padding: 12px 16px;
+  border: 1px solid #f0f0f1;
+  box-shadow: 0 0 #0000;
+}
+
+.content_container {
+  overflow-wrap: break-word;
+  padding: 12px 0;
+}
+
+.content_signIn_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.content_signIn_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #f9a825;
+  cursor: pointer;
+}
+
+.content_signIn_title {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #0c0c0c;
+}
+
+.chevron_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+  cursor: pointer;
+}
+
+.price_icon {
+  width: 16px;
+  height: 16px;
+  fill: #62666d;
+}
+
+.footer_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  gap: 8px;
+  border-radius: 8px;
+  padding-block: 8px;
+  padding-inline: 8px;
+  border: 1px solid rgb(51, 51, 51);
+  margin-top: 8px;
+  cursor: pointer;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.footer_btn_text {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 18.9px;
+  color: rgb(51, 51, 51);
+  direction: rtl;
+  text-align: right;
+}

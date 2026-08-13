@@ -1,0 +1,99 @@
+.recommendation_container {
+  position: relative;
+  display: flex;
+  width: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e2;
+  border-bottom: 4px solid #f0f0f1;
+  margin-top: 16px;
+  padding-bottom: 12px;
+  flex-direction: column;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.recommendation_title_text {
+  color: #81858b;
+}
+
+.recommendation_ad_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #ff009c;
+}
+
+.recommendation_title_caption {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+}
+
+.recommendation_title_line {
+  margin-top: 8px;
+  background-color: #ef394e;
+  width: 70px;
+  height: 2px;
+  margin-top: 8px;
+}
+
+.recommendation_slider {
+  width: 192px !important;
+  min-width: 192px !important;
+  max-width: 192px !important;
+  margin-left: 8px !important;
+  border-left: 1px solid #f0f0f1;
+  cursor: pointer !important;
+}
+
+.recommendation_slide:last-child {
+  border-left: none !important;
+}
+
+.recommendation_container :global(.recommendation-swiper-button-prev),
+.recommendation_container :global(.recommendation-swiper-button-next) {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #fff !important;
+  border-radius: 50% !important;
+  border: 1px solid #c3c3ce !important;
+  color: #3f4064 !important;
+  font-size: 12px !important;
+  z-index: 20;
+}
+
+.swiper_btn_icon {
+  width: 25px;
+  height: 25px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+.recommendation_container :global(.recommendation-swiper-button-prev) {
+  right: 8px !important;
+}
+
+.recommendation_container :global(.recommendation-swiper-button-next) {
+  left: 8px !important;
+}
+
+.recommendation_container
+  :global(.recommendation-swiper-button-prev.swiper-button-disabled),
+.recommendation_container
+  :global(.recommendation-swiper-button-next.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .recommendation_container {
+    display: none;
+  }
+}

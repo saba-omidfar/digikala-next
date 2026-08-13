@@ -1,0 +1,140 @@
+.filter_item_container {
+  width: 100%;
+  padding: 0 20px;
+  border-bottom: none;
+  cursor: pointer;
+}
+
+.filter_item_open {
+  border-bottom: 1px solid #f0f0f1;
+  padding: 0;
+}
+
+.filter_item {
+  color: #3f4064;
+  flex-grow: 1;
+}
+
+.filter_modal_sortItem {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.filter_modal_sortItem_bb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f1;
+  color: #3f4064;
+  cursor: pointer;
+}
+
+.filter_icon_container {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.filter_icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #1028ff;
+}
+
+.filter_modal_sort_title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #3f4064;
+}
+
+.filter_expandable__child_active {
+  width: 4px;
+  height: 4px;
+  background-color: #1672dd;
+  margin-right: 12px;
+  border-radius: 50%;
+}
+
+.filter_modal_arrow,
+.filter_modal_arrow_expandMore {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+  cursor: pointer;
+}
+
+.filter_modal_switch_caption {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #81858b;
+}
+
+.filter_expandable_filter__child {
+  max-height: 360px;
+  padding-top: 4px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-bottom: 1px solid #f0f0f1;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .filter_item_container {
+    padding: 0;
+  }
+
+  .filter_modal_sort_title {
+    font-size: 13px;
+  }
+
+  .filter_modal_sortItem {
+    padding: 12px 0;
+  }
+
+  .filter_modal_arrow,
+  .filter_modal_arrow_expandMore {
+    fill: #424750;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .filter_modal_switch_caption {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .filter_modal_switch_caption {
+    font-size: 10px;
+  }
+}

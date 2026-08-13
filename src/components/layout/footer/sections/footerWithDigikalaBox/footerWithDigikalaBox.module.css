@@ -1,0 +1,29 @@
+.with_digikala_container {
+  display: block;
+  flex-grow: 1;
+  width: unset;
+}
+
+.with_digikala_title {
+  display: block;
+  color: #3f4064;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+  margin-bottom: 8px;
+}
+
+.with_digikala_link {
+  display: block;
+  color: #81858b;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  margin-bottom: 8px;
+}
+
+@media screen and (max-width: 1024px) {
+  .with_digikala_container {
+    width: 50%;
+  }
+}

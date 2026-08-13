@@ -1,0 +1,132 @@
+.categories_container_padding {
+  width: 100%;
+  padding-bottom: 12px;
+}
+
+.categories_container {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+}
+
+.all_cat_icon_container {
+  display: flex;
+  border: 2px solid #1672dd;
+  border-radius: 9999px;
+  background-color: #e6f4f7;
+  padding: 8px;
+}
+
+.all_cat_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #1672dd;
+}
+
+.select_category_title {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+  margin: 0 12px;
+}
+
+.all_categories_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.category_container {
+  display: flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid #e0e0e2;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.category_title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  margin-left: 8px;
+}
+
+.category_subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+}
+
+.chevron_icon_container {
+  display: flex;
+  margin-right: 4px;
+}
+
+.chevron_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #81858b;
+}
+
+@media screen and (max-width: 1280px) {
+  .productList_pagesContainer_with_sidebar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .sidebar_wrapper {
+    display: none;
+  }
+
+  .categories_container {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 8px 0 12px 0;
+    border: none;
+  }
+
+  .all_cat_icon_container {
+    display: none;
+  }
+
+  .select_category_title {
+    font-size: 12px;
+    margin: 0;
+  }
+
+  .all_categories_container {
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+  }
+
+  .category_container {
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 0;
+    border: none;
+    padding: 6px 0;
+  }
+
+  .category_container:not(:last-child) {
+    border-bottom: 1px solid #e0e0e2 !important;
+  }
+}

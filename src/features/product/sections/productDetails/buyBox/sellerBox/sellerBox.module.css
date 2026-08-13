@@ -1,0 +1,145 @@
+.digikala_icon_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  background-color: #ef4056;
+  margin-top: 4px;
+  border-radius: 50%;
+}
+
+.digikala_icon_badge {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #fff;
+}
+
+.seller_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.seller_icon_badge_container {
+  display: flex;
+  position: absolute;
+  width: 16px;
+  bottom: -5px;
+  left: -4px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.is_official_badge {
+  color: #0081b9;
+}
+
+.is_trusted_badge {
+  color: #00a049;
+}
+
+.is_official_icon {
+  width: 16px;
+  height: 16px;
+  fill: #0081b9;
+}
+
+.is_trusted_icon {
+  width: 16px;
+  height: 16px;
+  fill: #00a049;
+}
+
+.seller_name {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+  margin-left: 8px;
+}
+
+.seller_badge_properties {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  margin-left: 8px;
+  border-radius: 50px;
+  max-height: 19px;
+}
+
+.seller_badge_is_official {
+  color: #0081b9;
+  background-color: rgba(0, 129, 185, 0.1);
+}
+
+.seller_badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  height: 22px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  padding: 0 8px;
+}
+
+.seller_badge_text {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.seller_badge_is_trusted {
+  color: #00a049;
+  background-color: rgba(0, 160, 73, 0.1);
+}
+
+.seller_performance {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 2.15;
+}
+
+.divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+}
+
+.divider::after {
+  position: absolute;
+  content: " ";
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #e0e0e2;
+  width: 1px;
+  height: calc(100% - 10px);
+}
+
+.seller_performance_percent {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  margin-left: 4px;
+}
+
+.seller_performance_text {
+  color: #81858b;
+  white-space: nowrap;
+  margin-left: 4px;
+}

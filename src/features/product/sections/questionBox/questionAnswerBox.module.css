@@ -1,0 +1,277 @@
+.Desktop_question_answer_wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  color: #5c5c5c;
+}
+
+.Desktop_question_answer_title {
+  margin-left: 16px;
+  font-size: 11px;
+  font-weight: normal;
+  line-height: 2.17;
+}
+
+.Answer_body_container {
+  margin-right: 48px;
+}
+
+.Answer_body {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #5c5c5c;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-right: 8px;
+  text-align: right;
+}
+
+.question_answer_media_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.question_answer_media {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.question_answer_media_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.question_answerInfo_author {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #424242;
+}
+
+.answer_date {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 25.2px;
+  color: #94969c;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dot_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #e0e0e2;
+}
+
+.seller_role_badge,
+.user_role_badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  padding: 0 8px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  border-style: none;
+}
+
+.seller_role_badge {
+  color: #f57f17;
+  background-color: rgba(249, 168, 37, 0.1);
+}
+
+.user_role_badge {
+  color: #2e7b32;
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.seller_role,
+.user_role {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 2.17;
+}
+
+.user_role {
+  color: #2e7b32;
+}
+
+.seller_role {
+  color: #f57f17;
+}
+
+.answer_container {
+  margin-right: 48px;
+}
+
+.helpful_answer_text {
+  margin-left: 40px;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 2.17;
+}
+
+.question_reaction_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 2.17;
+  color: #a1a3a8;
+  padding: 0 8px;
+  outline: none;
+  overflow: hidden;
+  transition: top 0.3s ease-in-out;
+}
+
+.question_reaction_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.question_reaction_count {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #424750;
+}
+
+.reaction_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 2.17;
+  color: #a1a3a8;
+  padding: 0 8px;
+  outline: none;
+  overflow: hidden;
+  transition: top 0.3s ease-in-out;
+}
+
+.reaction_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.profile_img_container {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  line-height: 0;
+}
+
+.profile_img {
+  display: inline-block;
+  width: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.author_is_active_container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.animate_icon_container {
+  width: 20px;
+  height: 20px;
+}
+
+.author_is_active_text {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 19.8px;
+  color: #2e7b32;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .answer_container {
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+  }
+
+  .Answer_body {
+    font-size: 12px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 8px;
+  }
+
+  .question_answerInfo_author,
+  .answer_date {
+    font-size: 12px;
+    line-height: 21.6px;
+  }
+
+  .reaction_icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+
+  .author_is_active_text {
+    font-size: 10px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .Desktop_question_answer_title,
+  .Desktop_question_author_role,
+  .question_answerInfo_author {
+    font-size: 9.6px;
+    line-height: 12px;
+  }
+
+  .answer_date,
+  .Answer_body {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+
+  .user_role,
+  .seller_role {
+    font-size: 8px;
+  }
+
+  .question_reaction_count {
+    font-size: 8px;
+    line-height: 10px;
+  }
+
+  .author_is_active_text {
+    font-size: 8px;
+    line-height: 14.4px;
+  }
+}

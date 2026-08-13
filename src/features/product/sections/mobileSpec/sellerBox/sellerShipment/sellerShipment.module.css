@@ -1,0 +1,122 @@
+.shipment_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 2px 16px;
+}
+
+.shipment_icon_bg {
+  display: flex;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #f0f0f1;
+}
+
+.shipment_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.shipment_title_container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.shipment_title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 21.6px;
+  color: #0c0c0c;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+}
+
+.chevron_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.delivery_container {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+}
+
+.delivery_icon {
+  width: 18px;
+  height: 18px;
+}
+
+.digikala_delivery_icon {
+  fill: #e6123d;
+}
+
+.jet_delivery_icon {
+  fill: #1028ff;
+}
+
+.seller_delivery_icon {
+  fill: #d86b00;
+}
+
+.delivery_title_container {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.delivery_title {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+}
+
+.method_price_text_container {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #424242;
+}
+
+.bulet_icon {
+  color: #81858b;
+  margin: 0 4px;
+}
+
+.modal_content_list_item_title_subText {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #424242;
+}
+
+@media screen and (max-width: 360px) {
+  .shipment_title {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+
+  .delivery_title {
+    font-size: 8.8px;
+  }
+}

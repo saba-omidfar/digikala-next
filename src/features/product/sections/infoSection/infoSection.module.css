@@ -1,0 +1,128 @@
+.content_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.rules_content_container {
+  padding: 20px 16px 8px;
+}
+
+.review_content_container {
+  padding-bottom: 20px;
+}
+
+.comment_content_container,
+.question_content_container {
+  padding: 0 16px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  /* padding-top: 8px; */
+  gap: 12px;
+}
+
+.review_content {
+  padding: 20px 20px 12px;
+}
+
+.comment_content,
+.question_content {
+  padding: 12px 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  /* padding: 0 16px; */
+  gap: 8px;
+}
+
+.title_container {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28.8px;
+  gap: 6px;
+}
+
+.title {
+  position: relative;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28.8px;
+  color: #212121;
+}
+
+.variation_colors_circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #e0e0e2;
+  border-radius: 50%;
+}
+
+.btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: none;
+  outline: none;
+  color: #0c0c0c;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 2.17;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: top 0.2s ease-in-out;
+}
+
+.btn_title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #424750;
+}
+
+.btn_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #424750;
+}
+
+@media screen and (max-width: 360px) {
+  .title {
+    font-size: 12.8px;
+    line-height: 23.04px;
+  }
+
+  .title_container {
+    font-size: 12.8px;
+    line-height: 23.04px;
+  }
+
+  .btn_title {
+    font-size: 9.6px;
+  }
+}

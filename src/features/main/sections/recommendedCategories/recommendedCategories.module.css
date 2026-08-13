@@ -1,0 +1,141 @@
+.categories_container {
+  position: relative;
+  border-radius: 16px;
+  padding: 0;
+}
+
+.categories_title_container {
+  padding: 16px 0;
+  align-items: center;
+}
+
+.categories_title {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 2.1;
+  text-align: center;
+  color: #0c0c0c;
+}
+
+.categories_content_container {
+  border-radius: 16px;
+  margin-top: 8px;
+  border: 1px solid #e0e0e2;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+.leaf_category {
+  flex-grow: 1;
+  min-width: 180px;
+  width: auto !important;
+  height: auto;
+}
+
+.leaf_category + .leaf_category {
+  border-right: 1px solid #f0f0f1;
+}
+
+.leaf_category_link {
+  display: inherit;
+  color: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+}
+
+.leaf_category_content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 4px;
+}
+
+.leaf_category__item_container {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background-color: #f0f0f1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.leaf_category_item {
+  width: 60px;
+  height: 60px;
+  line-height: 0;
+  mix-blend-mode: multiply;
+  position: relative;
+}
+
+.leaf_category_item_img {
+  display: inline-block;
+  object-fit: contain;
+}
+
+.leaf_category__item_text {
+  width: 80%;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #0c0c0c;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .categories_container {
+    padding: 0 20px 12px;
+  }
+
+  .categories_title_container {
+    padding: 12px 0;
+  }
+
+  .categories_title {
+    font-size: 18px;
+  }
+
+  .categories_content_container {
+    display: flex;
+    scrollbar-width: none;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+
+  .leaf_category {
+    min-width: 160px;
+    flex-grow: 1;
+  }
+
+  .leaf_category__item_text {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .categories_title {
+    font-size: 14.4px;
+  }
+
+  .leaf_category__item_text {
+    font-size: 9.6px;
+  }
+}

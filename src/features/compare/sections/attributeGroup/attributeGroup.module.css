@@ -1,0 +1,44 @@
+.attribute_groups_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.attributes_container {
+  padding: 20px 0;
+}
+
+.attribute_item {
+  text-align: right;
+}
+
+.attribute_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #81858b;
+  padding-top: 20px;
+  margin-bottom: 0;
+}
+
+.attribute_values_container {
+  display: grid;
+  gap: 8px;
+  padding-top: 16px;
+  padding-bottom: 20px;
+}
+
+.attribute_value_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #0c0c0c;
+  padding-top: 20px;
+}
+
+.br_list_vertical_no_padding_200 + .br_list_vertical_no_padding_200 {
+  border-top: 1px solid #f0f0f1;
+}

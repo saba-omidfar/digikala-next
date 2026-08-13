@@ -1,0 +1,70 @@
+.brand_code {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  margin-top: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.brand_code_skeleton {
+  height: 58px;
+}
+
+.brand_code_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  margin-bottom: 0;
+}
+
+.brand_code_subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+}
+
+.brand_logo {
+  margin-left: 20px;
+}
+
+.brand_img_container {
+  width: 50px;
+  height: 50px;
+  line-height: 0;
+}
+
+.brand_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 1024px) {
+  .brand_code {
+    margin-bottom: 12px;
+  }
+
+  .brand_code_title {
+    font-size: 14px;
+  }
+
+  .brand_code_subtitle {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .brand_code_title {
+    font-size: 11.2px;
+  }
+
+  .brand_code_subtitle {
+    font-size: 8.8px;
+  }
+}

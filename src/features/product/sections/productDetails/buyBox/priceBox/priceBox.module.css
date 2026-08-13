@@ -1,0 +1,189 @@
+.footer_actionWrapper_bb {
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e2;
+}
+
+.footer_actionWrapper {
+  background-color: transparent;
+  box-shadow: none;
+  width: 100%;
+}
+
+.insurance_badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 64, 255, 8%);
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.insurance_icon_container {
+  display: flex;
+  padding-left: 8px;
+}
+
+.insurance_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #0040ff;
+}
+
+.insurance_title {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+}
+
+.insurance_price {
+  display: flex;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #23254e;
+}
+
+.price_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.lowest_price_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1672dd1f;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.lowest_price {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 8px;
+}
+
+.alert_icon_container {
+  display: flex;
+  margin-bottom: 2px;
+}
+
+.alert_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: rgb(63, 105, 242);
+}
+
+.lowest_price_text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 19.8px;
+  color: #212121;
+}
+
+.lowest_price_bold {
+  font-weight: 700;
+}
+
+.chevron_ion {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #a1a3a8;
+}
+
+.footer_actionWrapper_icon {
+  width: 18px;
+  height: 18px;
+  fill: #a1a3a8;
+  cursor: pointer;
+}
+
+.product_price_container {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 2.1;
+  margin-right: auto;
+}
+
+.vertical_slider_container {
+  height: 20px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.see_cart_main {
+  display: block;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.see_cart_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+  text-align: right;
+}
+
+.see_cart_link {
+  color: #1672dd;
+}
+
+.see_cart_link_text {
+  font-size: 11px;
+  font-weight: normal;
+  line-height: 2.17;
+  margin-right: 4px;
+}
+
+.quantity_box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  width: 102px;
+  max-width: 102px;
+  min-height: 44px;
+  max-height: 44px;
+  color: #ef4056;
+  background-color: #fff;
+  padding: 0 8px;
+  z-index: 1;
+}
+
+@media screen and (max-width: 1024px) {
+  .footer_actionWrapper_bb {
+    padding-top: 0;
+  }
+
+  .footer_actionWrapper {
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+  }
+
+  .buy_box_footer {
+    margin: 0;
+    padding: 4px 16px;
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,143 @@
+.empty_space {
+  width: 100%;
+  max-width: 1528px;
+  margin: 0 auto 24px;
+}
+
+.content {
+  width: 100%;
+  max-width: 1528px;
+  padding: 0 16px;
+  margin: 0 auto;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 436px;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+  padding-top: 8px;
+  overflow: hidden;
+}
+
+.header_container {
+  padding: 12px 20px;
+  overflow-wrap: break-word;
+}
+
+.header_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.header_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.comming_soon_icon {
+  color: #424750;
+}
+
+.ad_icon {
+  color: #ff009c;
+}
+
+.header_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  flex-grow: 1;
+  color: #0c0c0c;
+}
+
+.title_line {
+  width: 70px;
+  height: 2px;
+  background-color: #ef394e;
+  margin-top: 8px;
+}
+
+.slide {
+  width: auto !important;
+}
+
+.content :global(.next-button-selector),
+.content :global(.prev-button-selector) {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border: 1px solid #f0f0f1;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 5;
+}
+
+.content :global(.next-button-selector.swiper-button-disabled),
+.content :global(.prev-button-selector.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+.content :global(.next-button-selector) {
+  left: 8px;
+}
+
+.content :global(.prev-button-selector) {
+  right: 8px;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+.product_link {
+  position: relative;
+  display: block;
+  width: 192px;
+  min-width: 192px;
+  max-width: 192px;
+  height: 100%;
+  padding: 12px 8px;
+  background-color: #fff;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.product_img_container {
+  width: 150px;
+  height: 150px;
+}
+
+@media screen and (max-width: 1024px) {
+  .header_title {
+    font-size: 14px;
+  }
+
+  .content :global(.next-button-selector),
+  .content :global(.prev-button-selector) {
+    display: none;
+  }
+
+  .container {
+    border: none;
+  }
+}

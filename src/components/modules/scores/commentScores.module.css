@@ -1,0 +1,31 @@
+.comment_question_stars_container {
+  height: 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.comment_question_stars {
+  display: flex;
+  flex-wrap: nowrap;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.comment_question_star_fill {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #f9a825;
+}
+
+.comment_question_star_empty {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #a1a3a8;
+}

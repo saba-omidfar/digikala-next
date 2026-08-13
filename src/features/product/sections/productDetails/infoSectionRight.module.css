@@ -1,0 +1,150 @@
+.infoSection_right {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 36%;
+  margin-left: 16px;
+}
+
+.ProductDetails_infoSection_left {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.promotion_incredible_offer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.promotion_img {
+  width: 139px;
+  height: 16px;
+  line-height: 0;
+}
+
+.productDetails_img_container {
+  cursor: pointer;
+  line-height: 0;
+}
+
+.productDetails_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.productDetails_img_actions {
+  display: flex;
+  align-self: self-start;
+  flex-direction: column;
+  row-gap: 16px;
+  color: #0c0c0c;
+}
+
+.productDetails_img_actions_item {
+  margin-left: 16px;
+  white-space: nowrap;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.productDetails_img_actions_text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 9px;
+  color: #3f4064;
+}
+
+.notification_icon,
+.favorite_icon {
+  width: 24px;
+  height: 24px;
+}
+
+.list_icon,
+.share_icon {
+  width: 24px;
+  height: 24px;
+  color: #424750;
+}
+
+.favorite_on_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #ef4056;
+}
+
+.productDetails_img {
+  display: inline-block;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+.productDetails_feedback_container {
+  display: flex;
+  align-items: center;
+}
+
+.productDetails_feedback {
+  margin-left: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.productDetails_feedback_icon_container {
+  display: flex;
+  margin-top: 4px;
+}
+
+.productDetails_feedback_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #81858b;
+}
+
+.productDetails_feedback_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #a1a3a8;
+  margin-right: 8px;
+}
+
+.compare_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .infoSection_right {
+    flex-direction: column-reverse;
+  }
+
+  .productDetails_img_container {
+    display: flex;
+  }
+
+  .productDetails_img_actions {
+    color: #3f4064;
+    align-self: flex-end;
+  }
+
+  .productDetails_img_actions_item {
+    margin-left: 24px;
+  }
+
+  .productDetails_feedback_container {
+    display: none;
+  }
+}

@@ -1,0 +1,147 @@
+.content {
+  width: 100%;
+  max-width: 1528px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.container {
+  width: 100%;
+  background-image:
+    url(/images/svg/amazing/deal-pattern.svg),
+    linear-gradient(180deg, #e6123d, #c60c31);
+  background-repeat: repeat-x;
+  padding-top: 0;
+  padding-bottom: 12px;
+  margin-top: 16px;
+  border-radius: 8px;
+}
+
+.header_container {
+  padding: 16px 0;
+  overflow-wrap: break-word;
+}
+
+.header_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.header_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #fff;
+}
+
+.header_text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+  flex-grow: 1;
+  color: #fff;
+}
+
+.slider_container {
+  height: 100%;
+  padding: 4px;
+}
+
+.slide {
+  width: 40vw !important;
+  height: auto !important;
+}
+
+.content :global(.next-button-selector),
+.content :global(.prev-button-selector) {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border: 1px solid #f0f0f1;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 5;
+}
+
+.content :global(.next-button-selector.swiper-button-disabled),
+.content :global(.prev-button-selector.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+.content :global(.next-button-selector) {
+  left: 8px;
+}
+
+.content :global(.prev-button-selector) {
+  right: 8px;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+.upcoming_offer_slide {
+  position: relative;
+  display: flex;
+  height: 100%;
+  border-radius: 8px;
+  margin-left: 0;
+  overflow: hidden;
+}
+
+.upcoming_offer_link {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    padding: 0;
+  }
+
+  .container {
+    border-radius: 0;
+  }
+
+  .slider_container {
+    padding: 0;
+  }
+
+  .slide {
+    width: 180px !important;
+  }
+
+  .content :global(.next-button-selector),
+  .content :global(.prev-button-selector) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .slide {
+    width: 179px !important;
+  }
+}

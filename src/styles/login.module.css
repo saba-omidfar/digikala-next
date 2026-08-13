@@ -1,0 +1,107 @@
+.account_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fff;
+  min-height: 100%;
+  width: 100%;
+}
+
+.account_wrapper__main_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid #e0e0e6;
+  border-radius: 8px;
+}
+
+.account_wrapper input:-webkit-autofill,
+.account_wrapper input:-webkit-autofill:focus {
+  transition:
+    background-color 0s 600000s,
+    color 0s 600000s !important;
+}
+
+.account_wrapper__text_link,
+.account_wrapper__text_link:hover {
+  color: #0d4485;
+}
+
+.send_code_again {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.send_code_with_sms {
+  display: flex;
+  align-items: center;
+  color: #1672dd;
+  margin: 0 8px;
+  cursor: pointer;
+}
+
+.verification_code_timer {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+  margin-top: 16px;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.verification_code_time {
+  display: inline-block;
+  width: 40px;
+  margin: 0 4px;
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .account_wrapper__main_box {
+    min-width: 100%;
+    padding: 20px;
+    border: none;
+  }
+
+  .text_error {
+    font-size: 11px;
+  }
+
+  .input_container {
+    background-color: #f0f0f1;
+    border: none !important;
+    border-bottom: 2px solid #d32f2f !important;
+  }
+
+  .login_btn {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .text_error,
+  .account_wrapper__footer_text {
+    font-size: 9px;
+  }
+
+  .input_container {
+    height: 40px;
+  }
+
+  .login_btn {
+    font-size: 10px;
+  }
+}

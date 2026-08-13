@@ -1,0 +1,125 @@
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.form_card {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+}
+
+.form_header {
+  position: relative;
+}
+
+.content {
+  margin-top: 64px;
+}
+
+.container input:-webkit-autofill,
+.container input:-webkit-autofill:focus {
+  transition:
+    background-color 0s 600000s,
+    color 0s 600000s !important;
+}
+
+.account_wrapper__text_link,
+.account_wrapper__text_link:hover {
+  color: #0d4485;
+}
+
+.countdown_timer {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+  text-align: center;
+  margin-top: 16px;
+  padding: 8px 0;
+}
+
+.timeout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.timeout_text {
+  display: flex;
+  align-items: center;
+  color: #19bfd3;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.chevron_icon {
+  width: 20px;
+  height: 20px;
+  fill: #19bfd3;
+}
+
+.verification_code_timer {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+  margin-top: 16px;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.verification_code_time {
+  display: inline-block;
+  width: 40px;
+  margin: 0 4px;
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    min-width: 100%;
+    padding: 20px;
+    border: none;
+  }
+
+  .text_error {
+    font-size: 11px;
+  }
+
+  .input_container {
+    background-color: #f0f0f1;
+    border: none !important;
+    border-bottom: 2px solid #d32f2f !important;
+  }
+
+  .login_btn {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .text_error,
+  .account_wrapper__footer_text {
+    font-size: 9px;
+  }
+
+  .input_container {
+    height: 40px;
+  }
+
+  .login_btn {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,84 @@
+.comment_box_border {
+  border-bottom: 4px solid #f0f0f1;
+  width: auto;
+  margin-top: 16px;
+  padding-bottom: 12px;
+}
+
+.comment_question_summary {
+  background-color: #fff;
+  display: block;
+  position: sticky;
+  right: 0;
+  min-width: 260px;
+  width: 260px;
+  margin-left: 48px;
+  z-index: 0;
+}
+
+.comment_question_score {
+  margin-left: 4px;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 2.1;
+}
+
+.no_comment_question_score {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #81858b;
+  text-align: right;
+}
+
+.comment_question_score_text {
+  color: #a1a3a8;
+  margin-right: 8px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.1;
+}
+
+.comment_question_stars_container {
+  height: 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.comment_question_stars {
+  display: flex;
+  flex-wrap: nowrap;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.add_comment_text {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+  margin-top: 16px;
+  margin-bottom: 12px;
+  text-align: right;
+}
+
+.add_comment_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+  position: relative;
+  border: 1px solid #ef4056;
+  color: #ef4056;
+  background-color: transparent;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  border-radius: 8px;
+  margin-top: 8px;
+}

@@ -1,0 +1,143 @@
+.review_container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 6px;
+  padding-bottom: 16px;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.right_space {
+  height: 4px;
+  padding-left: 10px;
+}
+
+.review_score_icon {
+  width: 20px;
+  height: 20px;
+  line-height: 0;
+}
+
+.review_score,
+.review_comments_count {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  margin-right: 4px;
+}
+
+.review_score {
+  color: #424750;
+}
+
+.review_comments_count {
+  color: #81858b;
+}
+
+.review_comments_overview_container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.review_comments_overview {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 0;
+  color: #1672dd;
+  cursor: pointer;
+}
+
+.review_summery_badge {
+  display: flex;
+  background-color: rgba(236, 237, 255, 0.7);
+  color: #424750;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 180%;
+  padding: 4px 8px;
+  gap: 2px;
+  border-radius: 16px;
+}
+
+.ai_icon_container {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.ai_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #7f53ef;
+}
+
+.review_comments_text {
+  display: flex;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 2.17;
+  color: #424750;
+  padding-right: 8px;
+  padding-left: 4px;
+  background-color: #f2f2f2;
+  border-radius: 16px;
+}
+
+.review_comments_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.review_questions {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 0 !important;
+  padding: 4px 20px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 2.17;
+  color: #1672dd;
+  cursor: pointer;
+}
+
+.review_questions_text {
+  display: flex;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 2.17;
+  color: #424750;
+  padding-right: 8px;
+  padding-left: 4px;
+  background-color: #f2f2f2;
+  border-radius: 16px;
+}
+
+.review_questions_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+@media screen and (max-width: 360px) {
+  .review_score,
+  .review_comments_count {
+    font-size: 9.6px;
+  }
+
+  .review_summery_badge,
+  .review_comments_text,
+  .review_questions_text {
+    font-size: 8.8px;
+    line-height: 15.84px;
+  }
+}

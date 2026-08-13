@@ -1,0 +1,28 @@
+import { digikalaFetch } from "@/lib/digikala";
+export const runtime = "nodejs";
+
+export async function GET(req, { params }) {
+  try {
+    const { productId } = await params;
+
+    const path = `/v1/product/${productId}/cpc/`;
+
+    const data = await digikalaFetch({
+      path,
+      headers: req.headers,
+    });
+
+    return Response.json(data);
+  } catch (err) {
+    console.error(err);
+
+    return Response.json(
+      {
+        message: err.message,
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}

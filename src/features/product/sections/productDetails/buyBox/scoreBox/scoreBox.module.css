@@ -1,0 +1,42 @@
+.club_info {
+  width: 100%;
+  display: flex;
+  border-top: 1px solid #e0e0e2;
+  padding: 12px 0;
+}
+
+.club_info_img_container {
+  width: 24px;
+  height: 24px;
+  line-height: 0;
+}
+
+.club_info_score {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #3f4064;
+}
+
+.club_info_warning_container {
+  margin-right: 8px;
+  margin-top: 2px;
+  touch-action: none;
+  user-select: none;
+}
+
+.club_tooltip_text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 12px;
+  color: #3f4064;
+}
+
+.club_info_warning_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #a1a3a8;
+}

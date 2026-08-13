@@ -1,0 +1,44 @@
+.content {
+  padding: 0 16px;
+}
+
+.content_children {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.search_saggested_container {
+  border-top: 1px solid #e0e0e2;
+}
+
+.search_item_category {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #a1a3a8;
+  cursor: pointer;
+}
+
+.search_item_icon_container {
+  display: flex;
+  margin-left: 16px;
+}
+
+.search_item_icon {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+}
+
+.br_list_vertical_no_padding + .br_list_vertical_no_padding {
+  border-top: 1px solid #e0e0e2;
+}

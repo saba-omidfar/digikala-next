@@ -1,0 +1,184 @@
+.faq_questions_container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  flex-grow: 1;
+}
+
+.faq_questions_container :global(.MuiTypography-root) {
+  width: 100%;
+  font-size: 15px !important;
+  line-height: 2.15 !important;
+  font-weight: 400 !important;
+  margin-bottom: 0;
+  padding: 0 !important;
+}
+
+.faq_questions_container :global(.MuiTypography-root) > span {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.15;
+}
+
+.faq_questions_container :global(.MuiTypography-root) > p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+}
+
+.faq_questions_container :global(.MuiAccordion-root) {
+  padding-bottom: 12px !important;
+  padding-top: 16px !important;
+  box-shadow: none !important;
+}
+
+.question_short_answer_link {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.faq_questions_container :global(.MuiAccordionDetails-root) {
+  padding: 0 0 16px 0 !important;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064 !important;
+}
+
+.faq_questions_container
+  .base_layout_desktop__content
+  :global(.MuiButtonBase-root) {
+  padding: 16px 0 !important;
+}
+
+.faq_questions_container
+  .base_layout_desktop__content
+  :global(.MuiAccordionSummary-content) {
+  margin: 0 !important;
+}
+
+.base_layout_desktop__content :global(.MuiPaper-root:first-child::before) {
+  opacity: 0 !important;
+}
+
+.arrow_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.arrow_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+}
+
+.faq_questions_container:global(.MuiAccordion-root) {
+  padding-bottom: 8px !important;
+}
+
+.landing_faq_questions_container:global(.MuiAccordion-root) {
+  padding-bottom: 8px !important;
+  color: hsl(199, 50%, 26%) !important;
+  background-color: transparent !important;
+  padding-bottom: 12px !important;
+  padding-top: 16px !important;
+}
+
+.faq_questions_container :global(.MuiAccordionSummary-expandIconWrapper),
+.landing_faq_questions_container
+  :global(.MuiAccordionSummary-expandIconWrapper) {
+  margin-right: 8px !important;
+}
+
+.landing_faq_questions_container:not(:first-child) :global(.MuiAccordion-root) {
+  color: hsl(199, 50%, 26%) !important;
+  background-color: transparent !important;
+  border-top: 1px solid hsl(199, 54%, 89%) !important;
+  padding-bottom: 12px !important;
+  padding-top: 16px !important;
+}
+
+.faq_questions_container :global(.MuiAccordionDetails-root),
+.faq_questions_container :global(.MuiAccordionSummary-root),
+.landing_faq_questions_container :global(.MuiAccordionSummary-root) {
+  padding: 0 !important;
+}
+
+.faq_questions_container :global(.MuiAccordionSummary-root),
+.landing_faq_questions_container :global(.MuiAccordionSummary-root) {
+  padding: 0 !important;
+  min-height: auto !important;
+}
+
+.faq_questions_container:global(.MuiAccordionSummary-content) {
+  display: block;
+  margin: 0 !important;
+  padding-bottom: 8px !important;
+}
+
+.faq_questions_container:global(.MuiAccordion-root) {
+  box-shadow: none !important;
+  padding-bottom: 12px !important;
+  padding-top: 16px !important;
+}
+
+.question_short_answer_link {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.faq_questions_container :global(.MuiAccordionDetails-root) {
+  padding: 0 0 16px 0 !important;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064 !important;
+}
+
+.faq_questions_container
+  .base_layout_desktop__content
+  :global(.MuiButtonBase-root) {
+  padding: 16px 0 !important;
+}
+
+.faq_questions_container
+  .base_layout_desktop__content
+  :global(.MuiAccordionSummary-content) {
+  margin: 0 !important;
+}
+
+.base_layout_desktop__content :global(.MuiPaper-root:first-child::before) {
+  opacity: 0 !important;
+}
+
+.landing_faq_questions_container:global(.MuiSvgIcon-root) {
+  fill: hsl(199, 80%, 40%) !important;
+}
+
+.faq_questions_container:global(.MuiSvgIcon-root) {
+  fill: #ef4056 !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .faq_questions_container :global(.MuiTypography-root) {
+    font-size: 13px !important;
+  }
+
+  .faq_questions_container :global(.MuiAccordion-root) {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .faq_questions_container :global(.MuiTypography-root) {
+    font-size: 11px !important;
+  }
+}

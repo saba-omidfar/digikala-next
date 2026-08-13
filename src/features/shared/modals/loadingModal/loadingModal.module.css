@@ -1,0 +1,112 @@
+.modal_layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-grow: 1;
+  max-width: 100vw;
+  overflow-y: hidden;
+}
+
+.modal_content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 16px 20px;
+}
+
+.logo_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 40px 56px 32px;
+  border: 1px solid #f0f0f1;
+}
+
+.logo_img_container {
+  width: 120px;
+  line-height: 0;
+}
+
+.logo_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.circles_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 24px;
+  height: 24px;
+  margin-top: 28px;
+}
+
+.loading_circle {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgb(239, 57, 78);
+}
+
+.loading_circle1 {
+  animation: animationCircle1 1.2s linear infinite normal forwards;
+}
+
+.loading_circle2 {
+  animation: animationCircle2 1.2s linear infinite normal forwards;
+}
+
+.loading_circle3 {
+  animation: animationCircle3 1.2s linear infinite normal forwards;
+}
+
+@keyframes animationCircle1 {
+  0% {
+    opacity: 0.9;
+  }
+  33.3333% {
+    opacity: 0.6;
+  }
+  66.6667% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes animationCircle2 {
+  0% {
+    opacity: 0.6;
+  }
+  33.3333% {
+    opacity: 0.3;
+  }
+  66.6667% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes animationCircle3 {
+  0% {
+    opacity: 0.3;
+  }
+  33.3333% {
+    opacity: 0.9;
+  }
+  66.6667% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}

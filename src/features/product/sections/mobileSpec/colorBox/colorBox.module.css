@@ -1,0 +1,126 @@
+.variant {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.color_container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+  padding: 0 16px;
+}
+
+.color_selected {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.color_title_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.color_title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28.8px;
+}
+
+.color_name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28.8px;
+}
+
+.color_circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #e0e0e2;
+}
+
+.variation_colors {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.variation_color_box {
+  padding: 2px 0;
+  cursor: pointer;
+}
+
+.variation_color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  gap: 6px;
+  white-space: nowrap;
+  padding: 6px 8px 6px 12px;
+  border-radius: 8px;
+  user-select: none;
+  border: 1px solid #e0e0e2;
+}
+
+.variation_color__selected {
+  background: #1672dd;
+  border: 1px solid transparent;
+}
+
+.variation_color_active {
+  border: 1px solid #424750;
+}
+
+.variation_colors_circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #e0e0e2;
+  border-radius: 50%;
+}
+
+.variation_icon {
+  width: 14px;
+  height: 14px;
+}
+
+.variation_color_text {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 180%;
+  white-space: nowrap;
+  color: #424242;
+}
+
+@media screen and (max-width: 360px) {
+  .color_title,
+  .color_name {
+    font-size: 12.8px;
+    line-height: 23.04px;
+  }
+
+  .variation_color_text {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+}

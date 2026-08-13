@@ -1,0 +1,284 @@
+/* Start CommentQuestion Left Section Styles */
+.comments_wrapper {
+  min-width: 0;
+  flex-grow: 1;
+  z-index: 0;
+}
+
+.comment_pics_wrapper {
+  position: relative;
+  border-bottom: 1px solid #e0e0e2;
+  margin-top: 20px;
+}
+
+.comment_pic_container {
+  width: 57px;
+  height: 57px;
+  border-radius: 8px;
+  border: 1px solid #f0f0f1;
+  margin-left: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.comment_pic {
+  line-height: 0;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Start Swiper Styles */
+
+.comment_pic_slide {
+  width: auto !important;
+  height: auto !important;
+  margin-left: 24px !important;
+  cursor: pointer;
+}
+
+.comment_pic_slide:last-child {
+  margin-left: 0 !important;
+}
+
+.comment_pic_see_more_btn {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  margin-top: 12px;
+  margin-bottom: 20px;
+  color: #1672dd;
+  cursor: pointer;
+}
+
+.comment_pic_see_more_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #1672dd;
+}
+
+.comment_section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 16px;
+}
+
+.comment_section_title {
+  padding: 12px 0;
+  overflow-wrap: break-word;
+}
+
+.header_sort_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.header_sort_title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  white-space: nowrap;
+  flex-grow: 1;
+  color: #3f4064;
+  cursor: pointer;
+}
+
+.header_sort_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+}
+
+.header_sort_list {
+  display: contents;
+}
+
+.header_sort_item {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.header_sort_item_active {
+  color: #ef394e;
+  font-weight: 700;
+}
+
+.comments_count {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.more_comment_btn_container {
+  border-top: 1px solid #e0e0e2;
+  padding: 12px 0;
+  text-align: right;
+}
+
+.more_comment_btn {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #1672dd;
+}
+
+.more_comment_icon_expend {
+  width: 17px;
+  height: 17px;
+  fill: #1672dd;
+}
+
+.no_comment_container {
+  padding: 12px 0;
+  text-align: right;
+}
+
+.no_comment_text {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 2.15;
+}
+
+.no_comment_subText {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #81858b;
+}
+
+.intent_container {
+  padding: 16px 0;
+  border-bottom: 1px solid #e0e0e2;
+  text-align: right;
+}
+
+.intent_title_container {
+  padding: 12px 0;
+  overflow-wrap: break-word;
+}
+
+.intent_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  flex-grow: 1;
+  color: #0c0c0c;
+}
+
+.intent_badge_container {
+  width: auto !important;
+  cursor: pointer;
+}
+
+.intent_badge_active {
+  border: 1px solid #e6123d !important;
+  color: #e6123d !important;
+  background: #e053530d !important;
+}
+
+.intent_badge {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  height: 32px;
+  border-radius: 100px;
+  border: 1px solid #e0e0e2;
+  color: #3f4064;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+  white-space: nowrap;
+}
+
+.intent_tags_container {
+  margin-top: 20px;
+}
+
+.intent_tags {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  gap: 16px;
+}
+
+.sentiment_percentages {
+  display: flex;
+  align-items: center;
+  width: 78px;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 2.1;
+}
+
+.sentiment_percentages_text {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  margin-right: 8px;
+}
+
+.hint_text_success {
+  color: #2e7b32;
+}
+
+.hint_text_caution {
+  color: #f57f17;
+}
+
+.hint_text_neutral {
+  color: #62666d;
+}
+
+.hint_bg_success {
+  background-color: #4caf50;
+}
+
+.hint_bg_caution {
+  background-color: #f9a825;
+}
+
+.hint_bg_neutral {
+  background-color: #62666d;
+}
+
+.inetnt_progressbar_container {
+  width: 148px;
+  height: 4px;
+  background-color: #f0f0f1;
+  border-radius: 8px;
+  margin: 0 4px;
+}
+
+.inetnt_progressbar {
+  border-radius: 8px;
+  height: 100%;
+}
+
+.intent_comments_number {
+  width: 70px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #62666d;
+  white-space: nowrap;
+}

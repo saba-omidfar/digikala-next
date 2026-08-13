@@ -1,0 +1,135 @@
+.content {
+  width: 100%;
+  max-width: 1528px;
+  margin: 0 auto;
+}
+
+.container {
+  display: flex;
+  padding: 20px 0;
+}
+
+.category_link {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 114px;
+  height: 100%;
+  padding: 8px 0;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.category_link__active {
+  border-radius: 8px;
+  background-color: #f0f0f1;
+}
+
+.category_img_container {
+  border-radius: 50%;
+  margin: 0 12px 8px;
+  line-height: 0;
+}
+
+.category_img {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.category_name {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  text-align: center;
+  color: #0c0c0c;
+  padding: 0 4px;
+}
+
+.category_name__active {
+  font-weight: 700;
+}
+
+.slide {
+  width: auto !important;
+  height: auto !important;
+}
+
+.content :global(.next-button-selector),
+.content :global(.prev-button-selector) {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border: 1px solid #f0f0f1;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 5;
+}
+
+.content :global(.next-button-selector.swiper-button-disabled),
+.content :global(.prev-button-selector.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+.content :global(.next-button-selector) {
+  left: 8px;
+}
+
+.content :global(.prev-button-selector) {
+  right: 8px;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 360px) {
+  .slide {
+    height: auto !important;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .content :global(.next-button-selector),
+  .content :global(.prev-button-selector) {
+    display: none;
+  }
+
+  .category_name {
+    font-size: 11px;
+  }
+
+  .category_img {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .slide {
+    display: flex !important;
+  }
+
+  .category_link {
+    flex: 0 0 114px;
+  }
+
+  .category_name {
+    font-size: 9px;
+  }
+}

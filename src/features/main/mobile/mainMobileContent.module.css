@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  flex-grow: 1;
+  flex-direction: column;
+  width: 100%;
+  background-color: #fff;
+}

@@ -1,0 +1,381 @@
+.modal_layout {
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+  height: 100%;
+  padding-top: 80px;
+  overflow-y: hidden;
+  border-radius: 16px 16px 0 0;
+  background-color: #fff;
+}
+
+.modal_header_container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.modal_header {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.arrow_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.sort_icon_btn {
+  padding: 12px 0;
+  overflow-wrap: break-word;
+}
+
+.sort_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.arrow_icon,
+.comment_sort_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+.modal_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  margin-right: 8px;
+  flex-grow: 1;
+}
+
+.modal_content {
+  position: relative;
+  flex-grow: 1;
+  padding: 12px 16px;
+  background-color: #fff;
+  margin-bottom: 4px;
+  box-shadow: 0px 6px 12px rgba(3, 10, 22, 0.05);
+}
+
+.product_rating {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 2.1;
+  margin-left: 4px;
+}
+
+.product_max_rating {
+  font-size: 18px;
+}
+
+.product_all_rating {
+  font-size: 10px;
+  margin-top: 4px;
+  margin-right: 8px;
+  color: #a1a3a8;
+}
+
+.pics_comment_container,
+.comment_intent_container {
+  display: flex;
+  margin-bottom: 8px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.media_slide_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 84px;
+  max-width: 84px;
+  min-height: 84px;
+  max-height: 84px;
+  width: 84px;
+  height: 84px;
+  border-radius: 8px;
+  line-height: 0;
+  border: 1px solid #f0f0f1;
+  margin-left: 12px;
+  overflow: hidden;
+}
+
+.media_slide_item_img {
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.modal_filter_title {
+  flex-grow: 1;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #0c0c0c;
+}
+
+.comment_intent {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  border: 1px solid #e0e0e2;
+  color: #3f4064;
+  padding: 16px;
+  height: 33px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.comment_intent:not(:first-child) {
+  margin-right: 4px;
+}
+
+.comment_row_box_container {
+  position: relative;
+  padding: 12px 16px;
+  background-color: #fff;
+  margin-bottom: 4px;
+  box-shadow: 0px 6px 12px rgba(3, 10, 22, 0.05);
+}
+
+.loading_container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+  background-color: #fff;
+  padding: 16px 0;
+  border-top: 1px solid #f0f0f1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: #f2f2f2;
+}
+
+.content_header_container {
+  position: relative;
+  padding: 12px 16px;
+  background-color: #fff;
+  margin-bottom: 4px;
+  box-shadow: 0px 6px 12px rgba(3, 10, 22, 0.05);
+}
+
+.content_header {
+  margin-bottom: 16px;
+}
+
+.infiniteScroll_container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: 100%;
+  max-height: 80vh;
+}
+
+.add_comment_btn_container {
+  position: fixed;
+  left: 16px;
+  bottom: 14px;
+  flex-grow: 1;
+}
+
+.add_comment_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 48px;
+  background-color: #ef4056;
+  color: #fff;
+  border: 1px solid #ef4056;
+  padding: 12px 16px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  outline: none;
+  overflow: hidden;
+  transition: top 0.3s ease-in-out;
+}
+
+.add_comment_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* intent styles */
+
+.intent_container {
+  padding: 16px 0;
+  text-align: right;
+}
+
+.intent_title_container {
+  padding: 12px 0;
+  overflow-wrap: break-word;
+}
+
+.intent_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.1;
+  flex-grow: 1;
+  color: #0c0c0c;
+}
+
+.intent_badge_container {
+  width: auto !important;
+  cursor: pointer;
+}
+
+.intent_badge_active {
+  border: 1px solid #e6123d !important;
+  color: #e6123d !important;
+}
+
+.intent_badge {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  height: 32px;
+  border-radius: 100px;
+  border: 1px solid #e0e0e2;
+  color: #3f4064;
+  padding: 16px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  white-space: nowrap;
+}
+
+.intent_tags_container {
+  margin-top: 20px;
+}
+
+.intent_tags {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  gap: 16px;
+}
+
+.sentiment_percentages {
+  display: flex;
+  align-items: center;
+  width: 78px;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 2.1;
+}
+
+.sentiment_percentages_text {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  margin-right: 8px;
+}
+
+.hint_text_success {
+  color: #2e7b32;
+}
+
+.hint_text_caution {
+  color: #f57f17;
+}
+
+.hint_text_neutral {
+  color: #62666d;
+}
+
+.hint_bg_success {
+  background-color: #2e7b32;
+}
+
+.hint_bg_caution {
+  background-color: #f57f17;
+}
+
+.hint_bg_neutral {
+  background-color: #62666d;
+}
+
+.inetnt_progressbar_container {
+  width: 148px;
+  height: 4px;
+  background-color: #f0f0f1;
+  border-radius: 8px;
+  margin: 0 4px;
+}
+
+.inetnt_progressbar {
+  border-radius: 8px;
+  height: 100%;
+}
+
+.intent_comments_number {
+  width: 70px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #62666d;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 360px) {
+  .modal_title {
+    font-size: 12.8px;
+  }
+
+  .product_rating {
+    font-size: 22.4px;
+  }
+
+  .product_max_rating {
+    font-size: 14.4px;
+  }
+
+  .product_all_rating {
+    font-size: 8px;
+  }
+
+  .intent_title {
+    font-size: 11.2px;
+  }
+
+  .intent_badge {
+    font-size: 9.6px;
+  }
+}

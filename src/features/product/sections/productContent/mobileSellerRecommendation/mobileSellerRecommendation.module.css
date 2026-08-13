@@ -1,0 +1,46 @@
+.cpc_container {
+  padding-bottom: 16px;
+}
+
+.cpc_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 16px 12px;
+}
+
+.cpc_title {
+  display: flex;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28.8px;
+  color: #212121;
+}
+
+.cpc_icon {
+  width: 24px;
+  height: 24px;
+  fill: #ff009c;
+}
+
+.cpc_content {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  scrollbar-width: none;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.pr {
+  padding-right: 8px;
+}
+
+@media screen and (max-width: 360px) {
+  .cpc_title {
+    font-size: 12.8px;
+    line-height: 23.04px;
+  }
+}

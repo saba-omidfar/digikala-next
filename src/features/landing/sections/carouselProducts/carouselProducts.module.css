@@ -1,0 +1,242 @@
+.content_container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex: 1 1 0%;
+  width: 100%;
+  margin: 16px auto;
+  padding: 0 16px;
+}
+
+.carousel_container {
+  align-items: center;
+  width: 100%;
+  max-width: 1336px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1336px;
+  text-align: right;
+  border: 1px solid;
+  border-radius: 8px;
+  margin: 0 auto;
+  padding-top: 8px;
+  overflow: hidden;
+}
+
+.carousel_title_container {
+  padding: 12px 20px;
+  overflow-wrap: break-word;
+}
+
+.carousel_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #23254e;
+  flex-grow: 1;
+}
+
+.carousel_title_line {
+  width: 70px;
+  height: 2px;
+  margin-top: 8px;
+}
+
+.carousel_see_all_btn {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  margin-left: 16px;
+}
+
+.carousel_see_all_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  color: inherit;
+}
+
+.special_carousel {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+  display: block;
+}
+
+.special_carousel_slide {
+  width: auto !important;
+  height: auto !important;
+}
+
+.product_link {
+  position: relative;
+  display: block;
+  width: 224px;
+  min-width: 230px;
+  max-width: 224px;
+  height: 100%;
+  background-color: #fff;
+  padding: 12px 8px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.product_img_container {
+  width: 150px;
+  height: 150px;
+  line-height: 0;
+}
+
+.special_carousel :global(.next-button-selector),
+.special_carousel :global(.prev-button-selector) {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.special_carousel :global(.next-button-selector.swiper-button-disabled),
+.special_carousel :global(.prev-button-selector.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+.special_carousel :global(.next-button-selector) {
+  left: 8px;
+}
+
+.special_carousel :global(.prev-button-selector) {
+  right: 8px;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.carousel_show_all_card_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 192px;
+  min-width: 192px;
+  max-width: 192px;
+  height: 100%;
+  padding: 40px 0;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.carousel_show_all_card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  border: 1px solid #ef4056;
+}
+
+.carousel_show_all_card_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #ef4056;
+}
+
+.carousel_show_all_card_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+  margin-top: 12px;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 1024px) {
+  .carousel_container,
+  .carousel {
+    max-width: 768px;
+  }
+
+  .carousel {
+    border: none;
+  }
+
+  .product_link {
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+    padding: 12px 16px;
+  }
+
+  .product_img_container {
+    width: 128px;
+    height: 128px;
+  }
+
+  .carousel_container {
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  .carousel_title {
+    font-size: 14px;
+  }
+
+  .carousel_show_all_card_text {
+    font-size: 11px;
+  }
+
+  .special_carousel :global(.next-button-selector),
+  .special_carousel :global(.prev-button-selector) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  /* .carousel {
+    max-width: 312px;
+  } */
+
+  .carousel_title {
+    font-size: 11.2px;
+  }
+
+  .carousel_see_all_btn {
+    font-size: 9.6px;
+  }
+}

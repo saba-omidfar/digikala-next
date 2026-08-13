@@ -1,0 +1,71 @@
+.categories_title_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f1;
+  cursor: pointer;
+}
+
+.categories_title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #3f4064;
+}
+
+.check_icon {
+  width: 24px;
+  height: 24px;
+  fill: #1672dd;
+}
+
+.tree_item {
+  display: flex;
+  margin-left: 4px;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.tree_item_show_child {
+  transition: all 0.15s;
+  transform: rotate(-90deg);
+}
+
+.chevron_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+}
+
+.show_child_icon_container {
+  display: flex;
+  transform: rotate(-90deg);
+  transition: 0.15s;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.categories_title_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f1;
+  cursor: pointer;
+}
+
+.categories_title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #3f4064;
+}
+
+@media screen and (max-width: 1024px) {
+  .categories_title {
+    font-size: 13px;
+  }
+}

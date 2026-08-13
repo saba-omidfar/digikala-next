@@ -1,0 +1,31 @@
+.gift_container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  border-top: 1px solid #e0e0e2;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.gift_icon_container {
+  margin-left: 16px;
+}
+
+.gift_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+}
+
+.gift_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #3f4064;
+}
+
+.chevron_left_icon {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+}

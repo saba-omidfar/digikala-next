@@ -1,0 +1,153 @@
+.content {
+  width: 100%;
+  max-width: 1676px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.plus_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  min-height: 110px;
+  background-color: #f0f0f1;
+  border-radius: 16px;
+  padding: 4px 28px 8px 28px;
+  margin-top: 8px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.plus_bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    url(/images/svg/typography/earlyAccessPatternPlus.svg) right center
+      no-repeat,
+    url(/images/svg/typography/earlyAccessPatternPlusMobile.svg) left center
+      no-repeat;
+  z-index: 1;
+}
+
+.plus_teasing_early_access {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #f0f0f1;
+  border-radius: 16px;
+  opacity: 0.1;
+  background: linear-gradient(274.36deg, #941b80 10%, #f0f0f1 100%);
+}
+
+.plus_logo_container {
+  width: 461px;
+  height: 83px;
+  line-height: 0;
+}
+
+.plus_logo {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.plus_infos_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-right: 16px;
+  z-index: 1;
+}
+
+.plus_infos {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  padding-right: 20px;
+}
+
+.plus_title_container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.plus_icon_container {
+  display: flex;
+  margin-left: 8px;
+}
+
+.plus_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #b12ba4;
+}
+
+.plus_title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 2.1;
+  color: #b12ba4;
+}
+
+.plus_timer_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  color: #941b80;
+}
+
+.plus_timer_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  margin-right: 16px;
+}
+
+.plus_timer_icon_container {
+  display: flex;
+  margin-right: 4px;
+}
+
+.plus_timer_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #941b80;
+}
+
+@media screen and (max-width: 1024px) {
+  .plus_container {
+    flex-direction: column;
+    padding: 12px 28px 20px 28px;
+  }
+
+  .plus_logo_container {
+    width: 309px;
+    height: 144px;
+  }
+
+  .plus_timer_text {
+    font-size: 11px;
+  }
+
+  .plus_title {
+    font-size: 14px;
+  }
+
+  .plus_bg {
+    background: url(/images/svg/typography/earlyAccessPatternPlusMobile.svg)
+      left top no-repeat;
+  }
+}

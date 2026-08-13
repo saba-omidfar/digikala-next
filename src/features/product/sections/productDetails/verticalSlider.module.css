@@ -1,0 +1,149 @@
+.mobile_album_container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 36px;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+.badge_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13.75px;
+  max-width: fit-content;
+  border: 1px solid #f0f0f1;
+  padding: 1px;
+  padding-left: 6px;
+  color: #fff !important;
+  background-color: rgba(12, 12, 12, 0.6);
+  border-color: rgba(255, 255, 255, 0.2);
+  gap: 6px;
+  border-radius: 16px;
+}
+
+.footer_sticky_badge_container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: fit-content;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13.75px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 1px;
+  padding-left: 6px !important;
+  background-color: rgba(12, 12, 12, 0.6);
+}
+
+.buy_box_badge_container {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mini_cart_sticky_badge_container {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  width: fit-content;
+  padding: 0 8px;
+  border: 1px solid rgb(231, 19, 61);
+  background-color: rgba(231, 19, 61, 0.07);
+  border-radius: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.sticky_footer_badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.icon_container {
+  width: 18px;
+  height: 18px;
+  line-height: 0;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  object-fit: cover;
+}
+
+.badge_text {
+  padding: 1px 0;
+  white-space: nowrap;
+  height: 14px;
+  color: #fff;
+}
+
+.buy_box_badge_text {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+}
+
+.slider_wrapper {
+  display: flex;
+  flex-direction: column;
+  transition: transform 300ms ease-in-out;
+}
+
+.animate {
+  transform: translateY(-20px);
+  transition-duration: 300ms;
+}
+
+@media screen and (max-width: 1024px) {
+  .icon_container {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .vertical_slider_item {
+    font-size: 8px;
+  }
+
+  .badge_container,
+  .footer_sticky_badge_container {
+    font-size: 8.8px;
+    line-height: 11px;
+  }
+}
+
+@media screen and (max-width: 320) {
+  .mobile_album_container {
+    height: 28px;
+    margin-bottom: 6px;
+  }
+}

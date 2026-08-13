@@ -1,0 +1,54 @@
+.warranty_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 2px 16px;
+}
+
+.warranty_icon_container {
+  position: relative;
+  padding-top: 6px;
+}
+
+.warranty_icon_bg {
+  display: flex;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #f0f0f1;
+}
+
+.warranty_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.warranty_title_container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.warranty_title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 21.6px;
+  color: #0c0c0c;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+}
+
+@media screen and (max-width: 360px) {
+  .warranty_title {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+}

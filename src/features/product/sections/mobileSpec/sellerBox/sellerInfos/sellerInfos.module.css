@@ -1,0 +1,155 @@
+.seller_link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 2px 16px;
+}
+
+.seller_icon_container {
+  display: flex;
+  border-radius: 50%;
+  padding: 8px;
+  background-color: #f0f0f1;
+}
+
+.seller_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.seller_badge_icon_container {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  display: flex;
+  background-color: #f0f0f1;
+}
+
+.digikala_badge_icon_container {
+  display: flex;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #ef4056;
+}
+
+.digikala_badge_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #fff;
+}
+
+.seller_badge_icon {
+  width: 12px;
+  height: 12px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.seller_trusted_badge_icon {
+  color: #00a049;
+  background-color: rgba(0, 160, 73, 0.1);
+}
+
+.seller_official_badge_text {
+  color: #0081b9;
+  background-color: rgba(0, 157, 176, 0.1);
+}
+
+.seller_infos {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  gap: 4px;
+  border-bottom: 1px solid #f0f0f1;
+  padding: 12px 0;
+}
+
+.seller_title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 21.6px;
+  color: #0c0c0c;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+}
+
+.chevron_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #424750;
+}
+
+.seller_badge_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 21.6px;
+  padding: 0 8px;
+  border-radius: 16px;
+  margin-right: 8px;
+}
+
+.seller_trusted_badge_text {
+  color: #00a049;
+  background-color: rgba(0, 160, 73, 0.1);
+}
+
+.seller_grade_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.seller_grade_label_container,
+.seller_statistics_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  color: #0c0c0c;
+  border: 1px solid #e2e2e2;
+  border-radius: 16px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 8px;
+  padding-left: 2px;
+}
+
+.seller_grade_label,
+.seller_statistics {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  padding: 2px 8px;
+  color: #fff;
+  border-radius: 16px;
+}
+
+@media screen and (max-width: 360px) {
+  .seller_title,
+  .seller_badge_text {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+
+  .seller_statistics_container,
+  .seller_statistics,
+  .seller_grade_label_container,
+  .seller_grade_label {
+    font-size: 9.6px;
+    line-height: 12px;
+  }
+}

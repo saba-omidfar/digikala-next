@@ -1,0 +1,38 @@
+.recommendation_title {
+  display: flex;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #212121;
+  line-height: 20px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.recommendation_content {
+  height: 272px;
+}
+
+.products_container {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.recommendation_space {
+  height: 8px;
+  background-color: #f0f0f1;
+  padding-right: 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+@media screen and (max-width: 360px) {
+  .recommendation_title {
+    font-size: 12.8px;
+    line-height: 16px;
+  }
+}
