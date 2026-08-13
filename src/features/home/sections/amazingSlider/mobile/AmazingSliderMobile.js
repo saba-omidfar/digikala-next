@@ -5,8 +5,6 @@ import AmazingItem from "@/features/home/sections/amazingSlider/mobile/amazingIt
 import styles from "./amazingSliderMobile.module.css";
 
 export default function AmazingSliderMobile({ data }) {
-  console.log("data=>", data);
-
   if (!data) return null;
 
   return (

@@ -1,5 +1,5 @@
-import { BottomSheet } from "react-spring-bottom-sheet";
-import "react-spring-bottom-sheet/dist/style.css";
+import { BottomSheet } from "@percivel/react-spring-bottom-sheet";
+import "@percivel/react-spring-bottom-sheet/dist/style.css";
 
 import { useModal } from "@/contexts/modalContext";
 

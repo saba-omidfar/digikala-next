@@ -109,7 +109,6 @@ export async function GET(req) {
             path,
             headers: req.headers,
           });
-          console.log("data =>", data);
 
           return data?.data?.product;
         } catch (err) {
