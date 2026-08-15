@@ -1,5 +1,3 @@
-import { Toaster } from "react-hot-toast";
-
 import { UserProvider } from "@/contexts/UserContext";
 import { ProductProvider } from "@/contexts/ProductContext";
 import { ModalProvider } from "@/contexts/modalContext";
@@ -3543,7 +3541,6 @@ export default function RootLayout({ children }) {
                     <LocationProvider>
                       <ProductProvider>
                         <NProgressBar />
-                        <Toaster />
                         <ParentModal scope="global" />
                         {children}
                       </ProductProvider>

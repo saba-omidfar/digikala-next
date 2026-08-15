@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { useModal } from "@/contexts/modalContext";
