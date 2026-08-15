@@ -28,8 +28,6 @@
     "dotenv": "^17.2.3",
     "framer-motion": "^12.6.3",
     "gsap": "^3.12.7",
-    "http": "^0.0.1-security",
-    "https": "^1.0.0",
     "jalali-moment": "^3.3.11",
     "jsonwebtoken": "^9.0.2",
     "maplibre-gl": "^5.24.0",
