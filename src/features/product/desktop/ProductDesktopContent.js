@@ -21,8 +21,6 @@ import InfoSectionLeft from "@/features/product/sections/productDetails/InfoSect
 import { useProductContext } from "@/contexts/ProductContext";
 import { useProductRecommendation } from "@/hooks/useProduct";
 
-import { HiOutlineSlash } from "react-icons/hi2";
-
 import styles from "./productDesktopContent.module.css";
 
 export default function ProductDesktopContent() {
@@ -83,10 +81,7 @@ export default function ProductDesktopContent() {
             <>
               <div className={styles.content}>
                 <div className={styles.breadcrumb_container}>
-                  <CategoryBreadcrumb
-                    breadcrumb={productDetails?.breadcrumb}
-                    dividerIcon={<HiOutlineSlash />}
-                  />
+                  <CategoryBreadcrumb />
                 </div>
                 <div className={styles.productDetails_container}>
                   <InfoSectionRight />

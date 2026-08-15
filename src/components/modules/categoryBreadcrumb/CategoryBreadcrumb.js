@@ -10,7 +10,7 @@ import { useProductContext } from "@/contexts/ProductContext";
 
 import styles from "./categoryBreadcrumb.module.css";
 
-function CategoryBreadcrumb({ textDecoration }) {
+function CategoryBreadcrumb() {
   const { productDetails } = useProductContext();
 
   return (
