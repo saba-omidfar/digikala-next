@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useGetUniversal } from "@/hooks/useGetUniversal";
+
 import styles from "./notFoundContent.module.css";
 
 export default function NotFoundContent() {
@@ -9,10 +11,9 @@ export default function NotFoundContent() {
 
   return (
     <div
-      className="d-flex flex-column flex-grow-1"
+      className={styles.container}
       style={{
         paddingTop: topMegaMenuBanners ? 168 : 108,
-        paddingBottom: isSmallScreen ? (isSmallMobile ? "50px" : "55px") : "0",
       }}
     >
       <div className={styles.not_found_container}>

@@ -1,3 +1,13 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 1;
+  background-color: #fff;
+  padding-left: 0;
+}
+
 .not_found_container {
   display: flex;
   flex-direction: column;
@@ -86,6 +96,11 @@
 }
 
 @media screen and (max-width: 1024px) {
+  .container {
+    padding-top: 0;
+    padding-bottom: 55px;
+  }
+
   .not_found_container {
     padding-top: 0;
     padding-bottom: 55px;

@@ -1,5 +1,5 @@
 import MobileStickyHeader from "@/components/layout/header/mobile/mobileStickyHeader/MobileStickyHeader";
-import NotFoundContent from "@/features/not_found/sections/NotFoundContent";
+import NotFoundContent from "@/features/not-found/sections/notFoundContent/NotFoundContent";
 import MenuMobile from "@/components/layout/footer/mobile/menuMobile/MenuMobile";
 
 export default function NotFoundMobile() {
