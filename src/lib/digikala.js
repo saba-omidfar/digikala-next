@@ -8,39 +8,56 @@ const DIGIKALA_COOKIE =
 const LOCATION_AREA =
   "WmZlakJtNUU3Y3h6K0JacG1JSzhhQVAxTXZzSXE1amtvR0JUZG9xTEV3az0=";
 
+// function buildHeaders() {
+//   return {
+//     Accept: "application/json, text/plain, */*",
+
+//     "Accept-Encoding": "gzip, deflate, br, zstd",
+
+//     "Accept-Language": "en-US,en;q=0.9,fa;q=0.8",
+
+//     Origin: "https://www.digikala.com",
+
+//     Referer: "https://www.digikala.com/",
+
+//     "User-Agent":
+//       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+
+//     "sec-ch-ua":
+//       '"Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"',
+
+//     "sec-ch-ua-mobile": "?0",
+
+//     "sec-ch-ua-platform": '"Windows"',
+
+//     "sec-fetch-dest": "empty",
+//     "sec-fetch-mode": "cors",
+//     "sec-fetch-site": "same-site",
+
+//     "x-web-client": "desktop",
+//     "x-web-client-id": "web",
+//     "x-web-optimize-response": "1",
+
+//     "location-area": LOCATION_AREA,
+
+//     Cookie: DIGIKALA_COOKIE,
+//   };
+// }
+
 function buildHeaders() {
   return {
     Accept: "application/json, text/plain, */*",
-
-    "Accept-Encoding": "gzip, deflate, br, zstd",
-
     "Accept-Language": "en-US,en;q=0.9,fa;q=0.8",
-
     Origin: "https://www.digikala.com",
-
     Referer: "https://www.digikala.com/",
-
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
-
-    "sec-ch-ua":
-      '"Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"',
-
-    "sec-ch-ua-mobile": "?0",
-
-    "sec-ch-ua-platform": '"Windows"',
-
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-site",
 
     "x-web-client": "desktop",
     "x-web-client-id": "web",
     "x-web-optimize-response": "1",
 
     "location-area": LOCATION_AREA,
-
-    Cookie: DIGIKALA_COOKIE,
   };
 }
 
