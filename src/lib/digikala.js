@@ -57,17 +57,17 @@ export async function digikalaFetch({ path, headers: incomingHeaders }) {
       redirect: "follow",
     });
 
-    // if (!res.ok) {
-    //   const text = await res.text();
+    if (!res.ok) {
+      const text = await res.text();
 
-    //   console.error("DIGIKALA ERROR =>", text);
+      console.error("DIGIKALA ERROR =>", text);
 
-    //   throw new Error({
-    //     status: res.status,
-    //   });
+      throw new Error({
+        status: res.status,
+      });
 
-    //   throw new Error(`Digikala fetch failed ${res.status}`);
-    // }
+      throw new Error(`Digikala fetch failed ${res.status}`);
+    }
 
     const json = await res.json();
 
