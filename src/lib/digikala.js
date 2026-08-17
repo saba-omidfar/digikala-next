@@ -71,36 +71,26 @@ export async function digikalaFetch({ path, cookie }) {
     headers.Cookie = cookie;
   }
 
-  try {
-    console.log("DIGIKALA URL =>", url);
+  console.log("DIGIKALA REQUEST =>", url);
 
-    const res = await fetch(url, {
-      method: "GET",
-      headers,
-      cache: "no-store",
-      redirect: "manual",
-    });
+  const res = await fetch(url, {
+    method: "GET",
+    headers,
+    cache: "no-store",
+    redirect: "manual",
+  });
 
-    console.log("DIGIKALA STATUS =>", res.status);
-    console.log("DIGIKALA LOCATION =>", res.headers.get("location"));
+  const text = await res.text();
 
-    const text = await res.text();
+  console.log("DIGIKALA RESPONSE =>", {
+    status: res.status,
+    location: res.headers.get("location"),
+    body: text.slice(0, 500),
+  });
 
-    console.log("DIGIKALA BODY =>", text.slice(0, 500));
-
-    return {
-      status: res.status,
-      location: res.headers.get("location"),
-      body: text,
-    };
-  } catch (err) {
-    console.error("DIGIKALA FETCH FAILED =>", {
-      name: err?.name,
-      message: err?.message,
-      cause: err?.cause,
-      causeMessage: err?.cause?.message,
-    });
-
-    throw err;
-  }
+  return {
+    status: res.status,
+    location: res.headers.get("location"),
+    body: text,
+  };
 }
