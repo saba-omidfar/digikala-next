@@ -56,10 +56,13 @@ export async function digikalaFetch({ path, cookie }) {
   const headers = {
     Accept: "application/json, text/plain, */*",
     "Accept-Language": "fa-IR,fa;q=0.9,en-US;q=0.8,en;q=0.7",
+
     Origin: "https://www.digikala.com",
     Referer: "https://www.digikala.com/",
+
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+
     "x-web-client": "desktop",
     "x-web-client-id": "web",
   };
@@ -70,23 +73,28 @@ export async function digikalaFetch({ path, cookie }) {
 
   try {
     console.log("DIGIKALA REQUEST =>", url);
-    console.log("VERCEL REGION =>", process.env.VERCEL_REGION);
 
     const res = await fetch(url, {
       method: "GET",
       headers,
       cache: "no-store",
-      redirect: "follow",
+      redirect: "manual",
     });
 
     console.log("DIGIKALA STATUS =>", res.status);
 
+    console.log("DIGIKALA LOCATION =>", res.headers.get("location"));
+
     const text = await res.text();
 
-    console.log("DIGIKALA RESPONSE =>", text.slice(0, 500));
+    console.log("DIGIKALA BODY =>", text.slice(0, 500));
 
     if (!res.ok) {
-      throw new Error(`Digikala responded with ${res.status}`);
+      throw new Error(
+        `Digikala responded with ${res.status}, location: ${res.headers.get(
+          "location",
+        )}`,
+      );
     }
 
     return JSON.parse(text);
