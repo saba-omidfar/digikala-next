@@ -12,8 +12,8 @@ export async function POST(req) {
   try {
     await dbConnect();
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
     const {
       guestCartId = null,
@@ -30,7 +30,7 @@ export async function POST(req) {
     /* ---------------- USER / GUEST CART ---------------- */
 
     const user = await UserModel.findOne({
-      "auth.token": token,
+      "auth.accessToken": accessToken,
     }).select("_id");
 
     if (user) {

@@ -11,7 +11,7 @@ import { useSnackbar } from "@/contexts/SnackbarContext";
 
 import styles from "./questions.module.css";
 
-function Questions({ isQuestionSectionSticky }) {
+export default function Questions({ topOffset }) {
   const questionsRef = useRef();
 
   const { openModal, closeModal } = useModal();
@@ -46,9 +46,7 @@ function Questions({ isQuestionSectionSticky }) {
           <div className="d-flex justify-content-start align-items-start mt-3">
             <div
               className={styles.add_question_container}
-              style={{
-                top: isQuestionSectionSticky ? "134.828px" : "230.828px",
-              }}
+              style={{ top: `${topOffset}px` }}
             >
               {questionsData?.pager?.total_items ? (
                 <>
@@ -138,4 +136,3 @@ function Questions({ isQuestionSectionSticky }) {
     </div>
   );
 }
-export default Questions;

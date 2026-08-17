@@ -205,7 +205,7 @@ function MobileSpec() {
         <SellerBox handleAddToCartSuccess={handleAddToCartSuccess} />
 
         {/* کالاهای پیشنهادی */}
-        {suggestionProducts ? (
+        {suggestionProducts?.length ? (
           <MobileRecommendationProducts data={suggestionProducts} />
         ) : (
           ""

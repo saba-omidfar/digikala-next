@@ -1,5 +1,4 @@
-// https://api.digikala.com/v1/search/?_rch=9fd46e644c8e&page=1
-
+import { cookies } from "next/headers";
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";
@@ -9,18 +8,14 @@ export async function GET(req) {
     const url = new URL(req.url);
     const searchParams = url.searchParams;
 
-    const userAgent = req.headers.get("user-agent") || "";
-
-    const isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        userAgent,
-      );
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
     const path = `/discovery/api/v2/search/?${searchParams.toString()}`;
 
     const data = await digikalaFetch({
       path,
-      headers: req.headers,
+      cookie: accessToken,
     });
 
     return Response.json(data);

@@ -137,7 +137,7 @@ function Topbar() {
                     href="/checkout/cart/"
                     className={`${styles.cart_shopping__link} ${
                       isOpenMiniCart ? styles.mini_cart_open : ""
-                    } p-lg-2`}
+                    }`}
                   >
                     <div className="d-flex justify-content-center align-items-center">
                       <svg className={styles.mini_cart_shopping_icon}>

@@ -74,10 +74,10 @@ export async function GET(req) {
   try {
     await dbConnect();
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json(
         { success: false, message: "کاربر احراز هویت نشده است" },
         { status: 401 },
@@ -94,7 +94,10 @@ export async function GET(req) {
       );
     }
 
-    const user = await UserModel.findOne({ "auth.token": token }).lean();
+    const user = await UserModel.findOne({
+      "auth.accessToken": accessToken,
+    }).lean();
+
     if (!user?._id) {
       return Response.json(
         { success: false, message: "کاربر یافت نشد" },

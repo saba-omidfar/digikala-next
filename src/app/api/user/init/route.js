@@ -7,9 +7,9 @@ export async function GET() {
     await dbConnect();
 
     const cookiesStore = await cookies();
-    const token = cookiesStore.get("token")?.value;
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json(
         {
           success: false,
@@ -20,7 +20,7 @@ export async function GET() {
     }
 
     const user = await UserModel.findOne({
-      "auth.token": token,
+      "auth.accessToken": accessToken,
     }).lean();
 
     if (!user) {

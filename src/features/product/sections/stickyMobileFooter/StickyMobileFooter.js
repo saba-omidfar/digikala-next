@@ -16,7 +16,7 @@ import toPersianDigits from "@/utils/toPersianDigits";
 
 import styles from "./stickyMobileFooter.module.css";
 
-function StickyMobileFooter() {
+export default function StickyMobileFooter() {
   const { guestCartId } = useUserContext();
 
   const [productQuantity, setProductQuantity] = useState(0);
@@ -162,16 +162,20 @@ function StickyMobileFooter() {
           ""
         )}
         <div style={{ padding: "12px 16px" }}>
-          <span
-            className={styles.mobile_content_verticalSlider_animation}
-            style={{ maxHeight: showVerticalSlider ? "36px" : "0" }}
-          >
-            <VerticalSlider
-              transform={36}
-              isStickyFooter
-              badges={productDetails?.product_badges}
-            />
-          </span>
+          {productDetails?.product_badges?.length ? (
+            <span
+              className={styles.mobile_content_verticalSlider_animation}
+              style={{ maxHeight: showVerticalSlider ? "36px" : "0" }}
+            >
+              <VerticalSlider
+                transform={36}
+                isStickyFooter
+                badges={productDetails?.product_badges}
+              />
+            </span>
+          ) : (
+            ""
+          )}
 
           <div className={styles.add_to_cart_btn_container}>
             <CartActionBox
@@ -247,5 +251,3 @@ function StickyMobileFooter() {
     </>
   );
 }
-
-export default StickyMobileFooter;

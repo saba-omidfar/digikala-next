@@ -11,12 +11,7 @@ function MobileSellerRecommendation() {
   const { cpc, isLoadingCpc } = useProductContext();
   const { isSmallScreen } = useScreenStatus();
 
-  if (
-    !cpc?.products?.length ||
-    (!isSmallScreen && cpc?.products?.length !== 1) ||
-    isLoadingCpc
-  )
-    return;
+  if (!cpc?.products?.length || isLoadingCpc) return;
 
   return (
     <div className={styles.cpc_container}>

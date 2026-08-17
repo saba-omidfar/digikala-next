@@ -12,7 +12,7 @@ import toPersianDigits from "@/utils/toPersianDigits";
 
 import styles from "./comments.module.css";
 
-function Comments({ isCommentSectionSticky }) {
+function Comments({ topOffset }) {
   const commentsRef = useRef();
   const { openModal } = useModal();
 
@@ -27,9 +27,7 @@ function Comments({ isCommentSectionSticky }) {
             <div className="d-flex justify-content-start align-items-start mt-3">
               <div
                 className={styles.comment_question_summary}
-                style={{
-                  top: isCommentSectionSticky ? "134.828px" : "30.828px",
-                }}
+                style={{ top: `${topOffset}px` }}
               >
                 {productDetails?.rating?.rate ? (
                   <div className="d-flex align-items-center">

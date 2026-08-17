@@ -17,11 +17,11 @@ export async function PATCH(req) {
     hasInsurance,
   } = await req.json();
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const cookiesStore = await cookies();
+  const accessToken = cookiesStore.get("access_token")?.value;
 
   const dbUser = await UserModel.findOne({
-    "auth.token": token,
+    "auth.accessToken": accessToken,
   }).select("_id");
 
   let cart = null;

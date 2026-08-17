@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,12 +11,18 @@ import ProductPriceBox from "@/features/cart/sections/productPriceBox/ProductPri
 import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useCartContext } from "@/contexts/CartContext";
+import { useGetUniversal } from "@/hooks/useGetUniversal";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 
 import styles from "./miniBuyBoxSticky.module.css";
 
 function MiniBuyBoxSticky() {
+  const [topOffset, setTopOffset] = useState(234);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [showAddToCartSuccess, setShowAddToCartSuccess] = useState(false);
+
+  const { data: topMegaMenuBanners } = useGetUniversal();
   const { user, guestCartId } = useUserContext();
   const { productDetails, activeVariant } = useProductContext();
   const {
@@ -27,8 +33,6 @@ function MiniBuyBoxSticky() {
     setLoadingVariantId,
     selectedInsurance,
   } = useCartContext();
-
-  const [showAddToCartSuccess, setShowAddToCartSuccess] = useState(false);
 
   const cartItem =
     userCart?.cart?.packages
@@ -101,6 +105,23 @@ function MiniBuyBoxSticky() {
     // }, 5000);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+
+      if (currentScroll < lastScrollY) {
+        setTopOffset(topMegaMenuBanners ? 234 : 173);
+      } else {
+        setTopOffset(topMegaMenuBanners ? 195 : 173);
+      }
+
+      setLastScrollY(currentScroll);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   if (Array.isArray(productDetails?.default_variant)) return null;
 
   return (
@@ -109,7 +130,10 @@ function MiniBuyBoxSticky() {
         <AddToCartSuccess setShowAddToCartSuccess={setShowAddToCartSuccess} />
       )}
       <div className={styles.mini_buyBox_container}>
-        <div className={styles.mini_buyBox_sticky_animation}>
+        <div
+          className={styles.mini_buyBox_sticky_animation}
+          style={{ top: `${topOffset}px` }}
+        >
           <div className={styles.mini_buyBox}>
             <div className={styles.incredible_offer_container}>
               {activeVariant?.price?.is_promotion ? (

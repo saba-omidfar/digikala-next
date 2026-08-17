@@ -92,12 +92,16 @@ export default function ProductDesktopContent() {
               <MiddleFooter />
 
               {/* کالاهای پیشنهادی */}
-              {suggestionProducts && (
+              {suggestionProducts?.length ? (
                 <RecommendationProducts data={suggestionProducts} />
+              ) : (
+                ""
               )}
 
-              {uniqueVariants?.length > 1 && (
+              {uniqueVariants?.length > 1 ? (
                 <Sellers sellers={uniqueVariants} />
+              ) : (
+                ""
               )}
 
               {/* کالاهای مشابه */}

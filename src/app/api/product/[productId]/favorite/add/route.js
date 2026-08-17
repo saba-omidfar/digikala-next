@@ -10,49 +10,49 @@ export async function POST(req, { params }) {
 
     const { productId } = await params;
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json(
-        { success: false, message: "کاربر احراز هویت نشده است" },
+        {
+          success: false,
+          message: "کاربر احراز هویت نشده است",
+        },
         { status: 401 },
       );
     }
 
-    const user = await UserModel.findOne({ "auth.token": token });
+    const user = await UserModel.findOne({
+      "auth.accessToken": accessToken,
+    });
+
     if (!user?._id) {
       return Response.json(
-        { success: false, message: "کاربر یافت نشد" },
+        {
+          success: false,
+          message: "کاربر یافت نشد",
+        },
         { status: 404 },
       );
     }
+
+    const favoriteId = String(productId);
 
     if (!Array.isArray(user.favorite_products)) {
       user.favorite_products = [];
     }
 
-    await UserModel.updateOne(
-      { "auth.token": token },
-      {
-        $addToSet: {
-          favorite_products: productId,
-        },
-      },
-    );
-
-    const updatedUser = await UserModel.findOne(
-      { "auth.token": token },
-      "favorite_products",
-    );
-
-    let message = "محصول به علاقه‌مندی‌ها اضافه شد";
+    if (!user.favorite_products.includes(favoriteId)) {
+      user.favorite_products.push(favoriteId);
+      await user.save();
+    }
 
     return Response.json(
       {
         success: true,
-        message,
-        favorites: updatedUser.favorite_products,
+        message: "محصول به علاقه‌مندی‌ها اضافه شد",
+        favorites: user.favorite_products,
       },
       { status: 200 },
     );
@@ -60,7 +60,10 @@ export async function POST(req, { params }) {
     console.error("add favorite error =>", err);
 
     return Response.json(
-      { success: false, message: err.message },
+      {
+        success: false,
+        message: err.message,
+      },
       { status: 500 },
     );
   }

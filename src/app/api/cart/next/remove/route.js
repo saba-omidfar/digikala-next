@@ -19,14 +19,14 @@ export async function POST(req) {
       removeAll = false,
     } = await req.json();
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
     let cart = null;
 
-    if (token) {
+    if (accessToken) {
       const user = await UserModel.findOne({
-        "auth.token": token,
+        "auth.accessToken": accessToken,
       }).select("_id");
 
       if (!user) {

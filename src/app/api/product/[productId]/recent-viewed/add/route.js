@@ -12,10 +12,10 @@ export async function POST(req, { params }) {
 
     const { productId } = await params;
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json(
         { success: false, message: "کاربر لاگین نیست" },
         { status: 401 },
@@ -23,7 +23,7 @@ export async function POST(req, { params }) {
     }
 
     const user = await UserModel.findOne({
-      "auth.token": token,
+      "auth.accessToken": accessToken,
     });
 
     if (!user) {

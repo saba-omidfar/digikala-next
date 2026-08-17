@@ -18,7 +18,6 @@ export async function GET(req, { params }) {
   const [dkRes, localQuestions] = await Promise.all([
     digikalaFetch({
       path,
-      headers: req.headers,
     }),
     QuestionModel.find({ productId }),
   ]);

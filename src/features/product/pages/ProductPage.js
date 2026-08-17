@@ -38,9 +38,5 @@ export default function ProductPage({ productId }) {
 
   if (!isClientReady) return null;
 
-  return isSmallScreen ? (
-    <ProductMobileContent productId={productId} />
-  ) : (
-    <ProductDesktopContent productId={productId} />
-  );
+  return isSmallScreen ? <ProductMobileContent /> : <ProductDesktopContent />;
 }

@@ -13,11 +13,11 @@ export async function POST(req) {
 
       const { plan } = await req.json();
 
-      const cookieStore = await cookies();
-      const token = cookieStore.get("token")?.value;
+      const cookiesStore = await cookies();
+      const accessToken = cookiesStore.get("access_token")?.value;
 
       let user = await UserModel.findOne({
-        "auth.token": token,
+        "auth.accessToken": accessToken,
       }).select("_id");
 
       const cart = await CartModel.findOne({ userId: user._id });

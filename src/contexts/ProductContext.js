@@ -34,6 +34,8 @@ const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const { productParams } = useParams();
+  const params = useParams();
+
   const productId = productParams?.[0]?.replace("dkp-", "");
 
   const [selectedIdentity, setSelectedIdentity] = useState("anonymous");

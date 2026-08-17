@@ -9,10 +9,10 @@ export async function GET(req) {
   try {
     await dbConnect();
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json(
         {
           success: false,
@@ -23,7 +23,7 @@ export async function GET(req) {
     }
 
     const user = await UserModel.findOne({
-      "auth.token": token,
+      "auth.accessToken": accessToken,
     }).lean();
 
     if (!user) {
@@ -50,7 +50,6 @@ export async function GET(req) {
         try {
           const data = await digikalaFetch({
             path: `/v2/product/${productId}/?_rch=9fd46e644c8e`,
-            headers: req.headers,
           });
 
           return data?.data?.product;

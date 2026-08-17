@@ -11,7 +11,7 @@ import VerticalProductCard from "@/components/modules/VerticalProductCard/Vertic
 import styles from "./recommendationProducts.module.css";
 
 function RecommendationProducts({ data }) {
-  if (!data) return;
+  if (!data || !data?.length) return;
 
   return (
     <div className="w-100 px-3">

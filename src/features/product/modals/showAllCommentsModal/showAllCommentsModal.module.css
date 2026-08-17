@@ -71,13 +71,15 @@
 
 .product_rating {
   font-size: 28px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 2.1;
   margin-left: 4px;
 }
 
 .product_max_rating {
   font-size: 18px;
+  font-weight: 500;
+  line-height: 2.1;
 }
 
 .product_all_rating {
@@ -249,7 +251,7 @@
 
 .intent_title {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 2.1;
   flex-grow: 1;
   color: #0c0c0c;
@@ -263,6 +265,7 @@
 .intent_badge_active {
   border: 1px solid #e6123d !important;
   color: #e6123d !important;
+  background: #e053530d !important;
 }
 
 .intent_badge {
@@ -275,7 +278,7 @@
   color: #3f4064;
   padding: 16px;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 2.15;
   white-space: nowrap;
 }

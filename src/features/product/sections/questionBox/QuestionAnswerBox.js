@@ -129,7 +129,7 @@ function QuestionAnswerBox({ question, answer, isAnswer }) {
         </div>
         <div className={styles.Answer_body_container}>
           <p className={styles.Answer_body}>{answer?.text}</p>
-          {answer?.files?.length && (
+          {answer?.files?.length ? (
             <div className={styles.question_answer_media_container}>
               {answer?.files?.map((file) => (
                 <div
@@ -170,6 +170,8 @@ function QuestionAnswerBox({ question, answer, isAnswer }) {
                 </div>
               ))}
             </div>
+          ) : (
+            ""
           )}
           <div
             className="d-flex align-items-center"

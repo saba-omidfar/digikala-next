@@ -1,12 +1,12 @@
-import { sign } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
-const generateToken = (data) => {
-  const token = sign({ ...data }, process.env.privateKey, {
-    algorithm: "HS256",
-    expiresIn: "24h",
+export default function generateAccessToken(payload) {
+  return jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: "15m",
   });
+}
 
-  return token;
-};
-
-export default generateToken;
+export function generateRefreshToken() {
+  return crypto.randomBytes(64).toString("hex");
+}

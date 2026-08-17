@@ -15,14 +15,14 @@ export async function POST(req, { params }) {
 
     const cookiesStore = await cookies();
 
-    const token = cookiesStore.get("token")?.value;
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     const user = await UserModel.findOne({
-      "auth.token": token,
+      "auth.accessToken": accessToken,
     });
 
     if (!user) {

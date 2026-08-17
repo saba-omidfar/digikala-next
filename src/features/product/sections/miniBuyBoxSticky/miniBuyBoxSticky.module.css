@@ -6,7 +6,6 @@
 
 .mini_buyBox_sticky_animation {
   position: sticky;
-  top: 138.828px;
   transition: top 0.2s ease;
 }
 

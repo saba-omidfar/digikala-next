@@ -4,6 +4,7 @@ import dbConnect from "@/configs/db";
 
 import UserModel from "@/models/User";
 import QuestionModel from "@/models/Question";
+import { accessToken } from "maplibre-gl";
 
 export async function POST(req, { params }) {
   try {
@@ -15,14 +16,14 @@ export async function POST(req, { params }) {
     const { productId, text, source } = body;
 
     const cookiesStore = await cookies();
-    const token = cookiesStore.get("token")?.value;
+    const token = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     const user = await UserModel.findOne({
-      "auth.token": token,
+      "auth.accessToken": accessToken,
     });
 
     if (!user) {

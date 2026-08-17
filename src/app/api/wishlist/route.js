@@ -1,37 +1,65 @@
 import dbConnect from "@/configs/db";
-
 import WishlistModel from "@/models/Wishlist";
 import UserModel from "@/models/User";
 
 import { cookies } from "next/headers";
 import { nanoid } from "nanoid";
 
-// 🟢 Create New List
+async function getAuthenticatedUser() {
+  const cookiesStore = await cookies();
+  const accessToken = cookiesStore.get("access_token")?.value;
+
+  if (!accessToken) {
+    return {
+      error: Response.json(
+        {
+          success: false,
+          message: "کاربر احراز هویت نشده است",
+        },
+        { status: 401 },
+      ),
+    };
+  }
+
+  const user = await UserModel.findOne({
+    "auth.accessToken": accessToken,
+  });
+
+  if (!user) {
+    return {
+      error: Response.json(
+        {
+          success: false,
+          message: "کاربر یافت نشد",
+        },
+        { status: 404 },
+      ),
+    };
+  }
+
+  return { user };
+}
+
 export async function POST(req) {
   try {
     await dbConnect();
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const { user, error } = await getAuthenticatedUser();
 
-    if (!token) {
-      return Response.json(
-        { success: false, message: "کاربر لاگین نیست" },
-        { status: 401 },
-      );
+    if (error) {
+      return error;
     }
 
-    const user = await UserModel.findOne({ "auth.token": token }).lean();
-
     const body = await req.json();
-    const { title, description, color_or_size } = body;
 
-    if (!user?._id || !title) {
-      return new Response(
-        JSON.stringify({
+    const { title, description = "", color_or_size = "" } = body;
+
+    if (!title?.trim()) {
+      return Response.json(
+        {
           success: false,
-          message: "userId و title الزامی هستند.",
-        }),
+          message: "عنوان لیست الزامی است.",
+        },
         { status: 400 },
       );
     }
@@ -39,10 +67,10 @@ export async function POST(req) {
     const code = nanoid(8);
 
     const newWishlist = await WishlistModel.create({
-      userId: user?._id,
-      title,
-      description: description || "",
-      color_or_size: color_or_size || "",
+      userId: user._id,
+      title: title.trim(),
+      description,
+      color_or_size,
       code,
       item_product: [],
       product_images: [],
@@ -50,97 +78,168 @@ export async function POST(req) {
       size: 0,
     });
 
-    return new Response(
-      JSON.stringify({
+    return Response.json(
+      {
         success: true,
         message: "لیست با موفقیت ساخته شد.",
         data: newWishlist,
-      }),
+      },
       { status: 201 },
     );
   } catch (err) {
-    return new Response(
-      JSON.stringify({ success: false, message: err.message }),
+    console.error("create wishlist error =>", err);
+
+    return Response.json(
+      {
+        success: false,
+        message: err.message,
+      },
       { status: 500 },
     );
   }
 }
 
-// 🔴 Delete One List
 export async function DELETE(req) {
   try {
     await dbConnect();
 
+    const { user, error } = await getAuthenticatedUser();
+
+    if (error) {
+      return error;
+    }
+
     const body = await req.json();
-    const { wishlistId } = body;
+    const wishlistId = String(body?.wishlistId || "").trim();
 
     if (!wishlistId) {
-      return new Response(
-        JSON.stringify({ success: false, message: "شناسه لیست الزامی است." }),
+      return Response.json(
+        {
+          success: false,
+          message: "شناسه لیست الزامی است.",
+        },
         { status: 400 },
+      );
+    }
+
+    const wishlist = await WishlistModel.findOne({
+      _id: wishlistId,
+      userId: user._id,
+    });
+
+    if (!wishlist) {
+      return Response.json(
+        {
+          success: false,
+          message: "لیست یافت نشد.",
+        },
+        { status: 404 },
       );
     }
 
     await WishlistModel.findByIdAndDelete(wishlistId);
 
-    return new Response(
-      JSON.stringify({
+    return Response.json(
+      {
         success: true,
         message: "لیست با موفقیت حذف شد.",
-      }),
+      },
       { status: 200 },
     );
   } catch (err) {
-    return new Response(
-      JSON.stringify({ success: false, message: err.message }),
+    console.error("delete wishlist error =>", err);
+
+    return Response.json(
+      {
+        success: false,
+        message: err.message,
+      },
       { status: 500 },
     );
   }
 }
 
-// 🟣 Edit List
 export async function PUT(req) {
   try {
     await dbConnect();
 
+    const { user, error } = await getAuthenticatedUser();
+
+    if (error) {
+      return error;
+    }
+
     const body = await req.json();
-    const { wishlistId, title, description, color_or_size } = body;
+
+    const wishlistId = String(body?.wishlistId || "").trim();
 
     if (!wishlistId) {
-      return new Response(
-        JSON.stringify({ success: false, message: "شناسه لیست الزامی است." }),
+      return Response.json(
+        {
+          success: false,
+          message: "شناسه لیست الزامی است.",
+        },
         { status: 400 },
       );
     }
 
-    const updatedList = await WishlistModel.findByIdAndUpdate(
-      wishlistId,
-      {
-        ...(title && { title }),
-        ...(description && { description }),
-        ...(color_or_size && { color_or_size }),
-      },
-      { new: true },
-    );
+    const wishlist = await WishlistModel.findOne({
+      _id: wishlistId,
+      userId: user._id,
+    });
 
-    if (!updatedList) {
-      return new Response(
-        JSON.stringify({ success: false, message: "لیست یافت نشد." }),
+    if (!wishlist) {
+      return Response.json(
+        {
+          success: false,
+          message: "لیست یافت نشد.",
+        },
         { status: 404 },
       );
     }
 
-    return new Response(
-      JSON.stringify({
+    if (body.title !== undefined) {
+      const title = String(body.title).trim();
+
+      if (!title) {
+        return Response.json(
+          {
+            success: false,
+            message: "عنوان لیست نمی‌تواند خالی باشد.",
+          },
+          { status: 400 },
+        );
+      }
+
+      wishlist.title = title;
+    }
+
+    if (body.description !== undefined) {
+      wishlist.description = body.description;
+    }
+
+    if (body.color_or_size !== undefined) {
+      wishlist.color_or_size = body.color_or_size;
+    }
+
+    await wishlist.save();
+
+    return Response.json(
+      {
         success: true,
         message: "لیست با موفقیت ویرایش شد.",
-        data: updatedList,
-      }),
+        data: wishlist,
+      },
       { status: 200 },
     );
   } catch (err) {
-    return new Response(
-      JSON.stringify({ success: false, message: err.message }),
+    console.error("update wishlist error =>", err);
+
+    return Response.json(
+      {
+        success: false,
+        message: err.message,
+      },
       { status: 500 },
     );
   }

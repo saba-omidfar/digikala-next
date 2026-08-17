@@ -7,15 +7,15 @@ export async function GET() {
     await dbConnect();
 
     const cookiesStore = await cookies();
-    const token = cookiesStore.get("token")?.value;
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token)
+    if (!accessToken)
       return Response.json(
         { success: false, message: "کاربر لاگین نیست" },
         { status: 401 },
       );
 
-    const user = await UserModel.findOne({ "auth.token": token });
+    const user = await UserModel.findOne({ "auth.accessToken": accessToken });
     if (!user)
       return Response.json(
         { success: false, message: "کاربر یافت نشد" },

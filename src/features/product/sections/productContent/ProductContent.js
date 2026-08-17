@@ -1,8 +1,4 @@
-"use client";
-
 import { useState, useEffect } from "react";
-
-import { ScrollTrigger } from "@/lib/gsap";
 
 import ShortReview from "@/features/product/sections/productContent/shortReview/ShortReview";
 import ExpertReview from "@/features/product/sections/productContent/expertReview/ExpertReview";
@@ -11,50 +7,41 @@ import SellerRecommendations from "@/features/product/sections/productContent/se
 import Comments from "@/features/product/sections/productContent/comments/Comments";
 import Questions from "@/features/product/sections/productContent/questions/Questions";
 
+import { useGetUniversal } from "@/hooks/useGetUniversal";
+
 import styles from "./productContent.module.css";
 
-function ProductContent() {
-  const [isCommentSectionSticky, setIsCommentSectionSticky] = useState(false);
-  const [isQuestionSectionSticky, setIsQuestionSectionSticky] = useState(false);
+export default function ProductContent() {
+  const { data: topMegaMenuBanners } = useGetUniversal();
+
+  const [topOffset, setTopOffset] = useState(234);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    const commentSectionTrigger = ScrollTrigger.create({
-      trigger: "#commentSection",
-      start: "top 0%",
-      end: "bottom 50%",
-      onEnter: () => setIsCommentSectionSticky(true),
-      onLeaveBack: () => setIsCommentSectionSticky(false),
-      immediateRender: false,
-    });
-    ScrollTrigger.refresh();
-    return () => commentSectionTrigger.kill();
-  }, []);
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
 
-  useEffect(() => {
-    const questionSectionTrigger = ScrollTrigger.create({
-      trigger: "#questionSection",
-      start: "top 0%",
-      end: "bottom 50%",
-      onEnter: () => setIsQuestionSectionSticky(true),
-      onLeaveBack: () => setIsQuestionSectionSticky(false),
-      immediateRender: false,
-    });
+      if (currentScroll < lastScrollY) {
+        setTopOffset(topMegaMenuBanners ? 234 : 173);
+      } else {
+        setTopOffset(topMegaMenuBanners ? 188 : 173);
+      }
 
-    return () => questionSectionTrigger.kill();
-  }, []);
+      setLastScrollY(currentScroll);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   return (
-    <>
-      <div className={styles.product_content_container}>
-        <ShortReview />
-        <ExpertReview />
-        <Specification />
-        <SellerRecommendations />
-        <Comments isCommentSectionSticky={isCommentSectionSticky} />
-        <Questions isQuestionSectionSticky={isQuestionSectionSticky} />
-      </div>
-    </>
+    <div className={styles.product_content_container}>
+      <ShortReview />
+      <ExpertReview />
+      <Specification />
+      <SellerRecommendations />
+      <Comments topOffset={topOffset} />
+      <Questions topOffset={topOffset} />
+    </div>
   );
 }
-
-export default ProductContent;

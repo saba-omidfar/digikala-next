@@ -10,11 +10,11 @@ export async function DELETE(req) {
   try {
     await dbConnect();
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
     let user = await UserModel.findOne({
-      "auth.token": token,
+      "auth.accessToken": accessToken,
     }).select("_id");
 
     const cart = await CartModel.findOne({ userId: user._id });

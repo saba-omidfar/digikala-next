@@ -1,12 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 
+import { useGetUniversal } from "@/hooks/useGetUniversal";
 import { useProductContext } from "@/contexts/ProductContext";
 
 import styles from "./tabs.module.css";
 
 export default function Tabs({ isTabsSticky }) {
   const { productDetails } = useProductContext();
+  const { data: topMegaMenuBanners } = useGetUniversal();
 
   const [topOffset, setTopOffset] = useState(68);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -72,9 +74,11 @@ export default function Tabs({ isTabsSticky }) {
       const currentScroll = window.scrollY;
 
       if (currentScroll < lastScrollY) {
-        setTopOffset(108);
+        isTabsSticky ? (topMegaMenuBanners ? 188 : 128) : 68;
+
+        setTopOffset(topMegaMenuBanners ? 168 : 108);
       } else {
-        setTopOffset(68);
+        setTopOffset(topMegaMenuBanners ? 128 : 68);
       }
 
       setLastScrollY(currentScroll);

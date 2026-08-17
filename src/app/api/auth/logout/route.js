@@ -2,20 +2,23 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/configs/db";
 import UserModel from "@/models/User";
 
+import { cookies } from "next/headers";
+
 export async function POST(req) {
   try {
     await dbConnect();
 
-    const token = req.cookies.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return NextResponse.json(
         { success: false, message: "توکن یافت نشد." },
         { status: 400 },
       );
     }
 
-    const user = await UserModel.findOne({ "auth.token": token });
+    const user = await UserModel.findOne({ "auth.accessToken": accessToken });
 
     if (!user) {
       return NextResponse.json(
@@ -25,7 +28,7 @@ export async function POST(req) {
     }
 
     user.is_logged_in = false;
-    user.auth = { token: "", tokenCreatedAt: null };
+    user.auth = { accessToken: "", accessTokenCreatedAt: null };
     await user.save();
 
     const response = NextResponse.json({
@@ -33,7 +36,7 @@ export async function POST(req) {
       message: "کاربر با موفقیت خارج شد.",
     });
 
-    response.cookies.set("token", "", {
+    response.cookies.set("accessToken", "", {
       httpOnly: true,
       secure: true,
       sameSite: "strict",

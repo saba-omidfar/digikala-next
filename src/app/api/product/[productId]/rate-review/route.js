@@ -25,7 +25,6 @@ export async function GET(req, { params }) {
   const [dkRes, localComments] = await Promise.all([
     digikalaFetch({
       path,
-      headers: req.headers,
     }),
     CommentModel.find({ product_id: productId }),
   ]);

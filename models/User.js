@@ -7,8 +7,25 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     auth: {
-      token: { type: String, default: "" },
-      tokenCreatedAt: { type: Date },
+      accessToken: {
+        type: String,
+        default: null,
+      },
+
+      refreshTokenHash: {
+        type: String,
+        default: null,
+      },
+
+      accessTokenCreatedAt: {
+        type: Date,
+        default: null,
+      },
+
+      refreshTokenCreatedAt: {
+        type: Date,
+        default: null,
+      },
     },
     digiclub: {
       is_digiclub_activated: { type: Boolean, default: false },
@@ -96,17 +113,7 @@ const userSchema = new mongoose.Schema(
         default: "",
       },
     },
-    auth: {
-      token: {
-        type: String,
-        default: "",
-      },
 
-      tokenCreatedAt: {
-        type: Date,
-        default: null,
-      },
-    },
     default_address: {
       id: {
         type: mongoose.Schema.Types.ObjectId,

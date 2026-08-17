@@ -1,130 +1,35 @@
-// import dbConnect from "@/configs/db";
-// import UserModel from "@/models/User";
-// import generateToken from "@/utils/auth";
-
-// export async function POST(req) {
-//   try {
-//     await dbConnect();
-
-//     const body = await req.json();
-//     const { username, guestCartId } = body;
-
-//     if (!username) {
-//       return new Response(
-//         JSON.stringify({
-//           message: "وارد کردن ایمیل یا شماره همراه اجباری است",
-//         }),
-//         { status: 400 },
-//       );
-//     }
-
-//     const phoneRegex = /^(\+98|0)?9\d{9}$/;
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-//     let query = {};
-//     let updateUser = {};
-
-//     if (phoneRegex.test(username)) query = { "user.phone": username };
-//     else if (emailRegex.test(username)) query = { "user.email": username };
-//     else
-//       return new Response(
-//         JSON.stringify({ message: "فرمت ورودی نادرست است." }),
-//         { status: 400 },
-//       );
-
-//     let user = await UserModel.findOne(query);
-//     let token = "";
-//     let isNewUser = false;
-
-//     if (!user) {
-//       if (emailRegex.test(username)) {
-//         token = generateToken({ username });
-//         user = await UserModel.create({
-//           is_logged_in: true,
-//           user: { email: username },
-//           auth: { token, tokenCreatedAt: new Date() },
-//         });
-//         isNewUser = true;
-//       }
-//     } else {
-//       if (!user.is_logged_in || !user.auth?.token) {
-//         token = generateToken({ username });
-//         user.is_logged_in = true;
-//         user.auth = { token, tokenCreatedAt: new Date() };
-//         await user.save();
-//       } else {
-//         token = user.auth.token;
-//       }
-
-//       updateUser = user;
-//     }
-
-//     if (guestCartId) {
-//       const guestCart = await CartModel.findById(guestCartId);
-//       let userCart = await CartModel.findOne({ userId: user._id });
-
-//       if (!userCart) {
-//         userCart = await CartModel.create({
-//           cartId: Date.now(),
-//           userId: user._id,
-//           packages: guestCart?.packages || [],
-//         });
-//       } else if (guestCart) {
-//         // اضافه کردن آیتم‌های مهمان به سبد کاربر
-//         guestCart.packages?.forEach((pkg) => {
-//           pkg.cart_items.forEach((item) => {
-//             // اگر محصول موجود بود، تعدادش رو اضافه کن
-//             const existingItemIndex = userCart.packages[0].cart_items.findIndex(
-//               (ci) => ci.variant?.variantId === item.variant?.id,
-//             );
-//             if (existingItemIndex > -1) {
-//               userCart.packages[0].cart_items[existingItemIndex].quantity +=
-//                 item.quantity;
-//             } else {
-//               userCart.packages[0].cart_items.push(item);
-//             }
-//           });
-//         });
-//       }
-
-//       await userCart.save();
-//       await CartModel.findByIdAndDelete(guestCartId);
-//     }
-
-//     return new Response(
-//       JSON.stringify({
-//         message: "User LoggedIn Successfully.",
-//         data: updateUser,
-//         token,
-//         guestCartId: null,
-//       }),
-//       { status: 200 },
-//     );
-//   } catch (err) {
-//     return new Response(
-//       JSON.stringify({ message: err.message }, { status: 500 }),
-//     );
-//   }
-// }
+import crypto from "crypto";
+import { cookies } from "next/headers";
 
 import dbConnect from "@/configs/db";
+
 import UserModel from "@/models/User";
 import CartModel from "@/models/Cart";
-import generateToken from "@/utils/auth";
+
+import generateAccessToken, { generateRefreshToken } from "@/utils/auth";
+
+function hashRefreshToken(accessToken) {
+  return crypto.createHash("sha256").update(accessToken).digest("hex");
+}
 
 export async function POST(req) {
   try {
     await dbConnect();
 
-    const body = await req.json();
-    const { username, guestCartId } = body;
+    const { username, guestCartId } = await req.json();
+
+    // =========================
+    // VALIDATION
+    // =========================
 
     if (!username) {
-      return new Response(
-        JSON.stringify({
+      return Response.json(
+        {
           message: "وارد کردن ایمیل یا شماره همراه اجباری است",
-        }),
-        { status: 400 },
+        },
+        {
+          status: 400,
+        },
       );
     }
 
@@ -132,130 +37,249 @@ export async function POST(req) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     let query = {};
-    let updateUser = {};
-    let token = "";
-    let isNewUser = false;
 
-    // VALIDATION
     if (phoneRegex.test(username)) {
-      query = { "user.phone": username };
+      query = {
+        "user.phone": username,
+      };
     } else if (emailRegex.test(username)) {
-      query = { "user.email": username };
+      query = {
+        "user.email": username,
+      };
     } else {
-      return new Response(
-        JSON.stringify({ message: "فرمت ورودی نادرست است." }),
-        { status: 400 },
+      return Response.json(
+        {
+          message: "فرمت ورودی نادرست است.",
+        },
+        {
+          status: 400,
+        },
       );
     }
 
+    // =========================
     // FIND USER
+    // =========================
+
     let user = await UserModel.findOne(query);
 
-    // ======================
+    let isNewUser = false;
+
+    // =========================
     // CREATE USER
-    // ======================
+    // =========================
+
     if (!user) {
-      if (emailRegex.test(username)) {
-        token = generateToken({ username });
-
-        user = await UserModel.create({
-          is_logged_in: true,
-          user: {
-            email: username,
-          },
-          auth: {
-            token,
-            tokenCreatedAt: new Date(),
-          },
-        });
-
-        isNewUser = true;
-      } else {
-        return new Response(
-          JSON.stringify({
+      if (!emailRegex.test(username)) {
+        return Response.json(
+          {
             message: "برای ساخت حساب کاربری از ایمیل استفاده کنید.",
-          }),
-          { status: 404 },
+          },
+          {
+            status: 404,
+          },
         );
       }
+
+      user = await UserModel.create({
+        is_logged_in: true,
+
+        user: {
+          email: username,
+        },
+      });
+
+      isNewUser = true;
     }
 
-    // ======================
-    // LOGIN USER
-    // ======================
-    else {
-      if (!user.is_logged_in || !user.auth?.token) {
-        token = generateToken({ username });
+    // =========================
+    // GENERATE ACCESS TOKEN
+    // =========================
 
-        user.is_logged_in = true;
-        user.auth = {
-          token,
-          tokenCreatedAt: new Date(),
-        };
+    const accessToken = generateAccessToken({
+      userId: user._id.toString(),
+      username,
+    });
 
-        await user.save();
-      } else {
-        token = user.auth.token;
-      }
+    // =========================
+    // GENERATE REFRESH TOKEN
+    // =========================
 
-      updateUser = user;
-    }
+    const refreshToken = generateRefreshToken();
 
-    // ======================
+    const refreshTokenHash = hashRefreshToken(refreshToken);
+
+    // =========================
+    // UPDATE AUTH
+    // =========================
+
+    user.is_logged_in = true;
+
+    user.auth = {
+      accessToken,
+      refreshTokenHash,
+      accessTokenCreatedAt: new Date(),
+      refreshTokenCreatedAt: new Date(),
+    };
+
+    await user.save();
+
+    // =========================
+    // SET COOKIES
+    // =========================
+
+    const cookieStore = await cookies();
+
+    // ACCESS TOKEN
+    cookieStore.set("access_accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/",
+      maxAge: 15 * 60,
+    });
+
+    // REFRESH TOKEN
+    cookieStore.set("refresh_accessToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60,
+    });
+
+    // =========================
     // MERGE GUEST CART
-    // ======================
+    // =========================
+
     if (guestCartId) {
       const guestCart = await CartModel.findById(guestCartId);
 
-      let userCart = await CartModel.findOne({
-        userId: user._id,
-      });
-
-      if (!userCart) {
-        userCart = await CartModel.create({
+      if (guestCart) {
+        let userCart = await CartModel.findOne({
           userId: user._id,
-          packages: guestCart?.packages || [],
         });
-      } else if (guestCart) {
-        if (!userCart.packages || !userCart.packages.length) {
-          userCart.packages = [{ cart_items: [] }];
+
+        // -------------------------
+        // CREATE USER CART
+        // -------------------------
+
+        if (!userCart) {
+          userCart = await CartModel.create({
+            userId: user._id,
+            packages: guestCart.packages || [
+              {
+                cart_items: [],
+              },
+            ],
+            next_cart: guestCart.next_cart || [],
+          });
         }
 
-        guestCart.packages?.forEach((pkg) => {
-          pkg.cart_items?.forEach((item) => {
-            const existingItemIndex = userCart.packages[0].cart_items.findIndex(
-              (ci) => ci?.variant?.id === item?.variant?.id,
+        // -------------------------
+        // MERGE EXISTING CART
+        // -------------------------
+        else {
+          if (!userCart.packages?.length) {
+            userCart.packages = [
+              {
+                cart_items: [],
+              },
+            ];
+          }
+
+          if (!userCart.packages[0].cart_items) {
+            userCart.packages[0].cart_items = [];
+          }
+
+          if (!userCart.next_cart) {
+            userCart.next_cart = [];
+          }
+
+          const userItems = userCart.packages[0].cart_items;
+
+          const guestItems = guestCart.packages?.[0]?.cart_items || [];
+
+          // -------------------------
+          // CART ITEMS
+          // -------------------------
+
+          for (const guestItem of guestItems) {
+            const existingItem = userItems.find(
+              (item) =>
+                Number(item.variant?.id) === Number(guestItem.variant?.id),
             );
 
-            if (existingItemIndex > -1) {
-              userCart.packages[0].cart_items[existingItemIndex].quantity +=
-                item.quantity;
+            if (existingItem) {
+              existingItem.quantity += guestItem.quantity;
             } else {
-              userCart.packages[0].cart_items.push(item);
+              userItems.push(guestItem);
             }
-          });
-        });
-      }
+          }
 
-      await userCart.save();
-      await CartModel.findByIdAndDelete(guestCartId);
+          // -------------------------
+          // NEXT CART
+          // -------------------------
+
+          for (const guestNextItem of guestCart.next_cart || []) {
+            const existingNext = userCart.next_cart.find(
+              (item) =>
+                Number(item.variant?.id) === Number(guestNextItem.variant?.id),
+            );
+
+            if (existingNext) {
+              existingNext.quantity += guestNextItem.quantity;
+            } else {
+              userCart.next_cart.push(guestNextItem);
+            }
+          }
+
+          userCart.updatedAt = new Date();
+        }
+
+        await userCart.save();
+
+        // -------------------------
+        // DELETE GUEST CART
+        // -------------------------
+
+        await CartModel.findByIdAndDelete(guestCartId);
+      }
     }
 
-    return new Response(
-      JSON.stringify({
-        message: "User LoggedIn Successfully.",
-        data: updateUser,
-        token,
-        guestCartId: null,
-      }),
-      { status: 200 },
+    // =========================
+    // RESPONSE
+    // =========================
+
+    return Response.json(
+      {
+        success: true,
+        message: "User logged in successfully.",
+        isNewUser,
+
+        data: {
+          id: user._id,
+          email: user.user?.email,
+          phone: user.user?.phone,
+        },
+
+        clearGuestCartId: Boolean(guestCartId),
+      },
+      {
+        status: 200,
+      },
     );
   } catch (err) {
-    return new Response(
-      JSON.stringify({
+    console.error("login error:", err);
+
+    return Response.json(
+      {
+        success: false,
         message: err.message,
-      }),
-      { status: 500 },
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

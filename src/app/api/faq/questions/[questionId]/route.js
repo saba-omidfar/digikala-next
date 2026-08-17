@@ -13,7 +13,6 @@ export async function GET(req, context) {
 
     const data = await digikalaFetch({
       path,
-      headers: req.headers,
     });
 
     return Response.json(data);

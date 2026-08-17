@@ -55,15 +55,6 @@ export default function ShowAllCommentsModal() {
       : commentsData?.media_comments?.slice(0, 6);
 
   const loadMore = () => {
-    console.log(
-      "loadMore",
-      currentPage,
-      "loading:",
-      isLoadingComments,
-      "comments:",
-      comments.length,
-    );
-
     if (loadingRef.current) return;
 
     if (currentPage >= (commentsData?.pager?.total_pages ?? 1)) return;
@@ -104,48 +95,44 @@ export default function ShowAllCommentsModal() {
   };
 
   return (
-    <div className="flex-grow-1">
-      <div className={styles.modal_layout}>
-        <div className={styles.modal_header_container}>
-          <div className={styles.modal_header}>
-            <div className="flex-grow-1">
-              <div className="d-flex flex-row justify-content-between align-items-center">
-                <div className="text-break">
-                  <div className="d-flex flex-grow-1 align-items-center">
+    <div className={styles.modal_layout}>
+      <div className={styles.modal_header_container}>
+        <div className={styles.modal_header}>
+          <div className="flex-grow-1">
+            <div className="d-flex flex-row justify-content-between align-items-center">
+              <div className="text-break">
+                <div className="d-flex flex-grow-1 align-items-center">
+                  <div
+                    className={styles.arrow_icon_container}
+                    onClick={() => closeModal()}
+                    aria-hidden="false"
+                  >
+                    <svg className={styles.arrow_icon}>
+                      <use href="#arrowRight"></use>
+                    </svg>
+                  </div>
+                  <p className={styles.modal_title}>
+                    <span className="position-relative">
+                      {productDetails?.comments_count?.toLocaleString("fa-IR")}{" "}
+                      دیدگاه
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div
+                onClick={handleSortModal}
+                className="d-flex flex-row align-items-center"
+              >
+                <div className={styles.sort_icon_btn}>
+                  <div className="d-flex align-items-center flex-grow-1">
                     <div
-                      className={styles.arrow_icon_container}
-                      onClick={() => closeModal()}
+                      className={styles.sort_icon_container}
+                      data-cro-id="comment-sort-icon"
                       aria-hidden="false"
                     >
-                      <svg className={styles.arrow_icon}>
-                        <use href="#arrowRight"></use>
+                      <svg className={styles.comment_sort_icon}>
+                        <use href="#sort"></use>
                       </svg>
-                    </div>
-                    <p className={styles.modal_title}>
-                      <span className="position-relative">
-                        {productDetails?.comments_count?.toLocaleString(
-                          "fa-IR",
-                        )}{" "}
-                        دیدگاه
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <div
-                  onClick={handleSortModal}
-                  className="d-flex flex-row align-items-center"
-                >
-                  <div className={styles.sort_icon_btn}>
-                    <div className="d-flex align-items-center flex-grow-1">
-                      <div
-                        className={styles.sort_icon_container}
-                        data-cro-id="comment-sort-icon"
-                        aria-hidden="false"
-                      >
-                        <svg className={styles.comment_sort_icon}>
-                          <use href="#sort"></use>
-                        </svg>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -153,105 +140,104 @@ export default function ShowAllCommentsModal() {
             </div>
           </div>
         </div>
-        <div className="d-flex flex-column overflow-y-auto flex-grow-1">
-          <div className={styles.content}>
-            <div className={styles.content_header_container}>
-              <div className={styles.content_header}>
-                <div
-                  className="d-flex align-items-center"
-                  style={{ height: "24px" }}
-                >
-                  <p className={styles.product_rating}>
-                    {toPersianDigits(
-                      Math.round(
-                        (productDetails?.rating?.rate / 100) * 5 * 10,
-                      ) / 10,
-                    )}
-                  </p>
-                  <p className={styles.product_max_rating}> از ۵ </p>
-                </div>
-                <div className="d-flex align-items-center">
-                  <Scores
-                    width={Math.floor(productDetails?.rating?.rate)}
-                    height={20}
-                    isIcon={false}
-                    marginStyle={{ marginTop: "4px" }}
-                    starSize={20}
-                  />
-                  <p className={styles.product_all_rating}>
-                    {`از مجموع ${productDetails?.rating?.count?.toLocaleString(
-                      "fa-IR",
-                    )} امتیاز`}
-                  </p>
-                </div>
+      </div>
+      <div className="d-flex flex-column overflow-y-auto flex-grow-1">
+        <div className={styles.content}>
+          <div className={styles.content_header_container}>
+            <div className={styles.content_header}>
+              <div
+                className="d-flex align-items-center"
+                style={{ height: "24px" }}
+              >
+                <p className={styles.product_rating}>
+                  {toPersianDigits(
+                    Math.round((productDetails?.rating?.rate / 100) * 5 * 10) /
+                      10,
+                  )}
+                </p>
+                <p className={styles.product_max_rating}> از ۵ </p>
               </div>
-              <div className={styles.pics_comment_container}>
-                {commentsData?.media_comments?.length &&
-                  mediaItems?.map((commentItem, index) => {
-                    const slideIndex =
-                      totalMainItemsLength +
-                      (commentsData?.media_comments?.length === 1
-                        ? index
-                        : commentsData?.media_comments
-                            ?.slice(0, index)
-                            ?.reduce(
-                              (acc, g) => acc + (g.files?.length || 0),
-                              0,
-                            ));
+              <div className="d-flex align-items-center">
+                <Scores
+                  width={Math.floor(productDetails?.rating?.rate)}
+                  height={20}
+                  isIcon={false}
+                  marginStyle={{ marginTop: "4px" }}
+                  starSize={20}
+                />
+                <p className={styles.product_all_rating}>
+                  {`از مجموع ${productDetails?.rating?.count?.toLocaleString(
+                    "fa-IR",
+                  )} امتیاز`}
+                </p>
+              </div>
+            </div>
+            <div className={styles.pics_comment_container}>
+              {commentsData?.media_comments?.length &&
+                mediaItems?.map((commentItem, index) => {
+                  const slideIndex =
+                    totalMainItemsLength +
+                    (commentsData?.media_comments?.length === 1
+                      ? index
+                      : commentsData?.media_comments
+                          ?.slice(0, index)
+                          ?.reduce(
+                            (acc, g) => acc + (g.files?.length || 0),
+                            0,
+                          ));
 
-                    return (
-                      <div
-                        id="pics-in-comment"
-                        key={index}
-                        className={styles.media_slide_item}
-                        onClick={() => {
-                          openModal(
-                            <GalleryModal
-                              customClass="modal_content_album_modal"
-                              selectedSlideIndex={slideIndex}
-                              selectedCommentId={
-                                commentItem.commentId || commentItem.id
-                              }
-                            />,
-                            {
-                              name: "album",
-                              className: "modal__album",
-                              size: "full",
-                            },
-                          );
-                        }}
-                      >
-                        <picture>
-                          <source
-                            type="image/webp"
-                            srcSet={
-                              commentItem?.thumbnail_url?.[0] ||
-                              commentItem?.files?.[0]?.thumbnail_url?.[0]
+                  return (
+                    <div
+                      id="pics-in-comment"
+                      key={index}
+                      className={styles.media_slide_item}
+                      onClick={() => {
+                        openModal(
+                          <GalleryModal
+                            customClass="modal_content_album_modal"
+                            selectedSlideIndex={slideIndex}
+                            selectedCommentId={
+                              commentItem.commentId || commentItem.id
                             }
-                          />
-                          <source
-                            type="image/jpeg"
-                            srcSet={
-                              commentItem?.thumbnail_url?.[0] ||
-                              commentItem?.files?.[0]?.thumbnail_url?.[0]
-                            }
-                          />
-                          <img
-                            className={styles.media_slide_item_img}
-                            src={
-                              commentItem?.thumbnail_url?.[0] ||
-                              commentItem?.files?.[0]?.thumbnail_url?.[0]
-                            }
-                            width={84}
-                            height={84}
-                            alt=""
-                            title=""
-                          />
-                        </picture>
-                      </div>
-                    );
-                  })}
-              </div>
+                          />,
+                          {
+                            name: "album",
+                            className: "modal__album",
+                            size: "full",
+                          },
+                        );
+                      }}
+                    >
+                      <picture>
+                        <source
+                          type="image/webp"
+                          srcSet={
+                            commentItem?.thumbnail_url?.[0] ||
+                            commentItem?.files?.[0]?.thumbnail_url?.[0]
+                          }
+                        />
+                        <source
+                          type="image/jpeg"
+                          srcSet={
+                            commentItem?.thumbnail_url?.[0] ||
+                            commentItem?.files?.[0]?.thumbnail_url?.[0]
+                          }
+                        />
+                        <img
+                          className={styles.media_slide_item_img}
+                          src={
+                            commentItem?.thumbnail_url?.[0] ||
+                            commentItem?.files?.[0]?.thumbnail_url?.[0]
+                          }
+                          width={84}
+                          height={84}
+                          alt=""
+                          title=""
+                        />
+                      </picture>
+                    </div>
+                  );
+                })}
             </div>
             {commentsData?.intent_data?.length ? (
               <div className={styles.intent_container}>
@@ -265,7 +251,7 @@ export default function ShowAllCommentsModal() {
                   </div>
                 </div>
                 <div>
-                  <div className="d-flex overflow-x-auto overflow-y-hidden hide-scrollbar gap-1">
+                  <div className="d-flex overflow-x-auto overflow-y-hidden hide-scrollbar gap-2">
                     {commentsData?.intent_data?.map((intent, index) => (
                       <div
                         key={index}
@@ -411,64 +397,65 @@ export default function ShowAllCommentsModal() {
             ) : (
               ""
             )}
-            <div className="d-flex h-100 flex-column">
-              <div>
-                <div className={styles.infiniteScroll_container}>
-                  <InfiniteScroll
-                    className="d-flex flex-wrap"
-                    pageStart={1}
-                    loadMore={loadMore}
-                    hasMore={
-                      currentPage < (commentsData?.pager?.total_pages ?? 1)
-                    }
-                    useWindow={false}
-                    getScrollParent={() =>
-                      document.querySelector(".infiniteScroll_container")
-                    }
-                  >
-                    {comments?.map((comment, index) => (
-                      <div
-                        key={index}
-                        className="overflow-x-hidden w-100 border-complete-b-200"
-                        style={{
-                          width: "calc(100% + 0px)",
-                          marginBottom: "0",
-                        }}
-                      >
-                        <div className={styles.comment_row_box_container}>
-                          <CommentBox comment={comment} />
-                        </div>
-                      </div>
-                    ))}
+          </div>
 
-                    {isLoadingComments && (
-                      <div className={styles.loading_container}>
-                        <Loading isSmall />
+          <div className="d-flex h-100 flex-column">
+            <div>
+              <div className={styles.infiniteScroll_container}>
+                <InfiniteScroll
+                  className="d-flex flex-wrap"
+                  pageStart={1}
+                  loadMore={loadMore}
+                  hasMore={
+                    currentPage < (commentsData?.pager?.total_pages ?? 1)
+                  }
+                  useWindow={false}
+                  getScrollParent={() =>
+                    document.querySelector(".infiniteScroll_container")
+                  }
+                >
+                  {comments?.map((comment, index) => (
+                    <div
+                      key={index}
+                      className="overflow-x-hidden w-100 border-complete-b-200"
+                      style={{
+                        width: "calc(100% + 0px)",
+                        marginBottom: "0",
+                      }}
+                    >
+                      <div className={styles.comment_row_box_container}>
+                        <CommentBox comment={comment} />
                       </div>
-                    )}
-                  </InfiniteScroll>
-                </div>
+                    </div>
+                  ))}
+
+                  {isLoadingComments && (
+                    <div className={styles.loading_container}>
+                      <Loading isSmall />
+                    </div>
+                  )}
+                </InfiniteScroll>
               </div>
             </div>
-            <div
-              className={styles.add_comment_btn_container}
-              onClick={() =>
-                openModal(<AddCommentModal />, { name: "add-comment" })
-              }
-            >
-              <button className={styles.add_comment_btn} id="su-comment">
-                <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
-                  <span>ثبت دیدگاه</span>
-                  <div className="d-flex me-2">
-                    <div
-                      data-icon-name="cube-value-comment"
-                      data-icon="&#xE90B;"
-                      className={`${styles.add_comment_icon} cube-font-icon`}
-                    ></div>
-                  </div>
+          </div>
+          <div
+            className={styles.add_comment_btn_container}
+            onClick={() =>
+              openModal(<AddCommentModal />, { name: "add-comment" })
+            }
+          >
+            <button className={styles.add_comment_btn} id="su-comment">
+              <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
+                <span>ثبت دیدگاه</span>
+                <div className="d-flex me-2">
+                  <div
+                    data-icon-name="cube-value-comment"
+                    data-icon="&#xE90B;"
+                    className={`${styles.add_comment_icon} cube-font-icon`}
+                  ></div>
                 </div>
-              </button>
-            </div>
+              </div>
+            </button>
           </div>
         </div>
       </div>

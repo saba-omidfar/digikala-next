@@ -8,11 +8,11 @@ export async function GET(req, { params }) {
 
   const { commentId } = params;
   const cookiesStore = await cookies();
-  const token = cookiesStore.get("token")?.value;
+  const accessToken = cookiesStore.get("access_token")?.value;
 
   let userId = null;
-  if (token) {
-    const user = await UserModel.findOne({ "auth.token": token });
+  if (accessToken) {
+    const user = await UserModel.findOne({ "auth.accessToken": accessToken });
     if (user) userId = user._id.toString();
   }
 
@@ -47,12 +47,12 @@ export async function PATCH(req, { params }) {
     const { commentId } = params;
     const { type } = await req.json();
     const cookiesStore = await cookies();
-    const token = cookiesStore.get("token")?.value;
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token)
+    if (!accessToken)
       return Response.json({ message: "Unauthorized" }, { status: 401 });
 
-    const user = await UserModel.findOne({ "auth.token": token });
+    const user = await UserModel.findOne({ "auth.accessToken": accessToken });
     if (!user)
       return Response.json({ message: "کاربر پیدا نشد" }, { status: 401 });
 

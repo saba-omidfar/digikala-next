@@ -138,6 +138,7 @@
 
 .cart_shopping__link {
   position: relative;
+  padding: 8px;
 }
 
 .cart_shopping__link.mini_cart_open::before {

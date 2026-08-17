@@ -8,13 +8,13 @@
 //     await dbConnect();
 
 //     const cookiesStore = await cookies();
-//     const token = cookiesStore.get("token")?.value;
+//     const accessToken = cookiesStore.get("access_token")?.value;
 
 //     const { searchParams } = new URL(req.url);
 //     const guestCartId = searchParams.get("guestCartId") || null;
 
-//     if (token) {
-//       const user = await UserModel.findOne({ "auth.token": token });
+//     if (accessToken) {
+//       const user = await UserModel.findOne({ "auth.accessToken": accessToken });
 //       if (!user)
 //         return new Response(
 //           JSON.stringify({ success: false, message: "کاربر یافت نشد" }),
@@ -90,7 +90,7 @@ export async function DELETE(req) {
     await dbConnect();
 
     const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value || null;
+    const accessToken = cookieStore.get("accessToken")?.value || null;
 
     const { searchParams } = new URL(req.url);
     const guestCartId = searchParams.get("guestCartId");
@@ -100,9 +100,9 @@ export async function DELETE(req) {
     /* --------------------------------
        1️⃣ پیدا کردن Cart (User / Guest)
     -------------------------------- */
-    if (token) {
+    if (accessToken) {
       const user = await UserModel.findOne({
-        "auth.token": token,
+        "auth.accessToken": accessToken,
       }).select("_id");
 
       if (!user) {
@@ -142,7 +142,9 @@ export async function DELETE(req) {
     return Response.json(
       {
         success: true,
-        message: token ? "سبد خرید کاربر پاک شد" : "سبد خرید مهمان پاک شد",
+        message: accessToken
+          ? "سبد خرید کاربر پاک شد"
+          : "سبد خرید مهمان پاک شد",
       },
       { status: 200 },
     );

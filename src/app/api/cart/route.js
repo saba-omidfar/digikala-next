@@ -20,10 +20,6 @@ async function hydrateItems(items = []) {
 
         if (!res.ok) {
           return null;
-          // return {
-          //   ...item,
-          //   unavailable: true,
-          // };
         }
 
         const data = await res.json();
@@ -32,10 +28,6 @@ async function hydrateItems(items = []) {
 
         if (!product) {
           return null;
-          // return {
-          //   ...item,
-          //   unavailable: true,
-          // };
         }
 
         const variant = product.variants?.find(
@@ -44,10 +36,6 @@ async function hydrateItems(items = []) {
 
         if (!variant) {
           return null;
-          // return {
-          //   ...item,
-          //   unavailable: true,
-          // };
         }
 
         return {
@@ -78,11 +66,6 @@ async function hydrateItems(items = []) {
       } catch (error) {
         console.error(error);
         return null;
-
-        // return {
-        //   ...item,
-        //   unavailable: true,
-        // };
       }
     }),
   );
@@ -94,8 +77,8 @@ export async function GET(req) {
   try {
     await dbConnect();
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
     const { searchParams } = new URL(req.url);
     const guestCartId = searchParams.get("guestCartId");
@@ -104,9 +87,9 @@ export async function GET(req) {
     let clearGuestCartId = false;
 
     /* ---------------- USER ---------------- */
-    if (token) {
+    if (accessToken) {
       const user = await UserModel.findOne({
-        "auth.token": token,
+        "auth.accessToken": accessToken,
       }).select("_id");
 
       if (!user) {

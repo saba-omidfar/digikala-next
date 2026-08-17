@@ -6,61 +6,105 @@ import UserModel from "@/models/User";
 import AmazingNotificationModel from "@/models/AmazingNotifications";
 
 export async function POST(req, { params }) {
-  await dbConnect();
+  try {
+    await dbConnect();
 
-  const { productId } = await params;
+    const { productId } = await params;
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+    const numericProductId = Number(productId);
 
-  if (!token) {
-    return Response.json(
-      { success: false, message: "کاربر احراز هویت نشده است" },
-      { status: 401 },
-    );
-  }
+    if (!Number.isFinite(numericProductId)) {
+      return Response.json(
+        {
+          success: false,
+          message: "شناسه محصول نامعتبر است",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
 
-  const user = await UserModel.findOne({ "auth.token": token }).lean();
-  if (!user?._id) {
-    return Response.json(
-      { success: false, message: "کاربر یافت نشد" },
-      { status: 404 },
-    );
-  }
+    const cookiesStore = await cookies();
 
-  const {
-    send_sms = false,
-    send_email = false,
-    send_notification = false,
-  } = await req.json();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-  const existing = await AmazingNotificationModel.findOne({
-    userId: user._id,
-    productId: Number(productId),
-    type: "on_incredible_offer",
-  });
+    if (!accessToken) {
+      return Response.json(
+        {
+          success: false,
+          message: "کاربر احراز هویت نشده است",
+        },
+        {
+          status: 401,
+        },
+      );
+    }
 
-  if (existing) {
+    const user = await UserModel.findOne({
+      "auth.accessToken": accessToken,
+    }).lean();
+
+    if (!user?._id) {
+      return Response.json(
+        {
+          success: false,
+          message: "کاربر یافت نشد",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+
+    const {
+      send_sms = false,
+      send_email = false,
+      send_notification = false,
+    } = await req.json();
+
+    const existing = await AmazingNotificationModel.findOne({
+      userId: user._id,
+      productId: numericProductId,
+      type: "on_incredible_offer",
+    });
+
+    if (existing) {
+      return Response.json(
+        {
+          success: false,
+          message: "قبلا ثبت شده",
+        },
+        {
+          status: 409,
+        },
+      );
+    }
+
+    await AmazingNotificationModel.create({
+      userId: user._id,
+      productId: numericProductId,
+      type: "on_incredible_offer",
+      send_sms: Boolean(send_sms),
+      send_email: Boolean(send_email),
+      send_notification: Boolean(send_notification),
+    });
+
+    return Response.json({
+      success: true,
+      action: "add",
+    });
+  } catch (err) {
+    console.error("Add amazing notification error:", err);
+
     return Response.json(
       {
         success: false,
-        message: "قبلا ثبت شده",
+        message: err.message,
       },
-      { status: 409 },
+      {
+        status: 500,
+      },
     );
   }
-
-  await AmazingNotificationModel.create({
-    userId: user._id,
-    productId: Number(productId),
-    type: "on_incredible_offer",
-    send_sms,
-    send_email,
-    send_notification,
-  });
-
-  return Response.json({
-    success: true,
-    action: "add",
-  });
 }

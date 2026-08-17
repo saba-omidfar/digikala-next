@@ -8,7 +8,7 @@
 //   try {
 //     await dbConnect();
 //     const cookiesStore = await cookies();
-//     const token = cookiesStore.get("token")?.value;
+//     const token = cookiesStore.get("access_token")?.value?.value;
 
 //     if (!token)
 //       return Response.json(
@@ -55,17 +55,20 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json(
         { success: false, message: "کاربر لاگین نیست" },
         { status: 401 },
       );
     }
 
-    const user = await UserModel.findOne({ "auth.token": token }).lean();
+    const user = await UserModel.findOne({
+      "auth.accessToken": accessToken,
+    }).lean();
+
     if (!user) {
       return Response.json(
         { success: false, message: "کاربر یافت نشد" },
@@ -104,7 +107,6 @@ export async function GET() {
 
               const data = await digikalaFetch({
                 path,
-                headers: req.headers,
               });
 
               return {

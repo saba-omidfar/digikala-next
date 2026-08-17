@@ -10,21 +10,22 @@ export async function GET(req, { params }) {
 
     const { productId } = await params;
 
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const cookiesStore = await cookies();
+    const accessToken = cookiesStore.get("access_token")?.value;
 
-    if (!token) {
+    if (!accessToken) {
       return Response.json({
-        is_active: false,
+        is_favorite: false,
       });
     }
 
     const user = await UserModel.findOne({
-      "auth.token": token,
-    });
+      "auth.accessToken": accessToken,
+    }).lean();
 
     const isFavorite =
-      user?.favorite_products?.some((id) => String(id) === productId) ?? false;
+      user?.favorite_products?.some((id) => String(id) === String(productId)) ??
+      false;
 
     return Response.json({
       is_favorite: isFavorite,
@@ -33,8 +34,13 @@ export async function GET(req, { params }) {
     console.error("status favorite error =>", err);
 
     return Response.json(
-      { success: false, message: err.message },
-      { status: 500 },
+      {
+        success: false,
+        message: err.message,
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

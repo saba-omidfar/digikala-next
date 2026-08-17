@@ -12,7 +12,6 @@ export async function GET(req, { params }) {
 
     const data = await digikalaFetch({
       path,
-      headers: req.headers,
     });
 
     return Response.json(data);

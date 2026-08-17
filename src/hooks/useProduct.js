@@ -30,6 +30,8 @@ function useGetProductDetails(productId) {
       const json = await res.json();
 
       setData(json?.data?.product ?? null);
+    } catch (error) {
+      console.error("PRODUCT DETAILS ERROR =>", error);
     } finally {
       setIsLoading(false);
     }
@@ -41,7 +43,6 @@ function useGetProductDetails(productId) {
 
   return { data, isLoading, refetch };
 }
-
 function useGetSuggestionProducts(productId) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
