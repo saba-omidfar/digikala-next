@@ -54,49 +54,24 @@
 // }
 
 export async function digikalaFetch({ path }) {
-  try {
-    const url = `https://api.digikala.com${path}`;
+  const url = `https://api.digikala.com${path}`;
 
-    const headers = {
-      Accept: "application/json, text/plain, */*",
-      "Accept-Language": "en-US,en;q=0.9,fa;q=0.8",
-      Origin: "https://www.digikala.com",
-      Referer: "https://www.digikala.com/",
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
-      "x-web-client": "desktop",
-      "x-web-client-id": "web",
-      "x-web-optimize-response": "1",
-    };
+  const res = await fetch(url, {
+    method: "GET",
+    redirect: "manual",
+    cache: "no-store",
+  });
 
-    const res = await fetch(url, {
-      method: "GET",
-      headers,
-      redirect: "manual",
-      cache: "no-store",
-    });
+  console.log("STATUS:", res.status);
+  console.log("LOCATION:", res.headers.get("location"));
 
-    const text = await res.text();
+  const text = await res.text();
 
-    console.log({
-      status: res.status,
-      location: res.headers.get("location"),
-      body: text.slice(0, 300),
-    });
+  console.log("BODY:", text.slice(0, 300));
 
-    if (!res.ok) {
-      throw new Error(`Digikala fetch failed: ${res.status}`);
-    }
-
-    return JSON.parse(text);
-  } catch (err) {
-    console.error("FETCH ERROR =>", {
-      name: err?.name,
-      message: err?.message,
-      cause: err?.cause,
-      code: err?.cause?.code,
-    });
-
-    throw err;
+  if (!res.ok) {
+    throw new Error(`Digikala fetch failed: ${res.status}`);
   }
+
+  return JSON.parse(text);
 }
