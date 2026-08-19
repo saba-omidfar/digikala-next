@@ -4,7 +4,7 @@ export const runtime = "nodejs";
 
 export async function GET(req) {
   try {
-    const path = `/discovery/api/v1/home/`;
+    const path = `/discovery/api/v1/home`;
 
     const data = await digikalaFetch({
       path,

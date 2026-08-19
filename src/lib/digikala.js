@@ -21,43 +21,43 @@ export async function digikalaFetch({ path, cookie }) {
     headers.Cookie = cookie;
   }
 
-  try {
-    console.log("DIGIKALA REQUEST =>", url);
+  const urls = [
+    "https://api.digikala.com/discovery/api/v1/home",
+    "https://api.digikala.com/discovery/api/v1/home/",
+  ];
 
-    const res = await fetch(url, {
-      method: "GET",
-      headers,
-      cache: "no-store",
-      // redirect: "manual",
-    });
+  for (const url of urls) {
+    try {
+      console.log("DIGIKALA REQUEST =>", url);
 
-    console.log("DIGIKALA STATUS =>", res.status);
-    console.log("DIGIKALA LOCATION =>", res.headers.get("location"));
-
-    const text = await res.text();
-
-    console.log("DIGIKALA RESPONSE =>", text.slice(0, 500));
-
-    if (!res.ok) {
-      console.error("DIGIKALA ERROR =>", {
-        status: res.status,
-        location: res.headers.get("location"),
-        body: text,
+      const res = await fetch(url, {
+        method: "GET",
+        headers,
+        cache: "no-store",
+        redirect: "manual",
       });
 
-      throw new Error(`Digikala fetch failed: ${res.status}`);
+      const text = await res.text();
+
+      console.log("TEST URL =>", url);
+      console.log("STATUS =>", res.status);
+      console.log("LOCATION =>", res.headers.get("location"));
+      console.log("BODY =>", text.slice(0, 300));
+
+      if (!res.ok) {
+        console.error("DIGIKALA ERROR =>", {
+          status: res.status,
+          location: res.headers.get("location"),
+          body: text,
+        });
+
+        throw new Error(`Digikala fetch failed: ${res.status}`);
+      }
+
+      return JSON.parse(text);
+    } catch (err) {
+      console.error("FAILED URL =>", url);
+      console.log(err);
     }
-
-    return JSON.parse(text);
-  } catch (err) {
-    console.error("DIGIKALA FETCH ERROR =>", {
-      name: err?.name,
-      message: err?.message,
-      cause: err?.cause,
-      causeCode: err?.cause?.code,
-      causeMessage: err?.cause?.message,
-    });
-
-    throw err;
   }
 }
