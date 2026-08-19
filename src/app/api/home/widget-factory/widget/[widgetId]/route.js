@@ -39,8 +39,6 @@ export async function GET(req, { params }) {
   try {
     const { widgetId } = await params;
 
-    console.log("widgetId =>", widgetId);
-
     const path = `/discovery/api/v1/widget-factory/widget/${widgetId}`;
 
     const data = await digikalaFetch({
