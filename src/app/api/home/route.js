@@ -1,6 +1,7 @@
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";
+export const preferredRegion = "fra1g";
 
 export async function GET(req) {
   try {

@@ -69,10 +69,6 @@ export async function digikalaFetch({ path }) {
       "x-web-optimize-response": "1",
     };
 
-    if (process.env.DIGIKALA_COOKIE) {
-      headers.Cookie = process.env.DIGIKALA_COOKIE;
-    }
-
     const res = await fetch(url, {
       method: "GET",
       headers,
