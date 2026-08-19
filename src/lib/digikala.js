@@ -58,16 +58,22 @@ export async function digikalaFetch({ path }) {
 
   const res = await fetch(url, {
     method: "GET",
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "Mozilla/5.0",
+    },
     redirect: "manual",
     cache: "no-store",
   });
 
   console.log("STATUS:", res.status);
   console.log("LOCATION:", res.headers.get("location"));
+  console.log("SERVER:", res.headers.get("server"));
+  console.log("VIA:", res.headers.get("via"));
 
   const text = await res.text();
 
-  console.log("BODY:", text.slice(0, 300));
+  console.log("BODY:", text.slice(0, 500));
 
   if (!res.ok) {
     throw new Error(`Digikala fetch failed: ${res.status}`);
