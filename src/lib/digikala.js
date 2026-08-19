@@ -54,26 +54,42 @@
 // }
 
 export async function digikalaFetch({ path }) {
-  const url = `https://api.digikala.com${path}`;
-
-  console.log("REQUEST =>", url);
-
   try {
+    const url = `https://api.digikala.com${path}`;
+
+    const headers = {
+      Accept: "application/json, text/plain, */*",
+      "Accept-Language": "en-US,en;q=0.9,fa;q=0.8",
+      Origin: "https://www.digikala.com",
+      Referer: "https://www.digikala.com/",
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "x-web-client": "desktop",
+      "x-web-client-id": "web",
+      "x-web-optimize-response": "1",
+    };
+
+    if (process.env.DIGIKALA_COOKIE) {
+      headers.Cookie = process.env.DIGIKALA_COOKIE;
+    }
+
     const res = await fetch(url, {
       method: "GET",
-      redirect: "follow",
+      headers,
+      redirect: "manual",
       cache: "no-store",
     });
 
-    console.log("STATUS =>", res.status);
-    console.log("FINAL URL =>", res.url);
-
     const text = await res.text();
 
-    console.log("BODY =>", text.slice(0, 500));
+    console.log({
+      status: res.status,
+      location: res.headers.get("location"),
+      body: text.slice(0, 300),
+    });
 
     if (!res.ok) {
-      throw new Error("Digikala fetch failed:", res.status);
+      throw new Error(`Digikala fetch failed: ${res.status}`);
     }
 
     return JSON.parse(text);
