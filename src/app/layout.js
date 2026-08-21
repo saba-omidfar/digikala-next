@@ -9,7 +9,7 @@ import { SnackbarProvider } from "@/contexts/SnackbarContext";
 import Providers from "@/providers/Provider";
 import ParentModal from "@/components/ui/modals/parentModal/ParentModal";
 
-import NProgressBar from "@/utils/NProgressBar";
+import NextTopLoader from "nextjs-toploader";
 
 import "@/components/modules/dk-popover/dk-popover";
 
@@ -3540,7 +3540,12 @@ export default function RootLayout({ children }) {
                   <SearchProvider>
                     <LocationProvider>
                       <ProductProvider>
-                        <NProgressBar />
+                        <NextTopLoader
+                          height={2}
+                          color="#ef4056"
+                          showSpinner={false}
+                          speed={200}
+                        />
                         <ParentModal scope="global" />
                         {children}
                       </ProductProvider>
