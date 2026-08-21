@@ -54,7 +54,7 @@
 // }
 
 export async function digikalaFetch({ path }) {
-  const url = `https://api.digikala.com${path}`;
+  const url = `https://digikala.apps.abrclick.cloud${path}`;
 
   const res = await fetch(url, {
     method: "GET",
