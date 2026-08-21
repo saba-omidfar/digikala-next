@@ -1,83 +1,38 @@
-// export const runtime = "nodejs";
-
-// export async function digikalaFetch({ path, cookie }) {
-//   const url = `https://api.digikala.com${path}`;
-
-//   const headers = {
-//     Accept: "application/json, text/plain, */*",
-//     "Accept-Language": "fa-IR,fa;q=0.9,en-US;q=0.8,en;q=0.7",
-
-//     Origin: "https://www.digikala.com",
-//     Referer: "https://www.digikala.com/",
-
-//     "User-Agent":
-//       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
-
-//     "x-web-client": "desktop",
-//     "x-web-client-id": "web",
-//   };
-
-//   if (cookie) {
-//     headers.Cookie = cookie;
-//   }
-
-//   try {
-//     const res = await fetch(url, {
-//       method: "GET",
-//       headers,
-//       cache: "no-store",
-//       redirect: "manual",
-//     });
-
-//     const text = await res.text();
-
-//     console.log("TEST URL =>", url);
-//     console.log("STATUS =>", res.status);
-//     console.log("LOCATION =>", res.headers.get("location"));
-//     console.log("BODY =>", text.slice(0, 300));
-
-//     if (!res.ok) {
-//       console.error("DIGIKALA ERROR =>", {
-//         status: res.status,
-//         location: res.headers.get("location"),
-//         body: text,
-//       });
-
-//       throw new Error(`Digikala fetch failed: ${res.status}`);
-//     }
-
-//     return JSON.parse(text);
-//   } catch (err) {
-//     console.error("FAILED URL =>", url);
-//     console.log(err);
-//   }
-// }
-
-export async function digikalaFetch({ path }) {
+export async function digikalaFetch({ path, cookie }) {
   const url = `https://digikala.apps.abrclick.cloud${path}`;
+
+  const headers = {
+    Accept: "application/json",
+    "User-Agent": "Mozilla/5.0",
+  };
+
+  if (cookie) {
+    headers.Cookie = cookie;
+  }
 
   const res = await fetch(url, {
     method: "GET",
-    headers: {
-      Accept: "application/json",
-      "User-Agent": "Mozilla/5.0",
-    },
+    headers,
     redirect: "manual",
     cache: "no-store",
   });
 
-  console.log("STATUS:", res.status);
-  console.log("LOCATION:", res.headers.get("location"));
-  console.log("SERVER:", res.headers.get("server"));
-  console.log("VIA:", res.headers.get("via"));
+  console.log("DIGIKALA PROXY STATUS:", res.status);
+  console.log("DIGIKALA PROXY LOCATION:", res.headers.get("location"));
 
   const text = await res.text();
 
-  console.log("BODY:", text.slice(0, 500));
+  console.log("DIGIKALA PROXY BODY:", text.slice(0, 500));
 
   if (!res.ok) {
-    throw new Error(`Digikala fetch failed: ${res.status}`);
+    throw new Error(
+      `Digikala fetch failed: ${res.status} - ${text.slice(0, 300)}`,
+    );
   }
 
-  return JSON.parse(text);
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(`Digikala returned invalid JSON: ${text.slice(0, 300)}`);
+  }
 }
