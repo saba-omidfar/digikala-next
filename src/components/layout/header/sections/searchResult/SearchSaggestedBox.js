@@ -1,4 +1,4 @@
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 
 import { useModal } from "@/contexts/modalContext";
 

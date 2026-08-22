@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 import Link from "next/link";
 
 import QuickActionsModal from "@/features/product/modals/quickActionsModal/QuickActionsModal";

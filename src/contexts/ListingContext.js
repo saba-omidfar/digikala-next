@@ -12,7 +12,7 @@ import React, {
 import qs from "qs";
 import { useParams } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 
 import { useModal } from "@/contexts/modalContext";
 import { useSearch } from "@/hooks/useSearch";

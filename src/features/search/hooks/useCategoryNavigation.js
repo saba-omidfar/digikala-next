@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 
 import buildCategoryTree from "@/utils/buildCategoryTree";
 import useScreenStatus from "@/hooks/useScreenStatus";

@@ -1,4 +1,4 @@
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 
 import AmazingNotifModal from "@/features/product/modals/amazingNotifModal/AmazingNotifModal";
 

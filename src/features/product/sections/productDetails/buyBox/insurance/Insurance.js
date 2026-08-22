@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 
 import InsuranceModal from "@/features/shared/modals/insuranceModal/InsuranceModal";
 

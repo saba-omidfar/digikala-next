@@ -1,7 +1,7 @@
 // "use client";
 
 // import { useEffect, useState, useCallback, useMemo } from "react";
-// import { useRouter } from "next-nprogress-bar";
+// import { useRouter } from 'nextjs-toploader/app';
 // import { useQueryClient } from "react-query";
 
 // import { useSendCode, useVerifyCode } from "@/features/users/hooks/useCode";
@@ -208,7 +208,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 import { useQueryClient } from "react-query";
 
 import { useSendCode, useVerifyCode } from "@/features/users/hooks/useCode";

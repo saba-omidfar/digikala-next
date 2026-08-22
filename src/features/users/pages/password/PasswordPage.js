@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 
 import UsernameForm from "@/features/users/sections/usernameForm/UsernameForm";
 import AuthHeader from "@/features/users/sections/authHeader/AuthHeader";

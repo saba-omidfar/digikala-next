@@ -1,5 +1,5 @@
 import { useModal } from "@/contexts/modalContext";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 
 import styles from "./digiplusModal.module.css";
 

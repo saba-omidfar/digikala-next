@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 
 import { usePopper } from "react-popper";
 

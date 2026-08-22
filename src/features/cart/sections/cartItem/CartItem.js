@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "nextjs-toploader/app";
 import Link from "next/link";
 import Image from "next/image";
 
