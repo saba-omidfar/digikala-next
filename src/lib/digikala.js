@@ -53,40 +53,20 @@
 //   }
 // }
 
-export async function digikalaFetch({ path, cookie }) {
+export async function digikalaFetch({ path }) {
   const url = `https://digikala.apps.abrclick.cloud${path}`;
 
-  const headers = {
-    Accept: "application/json",
-    "User-Agent": "Mozilla/5.0",
-  };
-
-  if (cookie) {
-    headers.Cookie = cookie;
-  }
-
   const res = await fetch(url, {
-    method: "GET",
-    headers,
-    redirect: "manual",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "User-Agent": "Mozilla/5.0",
+    },
     cache: "no-store",
   });
 
-  const text = await res.text();
-
-  console.log("PROXY STATUS:", res.status);
-  console.log("PROXY BODY:", text.slice(0, 300));
-
   if (!res.ok) {
-    throw new Error(`Proxy failed: ${res.status}`);
+    throw new Error(`Digikala proxy failed: ${res.status}`);
   }
 
-  const data = JSON.parse(text);
-
-  // نسخه فعلی Proxy پاسخ Digikala را داخل body گذاشته
-  if (data.body && data.status) {
-    return JSON.parse(data.body);
-  }
-
-  return data;
+  return res.json();
 }
