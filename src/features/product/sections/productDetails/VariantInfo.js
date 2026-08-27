@@ -39,8 +39,6 @@ function VariantInfo() {
     trueToSize,
   } = useProductContext();
 
-  console.log("commentsData", commentsData);
-
   const { basket } = useCartContext();
 
   const [openTooltipId, setOpenTooltipId] = useState(null);
