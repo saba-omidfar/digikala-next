@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/best-selling/?last_days=week
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

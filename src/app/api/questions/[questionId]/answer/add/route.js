@@ -4,7 +4,7 @@ import dbConnect from "@/configs/db";
 
 import UserModel from "@/models/User";
 import QuestionModel from "@/models/Question";
-import { accessToken } from "maplibre-gl";
+import { digikalaFetch } from "@/lib/digikala";
 
 export async function POST(req, { params }) {
   try {
@@ -16,7 +16,7 @@ export async function POST(req, { params }) {
     const { productId, text, source } = body;
 
     const cookiesStore = await cookies();
-    const token = cookiesStore.get("access_token")?.value;
+    const accessToken = cookiesStore.get("access_token")?.value;
 
     if (!accessToken) {
       return Response.json({ message: "Unauthorized" }, { status: 401 });
@@ -58,11 +58,9 @@ export async function POST(req, { params }) {
 
     if (!questionDoc) {
       if (source === "digikala") {
-        const res = await fetch(
-          `https://api.digikala.com/v1/product/${productId}/questions/`,
-        );
-
-        const data = await res.json();
+        const data = await digikalaFetch({
+          path: `/v1/product/${productId}/questions/`,
+        });
 
         const question = data?.data?.questions?.find(
           (q) => String(q.id) === String(questionId),

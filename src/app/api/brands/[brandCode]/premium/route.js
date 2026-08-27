@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/brands/tch/premium/
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

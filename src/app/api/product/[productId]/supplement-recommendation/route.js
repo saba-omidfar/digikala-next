@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/product/915865/supplement-recommendation/
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

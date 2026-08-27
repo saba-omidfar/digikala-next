@@ -5,24 +5,17 @@ import dbConnect from "@/configs/db";
 import CartModel from "@/models/Cart";
 import UserModel from "@/models/User";
 
+import { digikalaFetch } from "@/lib/digikala";
+
 async function hydrateItems(items = []) {
   if (!items?.length) return [];
 
   const hydrated = await Promise.all(
     items.map(async (item) => {
       try {
-        const res = await fetch(
-          `https://api.digikala.com/v2/product/${item.product.id}/`,
-          {
-            cache: "no-store",
-          },
-        );
-
-        if (!res.ok) {
-          return null;
-        }
-
-        const data = await res.json();
+        const data = await digikalaFetch({
+          path: `/v2/product/${item.product.id}/`,
+        });
 
         const product = data?.data?.product;
 

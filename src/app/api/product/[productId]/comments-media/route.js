@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/product/10828074/comments-media/
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

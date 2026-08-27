@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/categories/electronic-devices/?_rch=9fd46e644c8e
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

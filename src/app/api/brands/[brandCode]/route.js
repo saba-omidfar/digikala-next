@@ -1,5 +1,3 @@
-// https://api.digikala.com/discovery/api/v1/brands/tch/products?_rch=9fd46e644c8e&no_redirect=1&page=1
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

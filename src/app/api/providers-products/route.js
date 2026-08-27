@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/providers-products/?category_code=mouse&page=1&q=%D9%85%D9%88%D8%B3
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

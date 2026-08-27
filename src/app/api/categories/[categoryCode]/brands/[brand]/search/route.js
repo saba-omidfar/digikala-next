@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/categories/mobile-phone/brands/apple/search/?_rch=9fd46e644c8e&page=1
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

@@ -1,5 +1,3 @@
-//https://api.digikala.com/v1/map/geo/?address=%DA%AF%D8%B1%DA%AF%D8%A7%D9%86&latitude=35.69070703918537&longitude=51.39002649040219
-
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";

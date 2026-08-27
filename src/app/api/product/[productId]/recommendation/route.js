@@ -1,4 +1,3 @@
-// https://api.digikala.com/v1/product/12511051/recommendation/?offset=0
 //
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";

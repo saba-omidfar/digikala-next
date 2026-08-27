@@ -1,5 +1,3 @@
-// https://api.digikala.com/discovery/api/v1/faceted-pages/products/category-mobile-phone/from-105000000-up-to-129000000?_rch=9fd46e644c8e&facetURL%5B0%5D=category-mobile-phone&facetURL%5B1%5D=from-105000000-up-to-129000000&page=1
-
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";

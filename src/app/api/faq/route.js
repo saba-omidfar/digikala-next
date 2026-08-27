@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/faq/?page=1
-
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";

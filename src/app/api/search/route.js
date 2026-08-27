@@ -11,7 +11,7 @@ export async function GET(req) {
     const cookiesStore = await cookies();
     const accessToken = cookiesStore.get("access_token")?.value;
 
-    const path = `/discovery/api/v2/search/?${searchParams.toString()}`;
+    const path = `/discovery/api/v2/search?${searchParams.toString()}`;
 
     const data = await digikalaFetch({
       path,

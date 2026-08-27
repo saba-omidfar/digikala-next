@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/categories/lip-gloss/search/?_rch=9fd46e644c8e&columns_per_page=2&page=1&q=لیپ+گلاس
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

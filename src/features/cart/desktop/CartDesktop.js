@@ -6,20 +6,18 @@ import CartSection from "@/features/cart/sections/cartSection/CartSection";
 import Footer from "@/components/layout/footer/desktop/Footer";
 import Spinner from "@/utils/Spinner";
 
-import useScreenStatus from "@/hooks/useScreenStatus";
 import { useGetUniversal } from "@/hooks/useGetUniversal";
 import { useCartContext } from "@/contexts/CartContext";
+import { useUserContext } from "@/contexts/UserContext";
 
 import styles from "./cartDesktop.module.css";
 
 function CartDesktop() {
-  const { isClientReady } = useScreenStatus();
   const { basket, isLoadingUserCart } = useCartContext();
+  const { user } = useUserContext();
   const { data: topMegaMenuBanners } = useGetUniversal();
 
   const isBasketEmpty = basket.length === 0;
-
-  if (!isClientReady) return;
 
   return (
     <>
@@ -49,7 +47,7 @@ function CartDesktop() {
                 <div className={styles.divider}>
                   <div className={styles.divider_line}></div>
                 </div>
-                <NextCart />
+                {user ? <NextCart /> : ""}
               </div>
             </>
           )}

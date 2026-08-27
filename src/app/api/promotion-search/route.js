@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/promotion-search/?page=1&promotion_types%5B0%5D=incredible_offer&promotion_types%5B1%5D=promotion
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

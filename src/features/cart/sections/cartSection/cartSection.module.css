@@ -68,6 +68,7 @@
 @media screen and (max-width: 1024px) {
   .cart_items_container {
     padding: 16px;
+    padding-bottom: 0 !important;
   }
 
   .cart_section {

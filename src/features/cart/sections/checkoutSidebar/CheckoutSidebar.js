@@ -76,7 +76,7 @@ function CheckoutSidebar() {
             {/* When User Is Not Logged In. */}
             {!user ? (
               <Link
-                href="/users/login/?backUrl=/checkout/cart"
+                href="/users/login/"
                 className={styles.checkout_sideBar_link}
               >
                 <div className={styles.content_container}>

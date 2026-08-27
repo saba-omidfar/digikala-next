@@ -13,6 +13,10 @@ import styles from "./homeMobile.module.css";
 export default function HomeMobile() {
   const { homeData, homeDataLoading } = useHomePageData();
 
+  const homeSlider = homeData?.find(
+    (widget) => widget.utm === "banner_slider_homepage_tab_all",
+  );
+
   return (
     <div className="d-flex flex-column bg-white">
       <div className="d-flex flex-column flex-grow-1">
@@ -27,10 +31,14 @@ export default function HomeMobile() {
                 <div className="position-relative">
                   <div className={styles.sticky_slider_container}>
                     <div className="w-100">
-                      <HomeTopSlider
-                        slides={homeData?.top_slider}
-                        isLoading={homeDataLoading}
-                      />
+                      {homeSlider?.data?.items?.length ? (
+                        <HomeTopSlider
+                          slides={homeSlider?.data?.items}
+                          isLoading={homeDataLoading}
+                        />
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                   <div className={styles.content_children}>

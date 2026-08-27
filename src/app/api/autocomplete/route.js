@@ -1,5 +1,3 @@
-// https://api.digikala.com/v2/autocomplete/?q=سا
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

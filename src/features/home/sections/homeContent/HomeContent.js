@@ -19,18 +19,22 @@ import Divider from "@/features/home/sections/divider/Divider";
 
 export default function HomeContent({ homeData, isMobile }) {
   const renderWidget = (widget) => {
-    const { component, data } = widget;
+    const { utm, data } = widget;
 
-    switch (component) {
-      case "top_slider":
+    switch (utm) {
+      case "banner_slider_homepage_tab_all":
         if (isMobile) return null;
 
-        return data?.length > 0 ? <HomeTopSlider slides={data} /> : null;
+        return data?.items?.length > 0 ? (
+          <HomeTopSlider slides={data?.items} />
+        ) : null;
 
-      case "deep_links":
-        return data?.length > 0 ? <DeepLinks deepLinks={data} /> : null;
+      case "circle_badge_homepage_tab_all":
+        return data?.items?.length > 0 ? (
+          <DeepLinks deepLinks={data?.items} />
+        ) : null;
 
-      case "incredible_offers":
+      case "amazing_carousel_homepage_tab_all":
         return data ? (
           isMobile ? (
             <AmazingSliderMobile data={data} />
@@ -39,14 +43,14 @@ export default function HomeContent({ homeData, isMobile }) {
           )
         ) : null;
 
-      case "categories":
+      case "touchpoint_group_tab_homepage_tab_all":
         return isMobile ? (
           <MobileCategories categories={data?.default_groups} />
         ) : (
           <Categories categories={data?.default_groups} />
         );
 
-      case "popular_brands":
+      case "brands_web":
         return isMobile ? (
           <MobileBrands
             icon={data?.icon?.url}
@@ -60,13 +64,20 @@ export default function HomeContent({ homeData, isMobile }) {
       case "top_banners":
       case "top_second_banners":
       case "zone_middle_banner_0":
+      case "dkms_zone_middle_index_0_homepage_tab_all":
       case "zone_middle_banner_1":
       case "middle_third_banners":
+      case "dkms_middle_third_homepage_tab_all":
       case "middle_third_other_banners":
       case "zone_bottom_banners":
-        return data?.length > 0 ? <Banners banners={data} isHomePage /> : null;
+      case "dkms_top_homepage_tab_all":
+      case "dkms_top_second_homepage_tab_all":
+      case "dkms_middle_third_other_tab_all":
+        return data?.items?.length > 0 ? (
+          <Banners banners={data?.items} isHomePage />
+        ) : null;
 
-      case "best_selling":
+      case "trending_products_tab_homepage":
         return data?.products?.length > 0 ? (
           <BestSellingProductsSlider
             isHomePage
@@ -78,7 +89,7 @@ export default function HomeContent({ homeData, isMobile }) {
           />
         ) : null;
 
-      case "trending":
+      case "trending_products_tab_homepage":
         return data?.products?.length > 0 ? (
           <BestSellingProductsSlider
             isHomePage

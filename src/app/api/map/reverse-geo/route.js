@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/map/reverse-geo/?latitude=36.830961&longitude=54.448008
-
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";

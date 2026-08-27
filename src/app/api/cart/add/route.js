@@ -7,6 +7,7 @@ import UserModel from "@/models/User";
 
 import recalcCartPrices from "@/utils/recalcCartPrices";
 import syncUserCart from "@/utils/syncUserCart";
+import { digikalaFetch } from "@/lib/digikala";
 
 export async function POST(req) {
   try {
@@ -136,11 +137,10 @@ export async function POST(req) {
         (item) => Number(item.variant?.id) !== Number(variantId),
       );
     } else {
-      const res = await fetch(
-        `https://api.digikala.com/v2/product/${productId}/`,
-      );
+      const data = await digikalaFetch({
+        path: `/v2/product/${item.product.id}/`,
+      });
 
-      const data = await res.json();
       const product = data?.data?.product;
 
       if (!product) {

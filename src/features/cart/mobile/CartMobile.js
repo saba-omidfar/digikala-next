@@ -6,11 +6,13 @@ import Spinner from "@/utils/Spinner";
 import MobileFooter from "@/features/cart/sections/mobileFooter/MobileFooter";
 
 import { useCartContext } from "@/contexts/CartContext";
+import { useUserContext } from "@/contexts/UserContext";
 
 import styles from "./cartMobile.module.css";
 
 function CartMobile() {
   const { basket, isLoadingUserCart } = useCartContext();
+  const { user } = useUserContext();
 
   if (isLoadingUserCart) {
     return (
@@ -26,7 +28,7 @@ function CartMobile() {
         <div className={styles.Desktop_content}>
           <div className={styles.cart_container}>
             <CartSection />
-            {!basket.length === 0 && <CheckoutSidebar />}
+            {basket.length > 0 && <CheckoutSidebar />}
 
             <div className={styles.divider}>
               <div className={styles.divider_line}></div>
@@ -34,18 +36,14 @@ function CartMobile() {
           </div>
           <div className={styles.cart_footer}>
             <ViewedProducts />
-            <div className={styles.divider}>
+            {/* <div className={styles.divider}>
               <div className={styles.divider_line}></div>
-            </div>
-            <NextCart />
+            </div> */}
+            {user ? <NextCart /> : ""}
           </div>
         </div>
       </div>
-      {!isLoadingUserCart && basket.length ? (
-        <MobileFooter activeMenu="basket" />
-      ) : (
-        ""
-      )}
+      {!isLoadingUserCart ? <MobileFooter activeMenu="basket" /> : ""}
     </>
   );
 }

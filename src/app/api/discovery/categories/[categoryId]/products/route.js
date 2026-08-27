@@ -1,5 +1,3 @@
-// https://api.digikala.com/discovery/api/v2/categories/6482/products?_rch=9fd46e644c8e&page=1&q=رژگونه+شیگلم
-
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";

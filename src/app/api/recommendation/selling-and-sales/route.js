@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/recommendation/selling-and-sales/
-
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";

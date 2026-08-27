@@ -128,10 +128,22 @@
 
 import api from "../Configs/config";
 
+// export async function getUserCart(guestCartId) {
+//   const query = guestCartId ? `?guestCartId=${guestCartId}` : "";
+
+//   const res = await api.get(`/cart${query}`);
+
+//   return res.data;
+// }
+
 export async function getUserCart(guestCartId) {
+  console.log("🔥 getUserCart CALLED", guestCartId);
+
   const query = guestCartId ? `?guestCartId=${guestCartId}` : "";
 
   const res = await api.get(`/cart${query}`);
+
+  console.log("🔥 getUserCart RESPONSE", res.data);
 
   return res.data;
 }

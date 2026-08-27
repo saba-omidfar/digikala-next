@@ -1,5 +1,3 @@
-// https://api.digikala.com/fresh/v1/autocomplete/?_whid=1&utm_source=digikala-web&utm_medium=home-category&q=%D8%B3%D8%A8
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 
 import CartPopover from "@/components/modules/cartPopover/CartPopover";
 
@@ -185,7 +186,21 @@ function CartSectionTitle() {
                       )}
                     </div>
                   ) : (
-                    ""
+                    <Link
+                      className={styles.checkout_link}
+                      href="/users/login/?backUrl=/checkout/cart/"
+                    >
+                      <span className={styles.checkout_link_text}>
+                        ورود به حساب کاربری
+                      </span>
+                      <div className="d-flex" aria-hidden="false">
+                        <div
+                          className={`${styles.chevron_icon} cube-font-icon`}
+                          data-icon-name="cube-nav-chevron-left"
+                          data-icon=""
+                        ></div>
+                      </div>
+                    </Link>
                   )}
                 </div>
               </div>

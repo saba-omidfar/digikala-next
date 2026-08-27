@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, createContext, useContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 
 import {
   useAddProductToCart,
@@ -21,6 +21,14 @@ export const CartProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState("next-cart");
   const [selectedInsurance, setSelectedInsurance] = useState(false);
   const [loadingVariantId, setLoadingVariantId] = useState(null);
+
+  useEffect(() => {
+    console.log("🟢 CartProvider MOUNT");
+
+    return () => {
+      console.log("🔴 CartProvider UNMOUNT");
+    };
+  }, []);
 
   const guestCartId =
     typeof window !== "undefined" ? localStorage.getItem("guestCartId") : null;

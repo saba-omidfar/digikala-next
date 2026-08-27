@@ -1,5 +1,3 @@
-// https://api.digikala.com/v2/category/6482/?_rch=9fd46e644c8e&q=%D8%B1%DA%98%DA%AF%D9%88%D9%86%D9%87%20%D8%B4%DB%8C%DA%AF%D9%84%D9%85
-
 import { digikalaFetch } from "@/lib/digikala";
 
 export const runtime = "nodejs";

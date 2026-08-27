@@ -1,5 +1,3 @@
-// https://api.digikala.com/fresh/v1/?_whid=29&utm_source=digikala-web&utm_medium=home-category
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 

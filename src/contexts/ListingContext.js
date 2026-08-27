@@ -261,6 +261,7 @@ export const ListingProvider = ({ children }) => {
   // }, [isSmallScreen, categoryCode, router]);
 
   // ساخت URL
+
   useEffect(() => {
     const currentUrl = new URL(window.location.href);
 

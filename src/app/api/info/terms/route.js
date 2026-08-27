@@ -1,5 +1,3 @@
-// https://api.digikala.com/v1/info/terms/
-
 import { digikalaFetch } from "@/lib/digikala";
 
 export async function GET(req) {

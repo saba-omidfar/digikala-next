@@ -1,7 +1,3 @@
-// api: https://api.digikala.com/fresh/v1/categories/clothes-detergents/search/?_whid=29&seo_url=&page=1
-
-// url: https://www.digikala.com/fresh/search/category-clothes-detergents/?has_selling_stock=1
-
 import { digikalaFetch } from "@/lib/digikala";
 export const runtime = "nodejs";
 
