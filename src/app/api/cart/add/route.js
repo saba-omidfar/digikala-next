@@ -138,7 +138,7 @@ export async function POST(req) {
       );
     } else {
       const data = await digikalaFetch({
-        path: `/v2/product/${item.product.id}/`,
+        path: `/v2/product/${productId}/`,
       });
 
       const product = data?.data?.product;
