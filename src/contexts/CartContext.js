@@ -22,14 +22,6 @@ export const CartProvider = ({ children }) => {
   const [selectedInsurance, setSelectedInsurance] = useState(false);
   const [loadingVariantId, setLoadingVariantId] = useState(null);
 
-  useEffect(() => {
-    console.log("🟢 CartProvider MOUNT");
-
-    return () => {
-      console.log("🔴 CartProvider UNMOUNT");
-    };
-  }, []);
-
   const guestCartId =
     typeof window !== "undefined" ? localStorage.getItem("guestCartId") : null;
 

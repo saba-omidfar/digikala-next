@@ -20,7 +20,7 @@ export async function GET(req, { params }) {
     searchParams.set("intent", intent);
   }
 
-  const path = `/v1/rate-review/products/${productId}?${searchParams.toString()}`;
+  const path = `/v1/rate-review/products/${productId}/?${searchParams.toString()}`;
 
   const [dkRes, localComments] = await Promise.all([
     digikalaFetch({

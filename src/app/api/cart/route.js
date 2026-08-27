@@ -189,7 +189,7 @@ export async function GET(req) {
 
     /* ---------------- GUEST ---------------- */
     if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
-      cart = await CartModel.findById(guestCartId);
+      cart = await CartModel.findById(guestCartId).lean();
     }
 
     if (!cart) {
@@ -202,8 +202,8 @@ export async function GET(req) {
     ]);
 
     if (
-      cartItems.length !== cart.packages?.[0]?.cart_items.length ||
-      nextCart.length !== cart.next_cart.length
+      cartItems.length !== cart.packages?.[0]?.cart_items?.length ||
+      nextCart.length !== cart.next_cart?.length
     ) {
       await CartModel.updateOne(
         { _id: cart._id },
@@ -231,10 +231,10 @@ export async function GET(req) {
     }
 
     const responseCart = {
-      ...cart.toObject(),
+      ...cart,
 
       packages: cart.packages.map((pkg, index) => ({
-        ...pkg.toObject(),
+        ...pkg,
         cart_items: index === 0 ? cartItems : pkg.cart_items,
       })),
 
