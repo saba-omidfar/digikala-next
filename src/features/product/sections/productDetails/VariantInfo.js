@@ -39,6 +39,8 @@ function VariantInfo() {
     trueToSize,
   } = useProductContext();
 
+  console.log("commentsData", commentsData);
+
   const { basket } = useCartContext();
 
   const [openTooltipId, setOpenTooltipId] = useState(null);
@@ -246,7 +248,8 @@ function VariantInfo() {
               className="d-flex align-items-center w-100"
               style={{ gap: "6px" }}
             >
-              {productDetails?.comments_overview ? (
+              {productDetails?.comments_count &&
+              productDetails?.comments_overview ? (
                 <span
                   className={styles.variant_info_summary_comments}
                   id="comments-abovefold"
