@@ -31,14 +31,10 @@ export default function HomeMobile() {
                 <div className="position-relative">
                   <div className={styles.sticky_slider_container}>
                     <div className="w-100">
-                      {homeSlider?.data?.items?.length ? (
-                        <HomeTopSlider
-                          slides={homeSlider?.data?.items}
-                          isLoading={homeDataLoading}
-                        />
-                      ) : (
-                        ""
-                      )}
+                      <HomeTopSlider
+                        slides={homeSlider?.data?.items}
+                        isLoading={homeDataLoading}
+                      />
                     </div>
                   </div>
                   <div className={styles.content_children}>
