@@ -2,12 +2,15 @@ import React from "react";
 
 import { useModal } from "@/contexts/modalContext";
 import { useProductContext } from "@/contexts/ProductContext";
+import { useGetMe } from "@/hooks/useUser";
+import toPersianDigits from "@/utils/toPersianDigits";
 
 import styles from "./flexibleCommentIdentityModal.module.css";
 
 function FlexibleCommentIdentityModal() {
   const { closeModal } = useModal();
   const { selectedIdentity, setSelectedIdentity } = useProductContext();
+  const { data: userInfo } = useGetMe();
 
   return (
     <div className={styles.modal_layout}>
@@ -97,7 +100,7 @@ function FlexibleCommentIdentityModal() {
                   ارسال با نام شما
                 </p>
                 <div className={styles.modal_content_identitiy_text}>
-                  دیدگاه شما در صفحه محصول با نام صبا امیدفر نمایش داده می‌شود
+                  {`دیدگاه شما در صفحه محصول با شماره ${userInfo?.user?.phone} نمایش داده می‌شود`}
                 </div>
               </div>
             </label>

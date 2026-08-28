@@ -7,6 +7,8 @@ import Link from "next/link";
 
 import { useModal } from "@/contexts/modalContext";
 import { useProductContext } from "@/contexts/ProductContext";
+import { useGetMe } from "@/hooks/useUser";
+import toPersianDigits from "@/utils/toPersianDigits";
 
 import FlexibleCommentIdentityModal from "./FlexibleCommentIdentityModal";
 
@@ -21,6 +23,8 @@ function AddCommentModal() {
     refetchComments,
     selectedIdentity,
   } = useProductContext();
+
+  const { data: userInfo } = useGetMe();
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -123,7 +127,7 @@ function AddCommentModal() {
                     />
                   </div>
                   <p className={styles.thankyou_title}>
-                    صبا عزیز! از مشارکتتان ممنونیم!
+                    کاربر عزیز! از مشارکتتان ممنونیم!
                   </p>
                   <div className={styles.thankyou_text}>
                     ممکن است کمی زمان ببرد تا دیدگاه شما پس از بررسی نمایش داده
@@ -239,7 +243,7 @@ function AddCommentModal() {
                         <span className={styles.author_name}>
                           {selectedIdentity === "anonymous"
                             ? "کاربر دیجی‌کالا"
-                            : "صبا امیدفر"}
+                            : toPersianDigits(userInfo?.user?.phone)}
                         </span>
                         <div
                           className={styles.author_infos}
