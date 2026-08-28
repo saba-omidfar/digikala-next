@@ -56,8 +56,8 @@ export async function POST(req, { params }) {
     }
 
     const cookiesStore = await cookies();
-    const accessToken = cookiesStore.get("access_token")?.value;
 
+    const accessToken = cookiesStore.get("access_token")?.value;
     if (!accessToken) {
       return Response.json({ message: "Unauthorized" }, { status: 401 });
     }
@@ -88,12 +88,12 @@ export async function POST(req, { params }) {
       { status: 201 },
     );
   } catch (err) {
-    console.error(err);
+    console.error("SUBMIT COMMENT ERROR =>", err);
 
     return Response.json(
       {
         success: false,
-        message: "خطایی رخ داده است.",
+        message: err.message,
       },
       { status: 500 },
     );

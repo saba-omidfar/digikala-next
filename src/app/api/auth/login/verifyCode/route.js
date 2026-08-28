@@ -1,50 +1,3 @@
-// import dbConnect from "@/configs/db";
-// import UserModel from "@/models/User";
-// import OTPModel from "@/models/Otp";
-// import CartModel from "@/models/Cart";
-// import { cookies } from "next/headers";
-
-// export async function POST(req) {
-//   try {
-//     await dbConnect();
-
-//     const { code, guestCartId } = await req.json();
-//     const cookiesStore = await cookies();
-//     const token = cookiesStore?.get("token")?.value;
-
-//     if (!token)
-//       return Response.json(
-//         { message: "کاربر لاگین نیست یا توکن یافت نشد" },
-//         { status: 401 },
-//       );
-
-//     const user = await UserModel.findOne({ "auth.token": token });
-//     if (!user)
-//       return Response.json({ message: "کاربر یافت نشد" }, { status: 404 });
-
-//     // ✅ بررسی کد OTP
-//     const otpRecord = await OTPModel.findOne({ userId: user._id });
-//     if (!otpRecord || otpRecord.code !== code) {
-//       return Response.json({ message: "کد تایید اشتباه است" }, { status: 400 });
-//     }
-
-//     await OTPModel.deleteMany({ userId: user._id });
-
-//     return Response.json({
-//       success: true,
-//       message: "کد تایید صحیح است و سبد خرید مرج شد",
-//       user,
-//       clearGuestCartId: true,
-//     });
-//   } catch (err) {
-//     console.error("verifyCode error:", err);
-//     return Response.json(
-//       { success: false, message: err.message },
-//       { status: 500 },
-//     );
-//   }
-// }
-
 import crypto from "crypto";
 import { cookies } from "next/headers";
 
@@ -68,10 +21,6 @@ export async function POST(req) {
 
     const { username, code, guestCartId } = await req.json();
 
-    // =========================
-    // VALIDATION
-    // =========================
-
     if (!username || !code) {
       return Response.json(
         {
@@ -82,10 +31,6 @@ export async function POST(req) {
         },
       );
     }
-
-    // =========================
-    // FIND USER
-    // =========================
 
     const phoneRegex = /^(\+98|0)?9\d{9}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -124,10 +69,6 @@ export async function POST(req) {
       );
     }
 
-    // =========================
-    // FIND OTP
-    // =========================
-
     const otpRecord = await OTPModel.findOne({
       userId: user._id,
     }).sort({
@@ -145,10 +86,6 @@ export async function POST(req) {
       );
     }
 
-    // =========================
-    // CHECK BLOCK
-    // =========================
-
     if (otpRecord.blockedUntil && otpRecord.blockedUntil > new Date()) {
       return Response.json(
         {
@@ -159,10 +96,6 @@ export async function POST(req) {
         },
       );
     }
-
-    // =========================
-    // CHECK EXPIRATION
-    // =========================
 
     if (otpRecord.expiresAt <= new Date()) {
       await OTPModel.deleteMany({
@@ -178,10 +111,6 @@ export async function POST(req) {
         },
       );
     }
-
-    // =========================
-    // CHECK OTP
-    // =========================
 
     if (String(otpRecord.code) !== String(code)) {
       otpRecord.attempts = (otpRecord.attempts || 0) + 1;
@@ -206,34 +135,18 @@ export async function POST(req) {
       );
     }
 
-    // =========================
-    // OTP IS VALID
-    // =========================
-
     await OTPModel.deleteMany({
       userId: user._id,
     });
-
-    // =========================
-    // GENERATE ACCESS TOKEN
-    // =========================
 
     const accessToken = generateAccessToken({
       userId: user._id.toString(),
       username,
     });
 
-    // =========================
-    // GENERATE REFRESH TOKEN
-    // =========================
-
     const refreshToken = generateRefreshToken();
 
     const refreshTokenHash = hashRefreshToken(refreshToken);
-
-    // =========================
-    // UPDATE USER AUTH
-    // =========================
 
     user.is_logged_in = true;
 
@@ -246,10 +159,6 @@ export async function POST(req) {
 
     await user.save();
 
-    // =========================
-    // SET ACCESS TOKEN COOKIE
-    // =========================
-
     const cookiesStore = await cookies();
 
     cookiesStore.set("access_token", accessToken, {
@@ -260,10 +169,6 @@ export async function POST(req) {
       maxAge: 15 * 60,
     });
 
-    // =========================
-    // SET REFRESH TOKEN COOKIE
-    // =========================
-
     cookiesStore.set("refresh_token", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -272,10 +177,6 @@ export async function POST(req) {
       maxAge: 7 * 24 * 60 * 60,
     });
 
-    // =========================
-    // MERGE GUEST CART
-    // =========================
-
     if (guestCartId) {
       const guestCart = await CartModel.findById(guestCartId);
 
@@ -283,10 +184,6 @@ export async function POST(req) {
         let userCart = await CartModel.findOne({
           userId: user._id,
         });
-
-        // -------------------------
-        // CREATE USER CART
-        // -------------------------
 
         if (!userCart) {
           userCart = await CartModel.create({
@@ -302,12 +199,7 @@ export async function POST(req) {
           recalcCartPrices(userCart);
 
           await userCart.save();
-        }
-
-        // -------------------------
-        // MERGE EXISTING CART
-        // -------------------------
-        else {
+        } else {
           if (!userCart.packages?.length) {
             userCart.packages = [
               {
@@ -328,10 +220,6 @@ export async function POST(req) {
 
           const guestItems = guestCart.packages?.[0]?.cart_items || [];
 
-          // -------------------------
-          // CART ITEMS
-          // -------------------------
-
           for (const guestItem of guestItems) {
             const existingItem = userItems.find(
               (item) =>
@@ -344,10 +232,6 @@ export async function POST(req) {
               userItems.push(guestItem);
             }
           }
-
-          // -------------------------
-          // NEXT CART
-          // -------------------------
 
           for (const guestNextItem of guestCart.next_cart || []) {
             const existingNext = userCart.next_cart.find(
@@ -369,17 +253,9 @@ export async function POST(req) {
           await userCart.save();
         }
 
-        // -------------------------
-        // DELETE GUEST CART
-        // -------------------------
-
         await CartModel.findByIdAndDelete(guestCartId);
       }
     }
-
-    // =========================
-    // RESPONSE
-    // =========================
 
     return Response.json({
       success: true,
@@ -392,7 +268,10 @@ export async function POST(req) {
       clearGuestCartId: Boolean(guestCartId),
     });
   } catch (err) {
-    console.error("verifyCode error:", err);
+    console.error("❌ verifyCode ERROR");
+    console.error("name:", err?.name);
+    console.error("message:", err?.message);
+    console.error("stack:", err?.stack);
 
     return Response.json(
       {

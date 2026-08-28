@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 import ProductContentTitle from "@/features/product/sections/productContent/productContentTitle/ProductContentTitle";
 import AddCommentModal from "@/features/product/modals/addCommentModal/AddCommentModal";
@@ -6,6 +7,7 @@ import CommentScores from "@/components/modules/scores/CommentScores";
 import CommentBoxDesktop from "@/features/product/sections/commentBoxDesktop/CommentBoxDesktop";
 
 import { useProductContext } from "@/contexts/ProductContext";
+import { useUserContext } from "@/contexts/UserContext";
 
 import { useModal } from "@/contexts/modalContext";
 import toPersianDigits from "@/utils/toPersianDigits";
@@ -16,7 +18,9 @@ function Comments({ topOffset }) {
   const commentsRef = useRef();
   const { openModal } = useModal();
 
+  const router = useRouter();
   const { productDetails } = useProductContext();
+  const { user } = useUserContext();
 
   return (
     <div className="lazyload-wrapper">
@@ -67,10 +71,12 @@ function Comments({ topOffset }) {
                 <button
                   className={styles.add_comment_btn}
                   onClick={() =>
-                    openModal(<AddCommentModal />, {
-                      name: "add-comment",
-                      className: "modal__add_comment rounded-medium",
-                    })
+                    user
+                      ? openModal(<AddCommentModal />, {
+                          name: "add-comment",
+                          className: "modal__add_comment rounded-medium",
+                        })
+                      : router.push("/users/login")
                   }
                 >
                   <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">

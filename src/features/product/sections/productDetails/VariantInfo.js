@@ -247,7 +247,7 @@ function VariantInfo() {
               style={{ gap: "6px" }}
             >
               {productDetails?.comments_count &&
-              productDetails?.comments_overview ? (
+              productDetails?.comments_overview?.length ? (
                 <span
                   className={styles.variant_info_summary_comments}
                   id="comments-abovefold"

@@ -47,7 +47,7 @@ function AIBuyerReviewsSummary() {
     import("@ebcom/dotlottie-player");
   }, []);
 
-  if (!productDetails?.comments_overview) return null;
+  if (!productDetails?.comments_overview?.length) return null;
 
   return (
     <div className="d-flex flex-column gap-2">

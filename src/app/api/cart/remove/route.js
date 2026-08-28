@@ -119,7 +119,7 @@ export async function DELETE(req) {
       {
         success: true,
         cart,
-        guestCartId: token ? null : cart._id.toString(),
+        guestCartId: accessToken ? null : cart._id.toString(),
       },
       { status: 200 },
     );

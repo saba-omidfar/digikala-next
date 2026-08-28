@@ -1,50 +1,3 @@
-// import dbConnect from "@/configs/db";
-// import WishlistModel from "@/models/Wishlist";
-// import UserModel from "@/models/User";
-// import { cookies } from "next/headers";
-
-// // 🟡 Get All Lists for Current User
-// export async function GET() {
-//   try {
-//     await dbConnect();
-//     const cookiesStore = await cookies();
-//     const token = cookiesStore.get("access_token")?.value?.value;
-
-//     if (!token)
-//       return Response.json(
-//         { success: false, message: "کاربر لاگین نیست" },
-//         { status: 401 }
-//       );
-
-//     const user = await UserModel.findOne({ "auth.token": token });
-//     const userId = user?._id;
-
-//     if (!userId) {
-//       return new Response(
-//         JSON.stringify({ success: false, message: "کاربر یافت نشد." }),
-//         { status: 400 }
-//       );
-//     }
-
-//     const lists = await WishlistModel.find({ userId })
-//       .sort({ createdAt: -1 })
-//       .populate("item_product");
-
-//     return new Response(
-//       JSON.stringify({
-//         success: true,
-//         data: lists,
-//       }),
-//       { status: 200 }
-//     );
-//   } catch (err) {
-//     return new Response(
-//       JSON.stringify({ success: false, message: err.message }),
-//       { status: 500 }
-//     );
-//   }
-// }
-
 import dbConnect from "@/configs/db";
 import WishlistModel from "@/models/Wishlist";
 import UserModel from "@/models/User";
@@ -103,10 +56,8 @@ export async function GET() {
             if (!item?.productId) return null;
 
             try {
-              const path = `/v2/product/${item?.productId}/?_rch=9fd46e644c8e`;
-
               const data = await digikalaFetch({
-                path,
+                path: `/v2/product/${item?.productId}/?_rch=9fd46e644c8e`,
               });
 
               return {

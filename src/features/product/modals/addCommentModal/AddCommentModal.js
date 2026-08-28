@@ -64,10 +64,19 @@ function AddCommentModal() {
       },
     };
 
+    console.log("✅ NEW COMMENT =>", newComment);
+
     postComment(newComment, {
-      onSuccess: () => {
+      onSuccess: (res) => {
+        console.log("COMMENT SUCCESS =>", res);
+
         refetchComments();
         setIsSubmitted(true);
+      },
+
+      onError: (error) => {
+        console.error("COMMENT ERROR =>", error);
+        alert(error?.message || "خطا در ثبت دیدگاه");
       },
     });
   };

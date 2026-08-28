@@ -207,7 +207,7 @@
 
 "use client";
 
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { useRouter } from "nextjs-toploader/app";
 import { useQueryClient } from "react-query";
 
@@ -230,6 +230,8 @@ import formatTime from "@/utils/formatTime";
 import styles from "./login.module.css";
 
 export default function LoginPage() {
+  const isVerifyingRef = useRef(false);
+
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -246,10 +248,6 @@ export default function LoginPage() {
 
   const { mutate: verifyCode, isLoading: verifyLoading } = useVerifyCode();
 
-  // =========================
-  // COUNTDOWN
-  // =========================
-
   useEffect(() => {
     if (step !== "otp" || timeLeft <= 0) return;
 
@@ -259,10 +257,6 @@ export default function LoginPage() {
 
     return () => clearInterval(timer);
   }, [step, timeLeft]);
-
-  // =========================
-  // SEND CODE
-  // =========================
 
   const submitUsername = (value) => {
     setUsername(value.username);
@@ -277,15 +271,11 @@ export default function LoginPage() {
           setStep("otp");
           setTimeLeft(180);
 
-          showSnackbar(`کد تست: ${res.demoOtp}`);
+          showSnackbar(`کد تایید: ${res.demoOtp}`);
         },
       },
     );
   };
-
-  // =========================
-  // RESEND CODE
-  // =========================
 
   const resendCode = useCallback(() => {
     if (timeLeft > 0 || !username) return;
@@ -308,10 +298,6 @@ export default function LoginPage() {
       },
     );
   }, [timeLeft, username, guestCartId, sendCode, showSnackbar]);
-
-  // =========================
-  // RESEND SECTION
-  // =========================
 
   const resendSection = useMemo(() => {
     if (timeLeft === 0) {
@@ -342,53 +328,59 @@ export default function LoginPage() {
     );
   }, [timeLeft, resendCode]);
 
-  // =========================
-  // VERIFY CODE
-  // =========================
+  const handleVerifyCode = useCallback(
+    (value) => {
+      if (
+        !username ||
+        value.length !== 5 ||
+        verifyLoading ||
+        isVerifyingRef.current
+      ) {
+        return;
+      }
 
-  useEffect(() => {
-    if (step !== "otp" || code.length !== 5 || !username) return;
+      isVerifyingRef.current = true;
 
-    verifyCode(
-      {
-        username,
-        code,
-        guestCartId,
-      },
-      {
-        onSuccess: async (res) => {
-          if (res.clearGuestCartId) {
-            localStorage.removeItem("guestCartId");
-          }
-
-          await Promise.all([
-            queryClient.invalidateQueries(["me"]),
-            queryClient.invalidateQueries(["UserCart"]),
-          ]);
-
-          router.push("/");
+      verifyCode(
+        {
+          username,
+          code: value,
+          guestCartId,
         },
+        {
+          onSuccess: async (res) => {
+            if (res.clearGuestCartId) {
+              localStorage.removeItem("guestCartId");
+            }
 
-        onError: () => {
-          showSnackbar("کد وارد شده صحیح نیست");
-          setCode("");
+            await Promise.all([
+              queryClient.invalidateQueries(["me"]),
+              queryClient.invalidateQueries(["UserCart"]),
+            ]);
+
+            router.push("/");
+          },
+
+          onError: (error) => {
+            isVerifyingRef.current = false;
+
+            showSnackbar(error?.message || "کد وارد شده صحیح نیست");
+
+            setCode("");
+          },
         },
-      },
-    );
-  }, [
-    code,
-    username,
-    step,
-    guestCartId,
-    queryClient,
-    router,
-    verifyCode,
-    showSnackbar,
-  ]);
-
-  // =========================
-  // UI
-  // =========================
+      );
+    },
+    [
+      username,
+      guestCartId,
+      verifyLoading,
+      verifyCode,
+      queryClient,
+      router,
+      showSnackbar,
+    ],
+  );
 
   return (
     <div className={styles.login}>
@@ -425,6 +417,7 @@ export default function LoginPage() {
               setLoginWithPassword={setLoginWithPassword}
               verifyLoading={verifyLoading}
               resendSection={resendSection}
+              onVerify={handleVerifyCode}
             />
           )}
         </div>

@@ -28,6 +28,7 @@ export default function VerificationForm({
   setLoginWithPassword,
   resendSection,
   verifyLoading,
+  onVerify,
 }) {
   const {
     register: registerOtp,
@@ -80,20 +81,25 @@ export default function VerificationForm({
                 }`}
               >
                 <input
-                  {...registerOtp("code")}
                   value={code}
-                  onChange={(e) => setCode(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "").slice(0, 5);
+
+                    setCode(value);
+
+                    if (value.length === 5) {
+                      onVerify(value);
+                    }
+                  }}
                   type="text"
                   id="code"
                   name="code"
                   autoComplete="one-time-code"
                   className={styles.input}
                   maxLength="5"
-                  pattern="[0-9]*"
                   inputMode="numeric"
                   autoFocus
                   tabIndex="1"
-                  data-error-message=""
                 />
 
                 {otpErrors.code && (
