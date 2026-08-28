@@ -1,7 +1,6 @@
-import MobileStickyHeader from "@/components/layout/header/mobile/mobileStickyHeader/MobileStickyHeader";
 import IncredibleContent from "@/features/incredible/sections/incredibleContent/IncredibleContent";
 import MenuMobile from "@/components/layout/footer/mobile/menuMobile/MenuMobile";
-import MobileHeader from "../sections/mobileHeader/MobileHeader";
+import MobileHeader from "@/features/incredible/sections/mobileHeader/MobileHeader";
 
 export default function IncredibleMobileContent({ categoryId }) {
   return (

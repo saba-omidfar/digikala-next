@@ -48,7 +48,7 @@ function ProductReviewSection() {
       )}
 
       <div className={styles.review_comments_overview_container}>
-        {productDetails?.comments_overview ? (
+        {productDetails?.comments_overview?.length ? (
           <span
             className={styles.review_comments_overview}
             id="comments-abovefold"

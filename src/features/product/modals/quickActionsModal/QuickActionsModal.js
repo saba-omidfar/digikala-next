@@ -51,6 +51,7 @@ export default function QuickActionsModal() {
   };
 
   const goToComparePage = () => {
+    closeModal("quick-actions");
     router.push(`/compare/dkp-${productDetails?.id}`);
   };
 

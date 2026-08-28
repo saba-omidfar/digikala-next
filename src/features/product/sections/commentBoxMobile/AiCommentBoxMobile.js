@@ -7,7 +7,7 @@ import { useProductContext } from "@/contexts/ProductContext";
 
 import styles from "./aiCommentBoxMobile.module.css";
 
-function AiCommentBoxMobile() {
+export default function AiCommentBoxMobile() {
   const { openModal } = useModal();
   const { productDetails } = useProductContext();
 
@@ -15,7 +15,7 @@ function AiCommentBoxMobile() {
     import("@ebcom/dotlottie-player");
   }, []);
 
-  if (!productDetails?.comments_overview) return null;
+  if (!productDetails?.comments_overview?.length) return null;
 
   return (
     <div
@@ -54,5 +54,3 @@ function AiCommentBoxMobile() {
     </div>
   );
 }
-
-export default AiCommentBoxMobile;

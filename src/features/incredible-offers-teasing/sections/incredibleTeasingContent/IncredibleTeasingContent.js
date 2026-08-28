@@ -10,7 +10,6 @@ import Timer from "@/components/modules/timer/Timer";
 import { useGetUniversal } from "@/hooks/useGetUniversal";
 import { useGetIncredibleOffers } from "@/features/incredible/hooks/useIncredibleOffers";
 import useGetIncredibleTeasing from "@/features/incredible-offers-teasing/hooks/useGetIncredibleTeasing";
-import { useModal } from "@/contexts/modalContext";
 
 import styles from "./incredibleTeasingContent.module.css";
 
@@ -18,22 +17,20 @@ export default function IncredibleTeasingContent({
   categoryId,
   isIncredibleTeasing,
 }) {
-  const { openModal, closeModal } = useModal();
   const { data, isLoading } = useGetIncredibleOffers({ categoryId });
 
   const { data: incredibleTeasing } = useGetIncredibleTeasing();
   const { data: topMegaMenuBanners } = useGetUniversal();
 
-  useEffect(() => {
-    if (isLoading) {
-      openModal(<LoadingModal />, {
-        name: "loading",
-        className: "modal__loading rounded-medium",
-      });
-    } else {
-      closeModal("loading");
-    }
-  }, [isLoading]);
+  if (isLoading) {
+    return (
+      <div className="cart_overlay">
+        <div className="page_loading_container">
+          <LoadingModal />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

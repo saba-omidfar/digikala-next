@@ -5,7 +5,7 @@ import IncredibleDesktopContent from "@/features/incredible/desktop/IncredibleDe
 
 import useScreenStatus from "@/hooks/useScreenStatus";
 
-function IncrediblePage({ categoryId }) {
+export default function IncrediblePage({ categoryId }) {
   const { isSmallScreen, isClientReady } = useScreenStatus();
 
   if (!isClientReady) return null;
@@ -16,5 +16,3 @@ function IncrediblePage({ categoryId }) {
     <IncredibleDesktopContent categoryId={categoryId} />
   );
 }
-
-export default IncrediblePage;

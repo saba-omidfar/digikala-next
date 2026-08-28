@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-
 import IncredibleTopSlider from "@/features/incredible/sections/incredibleTopSlider/IncredibleTopSlider";
 import IncredibleOffersDealOfTheDay from "@/features/incredible/sections/incredibleOffersDealOfTheDay/IncredibleOffersDealOfTheDay";
 import IncredibleProductsSlider from "@/features/incredible/sections/incredibleProductsSlider/IncredibleProductsSlider";
-import Digiplus from "@/features/incredible/sections/digiplus/Digiplus";
 import Categories from "@/features/incredible/sections/categories/Categories";
 import FreshIncredibleOffers from "@/components/sections/freshIncredibleOffers/FreshIncredibleOffers";
 import AllFreshIncredibleOffers from "@/features/incredible/sections/allFreshIncredibleOffers/AllFreshIncredibleOffers";
@@ -15,27 +12,22 @@ import { useGetIncredibleOffers } from "@/features/incredible/hooks/useIncredibl
 import { useGetUniversal } from "@/hooks/useGetUniversal";
 import useScreenStatus from "@/hooks/useScreenStatus";
 
-import { useModal } from "@/contexts/modalContext";
-
 import styles from "./incredibleContent.module.css";
 
 export default function IncredibleContent({ categoryId }) {
-  const { openModal, closeModal } = useModal();
-
   const { isSmallScreen } = useScreenStatus();
   const { data, isLoading } = useGetIncredibleOffers({ categoryId });
   const { data: topMegaMenuBanners } = useGetUniversal();
 
-  useEffect(() => {
-    if (isLoading) {
-      openModal(<LoadingModal />, {
-        name: "loading",
-        className: "modal__loading rounded-medium",
-      });
-    } else {
-      closeModal("loading");
-    }
-  }, [isLoading]);
+  if (isLoading) {
+    return (
+      <div className="cart_overlay">
+        <div className="page_loading_container">
+          <LoadingModal />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -73,26 +65,6 @@ export default function IncredibleContent({ categoryId }) {
           ""
         )}
 
-        {/* سوپرمارکت */}
-        {/* {data?.fresh_incredible_products ? (
-          <FreshIncredibleOffers
-            marginStyle={{ marginTop: "16px" }}
-            patternStyle={{
-              background:
-                "url(/images/svg/typography/freshPattern.svg) left center no-repeat",
-            }}
-            discountPercent={data?.fresh_incredible_products?.discount_percent}
-            products={data?.fresh_incredible_products?.products}
-            backgroundGradiant="linear-gradient(267.6deg,rgba(2, 154, 73, 0.1) 0,rgba(242, 242, 242, 0) 100%)"
-            isIncredibleOffersPage
-            seeMoreLink={data?.fresh_incredible_products?.see_more_url?.uri}
-          />
-        ) : (
-          ""
-        )} */}
-
-        {/* <Digiplus /> */}
-
         {data?.lightening_deal_products?.products?.length ? (
           <IncredibleProductsSlider
             products={data?.lightening_deal_products?.products}
@@ -102,7 +74,6 @@ export default function IncredibleContent({ categoryId }) {
           ""
         )}
 
-        {/* فردای شگفت‌انگیز */}
         {data?.teasing_incredible_products?.products?.length ? (
           <FreshIncredibleOffers
             marginStyle={{ marginTop: "16px" }}
@@ -124,7 +95,6 @@ export default function IncredibleContent({ categoryId }) {
           ""
         )}
 
-        {/* همه‌ی شگفت‌انگیزها */}
         {data?.incredible_products_list ? (
           <AllFreshIncredibleOffers isIncredibleTeasing />
         ) : (

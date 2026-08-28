@@ -57,7 +57,6 @@ export default function ProductMobileContent() {
               <Review />
               <CommentQuestionSection />
               <MobileSellerRecommendation />
-
               <Suggestion />
               <Dkp />
             </div>

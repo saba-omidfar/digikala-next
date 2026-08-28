@@ -7,7 +7,6 @@ import Pagination from "../pagination/Pagination";
 import LoadingModal from "@/features/shared/modals/loadingModal/LoadingModal";
 
 import { useProductContext } from "@/contexts/ProductContext";
-import { useModal } from "@/contexts/modalContext";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 
@@ -16,7 +15,6 @@ import styles from "./questionBoxDesktop.module.css";
 function QuestionBoxDesktop() {
   const questionsWrapperRef = useRef(null);
 
-  const { openModal, closeModal } = useModal();
   const {
     questionsData,
     isLoadingQuestions,
@@ -37,16 +35,15 @@ function QuestionBoxDesktop() {
     }
   }, [isLoadingQuestions]);
 
-  useEffect(() => {
-    if (isLoadingQuestions) {
-      openModal(<LoadingModal />, {
-        name: "loading",
-        className: "modal__loading rounded-medium",
-      });
-    } else {
-      closeModal("loading");
-    }
-  }, [isLoadingQuestions]);
+  if (isLoadingQuestions) {
+    return (
+      <div className="cart_overlay">
+        <div className="page_loading_container">
+          <LoadingModal />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

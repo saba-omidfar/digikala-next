@@ -22,7 +22,7 @@ import styles from "./commentBoxDesktop.module.css";
 function CommentBoxDesktop() {
   const commentsWrapperRef = useRef(null);
 
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
   const {
     commentsData,
     currentPage,
@@ -102,16 +102,15 @@ function CommentBoxDesktop() {
         }))
       : commentsData?.media_comments?.slice(0, 6);
 
-  useEffect(() => {
-    if (isLoading) {
-      openModal(<LoadingModal />, {
-        name: "loading",
-        className: "modal__loading rounded-medium",
-      });
-    } else {
-      closeModal("loading");
-    }
-  }, [isLoading]);
+  if (isLoading) {
+    return (
+      <div className="cart_overlay">
+        <div className="page_loading_container">
+          <LoadingModal />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={commentsWrapperRef} className={styles.comments_wrapper}>

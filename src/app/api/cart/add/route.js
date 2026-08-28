@@ -28,8 +28,6 @@ export async function POST(req) {
 
     let cart;
 
-    /* ---------------- USER / GUEST CART ---------------- */
-
     const user = await UserModel.findOne({
       "auth.accessToken": accessToken,
     }).select("_id");
@@ -55,7 +53,6 @@ export async function POST(req) {
     let cartProduct = null;
     let cartVariant = null;
 
-    /* ---------------- MOVE ALL: NEXT -> BASKET ---------------- */
     if (fromNextCart && moveAll) {
       for (const item of cart.next_cart) {
         const idx = packageRef.cart_items.findIndex(
@@ -86,7 +83,6 @@ export async function POST(req) {
       return Response.json({ success: true, cart }, { status: 200 });
     }
 
-    /* ---------------- MOVE ALL: BASKET -> NEXT ---------------- */
     if (!fromNextCart && moveAll) {
       for (const item of packageRef.cart_items) {
         const idx = cart.next_cart.findIndex(
@@ -117,7 +113,6 @@ export async function POST(req) {
       return Response.json({ success: true, cart }, { status: 200 });
     }
 
-    /* ---------------- SINGLE ITEM / FETCH PRODUCT ---------------- */
     if (fromNextCart) {
       const nextItem = cart.next_cart.find(
         (item) => Number(item.variant?.id) === Number(variantId),
@@ -165,12 +160,10 @@ export async function POST(req) {
       cartVariant = variant;
     }
 
-    /* ---------------- REMOVE FROM NEXT CART ---------------- */
     cart.next_cart = cart.next_cart.filter(
       (item) => Number(item.variant?.id) !== Number(cartVariant.id),
     );
 
-    /* ---------------- ADD / UPDATE CART ITEM ---------------- */
     const existingIndex = packageRef.cart_items.findIndex(
       (item) => Number(item.variant?.id) === Number(cartVariant.id),
     );
@@ -201,7 +194,6 @@ export async function POST(req) {
       });
     }
 
-    /* ---------------- SAVE ---------------- */
     cart.updatedAt = new Date();
 
     recalcCartPrices(cart);

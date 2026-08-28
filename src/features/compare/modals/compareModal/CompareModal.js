@@ -156,6 +156,7 @@ function CompareModal({ productIds }) {
                                         linkClassName={styles.product_link}
                                         isVertical
                                         hasBorderLeft={
+                                          !isSmallScreen &&
                                           index !== data?.products?.length - 1
                                         }
                                         width="150px"

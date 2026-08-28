@@ -386,24 +386,26 @@ function VerticalProductCard({
                       ) : (
                         ""
                       )}
-                      {!hasNoRating && product?.rating?.rate !== 0 && (
-                        <div className="d-flex align-items-center w-100">
-                          <p className={styles.product_rate}>
-                            {toPersianDigits(
-                              Math.round(
-                                (product?.rating?.rate / 100) * 5 * 10,
-                              ) / 10,
-                            )}
-                          </p>
-                          <div className={styles.product_icon_container}>
-                            <div
-                              className={`${styles.product_rate_icon} cube-font-icon`}
-                              data-icon-name="cube-star-fill"
-                              data-icon="&#xE928;"
-                            ></div>
+                      {!hasNoRating &&
+                        product?.rating?.rate &&
+                        product?.rating?.rate !== 0 && (
+                          <div className="d-flex align-items-center w-100">
+                            <p className={styles.product_rate}>
+                              {toPersianDigits(
+                                Math.round(
+                                  (product?.rating?.rate / 100) * 5 * 10,
+                                ) / 10,
+                              )}
+                            </p>
+                            <div className={styles.product_icon_container}>
+                              <div
+                                className={`${styles.product_rate_icon} cube-font-icon`}
+                                data-icon-name="cube-star-fill"
+                                data-icon="&#xE928;"
+                              ></div>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                     </div>
                   </div>
                 )}

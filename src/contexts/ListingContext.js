@@ -7,11 +7,11 @@ import React, {
   createContext,
   useContext,
   useCallback,
+  useRef,
 } from "react";
 
 import qs from "qs";
-import { useParams } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 
 import { useModal } from "@/contexts/modalContext";
@@ -21,10 +21,9 @@ import debounce from "@/utils/debounce";
 const ListingContext = createContext();
 
 export const ListingProvider = ({ children }) => {
-  // const [categoryId, setCategoryId] = useState(null);
-
   const router = useRouter();
   const { closeModal } = useModal();
+
   let {
     brandCode,
     facetCode,
@@ -37,6 +36,7 @@ export const ListingProvider = ({ children }) => {
   } = useParams();
 
   const searchParams = useSearchParams();
+
   const searchTerm = searchParams.get("q");
   const categoryId = searchParams.get("categoryId");
   const incredibleCategoryId = searchParams.get("category_id");
@@ -45,23 +45,19 @@ export const ListingProvider = ({ children }) => {
     categoryCode = categoryCode.replace("category-", "");
   }
 
+  // =========================
+  // INITIAL PARAMS
+  // =========================
+
   const getInitialParams = () => {
     const initial = {};
 
     searchParams.forEach((value, key) => {
-      // attributes[12][0]
       const nestedMatch = key.match(/^(.+)\[(.+)\]\[(\d+)\]$/);
-
-      // brands[0]
       const arrayMatch = key.match(/^(.+)\[(\d+)\]$/);
-
-      // price[min]
       const objectMatch = key.match(/^(.+)\[(.+)\]$/);
 
-      // -----------------------------
-      // nested object arrays
       // attributes[12][0]
-      // -----------------------------
       if (nestedMatch) {
         const mainKey = nestedMatch[1];
         const subKey = nestedMatch[2];
@@ -80,10 +76,7 @@ export const ListingProvider = ({ children }) => {
         return;
       }
 
-      // -----------------------------
-      // arrays
       // brands[0]
-      // -----------------------------
       if (arrayMatch) {
         const mainKey = arrayMatch[1];
 
@@ -96,10 +89,7 @@ export const ListingProvider = ({ children }) => {
         return;
       }
 
-      // -----------------------------
-      // objects
       // price[min]
-      // -----------------------------
       if (objectMatch) {
         const mainKey = objectMatch[1];
         const subKey = objectMatch[2];
@@ -113,66 +103,26 @@ export const ListingProvider = ({ children }) => {
         return;
       }
 
-      // -----------------------------
       // primitive
-      // -----------------------------
       initial[key] = value;
     });
 
     return initial;
   };
 
-  // const getInitialParams = () => {
-  //   const params = {};
-  //   const brands = [];
-  //   const seller_types = [];
-  //   const color_palettes = [];
-  //   const attributes = {};
-
-  //   searchParams.forEach((value, key) => {
-  //     const priceMatch = key.match(/^price\[(\w+)\]$/);
-  //     const brandMatch = key.match(/^brands\[(\d+)\]$/);
-  //     const sellerMatch = key.match(/^seller_types\[(\d+)\]$/);
-  //     const attributesMatch = key.match(/^attributes\[(.*)\[\]]$/);
-  //     const colorMatch = key.match(/^color_palettes\[(\d+)\]$/);
-
-  //     if (priceMatch) {
-  //       if (!initial.price) initial.price = {};
-  //       initial.price[priceMatch[1]] = value;
-  //     } else if (brandMatch) brands.push(String(value));
-  //     else if (sellerMatch) seller_types.push(String(value));
-  //     else if (colorMatch) color_palettes.push(String(value));
-  //     else if (attributesMatch) {
-  //       const attrId = attributesMatch[1];
-  //       const index = attributesMatch[2] ? Number(attributesMatch[2]) : null;
-
-  //       if (!attributes[attrId]) attributes[attrId] = [];
-  //       if (index !== null) {
-  //         attributes[attrId][index] = String(value);
-  //       } else {
-  //         attributes[attrId].push(String(value));
-  //       }
-
-  //       // if (attributes[attrId].includes(String(value))) {
-  //       //   attributes[attrId].pop(String(value));
-  //       // } else {
-  //       //   attributes[attrId].push(String(value));
-  //       // }
-  //     } else params[key] = value;
-  //   });
-
-  //   if (brands.length) params.brands = brands;
-  //   if (seller_types.length) params.seller_types = seller_types;
-  //   if (Object.keys(attributes).length) params.attributes = attributes;
-  //   if (color_palettes.length) params.color_palettes = color_palettes;
-
-  //   return params;
-  // };
-
   const [params, setParams] = useState(getInitialParams);
+
+  // برای جلوگیری از stale state در debounce
+  const paramsRef = useRef(params);
+
+  useEffect(() => {
+    paramsRef.current = params;
+  }, [params]);
+
   const [activeCategory, setActiveCategory] = useState(null);
   const [sortDefault, setSortDefault] = useState(null);
   const [filters, setFilters] = useState([]);
+
   const [filterExtra, setFilterExtra] = useState({
     filterId: null,
     filterItem: null,
@@ -182,19 +132,56 @@ export const ListingProvider = ({ children }) => {
     isOpen: false,
   });
 
-  const hasNonSortFilters = Object.keys(params).some(
-    (key) => key !== "sort" && key !== "q" && key !== "catgeory_id",
+  // =========================
+  // UPDATE URL
+  // =========================
+
+  const updateUrl = useCallback(
+    (newParams) => {
+      const cleanedParams = { ...newParams };
+
+      Object.keys(cleanedParams).forEach((key) => {
+        const value = cleanedParams[key];
+
+        if (
+          value === null ||
+          value === undefined ||
+          value === "" ||
+          (Array.isArray(value) && value.length === 0) ||
+          (typeof value === "object" &&
+            !Array.isArray(value) &&
+            Object.keys(value).length === 0)
+        ) {
+          delete cleanedParams[key];
+        }
+      });
+
+      const queryString = qs.stringify(cleanedParams, {
+        encode: true,
+        arrayFormat: "bracket",
+        indices: true,
+      });
+
+      const newUrl = queryString
+        ? `${window.location.pathname}?${queryString}`
+        : window.location.pathname;
+
+      const currentUrl = `${window.location.pathname}${window.location.search}`;
+
+      if (newUrl === currentUrl) {
+        return;
+      }
+
+      router.push(newUrl, undefined, {
+        scroll: false,
+      });
+    },
+    [router],
   );
 
-  const filtersCount = useMemo(() => {
-    return Object.keys(params).filter(
-      (key) =>
-        key !== "q" &&
-        key !== "sort" &&
-        key !== "categoryId" &&
-        key !== "catgeory_id",
-    )?.length;
-  }, [params]);
+  // =========================
+  // SEARCH
+  // =========================
 
   const {
     data,
@@ -223,14 +210,29 @@ export const ListingProvider = ({ children }) => {
     searchTerm,
   });
 
+  // =========================
+  // SEARCH TERM
+  // =========================
+
   useEffect(() => {
-    setParams((prev) => ({
-      ...prev,
-      q: searchTerm,
-    }));
+    setParams((prev) => {
+      const next = {
+        ...prev,
+        ...(searchTerm ? { q: searchTerm } : {}),
+      };
+
+      if (!searchTerm) {
+        delete next.q;
+      }
+
+      return next;
+    });
   }, [searchTerm]);
 
-  // Set AllFilters
+  // =========================
+  // FILTERS
+  // =========================
+
   useEffect(() => {
     const filtersWidget = Array.isArray(data)
       ? data.find((widget) => widget.type === "filters")?.data
@@ -238,7 +240,7 @@ export const ListingProvider = ({ children }) => {
 
     const allFilters =
       filtersWidget &&
-      Object.entries(filtersWidget)?.map(([key, value]) => ({
+      Object.entries(filtersWidget).map(([key, value]) => ({
         key,
         ...value,
       }));
@@ -246,55 +248,18 @@ export const ListingProvider = ({ children }) => {
     setFilters(allFilters);
   }, [data]);
 
-  // useEffect(() => {
-  //   if (!isSmallScreen) return;
-  //   if (!categoryCode) return;
+  // =========================
+  // IMPORTANT:
+  // URL SYNC EFFECT REMOVED
+  // =========================
 
-  //   const currentUrl = new URL(window.location.href);
+  // قبلاً اینجا useEffect مربوط به router.push داشتیم.
+  // عمداً حذف شده تا loop / reload ایجاد نکند.
 
-  //   if (!currentUrl.searchParams.get("categoryCode")) {
-  //     const newUrl = `/search/${categoryCode}?categoryCode=${encodeURIComponent(
-  //       categoryCode,
-  //     )}`;
-  //     router.replace(newUrl);
-  //   }
-  // }, [isSmallScreen, categoryCode, router]);
+  // =========================
+  // SORT LABEL
+  // =========================
 
-  // ساخت URL
-
-  useEffect(() => {
-    const currentUrl = new URL(window.location.href);
-
-    const q = currentUrl.searchParams.get("q");
-
-    const baseParams = {};
-
-    if (q) baseParams.q = q;
-    if (categoryId) baseParams.categoryId = categoryId;
-    if (incredibleCategoryId) baseParams.category_id = incredibleCategoryId;
-
-    const newQueryParams = { ...baseParams, ...params };
-
-    Object.keys(newQueryParams).forEach((key) => {
-      if (newQueryParams[key] === null || newQueryParams[key] === undefined) {
-        delete newQueryParams[key];
-      }
-    });
-
-    const queryString = qs.stringify(newQueryParams, {
-      encode: true,
-      arrayFormat: "bracket",
-      indices: true,
-    });
-
-    const newUrl = `${currentUrl.pathname}?${queryString}`;
-
-    if (`?${queryString}` !== currentUrl.search) {
-      router.push(newUrl, undefined, { scroll: false });
-    }
-  }, [router, params, categoryId]);
-
-  // --- بروزرسانی label مرتب سازی ---
   useEffect(() => {
     let selectedSort = null;
 
@@ -313,6 +278,10 @@ export const ListingProvider = ({ children }) => {
     setSortDefault(selectedSort);
   }, [params.sort, data]);
 
+  // =========================
+  // FILTER EXTRA
+  // =========================
+
   const clearFilterExtra = () => {
     setFilterExtra({
       filterItem: undefined,
@@ -323,65 +292,134 @@ export const ListingProvider = ({ children }) => {
     });
   };
 
-  // --- Update Parameters ---
-  const updateParams = (key, value) => {
-    setParams((prev) => {
-      const newParams = { ...prev };
+  // =========================
+  // UPDATE PARAM
+  // =========================
+
+  const updateParams = useCallback(
+    (key, value) => {
+      const currentParams = paramsRef.current;
+
+      const newParams = {
+        ...currentParams,
+      };
+
       if (value === undefined || value === null || value === "") {
         delete newParams[key];
       } else {
         newParams[key] = value;
       }
-      return newParams;
-    });
-  };
+
+      paramsRef.current = newParams;
+
+      setParams(newParams);
+
+      updateUrl(newParams);
+    },
+    [updateUrl],
+  );
+
+  // =========================
+  // SWITCH FILTER
+  // =========================
 
   const switchFiltersChangeHandler = (switchFilter) => {
-    const isActive = !!params[switchFilter];
+    const isActive = !!paramsRef.current[switchFilter];
+
     updateParams(switchFilter, isActive ? undefined : "1");
   };
 
   const handleSwitchChange = (event) => {
     const { name } = event.target;
-    const isActive = !!params[name];
+
+    const isActive = !!paramsRef.current[name];
+
     updateParams(name, isActive ? undefined : "1");
   };
 
-  // Remove All Filters
+  // =========================
+  // REMOVE ALL FILTERS
+  // =========================
+
   const removeAllFilters = () => {
-    setParams((prev) => {
-      const newParams = {};
+    const current = paramsRef.current;
 
-      // if (prev.sort) newParams.sort = prev.sort;
-      if (prev.categoryCode) newParams.categoryCode = prev.categoryCode;
+    const newParams = {};
 
-      return newParams;
-    });
+    // موارد اصلی URL را نگه می‌داریم
+    if (current.q) {
+      newParams.q = current.q;
+    }
+
+    if (current.categoryId) {
+      newParams.categoryId = current.categoryId;
+    }
+
+    if (current.category_id) {
+      newParams.category_id = current.category_id;
+    }
+
+    if (current.catgeory_id) {
+      newParams.catgeory_id = current.catgeory_id;
+    }
+
+    if (current.categoryCode) {
+      newParams.categoryCode = current.categoryCode;
+    }
+
+    paramsRef.current = newParams;
+
+    setParams(newParams);
+
+    updateUrl(newParams);
   };
 
-  // Change Sort
+  // =========================
+  // SORT
+  // =========================
+
   const sortDefaultChangeHandler = (sortOption) => {
     setSortDefault(sortOption);
+
     updateParams("sort", sortOption.id);
   };
 
+  // =========================
+  // PRICE
+  // =========================
+
   const normalizeRange = (values) => {
     const sorted = values.map(Number).sort((a, b) => a - b);
+
     return [sorted[0], sorted[1]];
   };
 
-  const updatePrice = useCallback(
-    debounce(({ min, max }) => {
-      setParams((prev) => ({
-        ...prev,
-        price: {
-          ...(prev.price || {}),
-          ...(min == null ? {} : { min: String(min) }),
-          ...(max == null ? {} : { max: String(max) }),
-        },
-      }));
-    }, 700),
-    [],
+  const updatePrice = useMemo(
+    () =>
+      debounce(({ min, max }) => {
+        const currentParams = paramsRef.current;
+
+        const newParams = {
+          ...currentParams,
+          price: {
+            ...(currentParams.price || {}),
+            ...(min == null ? {} : { min: String(min) }),
+            ...(max == null ? {} : { max: String(max) }),
+          },
+        };
+
+        // حذف priceهای خالی
+        if (!newParams.price.min && !newParams.price.max) {
+          delete newParams.price;
+        }
+
+        paramsRef.current = newParams;
+
+        setParams(newParams);
+
+        updateUrl(newParams);
+      }, 700),
+    [updateUrl],
   );
 
   const priceInputChangeHandler = ({ min, max }) => {
@@ -402,139 +440,234 @@ export const ListingProvider = ({ children }) => {
     });
   };
 
-  // Focus On Input
+  // =========================
+  // PRICE INPUT FOCUS
+  // =========================
+
   const focusInputHandler = (event) => {
     const { name, value } = event.target;
+
     if (value === "0") {
-      setParams((prev) => {
-        const updatedPrice = { ...prev.price };
-        delete updatedPrice[name];
-        const newParams = { ...prev };
-        if (Object.keys(updatedPrice).length > 0) {
-          newParams.price = updatedPrice;
-        } else {
-          delete newParams.price;
-        }
-        return newParams;
-      });
+      const currentParams = paramsRef.current;
+
+      const updatedPrice = {
+        ...(currentParams.price || {}),
+      };
+
+      delete updatedPrice[name];
+
+      const newParams = {
+        ...currentParams,
+      };
+
+      if (Object.keys(updatedPrice).length > 0) {
+        newParams.price = updatedPrice;
+      } else {
+        delete newParams.price;
+      }
+
+      paramsRef.current = newParams;
+
+      setParams(newParams);
+
+      updateUrl(newParams);
     }
   };
 
+  // =========================
+  // COLORS
+  // =========================
+
   const colorsPalleteSellectHandler = (color) => {
-    setParams((prev) => {
-      const currentColorPalettes = prev.color_palettes || [];
+    const currentParams = paramsRef.current;
 
-      const isSelected = currentColorPalettes.includes(String(color.id));
+    const currentColorPalettes = currentParams.color_palettes || [];
 
-      const updatedColorPalettes = isSelected
-        ? currentColorPalettes.filter((c) => c !== String(color.id))
-        : [...currentColorPalettes, String(color.id)];
-      return { ...prev, color_palettes: updatedColorPalettes };
-    });
+    const colorId = String(color.id);
+
+    const isSelected = currentColorPalettes.includes(colorId);
+
+    const updatedColorPalettes = isSelected
+      ? currentColorPalettes.filter((c) => c !== colorId)
+      : [...currentColorPalettes, colorId];
+
+    const newParams = {
+      ...currentParams,
+    };
+
+    if (updatedColorPalettes.length) {
+      newParams.color_palettes = updatedColorPalettes;
+    } else {
+      delete newParams.color_palettes;
+    }
+
+    paramsRef.current = newParams;
+
+    setParams(newParams);
+
+    updateUrl(newParams);
   };
+
+  // =========================
+  // CHECKBOX FILTER
+  // =========================
 
   const filterCheckboxChangeHandler = ({ key, id, title, checked }) => {
+    const currentParams = paramsRef.current;
+
     const value = String(id ?? title);
 
-    setParams((prev) => {
-      const currentValues = prev[key] || [];
+    const currentValues = currentParams[key] || [];
 
-      const updatedValues = checked
-        ? [...new Set([...currentValues, value])]
-        : currentValues.filter((item) => String(item) !== value);
+    const updatedValues = checked
+      ? [...new Set([...currentValues, value])]
+      : currentValues.filter((item) => String(item) !== value);
 
-      if (!updatedValues.length) {
-        const newParams = { ...prev };
-        delete newParams[key];
-        return newParams;
-      }
+    const newParams = {
+      ...currentParams,
+    };
 
-      return {
-        ...prev,
-        [key]: updatedValues,
-      };
-    });
+    if (!updatedValues.length) {
+      delete newParams[key];
+    } else {
+      newParams[key] = updatedValues;
+    }
+
+    paramsRef.current = newParams;
+
+    setParams(newParams);
+
+    updateUrl(newParams);
   };
+
+  // =========================
+  // COMPUTED VALUES
+  // =========================
+
+  const hasNonSortFilters = Object.keys(params).some(
+    (key) =>
+      key !== "sort" &&
+      key !== "q" &&
+      key !== "catgeory_id" &&
+      key !== "categoryId" &&
+      key !== "category_id",
+  );
+
+  const filtersCount = useMemo(() => {
+    return Object.keys(params).filter(
+      (key) =>
+        key !== "q" &&
+        key !== "sort" &&
+        key !== "categoryId" &&
+        key !== "category_id" &&
+        key !== "catgeory_id",
+    ).length;
+  }, [params]);
+
+  // =========================
+  // CONTEXT
+  // =========================
 
   const contextValue = useMemo(
     () => ({
       categoryId,
       promotionId,
-      // setCategoryId,
+
       data,
       banners,
       filters,
       isLoading,
+
       products,
       totalItems,
+
       page,
       setPage,
       goToPage,
+
       filterExtra,
       setFilterExtra,
       clearFilterExtra,
+
       sortDefault,
       setSortDefault,
+
       params,
       setParams,
+
       updateParams,
+
       switchFiltersChangeHandler,
       handleSwitchChange,
+
       removeAllFilters,
+
       sortDefaultChangeHandler,
+
       activeCategory,
       setActiveCategory,
+
       normalizeRange,
+
       priceInputChangeHandler,
       focusInputHandler,
       priceSliderChangeHandler,
+
       hasNonSortFilters,
       filtersCount,
+
       colorsPalleteSellectHandler,
       filterCheckboxChangeHandler,
+
       loadMore,
       isFetchingMore,
       isAutoFetchEnabled,
+
       categoryCode,
     }),
     [
       categoryId,
       promotionId,
-      // setCategoryId,
+
       data,
       banners,
       filters,
       isLoading,
+
       products,
       totalItems,
+
       page,
       setPage,
       goToPage,
+
       filterExtra,
-      setFilterExtra,
-      clearFilterExtra,
       sortDefault,
-      setSortDefault,
+
       params,
-      setParams,
+
       updateParams,
       switchFiltersChangeHandler,
       handleSwitchChange,
       removeAllFilters,
       sortDefaultChangeHandler,
+
       activeCategory,
-      setActiveCategory,
-      normalizeRange,
+
       priceInputChangeHandler,
       focusInputHandler,
       priceSliderChangeHandler,
+
       hasNonSortFilters,
       filtersCount,
+
       colorsPalleteSellectHandler,
       filterCheckboxChangeHandler,
+
       loadMore,
       isFetchingMore,
       isAutoFetchEnabled,
+
       categoryCode,
     ],
   );

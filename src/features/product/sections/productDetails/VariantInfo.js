@@ -16,7 +16,6 @@ import toPersianDigits from "@/utils/toPersianDigits";
 import isLightColor from "@/utils/isLightColor";
 
 import styles from "./variantInfo.module.css";
-import { useCartContext } from "@/contexts/CartContext";
 
 function VariantInfo() {
   let isValueEnabled = false;
@@ -38,8 +37,6 @@ function VariantInfo() {
     setSelectedColor,
     trueToSize,
   } = useProductContext();
-
-  const { basket } = useCartContext();
 
   const [openTooltipId, setOpenTooltipId] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
@@ -86,51 +83,6 @@ function VariantInfo() {
       { name: "size-guide", className: "modal__size_guide rounded-medium" },
     );
   };
-
-  useEffect(() => {
-    const allThemes = productDetails?.default_variant?.themes?.map(
-      (variant) => ({
-        themeType: variant.type,
-        themeHexCode: variant.value.hex_code,
-        themeId: variant.value.id,
-        themeSortOrder: variant.value.set_order,
-        themeTitle: variant.value.title,
-        themeVariantId: variant.value.variant_id,
-      }),
-    );
-
-    setSelectedThemes(allThemes);
-  }, [productDetails]);
-
-  useEffect(() => {
-    if (!productDetails?.default_variant?.size) return;
-
-    const availableValuesArray = [];
-
-    productDetails?.variants
-      ?.map((v) => v.themes)
-      ?.map((values) => {
-        values?.map((val) => {
-          if (
-            val.type === "colored" &&
-            val?.value?.hex_code ===
-              (productDetails?.default_variant?.themes).find(
-                (theme) => theme.type === "colored",
-              )?.value?.hex_code
-          ) {
-            const mainValue = values.find(
-              (value) => value.type === "sized",
-            ).value;
-
-            const exists = availableValuesArray?.some(
-              (x) => x?.id === mainValue.id,
-            );
-            if (!exists) availableValuesArray?.push(mainValue);
-          }
-        });
-      });
-    setAvailableValues(availableValuesArray);
-  }, [productDetails]);
 
   const changeThemeValueHandler = (v) => {
     let mainVariant = null;
@@ -183,13 +135,50 @@ function VariantInfo() {
     setAvailableValues(availableValues);
   };
 
-  const basketVariant = basket?.find(
-    (item) => item.product.id === productDetails?.id,
-  );
+  useEffect(() => {
+    const allThemes = productDetails?.default_variant?.themes?.map(
+      (variant) => ({
+        themeType: variant.type,
+        themeHexCode: variant.value.hex_code,
+        themeId: variant.value.id,
+        themeSortOrder: variant.value.set_order,
+        themeTitle: variant.value.title,
+        themeVariantId: variant.value.variant_id,
+      }),
+    );
 
-  const basketSizeId = basketVariant?.variant?.themes?.find(
-    (theme) => theme.type === "sized",
-  )?.value?.id;
+    setSelectedThemes(allThemes);
+  }, [productDetails]);
+
+  useEffect(() => {
+    if (!productDetails?.default_variant?.size) return;
+
+    const availableValuesArray = [];
+
+    productDetails?.variants
+      ?.map((v) => v.themes)
+      ?.map((values) => {
+        values?.map((val) => {
+          if (
+            val.type === "colored" &&
+            val?.value?.hex_code ===
+              (productDetails?.default_variant?.themes).find(
+                (theme) => theme.type === "colored",
+              )?.value?.hex_code
+          ) {
+            const mainValue = values.find(
+              (value) => value.type === "sized",
+            ).value;
+
+            const exists = availableValuesArray?.some(
+              (x) => x?.id === mainValue.id,
+            );
+            if (!exists) availableValuesArray?.push(mainValue);
+          }
+        });
+      });
+    setAvailableValues(availableValuesArray);
+  }, [productDetails]);
 
   return (
     <div id="variant" className={styles.variant_info}>
