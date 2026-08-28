@@ -100,7 +100,7 @@ function FlexibleCommentIdentityModal() {
                   ارسال با نام شما
                 </p>
                 <div className={styles.modal_content_identitiy_text}>
-                  {`دیدگاه شما در صفحه محصول با شماره ${userInfo?.user?.phone} نمایش داده می‌شود`}
+                  {`دیدگاه شما در صفحه محصول با شماره ${toPersianDigits(userInfo?.user?.phone)} نمایش داده می‌شود`}
                 </div>
               </div>
             </label>
