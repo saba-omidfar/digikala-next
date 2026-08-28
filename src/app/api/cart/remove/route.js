@@ -51,7 +51,6 @@ export async function DELETE(req) {
       cart = await CartModel.findOne({ userId: user._id });
     } else if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
       cart = await CartModel.findById(guestCartId);
-      console.log("CART =>", cart);
     }
 
     if (!cart) {

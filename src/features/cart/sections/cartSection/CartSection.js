@@ -11,9 +11,11 @@ import { useCartContext } from "@/contexts/CartContext";
 import styles from "./cartSection.module.css";
 
 export default function CartSection() {
-  const { user } = useUserContext();
+  const { user, guestCartId } = useUserContext();
   const { basket, isLoadingAddToNextCart, loadingVariantId, saveToListData } =
     useCartContext();
+
+  console.log("basket =>", basket);
 
   const isBasketEmpty = basket.length === 0;
 
@@ -26,7 +28,7 @@ export default function CartSection() {
             {/* <DigiplusBenefitCardTemporary /> */}
             <CartSectionTitle />
             <div className={styles.cart_items_container}>
-              {user && !isBasketEmpty ? (
+              {!isBasketEmpty ? (
                 <div className="d-flex flex-column">
                   {basket?.map((item, index) => (
                     <div key={index} className="position-relative">
