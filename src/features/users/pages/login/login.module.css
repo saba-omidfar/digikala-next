@@ -94,6 +94,10 @@
     border: none;
   }
 
+  .login {
+    align-items: flex-end;
+  }
+
   .text_error {
     font-size: 11px;
   }
@@ -106,6 +110,10 @@
 
   .login_btn {
     margin-top: 20px;
+  }
+
+  .form_card {
+    border: none;
   }
 }
 
