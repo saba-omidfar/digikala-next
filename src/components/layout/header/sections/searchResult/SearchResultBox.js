@@ -14,9 +14,9 @@ function SearchResultBox({ data }) {
       className={styles.search_result_item}
       href={
         data?.url
-          ? `${data.url.uri}${
+          ? `${data.url.url}${
               data?.type === "category"
-                ? `${data.url.uri.includes("?") ? "&" : "?"}categoryId=${data.id}`
+                ? `${data.url.url.includes("?") ? "&" : "?"}categoryId=${data.id}`
                 : ""
             }`
           : "#"

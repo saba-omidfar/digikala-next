@@ -169,25 +169,27 @@ export function useSearch({
   // ----------------------------
   // Fetch Page
   // ----------------------------
+
   const fetchPage = useCallback(
     async (pageNumber = 1, append = false) => {
-      if (isFetchingRef.current) return;
-
-      isFetchingRef.current = true;
-
       append ? setIsFetchingMore(true) : setIsLoading(true);
 
       try {
         const url = buildUrl(pageNumber, searchTerm);
-        console.log("URL =>", url);
 
-        if (!url) {
-          console.error("buildUrl returned undefined");
-          return;
+        console.log("🔥 FETCH URL =>", url);
+
+        const res = await fetch(url, {
+          cache: "no-store",
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
         }
 
-        const res = await fetch(url);
         const json = await res.json();
+
+        console.log("🔥 RESPONSE =>", json);
 
         const newData = json?.data?.widgets
           ? json?.data?.widgets?.find(
@@ -196,11 +198,13 @@ export function useSearch({
             json.data ||
             null
           : json?.data?.incredible_products_list
-            ? json?.data?.incredible_products_list || null
+            ? json?.data?.incredible_products_list
             : json?.data || null;
 
         setData((prev) => {
-          if (!append || !prev) return newData;
+          if (!append || !prev) {
+            return newData;
+          }
 
           return {
             ...prev,
@@ -215,14 +219,10 @@ export function useSearch({
             ?.items || [],
         );
       } catch (err) {
-        console.error("Search error:", err);
+        console.error("❌ Search error:", err);
       } finally {
         setIsLoading(false);
         setIsFetchingMore(false);
-
-        setTimeout(() => {
-          isFetchingRef.current = false;
-        }, 300);
       }
     },
     [
@@ -240,6 +240,80 @@ export function useSearch({
       brandCode,
     ],
   );
+
+  // const fetchPage = useCallback(
+  //   async (pageNumber = 1, append = false) => {
+  //     if (isFetchingRef.current) return;
+
+  //     isFetchingRef.current = true;
+
+  //     append ? setIsFetchingMore(true) : setIsLoading(true);
+
+  //     try {
+  //       const url = buildUrl(pageNumber, searchTerm);
+  //       console.log("URL =>", url);
+
+  //       if (!url) {
+  //         console.error("buildUrl returned undefined");
+  //         return;
+  //       }
+
+  //       const res = await fetch(url, {
+  //         cache: "no-store",
+  //       });
+  //       const json = await res.json();
+
+  //       const newData = json?.data?.widgets
+  //         ? json?.data?.widgets?.find(
+  //             (w) => w.type === "vertical_product_listing",
+  //           )?.data ||
+  //           json.data ||
+  //           null
+  //         : json?.data?.incredible_products_list
+  //           ? json?.data?.incredible_products_list || null
+  //           : json?.data || null;
+
+  //       setData((prev) => {
+  //         if (!append || !prev) return newData;
+
+  //         return {
+  //           ...prev,
+  //           ...newData,
+  //           products: [...(prev?.products || []), ...(newData?.products || [])],
+  //           widgets: [...(prev?.widgets || []), ...(newData?.widgets || [])],
+  //         };
+  //       });
+
+  //       setBanners(
+  //         json?.data?.widgets?.find((w) => w.type === "simple_banner")?.data
+  //           ?.items || [],
+  //       );
+  //     } catch (err) {
+  //       console.error("Search error:", err);
+  //     } finally {
+  //       setIsLoading(false);
+  //       setIsFetchingMore(false);
+
+  //       setTimeout(() => {
+  //         isFetchingRef.current = false;
+  //       }, 300);
+  //     }
+  //   },
+  //   [
+  //     params,
+  //     incredibleCategoryId,
+  //     categoryId,
+  //     categoryCode,
+  //     sellerCode,
+  //     brand,
+  //     promotionId,
+  //     searchTerm,
+  //     isSmallScreen,
+  //     facetCategoryCode,
+  //     facetCode,
+  //     brandCode,
+  //   ],
+  // );
 
   // ----------------------------
   // Infinite Scroll
@@ -269,6 +343,7 @@ export function useSearch({
   // ----------------------------
   // Reset on filter change
   // ----------------------------
+
   useEffect(() => {
     setIsManualPagination(false);
     setPage(1);

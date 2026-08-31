@@ -5,7 +5,7 @@ export async function GET(req) {
   try {
     const query = req.nextUrl.searchParams.get("q") || "";
 
-    const path = `/v2/autocomplete/?q=${query}`;
+    const path = `/discovery/api/v2/autocomplete?q=${query}`;
 
     const data = await digikalaFetch({
       path,

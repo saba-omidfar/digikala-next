@@ -24,7 +24,6 @@ export default function MobileSort({
     params,
     promotionId,
     filters,
-    filterExtra,
     setFilterExtra,
     clearFilterExtra,
     filtersCount,
@@ -32,7 +31,6 @@ export default function MobileSort({
     sortDefault,
     totalItems,
   } = useListing();
-  console.log("isIncrediblePage=>", isIncrediblePage);
 
   const handleClick = ({ filterTitle = "", filter, key }) => {
     if (filterTitle === "فیلترها") {

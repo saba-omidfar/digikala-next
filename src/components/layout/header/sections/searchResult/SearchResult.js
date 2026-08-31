@@ -16,28 +16,14 @@ function SearchResult() {
   //     </div>
   //   );
 
+  if (!data) return null;
+
   return (
     <div className="overflow-y-auto hide-scrollbar">
       <div>
         <div className="d-flex flex-column">
           {!Array?.isArray(data) && searchItemValue ? (
             <>
-              {/* {data?.advance_links?.map((link, _) => (
-            <span className="d-flex align-items-center py-2">
-              <div
-                className={styles.search_item_icon_container}
-                aria-hidden="false"
-              >
-                <svg className={styles.search_item_icon}>
-                  <use href="#categoryOutline"></use>
-                </svg>
-              </div>
-              <p className={styles.search_item_category}>
-                {` همه کالاهای ${link?.category?.title_fa}`}
-              </p>
-            </span>
-          ))} */}
-
               {data?.auto_complete?.map((data, index) => (
                 <SearchResultBox
                   key={`${index} - ${data?.title}`}

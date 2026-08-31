@@ -52,7 +52,6 @@ function SearchBoxModal({ searchBoxRef }) {
                       value={searchItemValue}
                       autoFocus="true"
                       onChange={(e) => setSearchItemValue(e.target.value)}
-                      // onKeyDown={}
                     />
                   </div>
                 </div>
@@ -99,7 +98,10 @@ function SearchBoxModal({ searchBoxRef }) {
                 {data?.trends?.map((chip) => (
                   <Link
                     key={chip.keyword}
-                    href={chip?.url ? chip?.url?.uri : "#"}
+                    href={
+                      chip.url.url.replace("https://www.digikala.com/", "/") ||
+                      "#"
+                    }
                     onClick={() => {
                       searchBoxRef.current?.blur();
                       closeModal();
