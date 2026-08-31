@@ -19,12 +19,13 @@ function MegamenuContent({ activeCategory, expandedItems, onToggleAccordion }) {
 
   const categoryPathname = activeCategory?.plp_url?.uri
     .replace(/^\/search\//, "")
-    .replace(/\/$/, "")
-    .replace("category-", "");
+    .replace(/^\/main\//, "")
+    .replace(/^\/landing\//, "")
+    .replace(/\/$/, "");
 
-  const mainCategory = categoryTree?.find(
-    (item) => item.category.code === categoryPathname,
-  ).category;
+  const mainCategory = categoryTree?.find((item) =>
+    item?.category?.code?.includes(categoryPathname),
+  )?.category;
 
   if (!activeCategory) return;
 
@@ -34,6 +35,7 @@ function MegamenuContent({ activeCategory, expandedItems, onToggleAccordion }) {
         <Link
           className={styles.mega_menu_all_cat_link}
           id="mega-menu-all-cat"
+          // href={activeCategory.plp_url.uri}
           href={
             isSmallScreen
               ? `${activeCategory.plp_url.uri}/?categoryId=${mainCategory?.id}`

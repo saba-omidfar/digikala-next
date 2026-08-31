@@ -49,9 +49,6 @@ export async function GET(req, { params }) {
       path = `/v1/categories/${categoryCode}/search/?_rch=9fd46e644c8e&${webSearchParams.toString()}`;
     }
 
-    console.log("path =>", path);
-    console.log("categoryCode =>", categoryCode);
-
     const data = await digikalaFetch({
       path,
       revalidate: 10,

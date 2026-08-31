@@ -25,7 +25,7 @@ function SimpleCarousel({ data, title, isFreshPage, titleLineColor }) {
             </p>
             <Link
               className={styles.see_all_btn}
-              href={data ? data?.see_more_url?.uri : "#"}
+              href={data?.see_more_url?.uri || "#"}
             >
               <span>
                 <span className={styles.see_all_btn_text}>مشاهده همه</span>
