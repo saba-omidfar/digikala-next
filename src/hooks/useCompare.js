@@ -87,7 +87,6 @@ export function useSearchCompare(productIds) {
 
       try {
         const url = buildUrl(pageNumber, searchValue);
-        console.log("URL =>", url);
 
         if (!url) {
           console.error("buildUrl returned undefined");
