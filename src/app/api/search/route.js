@@ -15,6 +15,7 @@ export async function GET(req) {
 
     const data = await digikalaFetch({
       path,
+      revalidate: 10,
       cookie: accessToken,
     });
 

@@ -1,17 +1,108 @@
-export async function digikalaFetch({ path }) {
+// export async function digikalaFetch({
+//   path,
+//   cache = "force-cache",
+//   revalidate,
+// }) {
+//   const url = `https://digikala.apps.abrclick.cloud${path}`;
+
+//   const options = {
+//     headers: {
+//       Accept: "application/json, text/plain, */*",
+//       "User-Agent": "Mozilla/5.0",
+//     },
+//   };
+
+//   if (cache === "no-store") {
+//     options.cache = "no-store";
+//   } else if (revalidate) {
+//     options.next = { revalidate };
+//   } else {
+//     options.cache = "force-cache";
+//   }
+
+//   const res = await fetch(url, options);
+
+//   if (!res.ok) {
+//     throw new Error(`Digikala proxy failed: ${res.status}`);
+//   }
+
+//   return res.json();
+// }
+
+export async function digikalaFetch({
+  path,
+  cache = "force-cache",
+  revalidate,
+}) {
   const url = `https://digikala.apps.abrclick.cloud${path}`;
 
-  const res = await fetch(url, {
+  const startTime = Date.now();
+
+  console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("🟡 DIGIKALA REQUEST");
+  console.log("📍 Path:", path);
+  console.log("🌐 URL:", url);
+  console.log("💾 Cache:", cache);
+  console.log("🔄 Revalidate:", revalidate ?? "none");
+
+  const options = {
     headers: {
       Accept: "application/json, text/plain, */*",
       "User-Agent": "Mozilla/5.0",
     },
-    cache: "no-store",
-  });
+  };
 
-  if (!res.ok) {
-    throw new Error(`Digikala proxy failed: ${res.status}`);
+  if (cache === "no-store") {
+    options.cache = "no-store";
+  } else if (revalidate) {
+    options.next = { revalidate };
+  } else {
+    options.cache = "force-cache";
   }
 
-  return res.json();
+  const fetchStart = Date.now();
+
+  try {
+    const res = await fetch(url, options);
+
+    const fetchTime = Date.now() - fetchStart;
+
+    console.log("📡 Response received");
+    console.log("📊 Status:", res.status);
+    console.log("⏱️ Fetch time:", `${fetchTime}ms`);
+
+    if (!res.ok) {
+      console.error("🔴 DIGIKALA REQUEST FAILED");
+      console.error("❌ Status:", res.status);
+      console.error("❌ Path:", path);
+
+      throw new Error(`Digikala proxy failed: ${res.status}`);
+    }
+
+    const jsonStart = Date.now();
+
+    const data = await res.json();
+
+    const jsonTime = Date.now() - jsonStart;
+    const totalTime = Date.now() - startTime;
+
+    console.log("📦 JSON parsed");
+    console.log("⏱️ JSON parse time:", `${jsonTime}ms`);
+    console.log("⏱️ TOTAL TIME:", `${totalTime}ms`);
+    console.log("🟢 DIGIKALA REQUEST SUCCESS");
+    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+
+    return data;
+  } catch (error) {
+    const totalTime = Date.now() - startTime;
+
+    console.error("🔴 DIGIKALA FETCH ERROR");
+    console.error("📍 Path:", path);
+    console.error("⏱️ Failed after:", `${totalTime}ms`);
+    console.error("❌ Error:", error);
+
+    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+
+    throw error;
+  }
 }
