@@ -8,6 +8,8 @@ import { useSnackbar } from "@/contexts/SnackbarContext";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import Loading from "@/components/modules/loading/Loading";
 
 import styles from "./insuranceModal.module.css";
@@ -17,6 +19,7 @@ function InsuranceModal({ product, cartItem }) {
   const { showSnackbar } = useSnackbar();
   const { user, guestCartId } = useUserContext();
   const { activeVariant } = useProductContext();
+  const { redirectToLogin } = useLoginRedirect();
 
   const {
     userCart,
@@ -76,7 +79,7 @@ function InsuranceModal({ product, cartItem }) {
         },
       );
     } else {
-      router.push("/users/login");
+      redirectToLogin();
     }
   };
 

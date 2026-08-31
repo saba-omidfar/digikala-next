@@ -7,12 +7,15 @@ import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./outOfStockBox.module.css";
 
 function outOfStockBox() {
   const router = useRouter();
   const { openModal } = useModal();
   const { showSnackbar } = useSnackbar();
+  const { redirectToLogin } = useLoginRedirect();
 
   const { productDetails, removeIncredibleNotification, incredibleStatus } =
     useProductContext();
@@ -20,7 +23,7 @@ function outOfStockBox() {
 
   const toggleAmazingNotifHandler = () => {
     if (!user) {
-      router.push(`/users/login/?backUrl=/${productDetails?.url?.uri}`);
+      redirectToLogin();
       return;
     }
 

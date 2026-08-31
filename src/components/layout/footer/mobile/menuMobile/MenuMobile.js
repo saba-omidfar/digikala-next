@@ -39,8 +39,6 @@ function MenuMobile({ activeMenu, noShadowStyle }) {
             title="دیجی‌کالای من"
             iconId={activeMenu === "دیجی‌کالای من" ? "profileOn" : "profileOff"}
             link="/users/login"
-            // If User Is LoggedIn
-            // link="/profile"
           />
         </div>
       </div>

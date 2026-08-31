@@ -17,12 +17,15 @@ import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useModal } from "@/contexts/modalContext";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./infoSectionRight.module.css";
 
 function InfoSectionRight() {
   const router = useRouter();
   const { openModal } = useModal();
   const { showSnackbar } = useSnackbar();
+  const { redirectToLogin } = useLoginRedirect();
 
   const [showTimer, setShowTimer] = useState(true);
 
@@ -79,7 +82,7 @@ function InfoSectionRight() {
     if (isLoadingIncredibleStatus) return;
 
     if (!user) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 
@@ -106,7 +109,7 @@ function InfoSectionRight() {
     if (isLoadingFavoriteStatus || isLoadingAddFavorite) return;
 
     if (!user) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 

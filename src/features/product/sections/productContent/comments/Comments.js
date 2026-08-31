@@ -12,14 +12,16 @@ import { useUserContext } from "@/contexts/UserContext";
 import { useModal } from "@/contexts/modalContext";
 import toPersianDigits from "@/utils/toPersianDigits";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./comments.module.css";
 
 function Comments({ topOffset }) {
   const commentsRef = useRef();
   const { openModal } = useModal();
 
-  const router = useRouter();
   const { productDetails } = useProductContext();
+  const { redirectToLogin } = useLoginRedirect();
   const { user } = useUserContext();
 
   return (
@@ -76,7 +78,7 @@ function Comments({ topOffset }) {
                           name: "add-comment",
                           className: "modal__add_comment rounded-medium",
                         })
-                      : router.push("/users/login")
+                      : redirectToLogin()
                   }
                 >
                   <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">

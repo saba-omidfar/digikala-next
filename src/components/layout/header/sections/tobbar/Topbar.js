@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
 
@@ -13,18 +14,22 @@ import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useCartContext } from "@/contexts/CartContext";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 import toPersianDigits from "@/utils/toPersianDigits";
 
 import styles from "./topbar.module.css";
 
-function Topbar() {
+export default function Topbar() {
   const { isLoadingSearchedProducts } = useProductContext();
   const { user, userIsLoading } = useUserContext();
   const { cart, basket } = useCartContext();
 
   const miniProfileBtnRef = useRef(null);
+
   const [isOpenMiniCart, setIsOpenMiniCart] = useState(false);
   const [isMiniProfileOpen, setIsMiniProfileOpen] = useState(false);
+
+  const { loginUrl } = useLoginRedirect();
 
   return (
     <div className={styles.navbar_top_container}>
@@ -79,12 +84,14 @@ function Topbar() {
                       </svg>
                     </div>
                   </div>
+
                   <div className="d-flex">
                     <svg className={styles.mini_profile__button_dropdown_icon}>
                       <use href="#dropdown"></use>
                     </svg>
                   </div>
                 </div>
+
                 {isMiniProfileOpen && (
                   <MiniProfileMenu
                     isMiniProfileOpen={isMiniProfileOpen}
@@ -95,7 +102,7 @@ function Topbar() {
               </div>
             ) : (
               <div className="position-relative">
-                <Link href="/users/login/">
+                <Link href={loginUrl}>
                   <button className={styles.profile_btn} id="header-profile">
                     <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
                       <div
@@ -114,15 +121,18 @@ function Topbar() {
             )}
 
             <span className={styles.divider}></span>
+
             <div
               className="d-flex flex-column position-relative"
               onMouseEnter={() => {
-                if (!isMiniProfileOpen && basket?.length)
+                if (!isMiniProfileOpen && basket?.length) {
                   setIsOpenMiniCart(true);
+                }
               }}
               onMouseLeave={() => {
-                if (!isMiniProfileOpen && basket?.length)
+                if (!isMiniProfileOpen && basket?.length) {
                   setIsOpenMiniCart(false);
+                }
               }}
             >
               {isLoadingSearchedProducts ? (
@@ -144,6 +154,7 @@ function Topbar() {
                         <use href="#cartOff"></use>
                       </svg>
                     </div>
+
                     {basket?.length ? (
                       <div className={styles.mini_cart_count_badge}>
                         <span className={styles.mini_cart_count_badge_text}>
@@ -154,6 +165,7 @@ function Topbar() {
                       ""
                     )}
                   </Link>
+
                   {isOpenMiniCart && (
                     <MiniCart setIsOpenMiniCart={setIsOpenMiniCart} />
                   )}
@@ -161,11 +173,10 @@ function Topbar() {
               )}
             </div>
           </div>
+
           <SelectCity />
         </div>
       </div>
     </div>
   );
 }
-
-export default Topbar;

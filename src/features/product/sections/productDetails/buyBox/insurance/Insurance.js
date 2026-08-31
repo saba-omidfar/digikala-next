@@ -11,11 +11,13 @@ import { useSnackbar } from "@/contexts/SnackbarContext";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 import useScreenStatus from "@/hooks/useScreenStatus";
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import styles from "./insurance.module.css";
 
 function Insurance() {
   const router = useRouter();
+  const { redirectToLogin } = useLoginRedirect();
 
   const { openModal, openMobileModal } = useModal();
   const { showSnackbar } = useSnackbar();
@@ -27,7 +29,7 @@ function Insurance() {
 
   const toggleInsuranceHandler = (checked) => {
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 

@@ -7,6 +7,7 @@ import CartPopover from "@/components/modules/cartPopover/CartPopover";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 import scrollToSection from "@/utils/scrollToSection";
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
 
@@ -16,10 +17,12 @@ import { useUserContext } from "@/contexts/UserContext";
 
 import styles from "./cartSectionTitle.module.css";
 
-function CartSectionTitle() {
+export default function CartSectionTitle() {
   const anchorRef = useRef(null);
 
   const [anchorOpen, setAnchorOpen] = useState(false);
+
+  const { loginUrl } = useLoginRedirect();
 
   const { user } = useUserContext();
   const { isSmallScreen } = useScreenStatus();
@@ -49,6 +52,7 @@ function CartSectionTitle() {
     handleResize();
 
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -65,6 +69,7 @@ function CartSectionTitle() {
                       <div>
                         <div className={styles.subtitle_container}>
                           <span className={styles.subtitle_bold}>سبد خرید</span>
+
                           {user ? (
                             <>
                               {basket.length !== 0 ? (
@@ -82,6 +87,7 @@ function CartSectionTitle() {
                       </div>
                     </span>
                   </div>
+
                   {user ? (
                     <div className={styles.left_section}>
                       <div
@@ -97,6 +103,7 @@ function CartSectionTitle() {
                         ) : (
                           ""
                         )}
+
                         <div className={styles.next_cart_images_row}>
                           <div className="position-relative d-inline-flex z-3">
                             <div
@@ -137,12 +144,14 @@ function CartSectionTitle() {
                                           item.product.images.main.webp_url?.[0]
                                         }
                                       />
+
                                       <source
                                         type="image/jpeg"
                                         srcSet={
                                           item.product.images.main.url?.[0]
                                         }
                                       />
+
                                       <img
                                         className={styles.next_cart_img}
                                         src={item.product.images.main.url?.[0]}
@@ -158,6 +167,7 @@ function CartSectionTitle() {
                           )}
                         </div>
                       </div>
+
                       {basket.length ? (
                         <div>
                           <button
@@ -186,13 +196,11 @@ function CartSectionTitle() {
                       )}
                     </div>
                   ) : (
-                    <Link
-                      className={styles.checkout_link}
-                      href="/users/login/?backUrl=/checkout/cart/"
-                    >
+                    <Link className={styles.checkout_link} href={loginUrl}>
                       <span className={styles.checkout_link_text}>
                         ورود به حساب کاربری
                       </span>
+
                       <div className="d-flex" aria-hidden="false">
                         <div
                           className={`${styles.chevron_icon} cube-font-icon`}
@@ -211,5 +219,3 @@ function CartSectionTitle() {
     </div>
   );
 }
-
-export default CartSectionTitle;

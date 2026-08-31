@@ -11,11 +11,15 @@ import { useUserContext } from "@/contexts/UserContext";
 import { useModal } from "@/contexts/modalContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./mobileInsuranceModal.module.css";
 
 function MobileInsuranceModal({ productId, variantId }) {
   const { closeMobileModal } = useModal();
   const { showSnackbar } = useSnackbar();
+
+  const { redirectToLogin } = useLoginRedirect();
 
   const { activeVariant } = useProductContext();
   const { user, guestCartId } = useUserContext();
@@ -76,7 +80,7 @@ function MobileInsuranceModal({ productId, variantId }) {
 
   const toggleInsuranceHandler = ({ hasInsurance }) => {
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 

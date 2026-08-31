@@ -1,32 +1,25 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "nextjs-toploader/app";
+import { useState } from "react";
 import Link from "next/link";
 
 import AddToCartSuccess from "@/features/shared/modals/addToCartSuccess/AddToCartSuccess";
 import Spinner from "@/utils/Spinner";
 
 import toPersianDigits from "@/utils/toPersianDigits";
+
 import { useUserContext } from "@/contexts/UserContext";
 import { useCartContext } from "@/contexts/CartContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./nextCartMobileItem.module.css";
 
 function NextCartMobileItem({ item, isNextCartItem }) {
-  const router = useRouter();
-
   const { showSnackbar } = useSnackbar();
   const { user, guestCartId } = useUserContext();
-  const {
-    userCart,
-    toggleInsurance,
-    addProductToCart,
-    removeFromNextCart,
-    removeProductFromCart,
-    setLoadingVariantId,
-  } = useCartContext();
+  const { addProductToCart, removeFromNextCart, setLoadingVariantId } =
+    useCartContext();
 
-  const [productQuantity, setProductQuantity] = useState(0);
   const [showAddToCartSuccess, setShowAddToCartSuccess] = useState(false);
   const [loadingState, setLoadingState] = useState(null);
 
@@ -35,7 +28,7 @@ function NextCartMobileItem({ item, isNextCartItem }) {
     e.stopPropagation();
 
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 
@@ -65,7 +58,7 @@ function NextCartMobileItem({ item, isNextCartItem }) {
     setLoadingVariantId(product?.variant?.id);
 
     if (!user) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 
@@ -87,7 +80,7 @@ function NextCartMobileItem({ item, isNextCartItem }) {
 
   const moveProductToBasket = ({ variantId }) => {
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 
@@ -102,8 +95,6 @@ function NextCartMobileItem({ item, isNextCartItem }) {
       },
       {
         onSuccess: (res) => {
-          console.log("res =>", res);
-
           if (!guestCartId && !user?._id && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
@@ -119,26 +110,9 @@ function NextCartMobileItem({ item, isNextCartItem }) {
     );
   };
 
-  const toggleInsuranceHandler = (checked) => {
-    toggleInsurance({
-      guestCartId,
-      productId: item?.product?.id,
-      variantId: item?.variant?.id,
-      hasInsurance: checked,
-    });
-  };
-
-  const maxLimit = item?.variant?.price?.order_limit || Infinity;
-  const isMaxReached = item?.quantity === maxLimit;
   const isJetEligible =
     item?.product?.digiplus?.is_jet_eligible ||
     item?.product?.shipment_methods?.providers?.[0]?.shipping_mode === "jet";
-
-  useEffect(() => {
-    if (userCart) {
-      setProductQuantity(item?.quantity || 0);
-    }
-  }, [userCart]);
 
   return (
     <>

@@ -5,17 +5,20 @@ import { useModal } from "@/contexts/modalContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useCartContext } from "@/contexts/CartContext";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./cartActionModal.module.css";
 
 function CartActionModal({ type }) {
   const { closeMobileModal, closeModal } = useModal();
+  const { redirectToLogin } = useLoginRedirect();
 
   const { user, guestCartId } = useUserContext();
   const { addProductToCart, removeFromNextCart } = useCartContext();
 
   const moveAllProuctsToBasket = () => {
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 
@@ -38,7 +41,7 @@ function CartActionModal({ type }) {
 
   const removeAllProductFromBasket = () => {
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 

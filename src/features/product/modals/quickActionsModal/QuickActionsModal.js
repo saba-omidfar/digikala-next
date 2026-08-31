@@ -10,12 +10,16 @@ import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useModal } from "@/contexts/modalContext";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./quickActionsModal.module.css";
 
 export default function QuickActionsModal() {
   const router = useRouter();
   const { openModal, closeModal } = useModal();
   const { showSnackbar } = useSnackbar();
+
+  const { redirectToLogin } = useLoginRedirect();
 
   const { user } = useUserContext();
   const { productDetails } = useProductContext();
@@ -28,7 +32,7 @@ export default function QuickActionsModal() {
 
   const toggleAmazingNotifHandler = () => {
     if (!user) {
-      router.push(`/users/login/?backUrl=/${productDetails?.url?.uri}`);
+      redirectToLogin();
       return;
     }
 

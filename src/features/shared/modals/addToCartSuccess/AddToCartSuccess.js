@@ -11,6 +11,7 @@ import { useProductContext } from "@/contexts/ProductContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 
@@ -18,6 +19,7 @@ import styles from "./addToCartSuccess.module.css";
 
 function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
   const router = useRouter();
+  const { redirectToLogin } = useLoginRedirect();
 
   const { isSmallScreen } = useScreenStatus();
   const { showSnackbar } = useSnackbar();
@@ -34,7 +36,7 @@ function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
 
   const toggleInsuranceHandler = (checked) => {
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 

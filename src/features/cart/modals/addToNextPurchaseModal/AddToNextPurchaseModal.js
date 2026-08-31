@@ -1,5 +1,6 @@
+"use client";
+
 import React from "react";
-import { useRouter } from "nextjs-toploader/app";
 
 import { useModal } from "@/contexts/modalContext";
 import { useUserContext } from "@/contexts/UserContext";
@@ -11,10 +12,12 @@ import {
 } from "@/features/cart/hooks/useCart";
 import recalcCartPrices from "@/utils/recalcCartPrices";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./addToNextPurchaseModal.module.css";
 
 export default function AddToNextPurchaseModal() {
-  const router = useRouter();
+  const { redirectToLogin } = useLoginRedirect();
 
   const { closeModal, closeAllModal } = useModal();
   const { user, guestCartId } = useUserContext();
@@ -27,7 +30,7 @@ export default function AddToNextPurchaseModal() {
 
   const handleMoveAllToNextPurchase = () => {
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 

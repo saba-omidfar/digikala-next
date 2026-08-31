@@ -4,20 +4,29 @@ import { useState } from "react";
 import { useModal } from "@/contexts/modalContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useCartContext } from "@/contexts/CartContext";
-import useScreenStatus from "@/hooks/useScreenStatus";
 import { useProductContext } from "@/contexts/ProductContext";
+
+import useScreenStatus from "@/hooks/useScreenStatus";
+
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import SaveToListMobileSheet from "./saveToListMobileSheet/SaveToListMobileSheet";
 import SaveToListDesktopModal from "./saveToListDesktopModal/SaveToListDesktopModal";
 
-function SaveToListModal({ productId, variantId, colorTitle, variantTitle }) {
-  const router = useRouter();
+export default function SaveToListModal({
+  productId,
+  variantId,
+  colorTitle,
+  variantTitle,
+}) {
+  const { redirectToLogin } = useLoginRedirect();
 
   const { closeModal } = useModal();
   const { isSmallScreen } = useScreenStatus();
 
   const { user, guestCartId } = useUserContext();
   const { addToNextCart, setLoadingVariantId } = useCartContext();
+
   const {
     addFavorite,
     isLoadingAddFavorite,
@@ -32,9 +41,10 @@ function SaveToListModal({ productId, variantId, colorTitle, variantTitle }) {
 
   const moveProductToNextCart = () => {
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
+
     setLoadingVariantId(variantId);
     closeModal();
 
@@ -42,15 +52,13 @@ function SaveToListModal({ productId, variantId, colorTitle, variantTitle }) {
       guestCartId,
       variantId,
     });
-
-    return;
   };
 
   const favoriteHandler = () => {
     if (isLoadingFavoriteStatus || isLoadingAddFavorite) return;
 
     if (!user) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 
@@ -106,5 +114,3 @@ function SaveToListModal({ productId, variantId, colorTitle, variantTitle }) {
     />
   );
 }
-
-export default SaveToListModal;

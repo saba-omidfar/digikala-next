@@ -1,7 +1,7 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-
-import { useRouter } from "next/navigation";
 
 import Timer from "@/components/modules/timer/Timer";
 
@@ -11,14 +11,13 @@ import { useUserContext } from "@/contexts/UserContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useProductContext } from "@/contexts/ProductContext";
 import { useGetIncredibleNotificationStatus } from "@/hooks/useProduct";
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
 
 import styles from "./productCard.module.css";
 
 export default function ProductCard({ product, lastBox, isIncrediblePage }) {
-  const router = useRouter();
-
   const { isSmallScreen } = useScreenStatus();
 
   const { showSnackbar } = useSnackbar();
@@ -29,6 +28,8 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
   const { data: incredibleStatus, isLoading: isLoadingIncredibleStatus } =
     useGetIncredibleNotificationStatus({ productId: product?.id });
 
+  const { redirectToLogin } = useLoginRedirect();
+
   const notifeMeHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -36,7 +37,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
     if (isLoadingIncredibleStatus) return;
 
     if (!user) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 
@@ -94,12 +95,14 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                       className={styles.product_ad_logo}
                     />
                   </div>
+
                   <div className={styles.product_ad_logo_text}>
                     <br />
                   </div>
                 </>
               )}
             </div>
+
             <div className={styles.product_content_container}>
               <div className={styles.product_content}>
                 <div
@@ -119,12 +122,15 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                         }
                         alt={product ? product?.title_fa : ""}
                         className={styles.product_img}
-                        style={{ mixBlendMode: !lastBox ? "multiply" : "" }}
+                        style={{
+                          mixBlendMode: !lastBox ? "multiply" : "",
+                        }}
                       />
                     </div>
                   </div>
                 </div>
               </div>
+
               <div className="flex-grow-1 d-flex flex-column align-items-stretch justify-content-start">
                 <div
                   className="d-flex align-items-center justify-content-start flex-wrap"
@@ -132,9 +138,11 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                 >
                   <br />
                 </div>
+
                 <div>
                   <h3 className={styles.product_title}>{product?.title_fa}</h3>
                 </div>
+
                 <div className="mb-1 d-flex align-items-center justify-content-between">
                   <div className={styles.product_color_container}>
                     <div
@@ -144,16 +152,19 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                           product?.second_default_variant?.color?.hex_code,
                       }}
                     ></div>
+
                     <p className={styles.product_color_name}>
                       {product?.second_default_variant?.color?.title}
                     </p>
                   </div>
+
                   {isSmallScreen ? (
                     <>
                       <div className="d-flex align-items-center">
                         <p className={styles.empty_space}>&amp;nbsp;</p>
                         <br />
                       </div>
+
                       {!lastBox && product?.rating.rate !== 0 && (
                         <div className="d-flex align-items-center">
                           {product ? (
@@ -165,6 +176,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                                   ) / 10,
                                 )}
                               </p>
+
                               <div
                                 className={styles.product_rating_icon_container}
                               >
@@ -186,7 +198,6 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                   )}
                 </div>
 
-                {/* Price */}
                 <div className={styles.product_price_container}>
                   <div className="d-flex align-items-center justify-content-between">
                     {product?.default_variant?.price?.discount_percent ? (
@@ -201,6 +212,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                     ) : (
                       ""
                     )}
+
                     <div className={styles.product_price_final}>
                       {product ? (
                         <>
@@ -210,6 +222,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                               10
                             ).toLocaleString("fa-IR")}
                           </span>
+
                           <div className="d-flex justify-content-center align-items-center">
                             <div
                               className={`${styles.product_icon} cube-font-icon`}
@@ -223,6 +236,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                       )}
                     </div>
                   </div>
+
                   <div className={styles.product_price_no_discount}>
                     {product ? (
                       <div className={styles.product_price_no_discount_text}>
@@ -235,6 +249,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                     )}
                   </div>
                 </div>
+
                 {product ? (
                   <div className="mt-auto">
                     {product?.default_variant?.price?.timer === 0 ? (
@@ -248,6 +263,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                             styles.product_promotion_timeline_progress_ended
                           }
                         ></span>
+
                         <span
                           className={
                             styles.product_promotion_timeline_progress_ended_text
@@ -265,7 +281,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                             product?.default_variant.price?.sold_percentage
                               ? "visible"
                               : "invisible"
-                          } `}
+                          }`}
                         >
                           <div
                             className={
@@ -276,6 +292,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                             }}
                           ></div>
                         </div>
+
                         <div className="d-flex justify-content-between pt-1">
                           <div
                             className={
@@ -290,10 +307,12 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                               )}
                               %
                             </span>
+
                             <span className={styles.product_soldout_text}>
                               فروش رفته
                             </span>
                           </div>
+
                           {product?.default_variant?.price?.timer && (
                             <div
                               className={
@@ -317,6 +336,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
           </article>
         </div>
       </Link>
+
       {lastBox ? (
         <div className={styles.overlay}>
           <div className={styles.overlay_lock_btn}>
@@ -326,6 +346,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
               className={`${styles.overlay_lock_icon} cube-font-icon`}
             ></div>
           </div>
+
           <div className={styles.overlay_text_container}>
             <span className={styles.overlay_text}>
               {isSmallScreen ? (
@@ -343,7 +364,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                   دیگر
                 </>
               ) : (
-                <span className="text-center">شروع تخفیف از ساعاتی دیگر </span>
+                <span className="text-center">شروع تخفیف از ساعاتی دیگر</span>
               )}
             </span>
           </div>
@@ -351,6 +372,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
       ) : (
         ""
       )}
+
       {product?.promotion_type === "teasing" ? (
         <div className={styles.overlay}>
           <div className={styles.overlay_lock_btn}>
@@ -360,6 +382,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
               className={`${styles.overlay_lock_icon} cube-font-icon`}
             ></div>
           </div>
+
           <div className={styles.overlay_text_container}>
             <span className={styles.overlay_text}>
               {isSmallScreen ? (
@@ -388,12 +411,17 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                   ) : (
                     "ساعاتی"
                   )}
-                  دیگر{" "}
+                  دیگر
                 </span>
               )}
             </span>
+
             <button
-              className={`${incredibleStatus?.is_active ? styles.dont_notife_me_btn : styles.notife_me_btn} `}
+              className={
+                incredibleStatus?.is_active
+                  ? styles.dont_notife_me_btn
+                  : styles.notife_me_btn
+              }
               onClick={notifeMeHandler}
             >
               <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
@@ -405,6 +433,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                     <use href="#notificationOffOutline"></use>
                   </svg>
                 </div>
+
                 {incredibleStatus?.is_active ? "دیگر خبرم نکن" : "خبرم کن"}
               </div>
             </button>

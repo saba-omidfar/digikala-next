@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+
 import Link from "next/link";
 
 import Timer from "../timer/Timer";
@@ -7,6 +8,7 @@ import toPersianDigits from "@/utils/toPersianDigits";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
 import { useGetIncredibleNotificationStatus } from "@/hooks/useProduct";
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import { useProductContext } from "@/contexts/ProductContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
@@ -37,6 +39,7 @@ function VerticalProductCard({
 }) {
   const { isMobile } = useScreenStatus();
   const { showSnackbar } = useSnackbar();
+  const { redirectToLogin } = useLoginRedirect();
 
   const priceSoldPercentage = product?.default_variant?.price?.sold_percentage;
   const sellerShipment =
@@ -74,7 +77,7 @@ function VerticalProductCard({
     if (isLoadingIncredibleStatus) return;
 
     if (!user) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 

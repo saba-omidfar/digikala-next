@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import Link from "next/link";
 
@@ -13,10 +15,12 @@ import { useGetFavoriteStatus } from "@/hooks/useProduct";
 import RelatedProductsModal from "@/features/cart/modals/relatedProductsModal/RelatedProductsModal";
 import Spinner from "@/utils/Spinner";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./nextCartItem.module.css";
 
-function NextCartItem({ product, variant, isNextCartItem }) {
-  const router = useRouter();
+export default function NextCartItem({ product, variant, isNextCartItem }) {
+  const { redirectToLogin } = useLoginRedirect();
 
   const [loadingState, setLoadingState] = useState(null);
 
@@ -30,6 +34,10 @@ function NextCartItem({ product, variant, isNextCartItem }) {
 
   const { removeFavorite, isPendingRemoveFavorite } = useProductContext();
 
+  const handleLoginRedirect = () => {
+    redirectToLogin();
+  };
+
   const moveProductToBasket = ({ e, variantId }) => {
     e.preventDefault();
     e.stopPropagation();
@@ -37,7 +45,7 @@ function NextCartItem({ product, variant, isNextCartItem }) {
     if (isLoadingFavoriteStatus || isPendingRemoveFavorite) return;
 
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      handleLoginRedirect();
       return;
     }
 
@@ -52,6 +60,7 @@ function NextCartItem({ product, variant, isNextCartItem }) {
       {
         onSettled: () => {
           setLoadingVariantId(null);
+          setLoadingState(null);
         },
       },
     );
@@ -62,7 +71,7 @@ function NextCartItem({ product, variant, isNextCartItem }) {
     e.stopPropagation();
 
     if (!user && !guestCartId) {
-      router.push("/users/login");
+      handleLoginRedirect();
       return;
     }
 
@@ -78,6 +87,7 @@ function NextCartItem({ product, variant, isNextCartItem }) {
       {
         onSettled: () => {
           setLoadingVariantId(null);
+          setLoadingState(null);
         },
       },
     );
@@ -108,9 +118,17 @@ function NextCartItem({ product, variant, isNextCartItem }) {
     setLoadingVariantId(variantId);
 
     if (favotiteStatus?.is_favorite) {
-      removeFavorite({
-        productId: product?.id,
-      });
+      removeFavorite(
+        {
+          productId: product?.id,
+        },
+        {
+          onSettled: () => {
+            setLoadingVariantId(null);
+            setLoadingState(null);
+          },
+        },
+      );
     }
   };
 
@@ -145,6 +163,7 @@ function NextCartItem({ product, variant, isNextCartItem }) {
             </picture>
           </div>
         </div>
+
         <div className={styles.product_infos_container}>
           <span className={styles.product_title}>{product?.title_fa}</span>
 
@@ -157,19 +176,19 @@ function NextCartItem({ product, variant, isNextCartItem }) {
                     data-icon-name="cube-badge-amazing"
                     data-icon=""
                     style={{ color: variant?.price?.badge?.color }}
-                  ></div>
+                  />
                 </div>
+
                 <span
                   className={styles.amazing_text}
                   style={{ color: variant?.price?.badge?.color }}
                 >
-                  {variant?.price?.badge ? variant?.price?.badge?.title : ""}
+                  {variant?.price?.badge?.title}
                 </span>
               </div>
-            ) : (
-              ""
-            )}
+            ) : null}
           </div>
+
           {product?.default_variant ? (
             <div className={styles.product_price_container}>
               <div className={styles.product_price}>
@@ -186,6 +205,7 @@ function NextCartItem({ product, variant, isNextCartItem }) {
                           </span>
                         </div>
                       </div>
+
                       <div className={styles.old_price_text_container}>
                         <span className={styles.old_price_text}>
                           {(
@@ -195,9 +215,8 @@ function NextCartItem({ product, variant, isNextCartItem }) {
                       </div>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )}
+                ) : null}
+
                 <div className={styles.new_price_container}>
                   <div className={styles.new_price}>
                     <span className={styles.new_price_text}>
@@ -205,6 +224,7 @@ function NextCartItem({ product, variant, isNextCartItem }) {
                         product?.default_variant?.price?.selling_price / 10
                       )?.toLocaleString("fa-IR")}
                     </span>
+
                     <div className="d-flex">
                       <svg className={styles.price_icon}>
                         <use href="#toman"></use>
@@ -228,7 +248,10 @@ function NextCartItem({ product, variant, isNextCartItem }) {
                       variantId: variant?.id,
                       removeAll: false,
                     })
-                  : removeProductFromFavorites({ e, variantId: variant?.id })
+                  : removeProductFromFavorites({
+                      e,
+                      variantId: variant?.id,
+                    })
               }
             >
               {loadingState?.variantId === variant?.id &&
@@ -242,12 +265,16 @@ function NextCartItem({ product, variant, isNextCartItem }) {
                 </span>
               )}
             </div>
+
             <div
               className={styles.mobile_delete_btn}
               aria-hidden="false"
               onClick={(e) =>
                 isNextCartItem
-                  ? moveProductToBasket({ e, variantId: variant?.id })
+                  ? moveProductToBasket({
+                      e,
+                      variantId: variant?.id,
+                    })
                   : seeProductHandler(e)
               }
             >
@@ -255,13 +282,17 @@ function NextCartItem({ product, variant, isNextCartItem }) {
                 className={`${styles.mobile_delete_btn_icon} cube-font-icon`}
                 data-icon-name="cube-action-delete"
                 data-icon=""
-              ></div>
+              />
             </div>
+
             <div
               className={`${styles.btn} ${styles.add_btn}`}
               onClick={(e) =>
                 isNextCartItem
-                  ? moveProductToBasket({ e, variantId: variant?.id })
+                  ? moveProductToBasket({
+                      e,
+                      variantId: variant?.id,
+                    })
                   : product?.default_variant
                     ? seeProductHandler(e)
                     : seeRelatedProducts(e)
@@ -286,5 +317,3 @@ function NextCartItem({ product, variant, isNextCartItem }) {
     </div>
   );
 }
-
-export default NextCartItem;

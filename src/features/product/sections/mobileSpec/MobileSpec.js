@@ -22,11 +22,14 @@ import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 
+import useLoginRedirect from "@/hooks/useLoginRedirect";
+
 import styles from "./mobileSpec.module.css";
 
 function MobileSpec() {
   const { user } = useUserContext();
   const { showSnackbar } = useSnackbar();
+  const { redirectToLogin } = useLoginRedirect();
   const {
     productDetails,
     suggestionProducts,
@@ -49,7 +52,7 @@ function MobileSpec() {
     if (isLoadingFavoriteStatus || isLoadingAddFavorite) return;
 
     if (!user) {
-      router.push("/users/login");
+      redirectToLogin();
       return;
     }
 
