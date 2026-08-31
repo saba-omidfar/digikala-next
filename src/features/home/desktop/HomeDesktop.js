@@ -13,7 +13,6 @@ import styles from "./homeDesktop.module.css";
 function HomeDesktop() {
   const { data: topMegaMenuBanners } = useGetUniversal();
   const { homeData, homeDataLoading } = useHomePageData();
-  console.log("homeData =>", homeData);
 
   return (
     <div className="h-100 flex flex-column bg-white align-items-center">
