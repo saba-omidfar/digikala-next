@@ -143,11 +143,10 @@ function SearchModal() {
                 {digikalaAutocompleteData?.trends?.map((chip) => (
                   <Link
                     key={chip.keyword}
-                    href={chip?.url?.uri || "#"}
-                    onClick={(e) => {
-                      e.preventDefault();
+                    href={chip?.url?.url || "#"}
+                    onClick={() => {
                       closeModal();
-                      router.push(chip?.url?.uri);
+                      router.push(chip.url.url);
                     }}
                   >
                     <div className={styles.chip_wrapper}>

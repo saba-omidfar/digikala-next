@@ -12,8 +12,6 @@ function MegamenuContent({ activeCategory, expandedItems, onToggleAccordion }) {
     return Object.values(activeCategory?.children ?? {});
   }, [activeCategory]);
 
-  console.log("groups=>", groups);
-
   if (!activeCategory) return;
 
   return (
