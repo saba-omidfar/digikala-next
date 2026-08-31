@@ -8,7 +8,7 @@ export default function useGetCategoryTree() {
     setIsLoading(true);
 
     try {
-      const res = await fetch(`/api/dictionaries`);
+      const res = await fetch(`/api/dictionaries/category-tree`);
       const json = await res.json();
 
       setData(

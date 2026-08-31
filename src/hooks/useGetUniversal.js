@@ -8,7 +8,7 @@ export function useGetUniversal() {
     setIsLoading(true);
 
     try {
-      const res = await fetch(`/api/dictionaries`);
+      const res = await fetch(`/api/dictionaries/universal`);
       const json = await res.json();
 
       setData(
