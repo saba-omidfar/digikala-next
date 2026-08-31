@@ -34,7 +34,7 @@ export default function LoginPage() {
   const callbackUrl = searchParams.get("callbackUrl");
 
   const redirectUrl =
-    callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
+    callbackUrl && callbackUrl?.startsWith("/") ? callbackUrl : "/";
 
   const [step, setStep] = useState("username");
   const [username, setUsername] = useState("");

@@ -1,6 +1,3 @@
-import { useQuery } from "react-query";
-import { getMegamenu } from "@/services/axios/Requests/megamenuRequests";
-
 import { useState, useEffect, useCallback } from "react";
 
 export function useGetMegamenu() {
@@ -29,12 +26,3 @@ export function useGetMegamenu() {
 
   return { data, isLoading, refetch };
 }
-
-// export function useGetMegamenu() {
-//   return useQuery(["Megamenu"], getMegamenu, {
-//     refetchOnMount: false,
-//     refetchOnWindowFocus: false,
-//     staleTime: 1000 * 60 * 60,
-//     cacheTime: 1000 * 60 * 60,
-//   });
-// }
