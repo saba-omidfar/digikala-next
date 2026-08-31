@@ -6,6 +6,7 @@ export async function GET(req) {
 
     const data = await digikalaFetch({
       path,
+      revalidate: 60,
     });
 
     return Response.json(data);
