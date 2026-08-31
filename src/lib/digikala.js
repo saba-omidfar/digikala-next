@@ -138,34 +138,50 @@ export async function digikalaFetch({
     options.cache = "force-cache";
   }
 
+  // 1. Fetch
   const fetchStart = Date.now();
 
   const res = await fetch(url, options);
 
+  const fetchTime = Date.now() - fetchStart;
+
   console.log("📡 Response received");
   console.log("📊 Status:", res.status);
-  console.log("⏱️ Fetch time:", Date.now() - fetchStart, "ms");
+  console.log("⏱️ Fetch time:", fetchTime, "ms");
 
   if (!res.ok) {
     throw new Error(`Digikala proxy failed: ${res.status}`);
   }
 
+  // 2. Read body
   const textStart = Date.now();
 
   const text = await res.text();
 
-  console.log("📦 Response size:", text.length);
-  console.log("📦 Response size MB:", (text.length / 1024 / 1024).toFixed(2));
+  const textTime = Date.now() - textStart;
 
-  console.log("⏱️ Response text time:", Date.now() - textStart, "ms");
+  console.log("📦 Response received as text");
+  console.log("📏 Response size:", text.length, "bytes");
+  console.log(
+    "📏 Response size:",
+    (text.length / 1024 / 1024).toFixed(2),
+    "MB",
+  );
+  console.log("⏱️ Body read time:", textTime, "ms");
 
+  // 3. JSON.parse فقط
   const parseStart = Date.now();
 
   const data = JSON.parse(text);
 
-  console.log("⏱️ JSON.parse time:", Date.now() - parseStart, "ms");
+  const parseTime = Date.now() - parseStart;
 
+  console.log("📦 JSON parsed");
+  console.log("⏱️ Pure JSON.parse time:", parseTime, "ms");
+
+  // 4. Total
   console.log("⏱️ TOTAL TIME:", Date.now() - start, "ms");
+
   console.log("🟢 DIGIKALA REQUEST SUCCESS");
   console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
