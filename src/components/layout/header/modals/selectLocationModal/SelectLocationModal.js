@@ -74,8 +74,6 @@ function SelectLocationModal({ isEdit }) {
       ({ coords }) => {
         const { latitude, longitude } = coords;
 
-        console.log(latitude, longitude);
-
         mapRef.current?.flyTo({
           center: [longitude, latitude],
           zoom: 16,
@@ -88,8 +86,6 @@ function SelectLocationModal({ isEdit }) {
         });
       },
       (error) => {
-        console.log(error);
-
         switch (error.code) {
           case error.PERMISSION_DENIED:
             alert("دسترسی به موقعیت مکانی رد شد.");

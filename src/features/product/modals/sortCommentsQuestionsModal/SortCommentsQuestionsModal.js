@@ -8,8 +8,6 @@ function SortCommentsQuestionsModal() {
   const { commentsData, activeCommentsSort, setActiveCommentsSort } =
     useProductContext();
 
-  console.log("commentsData =>", commentsData);
-
   return (
     <div className={styles.layout}>
       <div className={styles.header_container}>

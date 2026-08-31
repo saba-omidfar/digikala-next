@@ -127,8 +127,6 @@ function PriceFeedbackMobileSheet() {
       },
       {
         onSuccess: (res) => {
-          console.log("res", res);
-
           if (res?.message === "نظر شما قبلا در سیستم ثبت شده است") {
             showSnackbar(res.message);
 

@@ -21,9 +21,6 @@ export default function QuestionAnswerMedia({ question, answer }) {
 
   const { closeModal } = useModal();
 
-  console.log("question =>", question);
-  console.log("answer =>", answer);
-
   const { mutate: toggleFeedback, isLoading, variables } = usePostFeedback();
   const { data: feedback, refetch } = useGetFeedback({
     targetId: answer?.id,

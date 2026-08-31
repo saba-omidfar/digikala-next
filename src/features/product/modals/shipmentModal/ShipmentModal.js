@@ -23,7 +23,6 @@ export default function ShipmentModal({ shipmentMethods }) {
   };
 
   const handleClose = () => {
-    console.log("close");
     closeModal();
   };
 

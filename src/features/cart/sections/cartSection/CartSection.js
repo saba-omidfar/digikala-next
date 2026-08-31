@@ -15,8 +15,6 @@ export default function CartSection() {
   const { basket, isLoadingAddToNextCart, loadingVariantId, saveToListData } =
     useCartContext();
 
-  console.log("basket =>", basket);
-
   const isBasketEmpty = basket.length === 0;
 
   return (

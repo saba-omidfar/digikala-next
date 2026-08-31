@@ -46,7 +46,6 @@ export default function PasswordPage() {
 
   // ✅ هندل سابمیت موفق
   const onSubmit = (data) => {
-    console.log("ورودی معتبر:", data.username);
     setUserInput(data.username);
     setStep("CODE");
     // router.push(backUrl || "/");
@@ -62,23 +61,6 @@ export default function PasswordPage() {
     <main className={styles.account_wrapper}>
       <div className={styles.account_wrapper__main_box}>
         <AuthHeader onClick={() => router.back()} />
-        {/* <div className={styles.logo_title} onClick={() => router.back()}>
-          <div className={styles.logo_icon_container}>
-            <svg className={styles.logo_icon}>
-              <use href="#arrowRight"></use>
-            </svg>
-          </div>
-          <Link href="/">
-            <div className={styles.logo_container}>
-              <Image
-                className={styles.logo}
-                fill
-                src="/images/brands/full-vertical.svg"
-                alt="لوگوی دیجیکالا"
-              />
-            </div>
-          </Link>
-        </div> */}
 
         <div className="w-100">
           {verificationCode ? (

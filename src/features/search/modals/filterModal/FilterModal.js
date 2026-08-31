@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 
 import FilterItem from "./FilterItem";
 import FilterSwitchItem from "./FilterSwitchItem";
@@ -43,10 +42,6 @@ function FilterModal({ activeFilter }) {
       isOpen: false,
     });
   };
-
-  useEffect(() => {
-    console.log("filterExtra changed =>", filterExtra);
-  }, [filterExtra]);
 
   return (
     <div className={styles.modal_layout}>

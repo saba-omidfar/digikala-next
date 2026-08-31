@@ -88,27 +88,24 @@ function FilterMobileContent() {
           <div className={styles.selected_items_container}>
             {selectedItems?.map(
               (filter) => (
-                console.log("filter->", filter),
-                (
-                  <div
-                    key={filter.id}
-                    className={styles.selected_item}
-                    onClick={() => {
-                      filterCheckboxChangeHandler({
-                        key: filter.key || filterExtra.filterKey,
-                        id: filter.id,
-                        title: filter?.title_fa || filter?.title,
-                        checked: !isChecked(filter),
-                      });
-                    }}
-                  >
-                    <div className="position-relative">
-                      <div className={styles.selected_item_chip}>
-                        <span>{filter?.title_fa || filter?.title}</span>
-                      </div>
+                <div
+                  key={filter.id}
+                  className={styles.selected_item}
+                  onClick={() => {
+                    filterCheckboxChangeHandler({
+                      key: filter.key || filterExtra.filterKey,
+                      id: filter.id,
+                      title: filter?.title_fa || filter?.title,
+                      checked: !isChecked(filter),
+                    });
+                  }}
+                >
+                  <div className="position-relative">
+                    <div className={styles.selected_item_chip}>
+                      <span>{filter?.title_fa || filter?.title}</span>
                     </div>
                   </div>
-                )
+                </div>
               ),
               // <CustomCheckBox
               //   key={index}

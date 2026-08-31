@@ -73,30 +73,22 @@ export default function AmazingSliderMobile({ incredibbleOffers }) {
               </SwiperSlide>
 
               {/* Amazing Products */}
-              {incredibbleOffers?.products?.map(
-                (product, index) => (
-                  console.log("product=>", product),
-                  (
-                    <SwiperSlide
-                      key={product?.id}
-                      className={styles.amazing_slide}
-                    >
-                      <VerticalProductCard
-                        index={index}
-                        product={product}
-                        linkClassName={styles.product_link}
-                        imgContainerClassName={styles.product_img_container}
-                        isVertical
-                        hasNoRating
-                        hasNoColors
-                        hasNoShipping
-                        hasBadge
-                        roundedClass={index === 0 ? styles.rounded_r_md : ""}
-                      />
-                    </SwiperSlide>
-                  )
-                ),
-              )}
+              {incredibbleOffers?.products?.map((product, index) => (
+                <SwiperSlide key={product?.id} className={styles.amazing_slide}>
+                  <VerticalProductCard
+                    index={index}
+                    product={product}
+                    linkClassName={styles.product_link}
+                    imgContainerClassName={styles.product_img_container}
+                    isVertical
+                    hasNoRating
+                    hasNoColors
+                    hasNoShipping
+                    hasBadge
+                    roundedClass={index === 0 ? styles.rounded_r_md : ""}
+                  />
+                </SwiperSlide>
+              ))}
 
               {/* See More Link */}
               <SwiperSlide className={styles.amazing_last_slide}>

@@ -14,7 +14,6 @@ import qs from "qs";
 import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 
-import { useModal } from "@/contexts/modalContext";
 import { useSearch } from "@/hooks/useSearch";
 import debounce from "@/utils/debounce";
 
@@ -22,7 +21,6 @@ const ListingContext = createContext();
 
 export const ListingProvider = ({ children }) => {
   const router = useRouter();
-  const { closeModal } = useModal();
 
   let {
     brandCode,
@@ -45,10 +43,7 @@ export const ListingProvider = ({ children }) => {
     categoryCode = categoryCode.replace("category-", "");
   }
 
-  // =========================
   // INITIAL PARAMS
-  // =========================
-
   const getInitialParams = () => {
     const initial = {};
 
@@ -57,7 +52,6 @@ export const ListingProvider = ({ children }) => {
       const arrayMatch = key.match(/^(.+)\[(\d+)\]$/);
       const objectMatch = key.match(/^(.+)\[(.+)\]$/);
 
-      // attributes[12][0]
       if (nestedMatch) {
         const mainKey = nestedMatch[1];
         const subKey = nestedMatch[2];
@@ -76,7 +70,6 @@ export const ListingProvider = ({ children }) => {
         return;
       }
 
-      // brands[0]
       if (arrayMatch) {
         const mainKey = arrayMatch[1];
 
@@ -89,7 +82,6 @@ export const ListingProvider = ({ children }) => {
         return;
       }
 
-      // price[min]
       if (objectMatch) {
         const mainKey = objectMatch[1];
         const subKey = objectMatch[2];
@@ -103,7 +95,6 @@ export const ListingProvider = ({ children }) => {
         return;
       }
 
-      // primitive
       initial[key] = value;
     });
 
@@ -112,7 +103,6 @@ export const ListingProvider = ({ children }) => {
 
   const [params, setParams] = useState(getInitialParams);
 
-  // برای جلوگیری از stale state در debounce
   const paramsRef = useRef(params);
 
   useEffect(() => {
@@ -132,10 +122,7 @@ export const ListingProvider = ({ children }) => {
     isOpen: false,
   });
 
-  // =========================
   // UPDATE URL
-  // =========================
-
   const updateUrl = useCallback(
     (newParams) => {
       const cleanedParams = { ...newParams };
@@ -179,10 +166,7 @@ export const ListingProvider = ({ children }) => {
     [router],
   );
 
-  // =========================
   // SEARCH
-  // =========================
-
   const {
     data,
     isLoading,
@@ -210,10 +194,7 @@ export const ListingProvider = ({ children }) => {
     searchTerm,
   });
 
-  // =========================
   // SEARCH TERM
-  // =========================
-
   useEffect(() => {
     setParams((prev) => {
       const next = {
@@ -229,10 +210,7 @@ export const ListingProvider = ({ children }) => {
     });
   }, [searchTerm]);
 
-  // =========================
   // FILTERS
-  // =========================
-
   useEffect(() => {
     const filtersWidget = Array.isArray(data)
       ? data.find((widget) => widget.type === "filters")?.data
@@ -248,18 +226,7 @@ export const ListingProvider = ({ children }) => {
     setFilters(allFilters);
   }, [data]);
 
-  // =========================
-  // IMPORTANT:
-  // URL SYNC EFFECT REMOVED
-  // =========================
-
-  // قبلاً اینجا useEffect مربوط به router.push داشتیم.
-  // عمداً حذف شده تا loop / reload ایجاد نکند.
-
-  // =========================
   // SORT LABEL
-  // =========================
-
   useEffect(() => {
     let selectedSort = null;
 
@@ -278,10 +245,7 @@ export const ListingProvider = ({ children }) => {
     setSortDefault(selectedSort);
   }, [params.sort, data]);
 
-  // =========================
   // FILTER EXTRA
-  // =========================
-
   const clearFilterExtra = () => {
     setFilterExtra({
       filterItem: undefined,
@@ -292,10 +256,7 @@ export const ListingProvider = ({ children }) => {
     });
   };
 
-  // =========================
   // UPDATE PARAM
-  // =========================
-
   const updateParams = useCallback(
     (key, value) => {
       const currentParams = paramsRef.current;
@@ -319,10 +280,7 @@ export const ListingProvider = ({ children }) => {
     [updateUrl],
   );
 
-  // =========================
   // SWITCH FILTER
-  // =========================
-
   const switchFiltersChangeHandler = (switchFilter) => {
     const isActive = !!paramsRef.current[switchFilter];
 
@@ -337,16 +295,12 @@ export const ListingProvider = ({ children }) => {
     updateParams(name, isActive ? undefined : "1");
   };
 
-  // =========================
   // REMOVE ALL FILTERS
-  // =========================
-
   const removeAllFilters = () => {
     const current = paramsRef.current;
 
     const newParams = {};
 
-    // موارد اصلی URL را نگه می‌داریم
     if (current.q) {
       newParams.q = current.q;
     }
@@ -374,20 +328,14 @@ export const ListingProvider = ({ children }) => {
     updateUrl(newParams);
   };
 
-  // =========================
   // SORT
-  // =========================
-
   const sortDefaultChangeHandler = (sortOption) => {
     setSortDefault(sortOption);
 
     updateParams("sort", sortOption.id);
   };
 
-  // =========================
   // PRICE
-  // =========================
-
   const normalizeRange = (values) => {
     const sorted = values.map(Number).sort((a, b) => a - b);
 
@@ -408,7 +356,6 @@ export const ListingProvider = ({ children }) => {
           },
         };
 
-        // حذف priceهای خالی
         if (!newParams.price.min && !newParams.price.max) {
           delete newParams.price;
         }
@@ -430,8 +377,6 @@ export const ListingProvider = ({ children }) => {
   };
 
   const priceSliderChangeHandler = (values) => {
-    console.log("values", values);
-
     const [min, max] = normalizeRange(values);
 
     updatePrice({
@@ -440,10 +385,7 @@ export const ListingProvider = ({ children }) => {
     });
   };
 
-  // =========================
   // PRICE INPUT FOCUS
-  // =========================
-
   const focusInputHandler = (event) => {
     const { name, value } = event.target;
 
@@ -474,10 +416,7 @@ export const ListingProvider = ({ children }) => {
     }
   };
 
-  // =========================
   // COLORS
-  // =========================
-
   const colorsPalleteSellectHandler = (color) => {
     const currentParams = paramsRef.current;
 
@@ -508,10 +447,7 @@ export const ListingProvider = ({ children }) => {
     updateUrl(newParams);
   };
 
-  // =========================
   // CHECKBOX FILTER
-  // =========================
-
   const filterCheckboxChangeHandler = ({ key, id, title, checked }) => {
     const currentParams = paramsRef.current;
 
@@ -540,10 +476,7 @@ export const ListingProvider = ({ children }) => {
     updateUrl(newParams);
   };
 
-  // =========================
   // COMPUTED VALUES
-  // =========================
-
   const hasNonSortFilters = Object.keys(params).some(
     (key) =>
       key !== "sort" &&
@@ -563,10 +496,6 @@ export const ListingProvider = ({ children }) => {
         key !== "catgeory_id",
     ).length;
   }, [params]);
-
-  // =========================
-  // CONTEXT
-  // =========================
 
   const contextValue = useMemo(
     () => ({

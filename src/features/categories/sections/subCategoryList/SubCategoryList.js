@@ -19,8 +19,6 @@ function SubCategoryList({ subCategory, isExpanded, onToggle }) {
 
   const Wrapper = isLink ? Link : "div";
 
-  console.log(subCategory);
-
   return (
     <Wrapper
       {...(isLink
