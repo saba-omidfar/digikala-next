@@ -10,7 +10,7 @@ export default function MainDesktopContent(props) {
   const { data: topMegaMenuBanners } = useGetUniversal();
 
   return (
-    <>
+    <div className="h-100 d-flex flex-column bg-white align-items-center">
       <Header />
       <div
         className={styles.container}
@@ -19,6 +19,6 @@ export default function MainDesktopContent(props) {
         <MainContent {...props} />
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
