@@ -14,7 +14,7 @@ export async function GET(req, { params }) {
     }
     const mobileSearchParams = new URLSearchParams(searchParams);
 
-    const path = `/discovery/api/v2/categories/${categoryId}/products/?${mobileSearchParams.toString()}/`;
+    const path = `/discovery/api/v2/categories/${categoryId}/products?${mobileSearchParams.toString()}/`;
 
     const data = await digikalaFetch({
       path,
