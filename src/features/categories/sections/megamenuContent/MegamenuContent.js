@@ -24,6 +24,10 @@ function MegamenuContent({ activeCategory, expandedItems, onToggleAccordion }) {
       return code === "mobile";
     }
 
+    if (activeCategory?.id === 1986) {
+      return code === "stationery";
+    }
+
     if (activeCategory?.id === 1414) {
       return code === "health-care";
     }

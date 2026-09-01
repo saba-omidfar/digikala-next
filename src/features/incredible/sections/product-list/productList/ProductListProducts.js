@@ -34,12 +34,8 @@ export default function ProductListProducts({
             linkClassName={
               isFacetPage ? styles.facet_product_link : styles.product_link
             }
-            imgContainerClassName={
-              isFacetPage
-                ? styles.facet_product_img_container
-                : styles.product_img_container
-            }
-            isVertical={!isFacetPage}
+            imgContainerClassName={styles.product_img_container}
+            isVertical={!isSmallScreen}
             hasBadge={!isIncredibleTeasing}
             hasPromotionTimeline
             isIncredibleTeasing={isIncredibleTeasing}

@@ -8,13 +8,13 @@ import { useListing } from "@/contexts/ListingContext";
 
 import styles from "./categories.module.css";
 
-function Categories() {
+export default function Categories() {
   const { data } = useListing();
 
   const [showAllCategories, setShowAllCategories] = useState(false);
   const subCategoriesLength = data?.sub_categories_best_selling?.length;
 
-  if (!data?.sub_categories_best_selling) return;
+  if (!data?.sub_categories_best_selling?.length) return;
 
   return (
     <div className={styles.categories_container}>
@@ -43,4 +43,3 @@ function Categories() {
     </div>
   );
 }
-export default Categories;

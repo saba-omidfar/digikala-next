@@ -32,7 +32,7 @@ export default function ProductListHeader({
       <Brand />
       <Advertisement advertisement={data?.advertisement} />
 
-      {!isSmallScreen && <Categories />}
+      <Categories />
 
       {isSmallScreen && !categoryCode && (
         <SelectCategory setCategoryId={setCategoryId} />
