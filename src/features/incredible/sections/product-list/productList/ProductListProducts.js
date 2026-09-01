@@ -11,6 +11,7 @@ export default function ProductListProducts({
   isFetchingMore,
   loadMoreRef,
   isIncredibleTeasing,
+  isFacetPage,
 }) {
   const { isSmallScreen } = useScreenStatus();
 
@@ -30,9 +31,15 @@ export default function ProductListProducts({
             key={index}
             index={index}
             product={product?.data || product}
-            linkClassName={styles.product_link}
-            imgContainerClassName={styles.product_img_container}
-            isVertical
+            linkClassName={
+              isFacetPage ? styles.facet_product_link : styles.product_link
+            }
+            imgContainerClassName={
+              isFacetPage
+                ? styles.facet_product_img_container
+                : styles.product_img_container
+            }
+            isVertical={!isFacetPage}
             hasBadge={!isIncredibleTeasing}
             hasPromotionTimeline
             isIncredibleTeasing={isIncredibleTeasing}

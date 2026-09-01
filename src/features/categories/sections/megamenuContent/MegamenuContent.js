@@ -5,10 +5,10 @@ import Link from "next/link";
 
 import SubCategoryList from "../subCategoryList/SubCategoryList";
 
-import styles from "./megamenuContent.module.css";
 import useScreenStatus from "@/hooks/useScreenStatus";
 import useGetCategoryTree from "@/features/search/hooks/useGetCategoryTree";
 
+import styles from "./megamenuContent.module.css";
 function MegamenuContent({ activeCategory, expandedItems, onToggleAccordion }) {
   const { isSmallScreen } = useScreenStatus();
   const { data: categoryTree } = useGetCategoryTree();
@@ -17,15 +17,25 @@ function MegamenuContent({ activeCategory, expandedItems, onToggleAccordion }) {
     return Object.values(activeCategory?.children ?? {});
   }, [activeCategory]);
 
-  const categoryPathname = activeCategory?.plp_url?.uri
-    .replace(/^\/search\//, "")
-    .replace(/^\/main\//, "")
-    .replace(/^\/landing\//, "")
-    .replace(/\/$/, "");
+  const mainCategory = categoryTree?.find((item) => {
+    const code = item?.category?.code;
 
-  const mainCategory = categoryTree?.find((item) =>
-    item?.category?.code?.includes(categoryPathname),
-  )?.category;
+    if (activeCategory?.id === 1) {
+      return code === "mobile";
+    }
+
+    if (activeCategory?.id === 1414) {
+      return code === "health-care";
+    }
+    const categoryPathname = activeCategory?.plp_url?.uri
+      .replace(/^\/search\//, "")
+      .replace(/^\/main\//, "")
+      .replace(/^\/landing\//, "")
+      .replace(/\/$/, "")
+      .replace("category-", "");
+
+    return code === categoryPathname || code.includes(categoryPathname);
+  });
 
   if (!activeCategory) return;
 
@@ -38,7 +48,7 @@ function MegamenuContent({ activeCategory, expandedItems, onToggleAccordion }) {
           // href={activeCategory.plp_url.uri}
           href={
             isSmallScreen
-              ? `${activeCategory.plp_url.uri}/?categoryId=${mainCategory?.id}`
+              ? `${activeCategory.plp_url.uri}/?categoryId=${mainCategory?.category?.id}`
               : activeCategory.plp_url.uri
           }
         >

@@ -18,6 +18,7 @@ export default function ProductListing({
   desktopNavClassname = "",
   mobileNavClassname = "",
   isPoromotionSearchPage,
+  isFacetPage,
 }) {
   const { isSmallScreen } = useScreenStatus();
   const { data: topMegaMenuBanners } = useGetUniversal();
@@ -79,6 +80,7 @@ export default function ProductListing({
           setActiveFilter={setActiveFilter}
           desktopNavClassname={desktopNavClassname}
           mobileNavClassname={mobileNavClassname}
+          isFacetPage={isFacetPage}
         />
       </main>
     </div>

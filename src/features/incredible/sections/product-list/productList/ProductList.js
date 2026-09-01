@@ -21,6 +21,7 @@ export default function ProductList({
   setActiveFilter,
   desktopNavClassname,
   mobileNavClassname,
+  isFacetPage,
 }) {
   const {
     filters,
@@ -71,6 +72,7 @@ export default function ProductList({
                 isFetchingMore={isFetchingMore}
                 loadMoreRef={loadMoreRef}
                 isIncredibleTeasing={isIncredibleTeasing}
+                isFacetPage={isFacetPage}
               />
 
               {!isLoading && totalItems === 0 && <NotFoundMessage />}

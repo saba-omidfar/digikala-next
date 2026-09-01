@@ -200,7 +200,7 @@ export default function AmazingItem({ product, index }) {
                   </div>
                 </div>
               </div>
-              {/* <div className="mt-auto">
+              <div className="mt-auto">
                 {product?.default_variant?.price?.is_finished ? (
                   <div className={styles.progress_ended_container}>
                     <span className={styles.progress_ended}></span>
@@ -224,7 +224,7 @@ export default function AmazingItem({ product, index }) {
                         }}
                       ></div>
                     </div>
-                    <div
+                    {/* <div
                       className="d-flex justify-content-between pt-1"
                       style={{ whiteSpace: "nowrap" }}
                     >
@@ -252,10 +252,10 @@ export default function AmazingItem({ product, index }) {
                           />
                         </div>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 )}
-              </div> */}
+              </div>
             </div>
           </div>
         </article>

@@ -6,9 +6,16 @@ import AmazingItem from "./amazingItem/AmazingItem";
 
 import styles from "./amazingSliderMobile.module.css";
 
-export default function AmazingSliderMobile({ incredibbleOffers }) {
+export default function AmazingSliderMobile({
+  incredibbleOffers,
+  backgroundColor,
+  backgroundBg,
+}) {
   return (
-    <div className={styles.content_container}>
+    <div
+      className={styles.content_container}
+      style={{ background: backgroundColor }}
+    >
       <div className={styles.slide_link}>
         <Link
           className="d-flex align-items-center justify-content-center flex-column"
@@ -33,17 +40,11 @@ export default function AmazingSliderMobile({ incredibbleOffers }) {
             aria-label=""
           >
             <picture>
-              <source
-                type="image/webp"
-                srcSet="/images/png/specialCarousel/Electronics.webp"
-              />
-              <source
-                type="image/jpeg"
-                srcSet="/images/png/specialCarousel/Electronics.webp"
-              />
+              <source type="image/webp" srcSet={backgroundBg} />
+              <source type="image/jpeg" srcSet={backgroundBg} />
               <img
                 className={styles.logo}
-                src="/images/png/specialCarousel/Electronics.webp"
+                src={backgroundBg}
                 width="145"
                 height="115"
                 alt="شگفت انگیز"

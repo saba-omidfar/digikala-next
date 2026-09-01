@@ -18,6 +18,8 @@ import useScreenStatus from "@/hooks/useScreenStatus";
 export default function LegacyMainContent({ categoryCode, data, title }) {
   const { isSmallScreen } = useScreenStatus();
 
+  console.log(categoryCode);
+
   let backgroundColor,
     backgroundBg = "";
 
