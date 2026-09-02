@@ -1,51 +1,44 @@
-import net from "net";
+import { MongoClient } from "mongodb";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  return new Promise((resolve) => {
-    const socket = new net.Socket();
-
-    socket.setTimeout(5000);
-
-    socket.on("connect", () => {
-      socket.destroy();
-
-      resolve(
-        Response.json({
-          success: true,
-          message: "TCP connection successful",
-        }),
-      );
-    });
-
-    socket.on("timeout", () => {
-      socket.destroy();
-
-      resolve(
-        Response.json({
-          success: false,
-          message: "TCP connection timeout",
-        }),
-        { status: 500 },
-      );
-    });
-
-    socket.on("error", (error) => {
-      socket.destroy();
-
-      resolve(
-        Response.json(
-          {
-            success: false,
-            message: error.message,
-            code: error.code,
-          },
-          { status: 500 },
-        ),
-      );
-    });
-
-    socket.connect(30677, "remote-pishgaman.runflare.com");
+  const client = new MongoClient(process.env.MONGODB_URI, {
+    serverSelectionTimeoutMS: 15000,
+    connectTimeoutMS: 15000,
   });
+
+  try {
+    console.log("🟡 RAW MONGO CONNECT");
+
+    await client.connect();
+
+    console.log("🟢 RAW MONGO CONNECTED");
+
+    const result = await client.db("admin").command({
+      ping: 1,
+    });
+
+    console.log("🏓 PING:", result);
+
+    return Response.json({
+      success: true,
+      ping: result,
+    });
+  } catch (error) {
+    console.error("❌ RAW MONGO ERROR:", error);
+
+    return Response.json(
+      {
+        success: false,
+        name: error.name,
+        message: error.message,
+        code: error.code || null,
+        reason: error.reason?.message || null,
+      },
+      { status: 500 },
+    );
+  } finally {
+    await client.close().catch(() => {});
+  }
 }

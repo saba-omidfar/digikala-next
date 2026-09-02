@@ -29,6 +29,7 @@
     "jalali-moment": "^3.3.11",
     "jsonwebtoken": "^9.0.2",
     "maplibre-gl": "^5.24.0",
+    "mongodb": "^7.6.0",
     "mongoose": "^8.18.1",
     "nanoid": "^5.1.6",
     "next": "^15.1.12",
