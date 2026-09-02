@@ -11,7 +11,7 @@ export async function GET() {
 
     const data = await digikalaFetch({
       path,
-      revalidate: 86400,
+      cache: "no-store",
     });
 
     return Response.json(data);
