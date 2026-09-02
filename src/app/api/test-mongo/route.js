@@ -6,22 +6,14 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const dbName = mongoose.connection.db.databaseName;
-
-    const collections = await mongoose.connection.db
-      .listCollections()
-      .toArray();
-
     const cartCount = await CartModel.countDocuments();
 
     return Response.json({
       success: true,
       readyState: mongoose.connection.readyState,
-      dbName,
+      cartCount,
       modelName: CartModel.modelName,
       collectionName: CartModel.collection.name,
-      cartCount,
-      collections: collections.map((c) => c.name),
     });
   } catch (error) {
     console.error("❌ TEST CART ERROR:", error);
