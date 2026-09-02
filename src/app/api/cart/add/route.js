@@ -256,16 +256,30 @@ const getCart = async ({ user, guestCartId }) => {
   if (user) {
     console.log("🛒 FIND USER CART");
 
-    return CartModel.findOne({
+    const cart = await CartModel.findOne({
       userId: user._id,
     });
+
+    console.log("🛒 USER CART RESULT:", Boolean(cart));
+
+    return cart;
   }
 
   if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
-    console.log("🛒 FIND GUEST CART");
+    console.log("🛒 FIND GUEST CART:", guestCartId);
 
-    return CartModel.findById(guestCartId);
+    console.log("🔵 BEFORE FIND BY ID");
+
+    const cart = await CartModel.findById(guestCartId);
+
+    console.log("🟢 AFTER FIND BY ID");
+
+    console.log("🛒 GUEST CART RESULT:", Boolean(cart));
+
+    return cart;
   }
+
+  console.log("⚠️ NO USER / INVALID GUEST CART ID");
 
   return null;
 };
