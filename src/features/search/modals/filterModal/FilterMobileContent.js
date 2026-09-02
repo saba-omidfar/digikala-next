@@ -22,8 +22,7 @@ function FilterMobileContent() {
       : filterExtra?.filterKey?.keyCode;
 
   if (key === "color_palettes") return <FilterColorsContent />;
-  // if (key === "categories" || key === "category_list")
-  //   return <FilterCategoriesContent />;
+  if (key === "categories") return <FilterCategoriesContent />;
   if (key === "price") return <FilterPriceContent />;
 
   const selectedItems = filterExtra?.filterOptions.filter((option) => {
