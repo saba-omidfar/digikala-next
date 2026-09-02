@@ -400,13 +400,19 @@ export async function POST(req) {
     // USER
     // ─────────────────────────────────────────────
 
-    console.log("🔎 FIND USER");
+    let user = null;
 
-    const user = await UserModel.findOne({
-      "auth.accessToken": accessToken,
-    }).select("_id");
+    if (accessToken) {
+      console.log("🔎 FIND USER");
 
-    console.log("👤 USER:", user?._id?.toString() || "GUEST");
+      user = await UserModel.findOne({
+        "auth.accessToken": accessToken,
+      }).select("_id");
+
+      console.log("👤 USER:", user?._id?.toString() || "USER NOT FOUND");
+    } else {
+      console.log("👤 GUEST USER → SKIP USER QUERY");
+    }
 
     // ─────────────────────────────────────────────
     // CART
