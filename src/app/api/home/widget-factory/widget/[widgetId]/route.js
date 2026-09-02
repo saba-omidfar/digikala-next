@@ -6,7 +6,7 @@ export async function GET(req, { params }) {
   try {
     const { widgetId } = await params;
 
-    const path = `/api/home/widget-factory/widget/${widgetId}`;
+    const path = `/discovery/api/v1/widget-factory/widget/${widgetId}`;
 
     const data = await digikalaFetch({
       path,
