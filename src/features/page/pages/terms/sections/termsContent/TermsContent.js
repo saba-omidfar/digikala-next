@@ -19,7 +19,12 @@ export default function TermsContent() {
   return (
     <div
       className={styles.container}
-      style={{ paddingTop: topMegaMenuBanners ? 168 : 108 }}
+      style={{
+        paddingTop: (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)
+          ?.length
+          ? 168
+          : 108,
+      }}
     >
       <div className={styles.content_container}>
         <section className={styles.content}>

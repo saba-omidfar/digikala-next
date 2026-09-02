@@ -32,7 +32,13 @@ export default function IncredibleContent({ categoryId }) {
   return (
     <div
       className={styles.container}
-      style={{ paddingTop: isSmallScreen ? 0 : topMegaMenuBanners ? 168 : 108 }}
+      style={{
+        paddingTop: isSmallScreen
+          ? 0
+          : (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+            ? 168
+            : 108,
+      }}
     >
       <main
         className={`${styles.layout_Desktop__container} ${styles.layout_Desktop__content_full_width}`}

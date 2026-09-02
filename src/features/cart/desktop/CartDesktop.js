@@ -24,7 +24,7 @@ function CartDesktop() {
       <Header />
       <div
         className={styles.container}
-        style={{ paddingTop: topMegaMenuBanners ? 184 : 124 }}
+        style={{ paddingTop: topMegaMenuBanners?.desktop?.length ? 184 : 124 }}
       >
         <div className={styles.Desktop_content}>
           {isLoadingUserCart ? (

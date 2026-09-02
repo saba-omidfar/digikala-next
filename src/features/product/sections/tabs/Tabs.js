@@ -74,11 +74,23 @@ export default function Tabs({ isTabsSticky }) {
       const currentScroll = window.scrollY;
 
       if (currentScroll < lastScrollY) {
-        isTabsSticky ? (topMegaMenuBanners ? 188 : 128) : 68;
+        isTabsSticky
+          ? (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+            ? 188
+            : 128
+          : 68;
 
-        setTopOffset(topMegaMenuBanners ? 168 : 108);
+        setTopOffset(
+          (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+            ? 168
+            : 108,
+        );
       } else {
-        setTopOffset(topMegaMenuBanners ? 128 : 68);
+        setTopOffset(
+          (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+            ? 128
+            : 68,
+        );
       }
 
       setLastScrollY(currentScroll);

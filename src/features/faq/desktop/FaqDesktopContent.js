@@ -24,7 +24,7 @@ export default function FaqDesktopContent({ categoryId, questionId }) {
       <Header />
       <div
         className="d-flex align-items-center flex-column flex-shrink-0 flex-grow-1 bg-white"
-        style={{ paddingTop: topMegaMenuBanners ? 168 : 108 }}
+        style={{ paddingTop: topMegaMenuBanners?.desktop?.length ? 168 : 108 }}
       >
         <FaqContent {...faq} />
       </div>

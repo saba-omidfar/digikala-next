@@ -14,7 +14,7 @@ export default function CompareDesktopContent({ productIds }) {
       <Header />
       <div
         className={styles.container}
-        style={{ paddingTop: topMegaMenuBanners ? 168 : 108 }}
+        style={{ paddingTop: topMegaMenuBanners?.desktop?.length ? 168 : 108 }}
       >
         <main className={styles.content}>
           <CompareContent productIds={productIds} maxLength={4} />

@@ -35,7 +35,12 @@ export default function IncredibleTeasingContent({
   return (
     <div
       className={styles.container}
-      style={{ paddingTop: topMegaMenuBanners ? 168 : 108 }}
+      style={{
+        paddingTop: (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)
+          ?.length
+          ? 168
+          : 108,
+      }}
     >
       <div id="base_layout_desktop_static_header" className="w-100">
         <div>

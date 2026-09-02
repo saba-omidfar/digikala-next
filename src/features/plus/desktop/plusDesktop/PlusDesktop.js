@@ -16,7 +16,7 @@ export default function PlusDesktop() {
       <Header />
       <div
         className="d-flex align-items-center flex-column w-100 flex-shrink-0 flex-grow-1"
-        style={{ paddingTop: topMegaMenuBanners ? 168 : 108 }}
+        style={{ paddingTop: topMegaMenuBanners?.desktop?.length ? 168 : 108 }}
       >
         <div className={styles.content_container}>
           <PlusContent />

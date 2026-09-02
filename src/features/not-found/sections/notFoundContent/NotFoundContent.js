@@ -13,7 +13,10 @@ export default function NotFoundContent() {
     <div
       className={styles.container}
       style={{
-        paddingTop: topMegaMenuBanners ? 168 : 108,
+        paddingTop: (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)
+          ?.length
+          ? 168
+          : 108,
       }}
     >
       <div className={styles.not_found_container}>

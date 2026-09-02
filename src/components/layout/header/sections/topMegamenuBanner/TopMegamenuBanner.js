@@ -13,7 +13,7 @@ export default function TopMegamenuBanner() {
 
   const banner = isSmallScreen ? data?.mobile : data?.desktop;
 
-  if (!banner) return null;
+  if (!banner?.length) return null;
 
   return (
     <div>

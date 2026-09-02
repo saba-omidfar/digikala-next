@@ -41,7 +41,7 @@ export default function DesktopContent() {
   return (
     <div
       className={styles.container}
-      style={{ paddingTop: topMegaMenuBanners ? 168 : 108 }}
+      style={{ paddingTop: topMegaMenuBanners?.desktop?.length ? 168 : 108 }}
     >
       <div
         id="base_layout_desktop_static_header"

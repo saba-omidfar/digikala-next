@@ -110,9 +110,9 @@ function MiniBuyBoxSticky() {
       const currentScroll = window.scrollY;
 
       if (currentScroll < lastScrollY) {
-        setTopOffset(topMegaMenuBanners ? 234 : 173);
+        setTopOffset(topMegaMenuBanners?.desktop?.length ? 234 : 173);
       } else {
-        setTopOffset(topMegaMenuBanners ? 195 : 173);
+        setTopOffset(topMegaMenuBanners?.desktop?.length ? 195 : 173);
       }
 
       setLastScrollY(currentScroll);

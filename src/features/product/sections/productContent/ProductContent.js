@@ -22,9 +22,17 @@ export default function ProductContent() {
       const currentScroll = window.scrollY;
 
       if (currentScroll < lastScrollY) {
-        setTopOffset(topMegaMenuBanners ? 234 : 173);
+        setTopOffset(
+          (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+            ? 234
+            : 173,
+        );
       } else {
-        setTopOffset(topMegaMenuBanners ? 188 : 173);
+        setTopOffset(
+          (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+            ? 188
+            : 173,
+        );
       }
 
       setLastScrollY(currentScroll);

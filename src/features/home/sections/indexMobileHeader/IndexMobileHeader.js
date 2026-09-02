@@ -48,7 +48,10 @@ export default function IndexMobileHeader() {
     <div
       className={styles.mobile_sticky_header_container}
       style={{
-        top: !isIndexMobileHeaderScrolledY && topMegaMenuBanners ? 35 : 0,
+        top:
+          !isIndexMobileHeaderScrolledY && topMegaMenuBanners?.mobile?.length
+            ? 35
+            : 0,
         backgroundColor: "rgb(242, 243, 245)",
         transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 300ms",
       }}

@@ -22,7 +22,7 @@ export default function Header({ isBrandLandingPage }) {
       {isOpenMegamenu && <div className="overlay" />}
 
       <div
-        className={`${!isBrandLandingPage ? (topMegaMenuBanners ? styles.banner_header_container : styles.header_container) : styles.header_landing_container} ${hideMenuOnTop ? (topMegaMenuBanners ? styles.header_banner_fixed_container : styles.header_fixed_container) : ""} ${isOpenMegamenu ? styles.padding_right : ""}`}
+        className={`${!isBrandLandingPage ? (topMegaMenuBanners?.desktop?.length ? styles.banner_header_container : styles.header_container) : styles.header_landing_container} ${hideMenuOnTop ? (topMegaMenuBanners?.desktop?.length ? styles.header_banner_fixed_container : styles.header_fixed_container) : ""} ${isOpenMegamenu ? styles.padding_right : ""}`}
       >
         <header className={styles.header}>
           <TopMegamenuBanner />

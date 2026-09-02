@@ -31,7 +31,12 @@ export default function ProductListing({
     <div
       className={styles.container}
       style={{
-        paddingTop: topMegaMenuBanners ? (isSmallScreen ? 0 : 168) : 0,
+        paddingTop: (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)
+          ?.length
+          ? isSmallScreen
+            ? 0
+            : 168
+          : 0,
       }}
     >
       {(promotionId || isPoromotionSearchPage) && (

@@ -23,7 +23,12 @@ export default function LandingContent({ id }) {
     <div
       className={styles.layout_Desktop__container}
       style={{
-        paddingTop: topMegaMenuBanners ? (isSmallScreen ? 0 : 168) : 108,
+        paddingTop: (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)
+          ?.length
+          ? isSmallScreen
+            ? 0
+            : 168
+          : 108,
       }}
     >
       <div

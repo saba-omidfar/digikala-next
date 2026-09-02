@@ -19,7 +19,7 @@ function HomeDesktop() {
       <Header />
       <div
         className={styles.content}
-        style={{ paddingTop: topMegaMenuBanners ? 168 : 108 }}
+        style={{ paddingTop: topMegaMenuBanners?.desktop?.length ? 168 : 108 }}
       >
         <main className={styles.content_full_width}>
           <div className={styles.container}>

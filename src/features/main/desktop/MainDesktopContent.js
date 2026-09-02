@@ -14,7 +14,7 @@ export default function MainDesktopContent(props) {
       <Header />
       <div
         className={styles.container}
-        style={{ paddingTop: topMegaMenuBanners ? 168 : 108 }}
+        style={{ paddingTop: topMegaMenuBanners?.desktop?.length ? 168 : 108 }}
       >
         <MainContent {...props} />
       </div>
