@@ -1,6 +1,6 @@
 import { digikalaFetch } from "@/lib/digikala";
 
-export const revalidate = 86400;
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
