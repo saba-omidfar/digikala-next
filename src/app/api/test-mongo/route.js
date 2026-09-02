@@ -1,30 +1,51 @@
-import mongoose from "mongoose";
-import dbConnect from "@/configs/db";
-import CartModel from "@/models/Cart";
+import net from "net";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  try {
-    await dbConnect();
+  return new Promise((resolve) => {
+    const socket = new net.Socket();
 
-    const cartCount = await CartModel.countDocuments();
+    socket.setTimeout(5000);
 
-    return Response.json({
-      success: true,
-      readyState: mongoose.connection.readyState,
-      cartCount,
-      modelName: CartModel.modelName,
-      collectionName: CartModel.collection.name,
+    socket.on("connect", () => {
+      socket.destroy();
+
+      resolve(
+        Response.json({
+          success: true,
+          message: "TCP connection successful",
+        }),
+      );
     });
-  } catch (error) {
-    console.error("❌ TEST CART ERROR:", error);
 
-    return Response.json(
-      {
-        success: false,
-        message: error.message,
-        readyState: mongoose.connection.readyState,
-      },
-      { status: 500 },
-    );
-  }
+    socket.on("timeout", () => {
+      socket.destroy();
+
+      resolve(
+        Response.json({
+          success: false,
+          message: "TCP connection timeout",
+        }),
+        { status: 500 },
+      );
+    });
+
+    socket.on("error", (error) => {
+      socket.destroy();
+
+      resolve(
+        Response.json(
+          {
+            success: false,
+            message: error.message,
+            code: error.code,
+          },
+          { status: 500 },
+        ),
+      );
+    });
+
+    socket.connect(30677, "remote-pishgaman.runflare.com");
+  });
 }
