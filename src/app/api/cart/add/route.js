@@ -268,18 +268,14 @@ const getCart = async ({ user, guestCartId }) => {
   if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
     console.log("🛒 FIND GUEST CART:", guestCartId);
 
-    console.log("🔵 BEFORE FIND BY ID");
+    console.log("🔎 MONGO STATE BEFORE QUERY:", mongoose.connection.readyState);
 
     const cart = await CartModel.findById(guestCartId);
 
     console.log("🟢 AFTER FIND BY ID");
 
-    console.log("🛒 GUEST CART RESULT:", Boolean(cart));
-
     return cart;
   }
-
-  console.log("⚠️ NO USER / INVALID GUEST CART ID");
 
   return null;
 };
