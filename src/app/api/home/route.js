@@ -5,7 +5,7 @@ export const preferredRegion = "fra1";
 
 export async function GET(req) {
   try {
-    const path = `/discovery/api/v1/home`;
+    const path = `/api/home`;
 
     const data = await digikalaFetch({
       path,
