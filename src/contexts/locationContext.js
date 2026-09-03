@@ -10,6 +10,8 @@ import {
   useState,
 } from "react";
 
+import { fromLonLat } from "ol/proj";
+
 import { useGeoMap, useReversGeoMap } from "@/hooks/useMap";
 import { useModal } from "@/contexts/modalContext";
 
@@ -89,8 +91,8 @@ export const LocationProvider = ({ children }) => {
   const handleSelectLocation = useCallback((location) => {
     setSearchValue(location.title);
     setShowGeoList(false);
-    mapRef.current?.flyTo({
-      center: [location.longitude, location.latitude],
+    mapRef.current?.getView().animate({
+      center: fromLonLat([location.longitude, location.latitude]),
       zoom: 15,
       duration: 1500,
     });

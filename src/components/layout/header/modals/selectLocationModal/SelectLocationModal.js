@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { fromLonLat } from "ol/proj";
 
 import { useModal } from "@/contexts/modalContext";
 import { useLocation } from "@/contexts/locationContext";
@@ -33,12 +34,15 @@ function SelectLocationModal({ isEdit }) {
   useEffect(() => {
     if (!selectedLocation) return;
 
-    mapRef.current?.flyTo({
-      center: [selectedLocation.longitude, selectedLocation.latitude],
+    mapRef.current?.getView().animate({
+      center: fromLonLat([
+        selectedLocation.longitude,
+        selectedLocation.latitude,
+      ]),
       zoom: 15,
       duration: 1200,
     });
-  }, []);
+  }, [selectedLocation, mapRef]);
 
   const handleMapMove = useCallback((coords) => {
     setMapCenter(coords);
@@ -74,8 +78,8 @@ function SelectLocationModal({ isEdit }) {
       ({ coords }) => {
         const { latitude, longitude } = coords;
 
-        mapRef.current?.flyTo({
-          center: [longitude, latitude],
+        mapRef.current?.getView().animate({
+          center: fromLonLat([longitude, latitude]),
           zoom: 16,
           duration: 1200,
         });

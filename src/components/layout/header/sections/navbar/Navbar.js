@@ -124,7 +124,7 @@ function Navbar({ hideMenuOnTop, isOpenMegamenu, setIsOpenMegamenu }) {
             <div className={styles.navbar_menu__border}></div>
           </div>
 
-          {user && selectedLocation ? (
+          {selectedLocation ? (
             <div className={styles.location} onClick={modalClickHandler}>
               <div className={styles.location_icon_container}>
                 <div

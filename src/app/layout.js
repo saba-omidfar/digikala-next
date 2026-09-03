@@ -13,7 +13,7 @@ import NextTopLoader from "nextjs-toploader";
 
 import "@/components/modules/dk-popover/dk-popover";
 
-import "maplibre-gl/dist/maplibre-gl.css";
+import "ol/ol.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import "./reset.css";
