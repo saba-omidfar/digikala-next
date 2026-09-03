@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/db";
+import dbConnect from "@/configs/db";
 import CartModel from "@/models/Cart";
 
 export const dynamic = "force-dynamic";
