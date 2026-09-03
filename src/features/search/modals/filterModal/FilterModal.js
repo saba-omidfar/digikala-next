@@ -29,7 +29,7 @@ function FilterModal({ activeFilter }) {
       filterKey: filter.key || key,
       filterTitle: filter.title,
       filterOptions: filter.options,
-      isOpen: !(prev.isOpen && prev.filterKey === filter.key),
+      isOpen: !prev.isOpen,
     }));
   };
 

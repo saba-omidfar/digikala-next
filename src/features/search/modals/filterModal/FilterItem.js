@@ -75,7 +75,9 @@ export default function FilterItem({ filter, filterKey, onClick, isLast }) {
   const caption = getFilterCaption(filter, params);
 
   const isOpen =
-    !isLast && filterExtra.isOpen && filterExtra.filterKey === filter.key;
+    !isLast &&
+    filterExtra.isOpen &&
+    filterExtra.filterKey === (filter.key || filterKey);
 
   return (
     <div
