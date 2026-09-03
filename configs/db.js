@@ -22,7 +22,6 @@ const dbConnect = async () => {
     return cached.conn;
   }
 
-  // اتصال قبلی در حال انجام است
   if (!cached.promise) {
     console.log("🟡 MONGO START CONNECT");
 

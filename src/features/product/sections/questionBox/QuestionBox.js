@@ -5,12 +5,18 @@ import Image from "next/image";
 import Loading from "@/components/modules/loading/Loading";
 
 import toPersianDigits from "@/utils/toPersianDigits";
+
 import { useGetFeedback, usePostFeedback } from "@/hooks/useFeedback";
+
 import { useModal } from "@/contexts/modalContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
+import { useUserContext } from "@/contexts/UserContext";
 
 import styles from "./questionBox.module.css";
 
 function QuestionBox({ question }) {
+  const { user } = useUserContext();
+  const { showSnackbar } = useSnackbar();
   const { openMobileModal } = useModal();
 
   const { mutate: toggleFeedback, isLoading, variables } = usePostFeedback();
@@ -20,6 +26,11 @@ function QuestionBox({ question }) {
   });
 
   const togglefeedbacksHandler = ({ questionId, type }) => {
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
     toggleFeedback(
       {
         targetId: questionId,

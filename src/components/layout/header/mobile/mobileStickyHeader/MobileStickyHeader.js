@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import SearchModal from "@/components/layout/header/modals/searchModal/SearchModal";
 
 import { useModal } from "@/contexts/modalContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
 
 import styles from "./mobileStickyHeader.module.css";
 
@@ -21,6 +22,7 @@ function MobileStickyHeader({
   const { sellerCode } = useParams();
 
   const { openModal, closeModal } = useModal();
+  const { showSnackbar } = useSnackbar();
 
   const copyPageUrlHandler = () => {
     const pageUrl = window.location.href;

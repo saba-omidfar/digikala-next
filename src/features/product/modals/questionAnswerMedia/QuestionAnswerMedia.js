@@ -2,10 +2,10 @@ import { useState } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
 
 import { useModal } from "@/contexts/modalContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
+import { useUserContext } from "@/contexts/UserContext";
 
 import { useGetFeedback, usePostFeedback } from "@/hooks/useFeedback";
 
@@ -20,6 +20,8 @@ export default function QuestionAnswerMedia({ question, answer }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const { closeModal } = useModal();
+  const { user } = useUserContext();
+  const { showSnackbar } = useSnackbar();
 
   const { mutate: toggleFeedback, isLoading, variables } = usePostFeedback();
   const { data: feedback, refetch } = useGetFeedback({
@@ -28,6 +30,11 @@ export default function QuestionAnswerMedia({ question, answer }) {
   });
 
   const toggleFeedbackHandler = ({ answerId, type }) => {
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
     toggleFeedback(
       {
         targetId: answerId,

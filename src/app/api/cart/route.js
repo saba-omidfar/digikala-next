@@ -70,21 +70,11 @@ export async function GET(req) {
   try {
     await dbConnect();
 
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log("🟡 CART GET: START");
-
     const cookiesStore = await cookies();
     const accessToken = cookiesStore.get("access_token")?.value;
 
     const { searchParams } = new URL(req.url);
     const guestCartId = searchParams.get("guestCartId");
-
-    console.log("🍪 ACCESS TOKEN:", Boolean(accessToken));
-    console.log("🛒 GUEST CART ID FROM URL:", guestCartId);
-    console.log(
-      "🆔 VALID OBJECT ID:",
-      guestCartId ? mongoose.Types.ObjectId.isValid(guestCartId) : false,
-    );
 
     let cart = null;
     let clearGuestCartId = false;
@@ -200,13 +190,7 @@ export async function GET(req) {
     /* ---------------- GUEST ---------------- */
 
     if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
-      console.log("🔎 FIND CART BY ID:", guestCartId);
-
       cart = await CartModel.findById(guestCartId).lean();
-
-      console.log("🛒 CART FOUND:", Boolean(cart), cart?._id?.toString());
-    } else {
-      console.log("❌ NO VALID GUEST CART ID");
     }
 
     if (!cart) {

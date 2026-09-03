@@ -10,11 +10,15 @@ import { useGetFeedback, usePostFeedback } from "@/hooks/useFeedback";
 import toPersianDigits from "@/utils/toPersianDigits";
 
 import { useModal } from "@/contexts/modalContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
+import { useUserContext } from "@/contexts/UserContext";
 
 import styles from "./questionAnswerBox.module.css";
 
 function QuestionAnswerBox({ question, answer, isAnswer }) {
   const { openModal } = useModal();
+  const { user } = useUserContext();
+  const { showSnackbar } = useSnackbar();
 
   const { mutate: toggleFeedback, isLoading, variables } = usePostFeedback();
   const { data: feedback, refetch } = useGetFeedback({
@@ -23,6 +27,11 @@ function QuestionAnswerBox({ question, answer, isAnswer }) {
   });
 
   const toggleFeedbackHandler = ({ answerId, type }) => {
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
     toggleFeedback(
       {
         targetId: answerId,

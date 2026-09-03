@@ -11,16 +11,20 @@ import useAlbumGroups from "@/features/shared/hooks/useGalleryGroups";
 
 import { useModal } from "@/contexts/modalContext";
 import { useProductContext } from "@/contexts/ProductContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
+import { useUserContext } from "@/contexts/UserContext";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 import getTrueToSizeLabel from "@/utils/getTrueToSizeClass";
 
 import { useGetFeedback, usePostFeedback } from "@/hooks/useFeedback";
-import { useReportComment } from "@/hooks/useReportComment";
 
 import styles from "./showCommentDetailsModal.module.css";
 
 function ShowCommentDetailsModal({ comment }) {
+  const { user } = useUserContext();
+  const { showSnackbar } = useSnackbar();
+
   const { openModal, closeModal } = useModal();
   const { productDetails, mediaComments } = useProductContext();
 
@@ -30,7 +34,6 @@ function ShowCommentDetailsModal({ comment }) {
       .length;
   }, [groups]);
 
-  const { mutate } = useReportComment();
   const { mutate: toggleFeedback, isLoading, variables } = usePostFeedback();
   const { data: feedback, refetch } = useGetFeedback({
     targetId: comment.id,
@@ -38,6 +41,11 @@ function ShowCommentDetailsModal({ comment }) {
   });
 
   const togglefeedbacksHandler = ({ commentId, type }) => {
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
     toggleFeedback(
       {
         targetId: commentId,

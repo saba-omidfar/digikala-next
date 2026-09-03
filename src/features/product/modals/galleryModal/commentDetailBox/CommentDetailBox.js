@@ -7,9 +7,15 @@ import toPersianDigits from "@/utils/toPersianDigits";
 
 import { useGetFeedback, usePostFeedback } from "@/hooks/useFeedback";
 
+import { useSnackbar } from "@/contexts/SnackbarContext";
+import { useUserContext } from "@/contexts/UserContext";
+
 import styles from "./commentDetailBox.module.css";
 
 export default function CommentDetailBox({ commentDetails, isMobileView }) {
+  const { user } = useUserContext();
+  const { showSnackbar } = useSnackbar();
+
   const commentRef = useRef(null);
   const [isCommentExpended, setICommentExpended] = useState(false);
 
@@ -20,6 +26,11 @@ export default function CommentDetailBox({ commentDetails, isMobileView }) {
   });
 
   const togglefeedbacksHandler = ({ commentId, type }) => {
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
     toggleFeedback(
       {
         targetId: commentId,

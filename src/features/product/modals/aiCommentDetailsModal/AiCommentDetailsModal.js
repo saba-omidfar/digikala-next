@@ -3,12 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { useModal } from "@/contexts/modalContext";
 import { useProductContext } from "@/contexts/ProductContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
+import { useUserContext } from "@/contexts/UserContext";
 import { useGetFeedback, usePostFeedback } from "@/hooks/useFeedback";
 
 import styles from "./aiCommentDetailsModal.module.css";
 
 function AiCommentDetailsModal() {
   const { closeModal } = useModal();
+  const { user } = useUserContext();
+  const { showSnackbar } = useSnackbar();
 
   const { productDetails } = useProductContext();
   const { mutate: toggleFeedback } = usePostFeedback();
@@ -33,6 +37,11 @@ function AiCommentDetailsModal() {
 
   const togglefeedbacksHandler = (type) => {
     const wasLiked = feedbacks?.userLiked;
+
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
 
     toggleFeedback(
       {

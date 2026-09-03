@@ -254,25 +254,15 @@ const saveCart = async (cart) => {
 
 const getCart = async ({ user, guestCartId }) => {
   if (user) {
-    console.log("🛒 FIND USER CART");
-
     const cart = await CartModel.findOne({
       userId: user._id,
     });
-
-    console.log("🛒 USER CART RESULT:", Boolean(cart));
 
     return cart;
   }
 
   if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
-    console.log("🛒 FIND GUEST CART:", guestCartId);
-
-    console.log("🔎 MONGO STATE BEFORE QUERY:", mongoose.connection.readyState);
-
     const cart = await CartModel.findById(guestCartId);
-
-    console.log("🟢 AFTER FIND BY ID");
 
     return cart;
   }
@@ -281,8 +271,6 @@ const getCart = async ({ user, guestCartId }) => {
 };
 
 const createCart = async (user) => {
-  console.log("🆕 CREATE CART");
-
   return CartModel.create({
     userId: user?._id || null,
     packages: [{ cart_items: [] }],
@@ -335,11 +323,6 @@ const moveCartToNextCart = (cart) => {
 };
 
 const getProductAndVariant = async ({ productId, variantId }) => {
-  console.log("🔵 FETCH DIGIKALA PRODUCT:", {
-    productId,
-    variantId,
-  });
-
   const data = await digikalaFetch({
     path: `/v2/product/${productId}/`,
   });
@@ -358,8 +341,6 @@ const getProductAndVariant = async ({ productId, variantId }) => {
     throw new Error("واریانت نامعتبر است");
   }
 
-  console.log("🟢 DIGIKALA PRODUCT FOUND");
-
   return {
     product,
     variant,
@@ -368,33 +349,14 @@ const getProductAndVariant = async ({ productId, variantId }) => {
 
 export async function POST(req) {
   try {
-    console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-    console.log("🟡 CART ADD: START");
-
-    // ─────────────────────────────────────────────
-    // DATABASE
-    // ─────────────────────────────────────────────
-
     await dbConnect();
 
-    console.log("🟢 CART ADD: DB CONNECTED");
-
-    // ─────────────────────────────────────────────
     // AUTH
-    // ─────────────────────────────────────────────
-
     const cookiesStore = await cookies();
     const accessToken = cookiesStore.get("access_token")?.value;
 
-    console.log("🔐 ACCESS TOKEN EXISTS:", Boolean(accessToken));
-
-    // ─────────────────────────────────────────────
     // REQUEST BODY
-    // ─────────────────────────────────────────────
-
     const body = await req.json();
-
-    console.log("📦 CART ADD BODY:", body);
 
     const {
       guestCartId = null,
@@ -406,34 +368,20 @@ export async function POST(req) {
       moveAll = false,
     } = body;
 
-    // ─────────────────────────────────────────────
     // USER
-    // ─────────────────────────────────────────────
-
     let user = null;
 
     if (accessToken) {
-      console.log("🔎 FIND USER");
-
       user = await UserModel.findOne({
         "auth.accessToken": accessToken,
       }).select("_id");
-
-      console.log("👤 USER:", user?._id?.toString() || "USER NOT FOUND");
-    } else {
-      console.log("👤 GUEST USER → SKIP USER QUERY");
     }
 
-    // ─────────────────────────────────────────────
-    // CART
-    // ─────────────────────────────────────────────
-
+    // CA
     let cart = await getCart({
       user,
       guestCartId,
     });
-
-    console.log("🛒 CART FOUND:", Boolean(cart));
 
     if (!cart) {
       cart = await createCart(user);
@@ -451,19 +399,12 @@ export async function POST(req) {
       );
     }
 
-    // ─────────────────────────────────────────────
     // MOVE NEXT CART → CART
-    // ─────────────────────────────────────────────
-
     if (fromNextCart && moveAll) {
-      console.log("🔄 MOVE ALL: NEXT CART → CART");
-
       moveNextCartToCart(cart);
 
       await saveCart(cart);
 
-      console.log("🟢 MOVE ALL SUCCESS");
-
       return Response.json(
         {
           success: true,
@@ -473,19 +414,13 @@ export async function POST(req) {
       );
     }
 
-    // ─────────────────────────────────────────────
     // MOVE CART → NEXT CART
-    // ─────────────────────────────────────────────
 
     if (!fromNextCart && moveAll) {
-      console.log("🔄 MOVE ALL: CART → NEXT CART");
-
       moveCartToNextCart(cart);
 
       await saveCart(cart);
 
-      console.log("🟢 MOVE ALL SUCCESS");
-
       return Response.json(
         {
           success: true,
@@ -495,16 +430,12 @@ export async function POST(req) {
       );
     }
 
-    // ─────────────────────────────────────────────
     // PRODUCT / VARIANT
-    // ─────────────────────────────────────────────
 
     let cartProduct;
     let cartVariant;
 
     if (fromNextCart) {
-      console.log("🟣 MOVE PRODUCT FROM NEXT CART");
-
       const nextItem = cart.next_cart.find(
         (item) => Number(item.variant?.id) === Number(variantId),
       );
@@ -535,29 +466,21 @@ export async function POST(req) {
       cartVariant = result.variant;
     }
 
-    // ─────────────────────────────────────────────
     // REMOVE FROM NEXT CART
-    // ─────────────────────────────────────────────
 
     cart.next_cart = cart.next_cart.filter(
       (item) => Number(item.variant?.id) !== Number(cartVariant.id),
     );
 
-    // ─────────────────────────────────────────────
     // FIND EXISTING ITEM
-    // ─────────────────────────────────────────────
 
     const existingIndex = packageRef.cart_items.findIndex(
       (item) => Number(item.variant?.id) === Number(cartVariant.id),
     );
 
-    // ─────────────────────────────────────────────
     // UPDATE EXISTING ITEM
-    // ─────────────────────────────────────────────
 
     if (existingIndex > -1) {
-      console.log("🛒 EXISTING CART ITEM");
-
       const existingItem = packageRef.cart_items[existingIndex];
 
       const orderLimit = cartVariant?.price?.order_limit || Infinity;
@@ -578,12 +501,8 @@ export async function POST(req) {
       existingItem.has_insurance = Boolean(hasInsurance);
     }
 
-    // ─────────────────────────────────────────────
     // ADD NEW ITEM
-    // ─────────────────────────────────────────────
     else {
-      console.log("➕ ADD NEW CART ITEM");
-
       packageRef.cart_items.push({
         id: Math.floor(Math.random() * 1e9),
         cart_id: cart._id,
@@ -598,16 +517,8 @@ export async function POST(req) {
       });
     }
 
-    // ─────────────────────────────────────────────
     // SAVE
-    // ─────────────────────────────────────────────
-
-    console.log("💾 SAVE CART");
-
     await saveCart(cart);
-
-    console.log("🟢 CART ADD SUCCESS");
-    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
     return Response.json(
       {

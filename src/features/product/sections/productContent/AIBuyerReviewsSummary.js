@@ -2,11 +2,17 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import { useProductContext } from "@/contexts/ProductContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
+import { useUserContext } from "@/contexts/UserContext";
+
 import { useGetFeedback, usePostFeedback } from "@/hooks/useFeedback";
 
 import styles from "./aIBuyerReviewsSummary.module.css";
 
 function AIBuyerReviewsSummary() {
+  const { user } = useUserContext();
+  const { showSnackbar } = useSnackbar();
+
   const [showLikeAnimation, setShowLikeAnimation] = useState(false);
   const [isExpendedReviewsSummary, setIsExpendedReviewsSummary] =
     useState(false);
@@ -20,6 +26,11 @@ function AIBuyerReviewsSummary() {
 
   const togglefeedbacksHandler = (type) => {
     const wasLiked = feedbacks?.userLiked;
+
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
 
     toggleFeedback(
       {

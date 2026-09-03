@@ -7,7 +7,10 @@ import { useProductContext } from "@/contexts/ProductContext";
 import toPersianDigits from "@/utils/toPersianDigits";
 import getTrueToSizeLabel from "@/utils/getTrueToSizeClass";
 import shouldTruncate from "@/utils/shouldTruncate";
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 import useScreenStatus from "@/hooks/useScreenStatus";
+import { useUserContext } from "@/contexts/UserContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
 
 import { useGetFeedback, usePostFeedback } from "@/hooks/useFeedback";
 import useAlbumGroups from "@/features/shared/hooks/useGalleryGroups";
@@ -24,6 +27,9 @@ import styles from "./commentBox.module.css";
 function commentBox({ comment }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [anchorOpen, setAnchorOpen] = useState(false);
+
+  const { user } = useUserContext();
+  const { showSnackbar } = useSnackbar();
 
   const { openModal } = useModal();
   const { isSmallScreen } = useScreenStatus();
@@ -43,6 +49,11 @@ function commentBox({ comment }) {
   }, [groups]);
 
   const togglefeedbacksHandler = ({ commentId, type }) => {
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
     toggleFeedback(
       {
         targetId: commentId,

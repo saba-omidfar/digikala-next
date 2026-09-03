@@ -11,7 +11,7 @@ import getTrueToSizeLabel from "@/utils/getTrueToSizeClass";
 
 import styles from "./commentBoxMobile.module.css";
 
-function CommentBoxMobile({ comment }) {
+export default function CommentBoxMobile({ comment }) {
   const { openModal } = useModal();
 
   return (
@@ -123,5 +123,3 @@ function CommentBoxMobile({ comment }) {
     </article>
   );
 }
-
-export default CommentBoxMobile;
