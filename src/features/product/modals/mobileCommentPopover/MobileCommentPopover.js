@@ -1,5 +1,6 @@
 import { useReportComment } from "@/hooks/useReportComment";
 
+import { useUserContext } from "@/contexts/UserContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useModal } from "@/contexts/modalContext";
 
@@ -7,11 +8,18 @@ import styles from "./mobileCommentPopover.module.css";
 
 export default function MobileCommentPopover({ commentId }) {
   const { closeModal } = useModal();
+  const { user } = useUserContext();
   const { showSnackbar } = useSnackbar();
 
   const { mutate, isLoading } = useReportComment();
 
   const reportHandler = () => {
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      closeModal();
+      return;
+    }
+
     mutate(
       { commentId },
       {

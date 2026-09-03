@@ -2,7 +2,9 @@
 
 import { Popover } from "@mui/material";
 
+import { useUserContext } from "@/contexts/UserContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
+
 import { useReportComment } from "@/hooks/useReportComment";
 import usePopoverPosition from "@/hooks/usePopoverPosition";
 
@@ -16,10 +18,18 @@ export default function CommentPopover({
 }) {
   const position = usePopoverPosition(anchorRef, open, 72);
 
+  const { user } = useUserContext();
   const { showSnackbar } = useSnackbar();
+
   const { mutate, isLoading } = useReportComment();
 
   const reportHandler = () => {
+    if (!user) {
+      showSnackbar("ابتدا وارد شوید.");
+      onClose();
+      return;
+    }
+
     mutate(
       { commentId },
       {

@@ -7,7 +7,6 @@ import { useProductContext } from "@/contexts/ProductContext";
 import toPersianDigits from "@/utils/toPersianDigits";
 import getTrueToSizeLabel from "@/utils/getTrueToSizeClass";
 import shouldTruncate from "@/utils/shouldTruncate";
-import useLoginRedirect from "@/hooks/useLoginRedirect";
 import useScreenStatus from "@/hooks/useScreenStatus";
 import { useUserContext } from "@/contexts/UserContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";

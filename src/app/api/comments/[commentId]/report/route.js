@@ -14,7 +14,6 @@ export async function POST(req, { params }) {
     const { commentId } = params;
 
     const cookiesStore = await cookies();
-
     const accessToken = cookiesStore.get("access_token")?.value;
 
     if (!accessToken) {
