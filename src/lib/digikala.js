@@ -5,7 +5,7 @@ export async function digikalaFetch({
 }) {
   const start = Date.now();
 
-  const url = `https://digikala-api-fk0-digiikala.runflare.cloud${path}`;
+  const url = `https://desktop-9a6leca.tailaf0a21.ts.net${path}`;
 
   console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
   console.log("🟡 DIGIKALA REQUEST");
@@ -46,6 +46,9 @@ export async function digikalaFetch({
   const textStart = Date.now();
 
   const text = await res.text();
+
+  console.log("📄 CONTENT-TYPE:", res.headers.get("content-type"));
+  console.log("📄 BODY START:", text.slice(0, 500));
 
   const textTime = Date.now() - textStart;
 
