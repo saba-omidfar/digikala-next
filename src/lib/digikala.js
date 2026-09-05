@@ -5,7 +5,7 @@ export async function digikalaFetch({
 }) {
   const start = Date.now();
 
-  const url = `https://digikala-api-o8z-digiikala.runflare.cloud${path}`;
+  const url = `https://digikala-api-fk0-digiikala.runflare.cloud${path}`;
 
   console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
   console.log("🟡 DIGIKALA REQUEST");
