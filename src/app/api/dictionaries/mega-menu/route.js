@@ -5,8 +5,8 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const path =
-      `v1/dictionaries/?` +
-      `hashes%5B3%5D=5b4d0f1131bd64ed423c553f6d522aac&` +
+      `/v1/dictionaries/?` +
+      `hashes%5B3%5D=5b4d0f1131bd23ed423c553f6d522aac&` +
       `types%5B3%5D=mega_menu`;
 
     const data = await digikalaFetch({
