@@ -1,10 +1,14 @@
-import { useRouter } from "next/navigation";
+"use client";
+
 import { useState } from "react";
 
 import { useModal } from "@/contexts/modalContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useCartContext } from "@/contexts/CartContext";
-import { useProductContext } from "@/contexts/ProductContext";
+import {
+  useAddFavoriteProduct,
+  useRemoveFavoriteProduct,
+} from "@/features/profile/hooks/useLists";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
 
@@ -27,12 +31,12 @@ export default function SaveToListModal({
   const { user, guestCartId } = useUserContext();
   const { addToNextCart, setLoadingVariantId } = useCartContext();
 
-  const {
-    addFavorite,
-    isLoadingAddFavorite,
-    favotiteStatus,
-    isLoadingFavoriteStatus,
-  } = useProductContext();
+  const { mutate: removeFavorite, isLoading: isLoadingRemoveFavorite } =
+    useRemoveFavoriteProduct();
+  const { mutate: addFavorite, isLoading: isLoadingAddFavorite } =
+    useAddFavoriteProduct();
+
+  const isFavorite = user?.favorite_products?.includes(String(productId));
 
   const [isNextCartSelected, setIsNextCartSelected] = useState(true);
   const [isWishlistSelected, setIsWishlistSelected] = useState(false);
@@ -40,7 +44,7 @@ export default function SaveToListModal({
   const isDisabled = !isNextCartSelected && !isWishlistSelected;
 
   const moveProductToNextCart = () => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }
@@ -55,26 +59,23 @@ export default function SaveToListModal({
   };
 
   const favoriteHandler = () => {
-    if (isLoadingFavoriteStatus || isLoadingAddFavorite) return;
+    if (isLoadingAddFavorite || isLoadingRemoveFavorite) return;
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       redirectToLogin();
       return;
     }
 
-    if (!favotiteStatus?.is_favorite) {
-      addFavorite(
-        {
-          productId,
+    if (isFavorite) {
+      removeFavorite(productId);
+    } else {
+      addFavorite(productId, {
+        onSuccess: ({ success }) => {
+          if (success) {
+            showSnackbar("کالا به علاقه‌مندی‌ها اضافه شد");
+          }
         },
-        {
-          onSuccess: ({ success }) => {
-            if (success) {
-              closeModal();
-            }
-          },
-        },
-      );
+      });
     }
   };
 

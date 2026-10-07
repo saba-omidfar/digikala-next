@@ -155,7 +155,6 @@ export default function FilterPriceContent() {
 
   return (
     <div className={styles.price_container}>
-      {/* Min Input */}
       <div className={styles.min_price_container}>
         <span className={styles.price_range_text}>از</span>
         <label className={styles.price_range_label}>
@@ -179,7 +178,6 @@ export default function FilterPriceContent() {
         </div>
       </div>
 
-      {/* Max Input */}
       <div className={styles.max_price_container}>
         <span className={styles.price_range_text}>تا</span>
         <label className={styles.price_range_label}>
@@ -202,8 +200,6 @@ export default function FilterPriceContent() {
           </svg>
         </div>
       </div>
-
-      {/* Slider */}
 
       <div className={styles.nouislider_container}>
         <div className={styles.nouislider}>
@@ -233,15 +229,6 @@ export default function FilterPriceContent() {
           />
         </div>
       </div>
-      {/* <div className={styles.nouislider_container}>
-        <PriceSlider
-          start={sliderStart}
-          min={sliderMin}
-          max={sliderMax}
-          onSlide={priceSliderSlideHandler}
-          onChange={priceSliderChangeHandler}
-        />
-      </div> */}
 
       <div className={styles.price_range_caption}>
         <span>ارزانترین</span>

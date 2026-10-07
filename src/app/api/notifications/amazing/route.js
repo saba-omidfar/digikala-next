@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import dbConnect from "@/configs/db";
 
 import UserModel from "@/models/User";
-import AmazingNotificationModel from "@/models/AmazingNotifications";
+import AmazingNotificationModel from "@/models/Observe";
 
 export async function POST(req) {
   try {
@@ -32,7 +32,7 @@ export async function POST(req) {
       "auth.accessToken": accessToken,
     }).lean();
 
-    if (!user?._id) {
+    if (!user?.is_logged_in) {
       return Response.json(
         { success: false, message: "کاربر یافت نشد" },
         { status: 404 },
@@ -44,7 +44,6 @@ export async function POST(req) {
       productId: Number(productId),
     });
 
-    // 🔴 toggle remove
     if (existing) {
       await AmazingNotificationModel.deleteOne({ _id: existing._id });
 
@@ -54,7 +53,6 @@ export async function POST(req) {
       );
     }
 
-    // 🟢 add
     await AmazingNotificationModel.create({
       userId: user._id,
       productId: Number(productId),

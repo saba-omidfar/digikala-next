@@ -11,19 +11,21 @@ import useScreenStatus from "@/hooks/useScreenStatus";
 
 import styles from "./addAnswerModal.module.css";
 
-function AddAnswerModal({
+export default function AddAnswerModal({
   questionId,
   questionText,
-  questionSource,
   onSuccess,
 }) {
   const { closeModal } = useModal();
   const { isSmallScreen } = useScreenStatus();
-  const { productId, postAnswer, isLoadingPostAnswer } = useProductContext();
+
+  const { productDetails, postAnswer, isLoadingPostAnswer } =
+    useProductContext();
 
   const [answer, setAnswer] = useState("");
 
   const textareaRef = useRef(null);
+
   const maxChars = 500;
   const minCharsToEnable = 7;
 
@@ -37,14 +39,14 @@ function AddAnswerModal({
   const postQuestionAnswerHandler = () => {
     postAnswer(
       {
-        productId,
+        productId: productDetails?.id,
         questionId,
-        text: answer,
-        source: questionSource,
+        text: answer.trim(),
       },
       {
         onSuccess: () => {
           if (onSuccess) onSuccess();
+          closeModal("add-answer");
         },
       },
     );
@@ -63,6 +65,7 @@ function AddAnswerModal({
               </p>
             </div>
           </div>
+
           <div className="d-flex" onClick={() => closeModal("add-answer")}>
             <div
               data-icon-name="cube-close"
@@ -72,11 +75,18 @@ function AddAnswerModal({
           </div>
         </div>
       </div>
+
       <div className={styles.modal_content_container}>
         <div className={styles.modal_content}>
           <div>
             <p className={styles.modal_question_text}>{questionText}</p>
-            <div style={{ marginTop: "20px", marginBottom: "8px" }}>
+
+            <div
+              style={{
+                marginTop: "20px",
+                marginBottom: "8px",
+              }}
+            >
               <label
                 htmlFor="answerInput"
                 className={styles.modal_answer_label}
@@ -91,10 +101,11 @@ function AddAnswerModal({
                       value={answer}
                       onChange={(e) => setAnswer(e.target.value)}
                       maxLength={maxChars}
-                    ></textarea>
+                    />
                   </div>
                 </div>
               </label>
+
               <div className={styles.modal_content_textarea_counter}>
                 {answer.length.toLocaleString("fa-IR")} /
                 {maxChars.toLocaleString("fa-IR")}
@@ -103,22 +114,26 @@ function AddAnswerModal({
           </div>
         </div>
       </div>
+
       <div className={styles.modal_footer}>
         <div className="d-flex align-items-center justify-content-between">
           <div className={styles.modal_submit_btn_container}>
             <button
               id="submit-answer"
               className={`${styles.modal_submit_btn} ${
-                answer.length >= minCharsToEnable
+                answer.trim().length >= minCharsToEnable
                   ? ""
                   : styles.modal_submit_disabled_btn
               }`}
-              disabled={answer.length < minCharsToEnable}
+              disabled={
+                answer.trim().length < minCharsToEnable || isLoadingPostAnswer
+              }
               onClick={postQuestionAnswerHandler}
             >
               {isLoadingPostAnswer ? <Loading isSmall={true} /> : "ثبت پاسخ"}
             </button>
           </div>
+
           <p className={styles.modal_question_rules_text}>
             ثبت پاسخ به معنی موافقت با
             <Link
@@ -135,5 +150,3 @@ function AddAnswerModal({
     </div>
   );
 }
-
-export default AddAnswerModal;

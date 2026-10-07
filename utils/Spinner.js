@@ -2,7 +2,12 @@
 
 import { useEffect, useRef } from "react";
 
-export default function Spinner({ size, color = "#000", loading = true }) {
+export default function Spinner({
+  size,
+  color = "#000",
+  backgroundColor = "#e5e5e5",
+  loading = true,
+}) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -29,7 +34,7 @@ export default function Spinner({ size, color = "#000", loading = true }) {
       const lw = size * 0.08;
 
       ctx.beginPath();
-      ctx.strokeStyle = "#e5e5e5";
+      ctx.strokeStyle = backgroundColor;
       ctx.lineWidth = lw;
       ctx.arc(size / 2, size / 2, size / 2 - lw, 0, Math.PI * 2);
       ctx.stroke();
@@ -56,7 +61,7 @@ export default function Spinner({ size, color = "#000", loading = true }) {
     frame = requestAnimationFrame(animate);
 
     return () => cancelAnimationFrame(frame);
-  }, [loading, size, color]);
+  }, [loading, size, color, backgroundColor]);
 
   return <canvas ref={ref} />;
 }

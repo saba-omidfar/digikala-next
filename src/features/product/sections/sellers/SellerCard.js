@@ -24,9 +24,11 @@ function SellerCard({ seller, index }) {
   const [popperElement, setPopperElement] = useState(null);
 
   const { isSmallScreen } = useScreenStatus();
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
   const { productDetails } = useProductContext();
   const { userCart, isLoadingUserCart } = useCartContext();
+
+  const guestCartId = localStorage.getItem("guestCartId");
 
   const {
     addProductToCart,
@@ -47,7 +49,7 @@ function SellerCard({ seller, index }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 
@@ -135,7 +137,10 @@ function SellerCard({ seller, index }) {
   return (
     <>
       {showAddToCartSuccess && (
-        <AddToCartSuccess setShowAddToCartSuccess={setShowAddToCartSuccess} />
+        <AddToCartSuccess
+          setShowAddToCartSuccess={setShowAddToCartSuccess}
+          width="375px"
+        />
       )}
       <div
         className={`${styles.seller_list_item} ${

@@ -17,14 +17,6 @@ import {
   useProductRecommendation,
   useGetSupplementRecommendationProducts,
   useProductFeedback,
-  useAddIncredibleNotification,
-  useRemoveIncredibleNotification,
-  useGetIncredibleNotificationStatus,
-  useAddFavorite,
-  useRemoveFavorite,
-  useGetFavoriteStatus,
-  useAddToRecentViewed,
-  useGetRecentViewed,
   usePostComment,
   usePostQuestion,
   usePostAnswer,
@@ -71,39 +63,13 @@ export const ProductProvider = ({ children }) => {
   const { data: trueToSize, isLoading: trueToSizeLoading } =
     useGetProductTrueToSize(productId);
 
-  // ADD COMMENT & QUESTION & ANSWER
   const { mutate: postComment, isLoading: isLoadingPostComment } =
     usePostComment(productId);
+
   const { mutate: postQuestion, isLoading: isLoadingPostQuestion } =
     usePostQuestion(productId);
   const { mutate: postAnswer, isLoading: isLoadingPostAnswer } =
     usePostAnswer();
-
-  // RELATED PRODUCTS
-
-  // NOTIFICATIONS
-  const {
-    mutate: addIncredibleNotification,
-    isLoading: isLoadingAddIncredibleNotification,
-  } = useAddIncredibleNotification();
-  const { mutate: removeIncredibleNotification } =
-    useRemoveIncredibleNotification();
-  const { data: incredibleStatus, isLoading: isLoadingIncredibleStatus } =
-    useGetIncredibleNotificationStatus({ productId });
-
-  // FaAVORITES
-  const { mutate: addFavorite, isLoading: isLoadingAddFavorite } =
-    useAddFavorite();
-  const { mutate: removeFavorite, isLoading: isLoadingRemoveFavorite } =
-    useRemoveFavorite();
-  const { data: favotiteStatus, isLoading: isLoadingFavoriteStatus } =
-    useGetFavoriteStatus({ productId });
-
-  // RECENT_VIEWED
-  const { mutate: addToRecentViewed, isLoading: isLoadingAddRecentViewed } =
-    useAddToRecentViewed();
-  const { data: recentViewed, isLoading: isLoadingGetRecentViewd } =
-    useGetRecentViewed();
 
   const {
     commentsData,
@@ -281,21 +247,6 @@ export const ProductProvider = ({ children }) => {
       selectedSize,
       setSelectedSize,
       lowestPrice,
-      addIncredibleNotification,
-      isLoadingAddIncredibleNotification,
-      removeIncredibleNotification,
-      incredibleStatus,
-      isLoadingIncredibleStatus,
-      addFavorite,
-      isLoadingAddFavorite,
-      removeFavorite,
-      isLoadingRemoveFavorite,
-      favotiteStatus,
-      isLoadingFavoriteStatus,
-      addToRecentViewed,
-      isLoadingAddRecentViewed,
-      recentViewed,
-      isLoadingGetRecentViewd,
       postComment,
       isLoadingPostComment,
       postQuestion,
@@ -358,21 +309,6 @@ export const ProductProvider = ({ children }) => {
       selectedSize,
       setSelectedSize,
       lowestPrice,
-      addIncredibleNotification,
-      isLoadingAddIncredibleNotification,
-      removeIncredibleNotification,
-      incredibleStatus,
-      isLoadingIncredibleStatus,
-      addFavorite,
-      isLoadingAddFavorite,
-      removeFavorite,
-      isLoadingRemoveFavorite,
-      favotiteStatus,
-      isLoadingFavoriteStatus,
-      addToRecentViewed,
-      isLoadingAddRecentViewed,
-      recentViewed,
-      isLoadingGetRecentViewd,
       postComment,
       isLoadingPostComment,
       postQuestion,

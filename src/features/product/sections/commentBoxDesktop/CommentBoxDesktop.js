@@ -19,7 +19,7 @@ import LoadingModal from "@/features/shared/modals/loadingModal/LoadingModal";
 
 import styles from "./commentBoxDesktop.module.css";
 
-function CommentBoxDesktop() {
+export default function CommentBoxDesktop() {
   const commentsWrapperRef = useRef(null);
 
   const { openModal } = useModal();
@@ -451,5 +451,3 @@ function CommentBoxDesktop() {
     </div>
   );
 }
-
-export default CommentBoxDesktop;

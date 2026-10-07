@@ -103,7 +103,7 @@ function ProductReviewSection() {
           <span
             className={styles.review_questions}
             id="questions-abovefold"
-            onClick={() => scrollToSection("QUESTIONS")}
+            onClick={() => scrollToSection("QUESTIONS", 100)}
           >
             <span>
               <span className={styles.review_questions_text}>

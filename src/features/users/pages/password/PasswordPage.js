@@ -12,7 +12,6 @@ import AuthHeader from "@/features/users/sections/authHeader/AuthHeader";
 
 import styles from "@/styles/login.module.css";
 
-// ✅ تعریف قوانین اعتبارسنجی
 const schema = yup.object({
   username: yup
     .string()
@@ -34,21 +33,18 @@ export default function PasswordPage() {
   const [loginWithPassword, setLoginWithPassword] = useState(false);
   const [passwordVisibile, setPasswordVisible] = useState(false);
 
-  // ✅ راه‌اندازی فرم با react-hook-form
   const {
-    register, // برای اتصال input
-    handleSubmit, // هندل‌کننده سابمیت فرم
-    formState: { errors }, // لیست خطاها
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    mode: "onBlur", // یعنی ولیدیشن بعد از خروج از input انجام بشه
+    mode: "onBlur",
   });
 
-  // ✅ هندل سابمیت موفق
   const onSubmit = (data) => {
     setUserInput(data.username);
     setStep("CODE");
-    // router.push(backUrl || "/");
   };
 
   const handleVerify = (e) => {

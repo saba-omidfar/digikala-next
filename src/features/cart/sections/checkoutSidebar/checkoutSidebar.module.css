@@ -297,6 +297,117 @@
   padding-top: 3px;
 }
 
+.digiplus_container {
+  display: contents;
+}
+
+.digiplus {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 81px;
+  background-color: #fff7fe;
+  padding: 12px 24px;
+  border: 1px solid #b12ba41f;
+  border-radius: 16px;
+}
+
+.digiplus_content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2px;
+}
+
+.digiplus_title_container {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 8px;
+}
+
+.plus_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #b12ba4;
+}
+
+.digiplus_chevron_icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  color: #b12ba4;
+}
+
+.digiplus_btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.loading_active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+}
+
+.btn_content_loading {
+  top: 200%;
+  visibility: hidden;
+}
+
+.digiplus_title {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #62666d;
+  margin-right: 4px;
+}
+
+.active_digiplus_title {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #b12ba4;
+  margin-right: 4px;
+}
+
+.remove_plan_btn {
+  position: relative;
+  display: flex;
+  max-height: 30px;
+  height: 40px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #ef4056;
+  border-radius: 8px;
+}
+
+.delete_icon_container {
+  display: flex;
+  margin-right: 8px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.delete_icon {
+  width: 18px;
+  height: 18px;
+  fill: #81858b;
+}
+
 .cart_continue_total_price_text {
   display: flex;
   align-items: center;
@@ -409,6 +520,13 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 2.15;
+}
+.active_plan_text {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #b12ba4;
+  margin-right: 4px;
 }
 
 @media screen and (max-width: 1024px) {

@@ -24,12 +24,12 @@ function ProductTitle() {
         <ProductBrandBreadcrumb />
         {productDetails?.default_variant ? (
           <h1 className={styles.header_title}>
-            {productDetails?.title_fa || productDetails?.test_title_fa}
+            {productDetails?.test_title_fa || productDetails?.title_fa}
           </h1>
         ) : (
           <h1 className={styles.not_found_title} id="title">
             <span className={styles.not_found_subtitle}>ناموجود</span>
-            {productDetails?.title_fa}
+            {productDetails?.test_title_fa || productDetails?.title_fa}
           </h1>
         )}
       </div>

@@ -11,7 +11,6 @@ const answerSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
   },
   text: {
     type: String,
@@ -67,6 +66,11 @@ const questionSchema = new mongoose.Schema({
     type: Number,
     unique: true,
     index: true,
+  },
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
   source: {
     type: String,

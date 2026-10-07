@@ -30,7 +30,7 @@ export default function QuestionAnswerMedia({ question, answer }) {
   });
 
   const toggleFeedbackHandler = ({ answerId, type }) => {
-    if (!user) {
+    if (!user?.is_logged_in) {
       showSnackbar("ابتدا وارد شوید.");
       return;
     }
@@ -189,7 +189,7 @@ export default function QuestionAnswerMedia({ question, answer }) {
                     <div>
                       <div className="d-flex flex-nowrap align-items-center overflow-hidden">
                         <span className={styles.answer_sender}>
-                          {answer?.sender}
+                          {toPersianDigits(answer?.sender)}
                         </span>
                         {answer?.type !== "user" ? (
                           <span>

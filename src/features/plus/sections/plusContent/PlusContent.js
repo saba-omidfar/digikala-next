@@ -26,13 +26,11 @@ export default function PlusContent() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // sentinel دیده می‌شود → دکمه معمولی
         if (entry.isIntersecting) {
           setIsFixed(false);
           return;
         }
 
-        // sentinel بالاتر از viewport رفته → دکمه fixed
         if (entry.boundingClientRect.top < 0) {
           setIsFixed(true);
         }

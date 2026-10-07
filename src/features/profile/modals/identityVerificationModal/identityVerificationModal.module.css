@@ -1,0 +1,366 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 460px;
+  max-width: 100vw;
+  height: 100%;
+  padding-top: 58px;
+  overflow-y: hidden;
+}
+
+.header_container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #e0e0e2;
+}
+
+.header_title_container {
+  flex-grow: 1;
+  overflow-wrap: break-word;
+  padding: 12px 0;
+}
+
+.header_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  flex-grow: 1;
+}
+
+.close_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+.content_container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 16px 20px;
+}
+
+.content {
+  flex-grow: 1;
+  padding-bottom: 0;
+}
+
+.content_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #62666d;
+  padding-bottom: 16px;
+}
+
+.content_title_phone {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #23254e;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.field_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+  margin-bottom: 8px;
+}
+
+.field_required {
+  color: #ef4056;
+}
+
+.form_title {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 1.8;
+  color: #5c5c5c;
+}
+
+.field_input_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #c0c2c5;
+  color: #23254e;
+  padding: 0 8px;
+  overflow: hidden;
+}
+
+.field_input_wrapper:focus {
+  border: 2px solid #333333;
+}
+
+.field_input_error {
+  color: #d32f2f;
+}
+
+.field_input {
+  width: 100%;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #3f4064;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: none;
+  caret-color: #1672dd;
+  -moz-appearance: textfield;
+}
+
+.field_error_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #b2001b;
+}
+
+.field_hint_text {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #94969c;
+  padding-right: 12px;
+}
+
+.birthday_title {
+  display: flex;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  margin-bottom: 8px;
+}
+
+.birthday_field {
+  display: inline-block;
+  width: 30%;
+}
+
+.birthday_field + .birthday_field {
+  margin-right: 12px;
+}
+
+.birthday_field_input {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  padding: 8px 12px;
+  border: 1px solid #f0f0f1;
+  border-radius: 8px;
+  background-color: #f0f0f1;
+  outline-offset: 2px;
+  outline: 2px solid #0000;
+  cursor: pointer;
+}
+
+.drop_down_icon_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  color: #23254e;
+  margin-top: 12px;
+  margin-left: 12px;
+  transform: scale(1);
+  user-select: none;
+  cursor: pointer;
+}
+
+.drop_down_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+}
+
+.birthday_day_list {
+  position: absolute;
+  width: 100%;
+  height: 192px;
+  background-color: #fff;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+  margin-top: 4px;
+  overflow: hidden;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.birthday_day_item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #23254e;
+  padding: 0 12px;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.birthday_day_item:hover {
+  background-color: #f0f0f1;
+}
+
+.form_hint {
+  border-radius: 8px;
+  margin-top: 16px;
+  margin-bottom: 60px;
+}
+
+.info_icon_container {
+  display: flex;
+  margin-top: 4px;
+}
+
+.info_icon {
+  width: 18px;
+  height: 18px;
+  fill: #81858b;
+}
+
+.form_hint_text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  margin-right: 8px;
+}
+
+.footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 12px 20px;
+}
+
+.footer_btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  border: 1px solid #ef4056;
+  background-color: #ef4056;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 16px;
+  transition: top 0.3s ease-in-out;
+}
+
+.footer_btn_disabled {
+  background-color: #e0e0e2 !important;
+  border: 1px solid #e0e0e2 !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .layout {
+    width: 100%;
+    padding-top: 54px;
+  }
+
+  .header_title {
+    font-size: 14px;
+  }
+
+  .field_input_wrapper {
+    background-color: #f0f0f1;
+    border: 1px solid #f0f0f1;
+  }
+
+  .field_input_wrapper:focus-within {
+    border-bottom: 2px solid #19bfd3;
+  }
+
+  .field_input_error {
+    border-bottom: 2px solid #d32f2f !important;
+  }
+
+  .content_title,
+  .birthday_title,
+  .field_title,
+  .content_title_phone,
+  .form_hint_text,
+  .footer_btn,
+  .birthday_day_item {
+    font-size: 12px;
+  }
+
+  .field_input_error {
+    border-bottom: 2px solid #d32f2f;
+  }
+
+  .field_input {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .layout {
+    padding-top: 48px;
+  }
+
+  .header_title {
+    font-size: 11.2px;
+  }
+
+  .content_title,
+  .birthday_title,
+  .field_title,
+  .content_title_phone,
+  .footer_btn {
+    font-size: 9.6px;
+  }
+
+  .field_hint_text,
+  .form_hint_text {
+    font-size: 8.8px;
+  }
+
+  .birthday_field_input {
+    font-size: 12px;
+  }
+
+  .field_input_container {
+    height: 38.4px;
+  }
+}

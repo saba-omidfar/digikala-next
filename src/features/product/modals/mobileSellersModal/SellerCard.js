@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 import ShipmentModal from "@/features/product/modals/shipmentModal/ShipmentModal";
 import CartActionBox from "@/features/cart/sections/cartActionBox/CartActionBox";
@@ -34,7 +34,7 @@ const shippingModes = {
 function SellerCard({ seller, isShowSellersModal, handleAddToCartSuccess }) {
   const router = useRouter();
   const { openModal, openMobileModal, closeMobileModal } = useModal();
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
   const { productDetails, activeVariant } = useProductContext();
   const {
     userCart,
@@ -44,6 +44,8 @@ function SellerCard({ seller, isShowSellersModal, handleAddToCartSuccess }) {
     loadingVariantId,
     setLoadingVariantId,
   } = useCartContext();
+
+  const guestCartId = localStorage.getItem("guestCartId");
 
   const [productQuantity, setProductQuantity] = useState(0);
 
@@ -59,7 +61,7 @@ function SellerCard({ seller, isShowSellersModal, handleAddToCartSuccess }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 
@@ -279,7 +281,7 @@ function SellerCard({ seller, isShowSellersModal, handleAddToCartSuccess }) {
                 ></div>
               </div>
             </div>
-            <ul>
+            <ul className="m-0 p-0">
               {seller?.shipment_methods?.providers?.map((method, index) => {
                 const currentMode =
                   shippingModes[method?.type] || shippingModes.digikala;
@@ -355,7 +357,7 @@ function SellerCard({ seller, isShowSellersModal, handleAddToCartSuccess }) {
               <div className="d-flex justify-content-start align-items-center">
                 <span className={styles.seller_plus_text}>ویژه اعضای پلاس</span>
               </div>
-              <ul>
+              <ul className="m-0 p-0">
                 {seller?.digiplus?.is_jet_eligible ? (
                   <li className={styles.seller_plus_box}>
                     <p className={styles.seller_plus_subtext}>

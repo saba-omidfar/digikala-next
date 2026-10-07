@@ -14,7 +14,7 @@ export default function MobileCommentPopover({ commentId }) {
   const { mutate, isLoading } = useReportComment();
 
   const reportHandler = () => {
-    if (!user) {
+    if (!user?.is_logged_in) {
       showSnackbar("ابتدا وارد شوید.");
       closeModal();
       return;

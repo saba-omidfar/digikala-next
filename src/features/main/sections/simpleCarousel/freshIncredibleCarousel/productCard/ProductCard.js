@@ -15,11 +15,13 @@ import styles from "./productCard.module.css";
 
 function ProductCard({ product, isFreshPage }) {
   const timerRef = useRef(null);
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
   const [productQuantity, setProductQuantity] = useState(0);
   const [showCartLink, setShowCartLink] = useState(false);
 
   const { activeVariant } = useProductContext();
+
+  const guestCartId = localStorage.getItem("guestCartId");
 
   const {
     userCart,
@@ -39,7 +41,7 @@ function ProductCard({ product, isFreshPage }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
         },

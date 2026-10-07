@@ -1,10 +1,11 @@
-import api from "../Configs/config";
+import api from "@/services/axios/Configs/config";
 
-export async function sendCode(username, guestCartId) {
+export async function sendCode(username, guestCartId, purpose) {
   try {
     const res = await api.post("/auth/login/sendCode", {
       username,
       guestCartId,
+      purpose,
     });
 
     return res.data;

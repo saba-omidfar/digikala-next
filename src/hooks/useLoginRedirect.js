@@ -7,6 +7,7 @@ import { getCurrentUrl, getLoginUrl } from "@/utils/getLoginUrl";
 
 export default function useLoginRedirect() {
   const router = useRouter();
+
   const pathname = usePathname();
   const searchParams = useSearchParams();
 

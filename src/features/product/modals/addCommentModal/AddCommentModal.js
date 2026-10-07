@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { useModal } from "@/contexts/modalContext";
 import { useProductContext } from "@/contexts/ProductContext";
+import { useUpdateComment } from "@/hooks/useProduct";
 import { useGetMe } from "@/hooks/useUser";
 import toPersianDigits from "@/utils/toPersianDigits";
 
@@ -14,22 +15,29 @@ import FlexibleCommentIdentityModal from "./FlexibleCommentIdentityModal";
 
 import styles from "./addCommentModal.module.css";
 
-function AddCommentModal() {
+export default function AddCommentModal({
+  productId,
+  commentId,
+  commentBody,
+  refetch,
+}) {
   const {
     activeVariant,
     productDetails,
     postComment,
-    isLoadingPostComment,
     refetchComments,
     selectedIdentity,
   } = useProductContext();
+
+  const { mutate: updateComment, isLoading: isLoadingUpdateComment } =
+    useUpdateComment(productId);
 
   const { data: userInfo } = useGetMe();
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { openModal, closeModal } = useModal();
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState(commentBody || "");
   const minCharsToEnable = 110;
 
   useEffect(() => {
@@ -44,6 +52,31 @@ function AddCommentModal() {
     e.preventDefault();
 
     if (!comment.trim()) return;
+
+    if (commentId) {
+      updateComment(
+        {
+          commentId,
+          comment: {
+            comment: comment.trim(),
+            is_anonymous: selectedIdentity === "anonymous",
+            rating: 0,
+          },
+        },
+        {
+          onSuccess: () => {
+            refetchComments();
+            setIsSubmitted(true);
+            refetch();
+          },
+          onError: (error) => {
+            alert(error?.response?.data?.message || "خطا در ویرایش دیدگاه");
+          },
+        },
+      );
+
+      return;
+    }
 
     const newComment = {
       comment,
@@ -80,6 +113,10 @@ function AddCommentModal() {
     });
   };
 
+  useEffect(() => {
+    setComment(commentBody || "");
+  }, [commentBody]);
+
   return (
     <div
       className={`${styles.layout} ${isSubmitted ? styles.layout_height : ""}`}
@@ -98,7 +135,9 @@ function AddCommentModal() {
                         className={`${styles.close_btn} cube-font-icon`}
                       ></div>
                     </div>
-                    <span className={styles.title}>ثبت دیدگاه</span>
+                    <span className={styles.title}>
+                      {commentBody ? "ویرایش دیدگاه" : "ثبت دیدگاه"}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -303,5 +342,3 @@ function AddCommentModal() {
     </div>
   );
 }
-
-export default AddCommentModal;

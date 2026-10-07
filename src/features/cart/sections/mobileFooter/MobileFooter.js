@@ -26,7 +26,7 @@ function MobileFooter({ activeMenu }) {
         width: innerWidth,
       }}
     >
-      {basket.length ? (
+      {basket?.length ? (
         <div>
           <div className={styles.box_container}>
             <div className="d-flex flex-row justify-content-between align-items-start">
@@ -50,11 +50,11 @@ function MobileFooter({ activeMenu }) {
                         onClick={() => openMobileModal("cart-bill-box")}
                       >
                         <span className={styles.top_section_text}>
-                          {user ? (
+                          {user?.is_logged_in ? (
                             <>
                               {basket?.length !== 0 ? (
                                 <span className={styles.subtitle}>
-                                  {basket.length > 1 && "جمع"}{" "}
+                                  {basket?.length > 1 && "جمع"}{" "}
                                   {toPersianDigits(basket?.length)} کالا
                                 </span>
                               ) : (

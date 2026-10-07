@@ -218,7 +218,6 @@ function PriceFeedbackMobileSheet() {
         <h5 className={styles.content_title}>لطفا اطلاعات زیر را وارد کنید</h5>
 
         <form id="price-feedback-form" onSubmit={handleSubmit(formSubmitting)}>
-          {/* PRICE */}
           <Controller
             control={control}
             type="number"
@@ -278,7 +277,6 @@ function PriceFeedbackMobileSheet() {
             )}
           />
 
-          {/* CHECKBOX */}
           <label className={styles.checkbox_container}>
             <Controller
               control={control}
@@ -295,7 +293,6 @@ function PriceFeedbackMobileSheet() {
             />
           </label>
 
-          {/* URL */}
           {isOnlineStore && (
             <label className="d-inline-block w-100">
               <div className="d-flex justify-content-between align-items-center">

@@ -10,6 +10,8 @@ import Providers from "@/providers/Provider";
 import ParentModal from "@/components/ui/modals/parentModal/ParentModal";
 
 import NextTopLoader from "nextjs-toploader";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "@/components/modules/dk-popover/dk-popover";
 
@@ -3545,6 +3547,15 @@ export default function RootLayout({ children }) {
                           color="#ef4056"
                           showSpinner={false}
                           speed={200}
+                        />
+                        <ToastContainer
+                          position="bottom-center"
+                          autoClose={2000}
+                          rtl
+                          theme="dark"
+                          icon={false}
+                          closeButton={false}
+                          hideProgressBar
                         />
                         <ParentModal scope="global" />
                         {children}

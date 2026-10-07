@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import Link from "next/link";
 
 import ProductCard from "./productCard/ProductCard";
@@ -35,7 +37,7 @@ function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
   } = useCartContext();
 
   const toggleInsuranceHandler = (checked) => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }
@@ -52,9 +54,7 @@ function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
       {
         onSuccess: () => {
           if (checked) {
-            // فقط وقتی ایتم تو سبد هست و بیمه تازه اضافه شده
             if (cart) {
-              // اگر قبلاً بیمه نداشت
               if (!cart.has_insurance) {
                 showSnackbar("بیمه به کالا اضافه شد");
               }
@@ -100,15 +100,12 @@ function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
             width: width,
           }}
         >
-          {/* Indicator */}
           <div className={styles.drag_indicator}>
             <div className={styles.drag_indicator_pill}></div>
           </div>
 
-          {/* Header */}
           <div className={styles.header_container}>
             <div className={styles.header}>
-              {/* Close */}
               <div
                 className={styles.close_icon_container}
                 aria-hidden="false"
@@ -121,7 +118,6 @@ function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
                 ></div>
               </div>
 
-              {/* Animation */}
               <div className={styles.success_animation__btn_container}>
                 <div className={styles.success_animation__btn}>
                   <div>
@@ -137,7 +133,6 @@ function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
                 <span className={styles.success__title}>کالا اضافه شد!</span>
               </div>
 
-              {/* Basket Link */}
               <Link
                 className={styles.cart_link_container}
                 href="/checkout/cart"
@@ -155,7 +150,6 @@ function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
           </div>
 
           <div className={styles.container}>
-            {/* Insurance */}
             {activeVariant?.insurance ? (
               <div className={styles.services_container}>
                 <div className={styles.services_header}>
@@ -243,14 +237,12 @@ function AddToCartSuccess({ product, setShowAddToCartSuccess, width }) {
               ""
             )}
 
-            {/* Suppliment Recommendations */}
             {supplementRecommendation?.products?.length ? (
               <div className={styles.suppliment_recommendations}>
                 <div className="d-flex flex-column">
                   <div className={styles.suppliment_recommendations_title}>
                     خریدت رو کامل‌تر کن
                   </div>
-                  {/* Products */}
                   {supplementRecommendation?.products?.map((product, index) => (
                     <ProductCard
                       index={index}

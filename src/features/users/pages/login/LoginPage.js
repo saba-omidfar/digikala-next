@@ -3,23 +3,27 @@
 import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
+
 import { useQueryClient } from "react-query";
 
 import { useSendCode, useVerifyCode } from "@/features/users/hooks/useCode";
 
 import { useUserContext } from "@/contexts/UserContext";
+import { useLoginWithPassword, useCheckUsername } from "@/hooks/useAuth";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 
 import AuthHeader from "@/features/users/sections/authHeader/AuthHeader";
 import LoginIntro from "@/features/users/sections/loginIntro/LoginIntro";
 import LoginFooter from "@/features/users/sections/loginFooter/LoginFooter";
 import UsernameForm from "@/features/users/sections/usernameForm/UsernameForm";
+import ForgotPassword from "@/features/users/sections/forgotPassword/ForgotPassword";
 import VerificationForm from "@/features/users/sections/verificationForm/VerificationForm";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 import formatTime from "@/utils/formatTime";
 
 import styles from "./login.module.css";
+import ChangePassword from "../../sections/changePassword/ChangePassword";
 
 export default function LoginPage() {
   const isVerifyingRef = useRef(false);
@@ -31,81 +35,203 @@ export default function LoginPage() {
   const { guestCartId } = useUserContext();
   const { showSnackbar } = useSnackbar();
 
+  const isEmailUsername = (value) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value || "");
+
   const callbackUrl = searchParams.get("callbackUrl");
 
   const redirectUrl =
-    callbackUrl && callbackUrl?.startsWith("/") ? callbackUrl : "/";
+    callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/";
 
   const [step, setStep] = useState("username");
   const [username, setUsername] = useState("");
   const [code, setCode] = useState("");
-  const [timeLeft, setTimeLeft] = useState(180);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [expiresAt, setExpiresAt] = useState(null);
   const [loginWithPassword, setLoginWithPassword] = useState(false);
+  const [isResetPassword, setIsResetPassword] = useState(false);
+  const [resetToken, setResetToken] = useState(null);
+  const [isNewPhone, setIsNewPhone] = useState(false);
 
   const { mutate: sendCode, isLoading: sendLoading } = useSendCode();
-
   const { mutate: verifyCode, isLoading: verifyLoading } = useVerifyCode();
+  const { mutate: checkUsername, isLoading: checkUsernameLoading } =
+    useCheckUsername();
 
-  // COUNTDOWN
+  const { mutate: loginWithPasswordHandler, isLoading: loginLoading } =
+    useLoginWithPassword();
+
   useEffect(() => {
-    if (step !== "otp" || timeLeft <= 0) return;
+    if (step !== "otp" || !expiresAt) {
+      return;
+    }
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
+    const updateTimer = () => {
+      const remaining = Math.max(
+        0,
+        Math.ceil((new Date(expiresAt).getTime() - Date.now()) / 1000),
+      );
 
-    return () => clearInterval(timer);
-  }, [step, timeLeft]);
+      setTimeLeft(remaining);
+    };
 
-  // SEND CODE
+    updateTimer();
+
+    const timer = setInterval(updateTimer, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [step, expiresAt]);
+
+  const setOtpExpiration = useCallback((expiration) => {
+    if (!expiration) {
+      setExpiresAt(null);
+      setTimeLeft(0);
+      return;
+    }
+
+    setExpiresAt(expiration);
+  }, []);
+
   const submitUsername = (value) => {
-    setUsername(value.username);
+    const usernameValue = value.username;
 
-    sendCode(
+    setUsername(usernameValue);
+    setIsResetPassword(false);
+
+    checkUsername(
       {
-        username: value.username,
-        guestCartId,
+        username: usernameValue,
       },
       {
         onSuccess: (res) => {
-          setStep("otp");
-          setTimeLeft(180);
+          if (res.isEmail) {
+            if (res.exists) {
+              setLoginWithPassword(true);
+              setStep("otp");
 
-          showSnackbar(`کد تایید: ${res.demoOtp}`);
+              return;
+            }
+
+            showSnackbar("شماره موبایل یا ایمیل نادرست است");
+            return;
+          }
+
+          setIsNewPhone(!res.exists);
+          setLoginWithPassword(false);
+
+          sendCode(
+            {
+              username: usernameValue,
+              guestCartId,
+            },
+            {
+              onSuccess: (res) => {
+                setStep("otp");
+                setCode("");
+                setOtpExpiration(res.expiresAt);
+
+                showSnackbar(`کد تایید: ${res.demoOtp}`);
+              },
+
+              onError: (error) => {
+                showSnackbar(error?.message || "خطا در ارسال کد تایید");
+              },
+            },
+          );
+        },
+
+        onError: (error) => {
+          showSnackbar(
+            error?.response?.data?.message || "خطا در بررسی اطلاعات کاربر",
+          );
         },
       },
     );
   };
 
-  // RESEND CODE
   const resendCode = useCallback(() => {
-    if (timeLeft > 0 || !username) return;
+    if (timeLeft > 0 || !username || sendLoading) {
+      return;
+    }
 
     sendCode(
       {
         username,
         guestCartId,
+        purpose: isResetPassword ? "reset_password" : "login",
       },
       {
         onSuccess: (res) => {
-          setTimeLeft(180);
+          setCode("");
+          setOtpExpiration(res.expiresAt);
 
-          showSnackbar(`کد تست: ${res.demoOtp}`);
+          if (!isEmailUsername(username)) {
+            showSnackbar(`کد تایید: ${res.demoOtp}`);
+          }
         },
 
-        onError: () => {
-          showSnackbar("خطا در شبکه");
+        onError: (error) => {
+          showSnackbar(error?.message || "خطا در ارسال کد تایید");
         },
       },
     );
-  }, [timeLeft, username, guestCartId, sendCode, showSnackbar]);
+  }, [
+    timeLeft,
+    username,
+    guestCartId,
+    sendCode,
+    sendLoading,
+    showSnackbar,
+    setOtpExpiration,
+    isResetPassword,
+  ]);
+
+  const handleBackToOtp = useCallback(() => {
+    setLoginWithPassword(false);
+
+    if (!username || sendLoading) {
+      return;
+    }
+
+    sendCode(
+      {
+        username,
+        guestCartId,
+        purpose: isResetPassword ? "reset_password" : "login",
+      },
+      {
+        onSuccess: (res) => {
+          setCode("");
+          setOtpExpiration(res.expiresAt);
+
+          if (!isEmailUsername(username)) {
+            showSnackbar(`کد تایید: ${res.demoOtp}`);
+          }
+        },
+
+        onError: (error) => {
+          showSnackbar(error?.message || "خطا در ارسال کد تایید");
+        },
+      },
+    );
+  }, [
+    timeLeft,
+    username,
+    guestCartId,
+    sendCode,
+    sendLoading,
+    showSnackbar,
+    setOtpExpiration,
+    isResetPassword,
+  ]);
 
   const resendSection = useMemo(() => {
-    if (timeLeft === 0) {
+    if (timeLeft <= 0) {
       return (
         <p
           id="countdown-timer"
-          data-sms-ttl="179"
           className={styles.countdown_timer}
           onClick={resendCode}
         >
@@ -129,12 +255,12 @@ export default function LoginPage() {
     );
   }, [timeLeft, resendCode]);
 
-  // VERIFY CODE
   const handleVerifyCode = useCallback(
     (value) => {
       if (
         !username ||
         value.length !== 5 ||
+        timeLeft <= 0 ||
         verifyLoading ||
         isVerifyingRef.current
       ) {
@@ -151,6 +277,20 @@ export default function LoginPage() {
         },
         {
           onSuccess: async (res) => {
+            if (isResetPassword) {
+              isVerifyingRef.current = false;
+
+              setResetToken(res.resetToken);
+              setCode("");
+              setExpiresAt(null);
+              setTimeLeft(0);
+              setLoginWithPassword(false);
+
+              setStep("changePassword");
+
+              return;
+            }
+
             if (res.clearGuestCartId) {
               localStorage.removeItem("guestCartId");
             }
@@ -160,19 +300,22 @@ export default function LoginPage() {
               queryClient.invalidateQueries(["UserCart"]),
             ]);
 
-            // =========================
-            // REDIRECT TO CALLBACK URL
-            // =========================
-
             router.push(redirectUrl);
           },
 
           onError: (error) => {
             isVerifyingRef.current = false;
 
-            showSnackbar(error?.message || "کد وارد شده صحیح نیست");
+            const errorData = error?.response?.data;
+
+            showSnackbar(errorData?.message || "کد وارد شده صحیح نیست");
 
             setCode("");
+
+            if (errorData?.expired) {
+              setTimeLeft(0);
+              setExpiresAt(null);
+            }
           },
         },
       );
@@ -180,8 +323,10 @@ export default function LoginPage() {
     [
       username,
       guestCartId,
+      timeLeft,
       verifyLoading,
       verifyCode,
+      isResetPassword,
       queryClient,
       router,
       showSnackbar,
@@ -189,26 +334,111 @@ export default function LoginPage() {
     ],
   );
 
+  const handleForgotPassword = useCallback(
+    (value) => {
+      const forgotUsername = value.username;
+
+      setUsername(forgotUsername);
+      setIsResetPassword(true);
+
+      sendCode(
+        {
+          username: forgotUsername,
+          guestCartId,
+          purpose: "reset_password",
+        },
+        {
+          onSuccess: (res) => {
+            setCode("");
+            setOtpExpiration(res.expiresAt);
+            setStep("otp");
+            setLoginWithPassword(false);
+
+            if (!isEmailUsername(forgotUsername)) {
+              showSnackbar(`کد تایید: ${res.demoOtp}`);
+            }
+          },
+
+          onError: (error) => {
+            showSnackbar(error?.message || "خطا در ارسال کد تایید");
+          },
+        },
+      );
+    },
+    [guestCartId, sendCode, setOtpExpiration, showSnackbar],
+  );
+
+  const handlePasswordLogin = useCallback(
+    (data) => {
+      if (!username || !data.password) return;
+
+      loginWithPasswordHandler(
+        {
+          username,
+          password: data.password,
+          guestCartId,
+        },
+        {
+          onSuccess: async (res) => {
+            if (res.clearGuestCartId) {
+              localStorage.removeItem("guestCartId");
+            }
+
+            await Promise.all([
+              queryClient.invalidateQueries(["me"]),
+              queryClient.invalidateQueries(["UserCart"]),
+            ]);
+
+            router.push(redirectUrl);
+          },
+
+          onError: (error) => {
+            showSnackbar(
+              error?.response?.data?.message ||
+                "شماره موبایل یا رمز عبور اشتباه است.",
+            );
+          },
+        },
+      );
+    },
+    [
+      username,
+      guestCartId,
+      loginWithPassword,
+      queryClient,
+      router,
+      redirectUrl,
+      showSnackbar,
+    ],
+  );
+
   return (
     <div className={styles.login}>
       <div className={styles.form_card}>
         <AuthHeader
-          isCodeSent={step === "otp"}
+          step={step}
           onClick={() => {
-            if (step === "otp") {
+            if (step === "otp" || step === "forgotPassword") {
               setStep("username");
               setCode("");
+              setExpiresAt(null);
+              setTimeLeft(0);
             } else {
               router.back();
             }
           }}
         />
 
-        <div className={styles.content}>
+        <div
+          className={`${step === "forgotPassword" ? styles.password_content : styles.content}`}
+        >
           {step === "username" && (
             <>
               <LoginIntro />
-              <UsernameForm onSubmit={submitUsername} loading={sendLoading} />
+              <UsernameForm
+                onSubmit={submitUsername}
+                loading={checkUsernameLoading || sendLoading}
+              />
               <LoginFooter />
             </>
           )}
@@ -218,12 +448,29 @@ export default function LoginPage() {
               code={code}
               setCode={setCode}
               username={username}
+              onSubmit={handleVerifyCode}
+              onPasswordSubmit={handlePasswordLogin}
               loginWithPassword={loginWithPassword}
               setLoginWithPassword={setLoginWithPassword}
-              verifyLoading={verifyLoading}
+              setStep={setStep}
+              onBackToOtp={handleBackToOtp}
               resendSection={resendSection}
-              onVerify={handleVerifyCode}
+              verifyLoading={verifyLoading}
+              setIsResetPassword={setIsResetPassword}
+              isNewPhone={isNewPhone}
             />
+          )}
+
+          {step === "forgotPassword" && (
+            <ForgotPassword
+              username={username}
+              onSubmit={handleForgotPassword}
+              loading={sendLoading}
+            />
+          )}
+
+          {step === "changePassword" && (
+            <ChangePassword username={username} resetToken={resetToken} />
           )}
         </div>
       </div>

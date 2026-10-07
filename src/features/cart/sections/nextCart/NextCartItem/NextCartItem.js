@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import Link from "next/link";
 
 import { useCartContext } from "@/contexts/CartContext";
 import { useUserContext } from "@/contexts/UserContext";
-import { useProductContext } from "@/contexts/ProductContext";
 import { useModal } from "@/contexts/modalContext";
 
-import { useGetFavoriteStatus } from "@/hooks/useProduct";
+import { useRemoveFavoriteProduct } from "@/features/profile/hooks/useLists";
 
 import RelatedProductsModal from "@/features/cart/modals/relatedProductsModal/RelatedProductsModal";
 import Spinner from "@/utils/Spinner";
@@ -29,10 +27,10 @@ export default function NextCartItem({ product, variant, isNextCartItem }) {
   const { addProductToCart, removeFromNextCart, setLoadingVariantId } =
     useCartContext();
 
-  const { data: favotiteStatus, isPending: isLoadingFavoriteStatus } =
-    useGetFavoriteStatus({ productId: product?.id });
+  const { mutate: removeFavorite, isLoading: isLoadingRemoveFavorite } =
+    useRemoveFavoriteProduct();
 
-  const { removeFavorite, isPendingRemoveFavorite } = useProductContext();
+  const isFavorite = user?.favorite_products?.includes(String(product?.id));
 
   const handleLoginRedirect = () => {
     redirectToLogin();
@@ -42,9 +40,7 @@ export default function NextCartItem({ product, variant, isNextCartItem }) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (isLoadingFavoriteStatus || isPendingRemoveFavorite) return;
-
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       handleLoginRedirect();
       return;
     }
@@ -70,7 +66,7 @@ export default function NextCartItem({ product, variant, isNextCartItem }) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       handleLoginRedirect();
       return;
     }
@@ -111,24 +107,21 @@ export default function NextCartItem({ product, variant, isNextCartItem }) {
   };
 
   const removeProductFromFavorites = ({ e, variantId }) => {
+    if (isLoading || !product?.id || isLoadingRemoveFavorite) return;
+
     e.preventDefault();
     e.stopPropagation();
 
     setLoadingState({ variantId, action: "remove" });
     setLoadingVariantId(variantId);
 
-    if (favotiteStatus?.is_favorite) {
-      removeFavorite(
-        {
-          productId: product?.id,
+    if (isFavorite) {
+      removeFavorite(product.id, {
+        onSettled: () => {
+          setLoadingVariantId(null);
+          setLoadingState(null);
         },
-        {
-          onSettled: () => {
-            setLoadingVariantId(null);
-            setLoadingState(null);
-          },
-        },
-      );
+      });
     }
   };
 

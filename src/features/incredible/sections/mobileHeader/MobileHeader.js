@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 import SearchModal from "@/components/layout/header/modals/searchModal/SearchModal";
 

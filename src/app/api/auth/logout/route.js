@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+
 import dbConnect from "@/configs/db";
 import UserModel from "@/models/User";
+
 import { cookies } from "next/headers";
 
 export async function POST(req) {
@@ -18,10 +20,10 @@ export async function POST(req) {
       if (user) {
         user.is_logged_in = false;
 
-        user.auth = {
-          accessToken: "",
-          accessTokenCreatedAt: null,
-        };
+        user.auth.accessToken = "";
+        user.auth.accessTokenCreatedAt = null;
+        user.auth.refreshTokenHash = null;
+        user.auth.refreshTokenCreatedAt = null;
 
         await user.save();
       }

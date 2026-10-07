@@ -6,18 +6,23 @@ import { useLocation } from "@/contexts/locationContext";
 import useScreenStatus from "@/hooks/useScreenStatus";
 
 import SearchLocationModal from "../searchLocationModal/SearchLocationModal";
-import Map from "@/components/modules/map/Map";
+import AddNewAddressModal from "@/features/profile/modals/addNewAddressModal/AddNewAddressModal";
+import Map from "@/components/modules/map/MapComponent";
 
 import styles from "./selectLocationModal.module.css";
 
-function SelectLocationModal({ isEdit }) {
+export default function SelectLocationModal({
+  title,
+  address,
+  isProfilePage,
+  setManualAddress,
+}) {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
 
-  const { openModal, closeAll } = useModal();
+  const { openModal, closeModal } = useModal();
   const { isSmallScreen } = useScreenStatus();
   const {
     showGeoList,
-    setShowGeoList,
     DEFAULT_LOCATION,
     mapRef,
     geo,
@@ -112,20 +117,53 @@ function SelectLocationModal({ isEdit }) {
     );
   };
 
+  const handleRegisterLocation = async () => {
+    const location = await handleSubmitLocation();
+
+    if (!location) return;
+
+    closeModal("select-location");
+
+    setManualAddress(false);
+
+    openModal(
+      <AddNewAddressModal
+        manualAddress={false}
+        setManualAddress={setManualAddress}
+        address={{
+          ...location,
+          id: undefined,
+          is_default: false,
+        }}
+        isEdit={false}
+      />,
+      {
+        name: "add-new-address",
+        className: "modal__add_new_address rounded-medium",
+      },
+    );
+  };
+
   return (
-    <div className={styles.layout}>
+    <div className={`${isProfilePage ? styles.profile_layout : styles.layout}`}>
       <div className={styles.header_container}>
         <div className={styles.header}>
           <div className={styles.title}>
             <div className="d-flex align-items-center justify-content-between">
               <div className="w-100">
                 <div className="d-flex align-items-center justify-content-between gap-2">
-                  <div className={styles.header_title}>انتخاب موقعیت مکانی</div>
+                  <div className={styles.header_title}>
+                    {title ? title : "انتخاب موقعیت مکانی"}
+                  </div>
 
                   <div
                     className="d-flex"
                     aria-hidden="false"
-                    onClick={() => closeAll()}
+                    onClick={() => {
+                      console.log("hello");
+
+                      closeModal("select-location");
+                    }}
                   >
                     <div
                       className={`${styles.close_icon} cube-font-icon`}
@@ -136,7 +174,9 @@ function SelectLocationModal({ isEdit }) {
                 </div>
 
                 <div className={styles.header_subtitle}>
-                  برای تحویل به‌موقع سفارش، موقعیت را دقیق انتخاب کنید.
+                  {isProfilePage
+                    ? "سفارش‌های شما به موقعیتی که انتخاب می‌کنید ارسال می‌شود. لطفاً موقعیت مکانی را دقیق انتخاب کنید تا از تأخیر در تحویل جلوگیری شود."
+                    : "برای تحویل به‌موقع سفارش، موقعیت را دقیق انتخاب کنید."}
                 </div>
               </div>
             </div>
@@ -147,7 +187,6 @@ function SelectLocationModal({ isEdit }) {
       <div className="d-flex flex-column flex-grow-1 overflow-y-auto">
         <div className={styles.content}>
           <div className="h-100 d-flex flex-column">
-            {/* موقعیت من */}
             <div
               className={styles.my_location_container}
               onClick={handleMyLocation}
@@ -180,18 +219,15 @@ function SelectLocationModal({ isEdit }) {
                           <use href="#searchSearch" />
                         </svg>
                       </div>
-                      {isEdit ? (
-                        <div className={styles.choose_location_text}>
-                          جستجوی استان و شهر ...
-                        </div>
-                      ) : (
-                        <div className={styles.choose_location_text}>
-                          {searchValue
+
+                      <div className={styles.choose_location_text}>
+                        {isProfilePage
+                          ? "جستجوی استان و شهر"
+                          : searchValue
                             ? searchValue
                             : selectedLocation?.address ||
                               "جستجوی استان و شهر ..."}
-                        </div>
-                      )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -284,23 +320,70 @@ function SelectLocationModal({ isEdit }) {
                 mapRef={mapRef}
                 initialCenter={DEFAULT_LOCATION}
                 onMove={handleMapMove}
-              />
+              >
+                <div
+                  className={styles.choose_location__pin}
+                  role="img"
+                  aria-hidden="false"
+                  aria-label="Pin"
+                >
+                  <img
+                    className={styles.choose_location__pin_img}
+                    alt="Pin"
+                    title=""
+                    src="https://www.digikala.com/statics/img/svg/pin-nearby.svg"
+                  />
+                </div>
+              </Map>
             </div>
           </div>
         </div>
       </div>
 
       <div className={styles.footer}>
-        <div className="d-flex align-items-center bg-white">
-          <button className={styles.footer_btn} onClick={handleSubmitLocation}>
-            <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
-              <span className={styles.footer_text}>ثبت موقعیت مکانی</span>
-            </div>
-          </button>
+        <div>
+          <div className="d-flex align-items-center justify-content-between user-select-none bg-white">
+            {isProfilePage ? (
+              <button
+                className={`${styles.add_address_btn} ${styles.footer_btn}`}
+                onClick={() => {
+                  closeModal("select-location");
+                  setManualAddress(true);
+
+                  openModal(
+                    <AddNewAddressModal
+                      manualAddress={true}
+                      setManualAddress={setManualAddress}
+                      address={address}
+                      isEdit={!!address}
+                    />,
+                    {
+                      name: "add-new-address",
+                      className: "modal__add_new_address rounded-medium",
+                    },
+                  );
+                }}
+              >
+                <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
+                  <span className={styles.footer_btn_text}>ثبت دستی آدرس</span>
+                </div>
+              </button>
+            ) : (
+              ""
+            )}
+            <button
+              className={`${styles.add_location_btn} ${styles.footer_btn}`}
+              onClick={
+                isProfilePage ? handleRegisterLocation : handleSubmitLocation
+              }
+            >
+              <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
+                <span className={styles.footer_btn_text}>ثبت موقعیت مکانی</span>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
-export default SelectLocationModal;

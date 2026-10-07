@@ -1,13 +1,32 @@
+import mongoose from "mongoose";
 import { cookies } from "next/headers";
-import dbConnect from "@/configs/db";
 
+import dbConnect from "@/configs/db";
 import CartModel from "@/models/Cart";
 import UserModel from "@/models/User";
 
 import recalcCartPrices from "@/utils/recalcCartPrices";
+import hydrateItems from "@/utils/hydrateCartItems";
 import syncUserCart from "@/utils/syncUserCart";
 
-import mongoose from "mongoose";
+const syncCartWithUser = async (cart) => {
+  if (!cart.userId) return;
+
+  const user = await UserModel.findById(cart.userId);
+
+  if (!user?.is_logged_in) return;
+
+  await syncUserCart(user, cart);
+  await user.save();
+};
+
+const saveCart = async (cart) => {
+  cart.updatedAt = new Date();
+
+  await cart.save();
+
+  await syncCartWithUser(cart);
+};
 
 export async function DELETE(req) {
   try {
@@ -28,9 +47,6 @@ export async function DELETE(req) {
       );
     }
 
-    /* --------------------------------
-       1️⃣ تشخیص User یا Guest
-    -------------------------------- */
     const cookiesStore = await cookies();
     const accessToken = cookiesStore.get("access_token")?.value;
 
@@ -39,9 +55,9 @@ export async function DELETE(req) {
     if (accessToken) {
       const user = await UserModel.findOne({
         "auth.accessToken": accessToken,
-      }).select("_id");
+      });
 
-      if (!user) {
+      if (!user?.is_logged_in) {
         return Response.json(
           { success: false, message: "کاربر یافت نشد" },
           { status: 404 },
@@ -60,9 +76,6 @@ export async function DELETE(req) {
       );
     }
 
-    /* --------------------------------
-       2️⃣ پیدا کردن آیتم
-    -------------------------------- */
     const package0 = cart.packages?.[0];
     if (!package0) {
       return Response.json(
@@ -84,11 +97,7 @@ export async function DELETE(req) {
 
     const cartItem = package0.cart_items[itemIndex];
 
-    /* --------------------------------c
-       3️⃣ منطق حذف / کاهش تعداد
-    -------------------------------- */
     if (removeFromNextPurchase) {
-      // حذف کامل (SaveForLater یا حذف مستقیم)
       package0.cart_items.splice(itemIndex, 1);
     } else {
       if (cartItem.quantity > 1 && quantity === 1) {
@@ -98,33 +107,35 @@ export async function DELETE(req) {
       }
     }
 
-    /* --------------------------------
-       4️⃣ ذخیره و محاسبه مجدد
-    -------------------------------- */
-    cart.updatedAt = new Date();
-    recalcCartPrices(cart);
-    await cart.save();
+    const responseCart = cart.toObject();
 
-    if (cart.userId) {
-      const user = await UserModel.findById(cart.userId);
+    const hydratedItems = await hydrateItems(
+      responseCart.packages?.[0]?.cart_items || [],
+    );
 
-      if (user) {
-        syncUserCart(user, cart);
-        await user.save();
-      }
-    }
+    responseCart.packages[0].cart_items = hydratedItems;
+
+    recalcCartPrices(responseCart);
+
+    cart.items_count = responseCart.items_count;
+    cart.payable_price = responseCart.payable_price;
+    cart.rrp_price = responseCart.rrp_price;
+    cart.rrp_price_total = responseCart.rrp_price_total;
+    cart.items_discount = responseCart.items_discount;
+    cart.total_discount = responseCart.total_discount;
+    cart.insurance = responseCart.insurance;
+
+    await saveCart(cart);
 
     return Response.json(
       {
         success: true,
-        cart,
+        cart: responseCart,
         guestCartId: accessToken ? null : cart._id.toString(),
       },
       { status: 200 },
     );
   } catch (err) {
-    console.error("Remove cart item error:", err);
-
     return Response.json(
       { success: false, message: err.message },
       { status: 500 },

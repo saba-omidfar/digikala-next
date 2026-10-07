@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useParams } from "next/navigation";
 
 import SearchModal from "@/components/layout/header/modals/searchModal/SearchModal";

@@ -26,7 +26,6 @@ export default function FilterItem({ filter, filterKey, onClick, isLast }) {
         let currentMax =
           params?.price?.max?.toString() ?? filter.options.max.toString();
 
-        // 1. از facet url
         if (!currentMin) {
           const match = pathname.match(/from-(\d+)-up-to-(\d+)/);
 
@@ -36,7 +35,6 @@ export default function FilterItem({ filter, filterKey, onClick, isLast }) {
           }
         }
 
-        // 2. از query string
         if (!currentMin) {
           currentMin = searchParams.get("price[min]") || "0";
           currentMax =

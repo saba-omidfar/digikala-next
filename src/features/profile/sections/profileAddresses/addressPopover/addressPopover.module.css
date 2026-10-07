@@ -1,0 +1,89 @@
+.popover {
+  position: absolute;
+  display: block;
+  padding: 8px;
+  z-index: 3;
+}
+
+.menu_btns_container {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 8px 0;
+  overflow: hidden;
+}
+
+.menu_btn {
+  display: flex;
+  align-items: center;
+  width: 280px;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.menu_btn:hover {
+  background-color: #f0f0f1;
+}
+
+.icon_container {
+  display: flex;
+  margin-left: 16px;
+  color: #3f4064;
+}
+
+.icon,
+.delete_icon {
+  width: 24px;
+  height: 24px;
+}
+
+.icon {
+  fill: rgb(148, 150, 156);
+}
+
+.delete_icon {
+  fill: #d32f2f;
+}
+
+.menu_title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.popover :global(.MuiPopover-paper) {
+  border-radius: 16px !important;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.popover :global(.MuiTypography-root) {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 2.15 !important;
+  flex-grow: 1;
+  font-family: "IRANYekan" !important;
+  color: #3f4064 !important;
+  letter-spacing: 0 !important;
+  cursor: pointer;
+}
+
+.popover :global(.MuiListItemText-root) {
+  margin-right: 16px !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  text-align: right !important;
+}
+
+.popover :global(.MuiListItemIcon-root) {
+  min-width: 0 !important;
+  color: #424750 !important;
+}
+
+.popover :global(.MuiListItem-root) {
+  padding: 8px 20px !important;
+}
+
+.popover :global(.MuiListItem-root:hover) {
+  background-color: #f0f0f1 !important;
+}

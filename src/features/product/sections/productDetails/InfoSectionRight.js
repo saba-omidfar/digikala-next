@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { useRouter } from "nextjs-toploader/app";
 
@@ -17,12 +19,20 @@ import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useModal } from "@/contexts/modalContext";
 
+import {
+  useAddFavoriteProduct,
+  useRemoveFavoriteProduct,
+  useRemoveObservedProduct,
+} from "@/features/profile/hooks/useLists";
+
 import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import styles from "./infoSectionRight.module.css";
+import Loading from "@/components/modules/loading/Loading";
 
-function InfoSectionRight() {
+export default function InfoSectionRight() {
   const router = useRouter();
+
   const { openModal } = useModal();
   const { showSnackbar } = useSnackbar();
   const { redirectToLogin } = useLoginRedirect();
@@ -34,20 +44,26 @@ function InfoSectionRight() {
   const [popperElement, setPopperElement] = useState(null);
 
   const { user } = useUserContext();
-  const {
-    productDetails,
-    isSelectedColor,
-    selectedThemes,
-    activeVariant,
-    removeIncredibleNotification,
-    incredibleStatus,
-    isLoadingIncredibleStatus,
-    addFavorite,
-    isLoadingAddFavorite,
-    removeFavorite,
-    favotiteStatus,
-    isLoadingFavoriteStatus,
-  } = useProductContext();
+
+  const { productDetails, isSelectedColor, selectedThemes, activeVariant } =
+    useProductContext();
+
+  const { mutate: removeFavorite, isLoading: isLoadingRemoveFavorite } =
+    useRemoveFavoriteProduct();
+
+  const { mutate: addFavorite, isLoading: isLoadingAddFavorite } =
+    useAddFavoriteProduct();
+
+  const { mutate: removeObservedProduct, isLoading: isLoadingRemoveObserved } =
+    useRemoveObservedProduct();
+
+  const isFavorite = user?.favorite_products?.includes(
+    String(productDetails?.id),
+  );
+
+  const isObserved = user?.observed_products?.some(
+    (item) => String(item.productId) === String(productDetails?.id),
+  );
 
   const { styles: popperStyles, attributes } = usePopper(
     referenceElement,
@@ -79,57 +95,76 @@ function InfoSectionRight() {
   );
 
   const notifeMeHandler = () => {
-    if (isLoadingIncredibleStatus) return;
+    if (isLoadingRemoveObserved) return;
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       redirectToLogin();
       return;
     }
 
-    if (!incredibleStatus?.is_active) {
+    if (!isObserved) {
       return openModal(<AmazingNotifModal productId={productDetails?.id} />, {
         name: "amazing-notification",
         className: "rounded-medium",
       });
     }
 
-    removeIncredibleNotification(
+    removeObservedProduct(
       {
         productId: productDetails?.id,
       },
       {
-        onSuccess: () => {
-          showSnackbar("حذف اطلاع‌رسانی با موفقیت انجام شد");
+        onSuccess: ({ success }) => {
+          if (success) {
+            showSnackbar("حذف اطلاع‌رسانی با موفقیت انجام شد");
+          }
         },
       },
     );
   };
 
-  const favoriteHandler = () => {
-    if (isLoadingFavoriteStatus || isLoadingAddFavorite) return;
-
-    if (!user) {
+  const addToListModalHandler = () => {
+    if (!user?.is_logged_in) {
       redirectToLogin();
       return;
     }
 
-    if (favotiteStatus?.is_favorite) {
-      removeFavorite({
-        productId: productDetails?.id,
+    openModal(<AddToListModal />, {
+      name: "add-to-list",
+      className: "modal__add_to_list rounded-medium",
+      size: "md",
+    });
+  };
+
+  const favoriteHandler = () => {
+    if (isLoadingAddFavorite || isLoadingRemoveFavorite) {
+      return;
+    }
+
+    if (!user?.is_logged_in) {
+      redirectToLogin();
+      return;
+    }
+
+    if (isFavorite) {
+      removeFavorite(productDetails?.id, {
+        onSuccess: ({ success }) => {
+          if (success) {
+            showSnackbar("کالا از علاقه‌مندی‌ها حذف شد");
+          }
+        },
       });
     } else {
-      addFavorite(
-        {
-          productId: productDetails?.id,
+      addFavorite(productDetails?.id, {
+        onSuccess: ({ success }) => {
+          if (success) {
+            showSnackbar("کالا در لیست علاقه‌مندی‌ها ذخیره شد", 5000, {
+              text: "مشاهده",
+              onClick: () => router.push("/profile/lists/"),
+            });
+          }
         },
-        {
-          onSuccess: ({ success }) => {
-            if (success) {
-              showSnackbar("کالا به علاقه‌مندی‌ها اضافه شد");
-            }
-          },
-        },
-      );
+      });
     }
   };
 
@@ -171,24 +206,23 @@ function InfoSectionRight() {
                   onMouseLeave={() => setTooltipKey(null)}
                 >
                   <div className="d-flex" aria-hidden="false">
-                    <svg
-                      className={styles.favorite_icon}
-                      style={{
-                        fill: favotiteStatus?.is_favorite
-                          ? "#ef4056"
-                          : "#424750",
-                      }}
-                    >
-                      <use
-                        href={
-                          favotiteStatus?.is_favorite
-                            ? "#favoriteOn"
-                            : "#favoriteOff"
-                        }
-                      ></use>
-                    </svg>
+                    {isLoadingRemoveFavorite || isLoadingAddFavorite ? (
+                      <Loading isSmall={true} />
+                    ) : (
+                      <svg
+                        className={styles.favorite_icon}
+                        style={{
+                          fill: isFavorite ? "#ef4056" : "#424750",
+                        }}
+                      >
+                        <use
+                          href={isFavorite ? "#favoriteOn" : "#favoriteOff"}
+                        ></use>
+                      </svg>
+                    )}
                   </div>
                 </div>
+
                 {tooltipKey === "favorite" && (
                   <div
                     ref={setPopperElement}
@@ -200,11 +234,13 @@ function InfoSectionRight() {
                   </div>
                 )}
               </div>
+
               <div
                 className={styles.productDetails_img_actions_item}
                 onClick={() =>
                   openModal(<ShareProductModal />, {
-                    className: "rounded-medium",
+                    name: "share-product",
+                    className: "modal__share_product rounded-medium",
                   })
                 }
               >
@@ -220,6 +256,7 @@ function InfoSectionRight() {
                     </svg>
                   </div>
                 </div>
+
                 {tooltipKey === "share" && (
                   <div
                     ref={setPopperElement}
@@ -231,6 +268,7 @@ function InfoSectionRight() {
                   </div>
                 )}
               </div>
+
               <div
                 className={styles.productDetails_img_actions_item}
                 onClick={notifeMeHandler}
@@ -244,18 +282,21 @@ function InfoSectionRight() {
                   onMouseLeave={() => setTooltipKey(null)}
                 >
                   <div className="d-flex" aria-hidden="false">
-                    <svg
-                      className={styles.notification_icon}
-                      style={{
-                        fill: incredibleStatus?.is_active
-                          ? "#ef4056"
-                          : "#424750",
-                      }}
-                    >
-                      <use href="#notificationActiveOutline"></use>
-                    </svg>
+                    {isLoadingRemoveObserved ? (
+                      <Loading isSmall={true} />
+                    ) : (
+                      <svg
+                        className={styles.notification_icon}
+                        style={{
+                          fill: isObserved ? "#ef4056" : "#424750",
+                        }}
+                      >
+                        <use href="#notificationActiveOutline"></use>
+                      </svg>
+                    )}
                   </div>
                 </div>
+
                 {tooltipKey === "notification" && (
                   <div
                     ref={setPopperElement}
@@ -268,7 +309,6 @@ function InfoSectionRight() {
                 )}
               </div>
 
-              {/* COMPARE */}
               <div
                 className={styles.productDetails_img_actions_item}
                 onClick={goToComparePage}
@@ -285,6 +325,7 @@ function InfoSectionRight() {
                     </svg>
                   </div>
                 </div>
+
                 {tooltipKey === "compare" && (
                   <div
                     ref={setPopperElement}
@@ -296,14 +337,10 @@ function InfoSectionRight() {
                   </div>
                 )}
               </div>
+
               <div
                 className={styles.productDetails_img_actions_item}
-                onClick={() =>
-                  openModal(<AddToListModal />, {
-                    className: "modal__add_to_list rounded-medium",
-                    size: "md",
-                  })
-                }
+                onClick={addToListModalHandler}
               >
                 <div
                   ref={tooltipKey === "list" ? setReferenceElement : null}
@@ -317,6 +354,7 @@ function InfoSectionRight() {
                     </svg>
                   </div>
                 </div>
+
                 {tooltipKey === "list" && (
                   <div
                     ref={setPopperElement}
@@ -329,6 +367,7 @@ function InfoSectionRight() {
                 )}
               </div>
             </div>
+
             <div
               className="position-relative d-flex align-items-center"
               onClick={() =>
@@ -349,6 +388,7 @@ function InfoSectionRight() {
                     }
                     type="image/webp"
                   />
+
                   <source
                     srcSet={
                       isSelectedColor
@@ -357,6 +397,7 @@ function InfoSectionRight() {
                     }
                     type="image/jpeg"
                   />
+
                   <img
                     src={
                       isSelectedColor
@@ -374,6 +415,7 @@ function InfoSectionRight() {
         </div>
 
         <Gallery />
+
         <div
           className={styles.productDetails_feedback_container}
           onClick={() =>
@@ -392,11 +434,13 @@ function InfoSectionRight() {
                   className={`${styles.productDetails_feedback_icon} cube-font-icon`}
                 ></div>
               </div>
+
               <span className={styles.productDetails_feedback_text}>
                 گزارش مشخصات کالا یا موارد قانونی
               </span>
             </div>
           </div>
+
           <span className={styles.productDetails_feedback_text}>
             DKP-{productDetails?.id}
           </span>
@@ -405,5 +449,3 @@ function InfoSectionRight() {
     </>
   );
 }
-
-export default InfoSectionRight;

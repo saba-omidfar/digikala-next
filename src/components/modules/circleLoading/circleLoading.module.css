@@ -1,5 +1,5 @@
 .loading_container {
-  position: fixed;
+  /* position: fixed; */
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -10,8 +10,6 @@
 }
 
 .rounded_circle {
-  width: 8px;
-  height: 8px;
   background: rgb(129, 133, 139);
   border-radius: 50%;
 }

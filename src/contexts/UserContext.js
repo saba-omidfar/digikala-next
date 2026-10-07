@@ -2,12 +2,7 @@
 
 import { createContext, useContext } from "react";
 
-import { useGetMe, useLogout, useGetFavorites } from "@/hooks/useUser";
-import {
-  useCreateList,
-  useAddProductToWishlist,
-  useGetAllUserList,
-} from "@/hooks/useWishlist";
+import { useGetMe, useLogout } from "@/hooks/useUser";
 
 const UserContext = createContext();
 
@@ -17,13 +12,6 @@ export const UserProvider = ({ children }) => {
 
   const { data: user, isLoading: userIsLoading } = useGetMe();
   const { mutate: logoutUser, isLoading: logoutIsLoading } = useLogout();
-  const { mutate: createWishlist } = useCreateList();
-  const { mutate: addProductToWishlist } = useAddProductToWishlist();
-  const { data: userLists, isLoading: userListsIsLoading } =
-    useGetAllUserList();
-
-  const { data: favoriteProducts, isLoading: isLoadingFavoriteProducts } =
-    useGetFavorites();
 
   return (
     <UserContext.Provider
@@ -33,12 +21,6 @@ export const UserProvider = ({ children }) => {
         userIsLoading,
         logoutUser,
         logoutIsLoading,
-        createWishlist,
-        addProductToWishlist,
-        userLists,
-        userListsIsLoading,
-        favoriteProducts,
-        isLoadingFavoriteProducts,
       }}
     >
       {children}

@@ -1,5 +1,3 @@
-// app/api/comments/[commentId]/report/route.js
-
 import dbConnect from "@/configs/db";
 
 import CommentReportModel from "@/models/CommentReport";
@@ -24,7 +22,7 @@ export async function POST(req, { params }) {
       "auth.accessToken": accessToken,
     });
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json({ message: "User not found" }, { status: 401 });
     }
 
@@ -52,8 +50,6 @@ export async function POST(req, { params }) {
       message: "گزارش با موفقیت ثبت شد",
     });
   } catch (err) {
-    console.error("POST /report error:", err);
-
     return Response.json(
       {
         message: "Internal Server Error",

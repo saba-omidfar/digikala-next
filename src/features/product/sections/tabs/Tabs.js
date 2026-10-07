@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useGetUniversal } from "@/hooks/useGetUniversal";
 import { useProductContext } from "@/contexts/ProductContext";
@@ -10,11 +10,15 @@ export default function Tabs({ isTabsSticky }) {
   const { productDetails } = useProductContext();
   const { data: topMegaMenuBanners } = useGetUniversal();
 
+  const lastScrollY = useRef(0);
   const [topOffset, setTopOffset] = useState(68);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [activeTab, setActiveTab] = useState(null);
 
   const sections = [];
+
+  const hasTopMegaMenuBanners =
+    Boolean(topMegaMenuBanners?.desktop?.length?.length) ||
+    Boolean(topMegaMenuBanners?.mobile?.length?.length);
 
   if (productDetails?.expert_reviews?.description) {
     sections.push({ id: "shortReview", label: "معرفی" });
@@ -56,10 +60,6 @@ export default function Tabs({ isTabsSticky }) {
         threshold: 0,
         rootMargin: "0px",
       },
-      // {
-      //   threshold: 0,
-      //   rootMargin: "-100px 0px -60% 0px",
-      // },
     );
     sections.forEach(({ id }) => {
       const section = document.getElementById(id);
@@ -72,38 +72,30 @@ export default function Tabs({ isTabsSticky }) {
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
+      const isScrollingUp = currentScroll < lastScrollY.current;
 
-      if (currentScroll < lastScrollY) {
-        isTabsSticky
-          ? (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
-            ? 188
-            : 128
-          : 68;
-
-        setTopOffset(
-          (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
-            ? 168
-            : 108,
-        );
+      if (isScrollingUp) {
+        setTopOffset(isTabsSticky ? (hasTopMegaMenuBanners ? 188 : 108) : 68);
       } else {
-        setTopOffset(
-          (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
-            ? 128
-            : 68,
-        );
+        setTopOffset(isTabsSticky ? (hasTopMegaMenuBanners ? 128 : 68) : 68);
       }
 
-      setLastScrollY(currentScroll);
+      lastScrollY.current = currentScroll;
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isTabsSticky, hasTopMegaMenuBanners]);
 
   const handleTabClick = (id) => {
     const section = document.getElementById(id);
+
     if (section) {
-      const offset = isTabsSticky ? 184 : 68;
+      const offset = isTabsSticky ? (hasTopMegaMenuBanners ? 188 : 128) : 68;
+
       const sectionTop =
         section.getBoundingClientRect().top + window.scrollY - offset;
 

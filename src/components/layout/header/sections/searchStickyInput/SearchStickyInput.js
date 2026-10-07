@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useSearchParams } from "next/navigation";
 
 import { useModal } from "@/contexts/modalContext";
@@ -45,7 +45,6 @@ function SearchStickyInput({ isSearchPage, isSearchInputSticky, hasBorder }) {
             className={styles.header}
             style={{
               borderBottom: hasBorder ? "1px solid #f0f0f1" : "",
-              // isSearchPage && isSmallScreen ? "none" : "1px solid #f0f0f1",
             }}
           >
             <div

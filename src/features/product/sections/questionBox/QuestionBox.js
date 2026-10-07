@@ -26,8 +26,13 @@ function QuestionBox({ question }) {
   });
 
   const togglefeedbacksHandler = ({ questionId, type }) => {
-    if (!user) {
+    if (!user?.is_logged_in) {
       showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
+    if (user._id === comment?.user_id) {
+      showSnackbar("امکان رای دادن به پاسخ خودتان وجود ندارد");
       return;
     }
 
@@ -74,7 +79,7 @@ function QuestionBox({ question }) {
                   <div>
                     <div className="d-flex align-items-center gap-1">
                       <span className={styles.question_answerInfo_author}>
-                        {question?.answers[0]?.sender}
+                        {toPersianDigits(question?.answers[0]?.sender)}
                       </span>
                       {question?.answers[0]?.type !== "user" ? (
                         <>

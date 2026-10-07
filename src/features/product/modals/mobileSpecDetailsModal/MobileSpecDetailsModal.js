@@ -7,7 +7,7 @@ import toPersianDigits from "@/utils/toPersianDigits";
 import { useProductContext } from "@/contexts/ProductContext";
 import { useModal } from "@/contexts/modalContext";
 
-import styles from "./mobileSpecDetailsModalDetailsModal.module.css";
+import styles from "./mobileSpecDetailsModal.module.css";
 
 export default function MobileSpecDetailsModal({ initialTab = 0 }) {
   const [activeTab, setActiveTab] = useState(initialTab);
@@ -40,9 +40,7 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
       }
     >
       <div className={styles.content}>
-        {/* Tabs */}
         <div className={styles.tabs_container}>
-          {/* معرفی کالا */}
           {productDetails?.review?.description?.length ? (
             <div
               className={`${styles.tab} ${
@@ -62,7 +60,6 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
             ""
           )}
 
-          {/* بررسی تخصصی */}
           {productDetails?.expert_reviews?.review_sections?.length ? (
             <div
               className={`${styles.tab} ${
@@ -82,7 +79,6 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
             ""
           )}
 
-          {/* جدول مشخصات */}
           {productDetails?.specifications?.length && (
             <div
               className={`${styles.tab} ${
@@ -102,7 +98,6 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
         </div>
         <span className={styles.space}></span>
 
-        {/* Content */}
         {activeTab === 0 ? (
           <div className={styles.tab_content}>
             <p className={styles.review_product_text}>
@@ -131,7 +126,6 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
                     </div>
                     {reviewSection?.sections?.map((section, index) => (
                       <div key={index}>
-                        {/* Text */}
                         {section.template === "text" && (
                           <div className={styles.review_section_text_content}>
                             <div className="mb-4">
@@ -146,7 +140,6 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
                           </div>
                         )}
 
-                        {/* Image-Text */}
                         {section.template === "image-text" && (
                           <div className={styles.review_section_img_content}>
                             <div className="d-flex justify-content-center">
@@ -177,7 +170,6 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
                           </div>
                         )}
 
-                        {/* Text-Image */}
                         {section.template === "text-image" && (
                           <div className={styles.review_section_img_content}>
                             <div className="d-flex justify-content-center">
@@ -208,7 +200,6 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
                           </div>
                         )}
 
-                        {/* Image */}
                         {section.template === "image" && (
                           <div className="d-flex justify-content-center mb-4">
                             <div
@@ -240,10 +231,8 @@ export default function MobileSpecDetailsModal({ initialTab = 0 }) {
           <div className={styles.review_product_table_container}>
             {productDetails?.specifications?.map((spec, specIndex) => (
               <Fragment key={specIndex}>
-                {/* title */}
                 <p className={styles.review_product_title}>{spec.title}</p>
 
-                {/* table */}
                 <table className={styles.review_product_table}>
                   <tbody>
                     {spec.attributes?.map((attr, attrIndex) => (

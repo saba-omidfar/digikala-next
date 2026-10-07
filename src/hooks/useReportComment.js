@@ -1,5 +1,3 @@
-// hooks/useReportComment.js
-
 import { useMutation } from "react-query";
 
 import { reportComment } from "@/services/axios/Requests/commentRequests";

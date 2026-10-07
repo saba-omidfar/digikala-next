@@ -20,7 +20,7 @@ export default function PriceFeedbackBox({ setShowAddToCartSuccess }) {
   const [isSellerInfoOpen, setIsSellerInfoOpen] = useState(false);
 
   const { productDetails, activeVariant, lowestPrice } = useProductContext();
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
 
   const {
     userCart,
@@ -68,8 +68,11 @@ export default function PriceFeedbackBox({ setShowAddToCartSuccess }) {
       ],
     });
 
+  const guestCartId = localStorage.getItem("guestCartId");
+
   const addProductToCartHandler = () => {
     setLoadingVariantId(activeVariant?.id);
+
     addProductToCart(
       {
         guestCartId,
@@ -80,7 +83,7 @@ export default function PriceFeedbackBox({ setShowAddToCartSuccess }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 

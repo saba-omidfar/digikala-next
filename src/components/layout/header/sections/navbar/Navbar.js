@@ -5,9 +5,8 @@ import { usePopper } from "react-popper";
 
 import { useModal } from "@/contexts/modalContext";
 
+import { useGetAddresses } from "@/features/profile/hooks/useAddress";
 import useScreenStatus from "@/hooks/useScreenStatus";
-import { useLocation } from "@/contexts/locationContext";
-import { useUserContext } from "@/contexts/UserContext";
 
 import LocationModal from "@/components/layout/header/modals/locationModal/LocationModal";
 import SelectLocationModal from "@/components/layout/header/modals/selectLocationModal/SelectLocationModal";
@@ -22,8 +21,6 @@ import styles from "./navbar.module.css";
 function Navbar({ hideMenuOnTop, isOpenMegamenu, setIsOpenMegamenu }) {
   const { isSmallScreen } = useScreenStatus();
   const { openModal } = useModal();
-  const { selectedLocation } = useLocation();
-  const { user } = useUserContext();
 
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState(null);
@@ -58,6 +55,10 @@ function Navbar({ hideMenuOnTop, isOpenMegamenu, setIsOpenMegamenu }) {
     },
   );
 
+  const { data, isLoading } = useGetAddresses();
+
+  const defaultAddress = data?.addresses?.find((address) => address.is_default);
+
   useEffect(() => {
     if (isOpenMegamenu) {
       document.body.classList.add("lock-body-scroll");
@@ -74,7 +75,7 @@ function Navbar({ hideMenuOnTop, isOpenMegamenu, setIsOpenMegamenu }) {
   );
 
   const modalClickHandler = () => {
-    if (selectedLocation) {
+    if (data?.addresses?.length) {
       if (isSmallScreen) {
         setShowLocations(true);
       } else {
@@ -124,62 +125,70 @@ function Navbar({ hideMenuOnTop, isOpenMegamenu, setIsOpenMegamenu }) {
             <div className={styles.navbar_menu__border}></div>
           </div>
 
-          {selectedLocation ? (
-            <div className={styles.location} onClick={modalClickHandler}>
-              <div className={styles.location_icon_container}>
-                <div
-                  data-icon-name="cube-location-pin"
-                  data-icon="&#xE946;"
-                  className={`${styles.location_icon} cube-font-icon`}
-                ></div>
-              </div>
-              <div
-                ref={setReferenceElement}
-                className="position-relative"
-                onMouseEnter={() => setIsTooltipOpen(true)}
-                onMouseLeave={() => setIsTooltipOpen(false)}
-              >
-                <div className={styles.location_text}>
-                  {selectedLocation?.address}
-                </div>
-
-                {isTooltipOpen && (
-                  <div
-                    ref={setPopperElement}
-                    style={popperStyles.popper}
-                    {...attributes.popper}
-                    className={`${isTooltipOpen ? "tooltip__active" : "tooltip__inactive"} location_tooltip`}
-                  >
-                    <span className="tooltip_content">
-                      مشاهده موجودی کالاها و ارسال سریع‌تر
-                    </span>
-                    <div
-                      data-popper-arrow
-                      className={styles.location_popper_arrow}
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div
-              className={styles.navbar__selectcity}
-              id="header-location"
-              onClick={modalClickHandler}
-            >
-              <div>
-                <div className={styles.navbar_selectcity_container}>
-                  <div className="d-flex" aria-hidden="false">
+          {!isLoading ? (
+            <>
+              {data?.addresses?.length ? (
+                <div className={styles.location} onClick={modalClickHandler}>
+                  <div className={styles.default_address_icon_container}>
                     <div
                       data-icon-name="cube-location-pin"
                       data-icon="&#xE946;"
-                      className={`${styles.location_icon} cube-font-icon`}
+                      className={`${styles.default_address_icon} cube-font-icon`}
                     ></div>
                   </div>
-                  <p className={styles.location_text}>انتخاب آدرس</p>
+                  <div
+                    ref={setReferenceElement}
+                    className="position-relative"
+                    onMouseEnter={() => setIsTooltipOpen(true)}
+                    onMouseLeave={() => setIsTooltipOpen(false)}
+                  >
+                    <div className={styles.default_address_text}>
+                      {defaultAddress?.name === "موقعیت انتخابی"
+                        ? defaultAddress?.address
+                        : `تحویل به ${defaultAddress?.name}`}
+                    </div>
+
+                    {isTooltipOpen && (
+                      <div
+                        ref={setPopperElement}
+                        style={popperStyles.popper}
+                        {...attributes.popper}
+                        className={`${isTooltipOpen ? "tooltip__active" : "tooltip__inactive"} location_tooltip`}
+                      >
+                        <span className="tooltip_content">
+                          مشاهده موجودی کالاها و ارسال سریع‌تر
+                        </span>
+                        <div
+                          data-popper-arrow
+                          className={styles.location_popper_arrow}
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </div>
+              ) : (
+                <div
+                  className={styles.navbar__selectcity}
+                  id="header-location"
+                  onClick={modalClickHandler}
+                >
+                  <div>
+                    <div className={styles.navbar_selectcity_container}>
+                      <div className="d-flex" aria-hidden="false">
+                        <div
+                          data-icon-name="cube-location-pin"
+                          data-icon="&#xE946;"
+                          className={`${styles.location_icon} cube-font-icon`}
+                        ></div>
+                      </div>
+                      <p className={styles.location_text}>انتخاب آدرس</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            ""
           )}
         </div>
       )}

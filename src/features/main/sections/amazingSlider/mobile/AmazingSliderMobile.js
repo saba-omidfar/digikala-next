@@ -63,12 +63,10 @@ export default function AmazingSliderMobile({
         </Link>
       </div>
 
-      {/* Amazing Products */}
       {incredibbleOffers?.products?.map((product, index) => (
         <AmazingItem key={product?.id} index={index} product={product} />
       ))}
 
-      {/* See More Link */}
       <div className={styles.see_all_btn_link}>
         <Link
           className="d-flex flex-column align-items-center justify-content-center"

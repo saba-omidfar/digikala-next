@@ -191,10 +191,6 @@ export default function CommentQuestionSection() {
                         <p className={styles.add_comment_title}>
                           اولین نفر دیدگاهتان را درباره این کالا بنویسید
                         </p>
-                        {/* <p className={styles.add_comment_text}>
-                          با ثبت دیدگاه بر روی کالاهای خریداری شده ۵ امتیاز در
-                          دیجی‌کلاب دریافت کنید
-                        </p> */}
                       </div>
                       <div
                         className={styles.add_comment_chevron_icon_container}
@@ -268,10 +264,6 @@ export default function CommentQuestionSection() {
                     <p className={styles.add_comment_title}>
                       دیدگاه خود را درباره این کالا بنویسید
                     </p>
-                    {/* <p className={styles.add_comment_text}>
-                      با ثبت دیدگاه بر روی کالاهای خریداری شده ۵ امتیاز در
-                      دیجی‌کلاب دریافت کنید
-                    </p> */}
                   </div>
 
                   <div className="d-flex me-auto pe-3" aria-hidden="false">

@@ -1,18 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import {
-  addIncredibleNotification,
-  removeIncredibleNotification,
-  getIncredibleNotificationStatus,
-  addFavorite,
-  removeFavorite,
-  getFavoriteStatus,
-  addToRecentViewed,
-  getRecentViewed,
+  addRecentViewedProduct,
+  removeRecentViewedProduct,
   postComment,
   postQuestion,
+  updateComment,
+  removeComment,
   postAnswer,
 } from "@/services/axios/Requests/productRequests";
 
@@ -202,62 +198,6 @@ function useSellerRecommendationProducts(productId) {
 
   return { data, isLoading, refetch };
 }
-
-// function useProductComments(
-//   productId,
-//   currentPage = 1,
-//   setCurrentPage,
-//   sort = "default",
-//   intent = null,
-// ) {
-//   const [data, setData] = useState(null);
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [isLoadingComments, setIsLoadingComments] = useState(false);
-
-//   const refetch = useCallback(async () => {
-//     if (!productId) return;
-
-//     setIsLoading(true);
-//     setIsLoadingComments(true);
-
-//     try {
-//       const res = await fetch(
-//         `/api/product/${productId}/rate-review?sort=${sort}&intent=${intent}&page=${currentPage}`,
-//       );
-
-//       const params = new URLSearchParams({
-//         page: currentPage,
-//         sort,
-//       });
-
-//       if (intent) {
-//         params.set("intent", intent);
-//       }
-
-//       const json = await res.json();
-
-//       setData(json?.data ?? null);
-//     } finally {
-//       setIsLoading(false);
-//       setIsLoadingComments(false);
-//     }
-//   }, [productId, currentPage, sort, intent]);
-
-//   useEffect(() => {
-//     refetch();
-//   }, [refetch]);
-
-//   useEffect(() => {
-//     setCurrentPage(1);
-//   }, [intent, sort]);
-
-//   return {
-//     data,
-//     isLoading,
-//     isLoadingComments,
-//     refetch,
-//   };
-// }
 
 function useProductComments(
   productId,
@@ -513,132 +453,23 @@ function useProductFeedback(productId) {
   };
 }
 
-function useAddIncredibleNotification() {
+function useAddRecentViewedProduct() {
   const queryClient = useQueryClient();
 
-  return useMutation(
-    ({ productId, send_sms, send_email, send_notification }) =>
-      addIncredibleNotification({
-        productId,
-        send_sms,
-        send_email,
-        send_notification,
-      }),
-    {
-      onSuccess: (_, variables) => {
-        const { productId, send_sms, send_email, send_notification } =
-          variables;
-
-        queryClient.setQueryData(
-          ["IncredibleNotification", String(productId)],
-          {
-            is_active: true,
-            send_sms,
-            send_email,
-            send_notification,
-          },
-        );
-      },
-    },
-  );
-}
-
-function useRemoveIncredibleNotification() {
-  const queryClient = useQueryClient();
-
-  return useMutation(
-    ({ productId }) => removeIncredibleNotification(productId),
-    {
-      onSuccess: (_, variables) => {
-        const { productId } = variables;
-
-        queryClient.setQueryData(
-          ["IncredibleNotification", String(productId)],
-          {
-            is_active: false,
-            send_sms: false,
-            send_email: false,
-            send_notification: false,
-          },
-        );
-      },
-    },
-  );
-}
-
-function useGetIncredibleNotificationStatus({ productId }, options = {}) {
-  return useQuery(
-    ["IncredibleNotification", String(productId)],
-    () => getIncredibleNotificationStatus({ productId }),
-    {
-      enabled: !!productId,
-      ...options,
-    },
-  );
-}
-
-function useAddFavorite() {
-  const queryClient = useQueryClient();
-
-  return useMutation(
-    ({ productId }) =>
-      addFavorite({
-        productId,
-      }),
-    {
-      onSuccess: (_, variables) => {
-        const { productId } = variables;
-
-        queryClient.setQueryData(["favorite", String(productId)], {
-          is_favorite: true,
-        });
-      },
-    },
-  );
-}
-
-function useRemoveFavorite() {
-  const queryClient = useQueryClient();
-
-  return useMutation(({ productId }) => removeFavorite(productId), {
-    onSuccess: (_, variables) => {
-      const { productId } = variables;
-
-      queryClient.setQueryData(["favorite", String(productId)], {
-        is_favorite: false,
-      });
-    },
-  });
-}
-
-function useGetFavoriteStatus({ productId }, options = {}) {
-  return useQuery(
-    ["favorite", String(productId)],
-    () => getFavoriteStatus({ productId }),
-    {
-      enabled: !!productId,
-      ...options,
-    },
-  );
-}
-
-function useAddToRecentViewed() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: addToRecentViewed,
+  return useMutation((productId) => addRecentViewedProduct(productId), {
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["recent-viewed"],
-      });
+      queryClient.invalidateQueries(["recent-viewed-products"]);
     },
   });
 }
 
-function useGetRecentViewed() {
-  return useQuery({
-    queryKey: ["recent-viewed"],
-    queryFn: getRecentViewed,
+function useRemoveRecentViewedProduct() {
+  const queryClient = useQueryClient();
+
+  return useMutation((productId) => removeRecentViewedProduct(productId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["recent-viewed-products"]);
+    },
   });
 }
 
@@ -646,6 +477,29 @@ function usePostComment(productId) {
   const queryClient = useQueryClient();
 
   return useMutation((comment) => postComment(productId, comment), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["Comments", productId]);
+    },
+  });
+}
+
+function useUpdateComment(productId) {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ commentId, comment }) => updateComment(productId, commentId, comment),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["Comments", productId]);
+      },
+    },
+  );
+}
+
+function useRemoveComment(productId) {
+  const queryClient = useQueryClient();
+
+  return useMutation((commentId) => removeComment(productId, commentId), {
     onSuccess: () => {
       queryClient.invalidateQueries(["Comments", productId]);
     },
@@ -666,14 +520,19 @@ function usePostAnswer() {
   const queryClient = useQueryClient();
 
   return useMutation(
-    ({ productId, questionId, text, source }) =>
-      postAnswer(questionId, { productId, text, source }),
+    ({ productId, questionId, text }) =>
+      postAnswer(questionId, {
+        productId,
+        text,
+      }),
     {
       onSuccess: (_, variables) => {
         queryClient.invalidateQueries([
           "Answer-Question",
           variables.questionId,
         ]);
+
+        queryClient.invalidateQueries(["Questions", variables.productId]);
       },
     },
   );
@@ -693,15 +552,11 @@ export {
   useProductRecommendation,
   useGetSupplementRecommendationProducts,
   useProductFeedback,
-  useAddIncredibleNotification,
-  useRemoveIncredibleNotification,
-  useGetIncredibleNotificationStatus,
-  useAddFavorite,
-  useRemoveFavorite,
-  useGetFavoriteStatus,
-  useAddToRecentViewed,
-  useGetRecentViewed,
+  useAddRecentViewedProduct,
+  useRemoveRecentViewedProduct,
   usePostComment,
+  useUpdateComment,
+  useRemoveComment,
   usePostQuestion,
   usePostAnswer,
 };

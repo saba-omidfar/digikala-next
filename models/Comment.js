@@ -8,6 +8,10 @@ const commentSchema = new mongoose.Schema({
     unique: true,
     index: true,
   },
+  order_item_id: {
+    type: Number,
+    default: 0,
+  },
   product_id: Number,
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -22,8 +26,8 @@ const commentSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["approved", "pending", "rejected"],
-    default: "approved",
+    enum: ["pending", "approved", "rejected"],
+    default: "pending",
   },
   is_anonymous: {
     type: Boolean,

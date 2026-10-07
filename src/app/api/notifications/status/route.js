@@ -1,73 +1,6 @@
-// import dbConnect from "@/configs/db";
-// import UserModel from "@/models/User";
-// import { cookies } from "next/headers";
-
-// import AmazingNotification from "@/models/AmazingNotifications";
-
-// export async function GET(req) {
-//   try {
-//     await dbConnect();
-
-//     const cookieStore = await cookies();
-//     const token = cookieStore.get("token")?.value || null;
-
-//     if (!token) {
-//       return Response.json(
-//         {
-//           success: false,
-//           message: "کاربر احراز هویت نشده است",
-//         },
-//         { status: 401 }
-//       );
-//     }
-
-//     const { searchParams } = new URL(req.url);
-//     const productId = searchParams.get("productId");
-
-//     const user = await UserModel.findOne({
-//       "auth.token": token,
-//     });
-
-//     if (!user?._id || !productId) {
-//       return new Response(JSON.stringify({ message: "Missing params" }), {
-//         status: 400,
-//       });
-//     }
-
-//     const existingNotification = await AmazingNotification.findOne({
-//       userId: user?._id,
-//       productId,
-//     });
-
-//     if (!existingNotification) {
-//       return new Response(
-//         JSON.stringify({
-//           success: true,
-//           isActive: false,
-//           channels: {},
-//         }),
-//         { status: 200 }
-//       );
-//     } else {
-//       return new Response(
-//         JSON.stringify({
-//           success: true,
-//           isActive: true,
-//           channels: existingNotification.channels,
-//         }),
-//         { status: 200 }
-//       );
-//     }
-//   } catch (err) {
-//     return new Response(JSON.stringify({ message: err.message }), {
-//       status: 500,
-//     });
-//   }
-// }
-
 import dbConnect from "@/configs/db";
 import UserModel from "@/models/User";
-import AmazingNotification from "@/models/AmazingNotifications";
+import AmazingNotification from "@/models/Observe";
 import { cookies } from "next/headers";
 
 export async function GET(req) {
@@ -98,7 +31,7 @@ export async function GET(req) {
       "auth.accessToken": accessToken,
     }).lean();
 
-    if (!user?._id) {
+    if (!user?.is_logged_in) {
       return Response.json(
         { success: false, message: "کاربر یافت نشد" },
         { status: 404 },

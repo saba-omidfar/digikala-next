@@ -18,6 +18,10 @@
   position: relative;
 }
 
+.password_content {
+  margin-top: 0;
+}
+
 .content {
   margin-top: 64px;
 }
@@ -90,12 +94,7 @@
 @media screen and (max-width: 1024px) {
   .content {
     min-width: 100%;
-    padding: 20px;
     border: none;
-  }
-
-  .login {
-    align-items: flex-end;
   }
 
   .text_error {
@@ -113,7 +112,17 @@
   }
 
   .form_card {
+    max-width: 100%;
     border: none;
+    padding: 20px 16px;
+  }
+
+  .countdown_timer {
+    font-size: 11px;
+  }
+
+  .timeout {
+    font-size: 10px;
   }
 }
 
@@ -128,6 +137,15 @@
   }
 
   .login_btn {
-    font-size: 10px;
+    font-size: 11.2px;
+  }
+
+  .countdown_timer,
+  .verification_code_timer {
+    font-size: 8.8px;
+  }
+
+  .timeout {
+    font-size: 8px;
   }
 }

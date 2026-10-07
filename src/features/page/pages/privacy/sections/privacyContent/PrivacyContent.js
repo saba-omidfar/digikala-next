@@ -12,8 +12,10 @@ export default function PrivacyContent() {
     <div
       className={styles.container}
       style={{
-        paddingTop: (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)
-          ?.length
+        paddingTop: (
+          topMegaMenuBanners?.desktop?.length ||
+          topMegaMenuBanners?.mobile?.length
+        )?.length
           ? 168
           : 108,
       }}

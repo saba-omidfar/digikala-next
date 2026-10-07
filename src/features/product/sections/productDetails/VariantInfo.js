@@ -182,7 +182,6 @@ function VariantInfo() {
 
   return (
     <div id="variant" className={styles.variant_info}>
-      {/* Eng Title */}
       {productDetails?.title_en && (
         <>
           <div className="align-items-center d-flex">
@@ -193,10 +192,8 @@ function VariantInfo() {
         </>
       )}
 
-      {/* Line */}
       <div className={styles.variant_info_enTitle_line}></div>
 
-      {/* Rating */}
       {productDetails?.rating?.rate ||
       productDetails?.comments_overview ||
       productDetails?.comments_count ||
@@ -269,7 +266,6 @@ function VariantInfo() {
                       <span className={styles.variant_info_comments_text}>
                         {toPersianDigits(commentsData?.pager?.total_items)}{" "}
                         دیدگاه{" "}
-                        {/* {toPersianDigits(productDetails?.comments_count)} دیدگاه */}
                         <div className="d-flex align-items-center">
                           <div
                             data-icon-name="cube-arrow-left"
@@ -292,9 +288,7 @@ function VariantInfo() {
                 >
                   <span>
                     <span className={styles.variant_info_questions_text}>
-                      {toPersianDigits(questionsData?.pager?.total_items)}{" "}
-                      {/* {productDetails?.questions_count?.toLocaleString("fa-IR")}{" "} */}
-                      پرسش
+                      {toPersianDigits(questionsData?.pager?.total_items)} پرسش
                       <div className="d-flex align-items-center">
                         <div
                           data-icon-name="cube-arrow-left"
@@ -315,7 +309,6 @@ function VariantInfo() {
         ""
       )}
 
-      {/* Colors */}
       {productDetails?.colors?.length ? (
         <div className={styles.variation_colors_container}>
           <div className="d-flex flex-column" style={{ gap: "12px" }}>
@@ -452,7 +445,6 @@ function VariantInfo() {
         ""
       )}
 
-      {/*  Size */}
       {productDetails?.has_true_to_size ? (
         <div className={styles.size_container}>
           <div className={styles.size_content}>
@@ -478,7 +470,6 @@ function VariantInfo() {
                 ""
               )}
 
-              {/* Size Guide */}
               {productDetails?.has_size_guide ? (
                 <button
                   className={styles.size_btn__text}
@@ -491,7 +482,7 @@ function VariantInfo() {
               ) : (
                 ""
               )}
-              {/* True To Size */}
+
               {productDetails?.has_true_to_size &&
               !productDetails?.has_size_guide &&
               trueToSize?.total_count !== 0 ? (
@@ -508,7 +499,6 @@ function VariantInfo() {
               )}
             </div>
 
-            {/* Sizes */}
             <div className="w-100">
               <div className={styles.sizes_container}>
                 {productThemes

@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from "react";
 
 import { BottomSheet } from "@percivel/react-spring-bottom-sheet";
@@ -64,7 +66,7 @@ function MobileInsuranceModal({ productId, variantId }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 
@@ -79,7 +81,7 @@ function MobileInsuranceModal({ productId, variantId }) {
   };
 
   const toggleInsuranceHandler = ({ hasInsurance }) => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }

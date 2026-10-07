@@ -68,8 +68,6 @@ export default function MobileLocationsModal() {
               ></div>
             </div>
           </button>
-          <h2 className={styles.locations_title}>آدرس‌ها</h2>
-          <ul className={styles.locations_list}></ul>
         </div>
       </BottomSheet>
     </>

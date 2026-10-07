@@ -103,7 +103,6 @@ function AiVoicePlayer() {
               className="position-relative d-flex align-items-center"
               aria-label="کنترل‌های پخش صوتی"
             >
-              {/* Forward */}
               <div
                 className={styles.forward_icon_container}
                 style={{
@@ -127,7 +126,6 @@ function AiVoicePlayer() {
                 </div>
               </div>
 
-              {/* Play / Pause */}
               <div
                 className={styles.play_icon_container}
                 style={{
@@ -153,7 +151,6 @@ function AiVoicePlayer() {
                 </div>
               </div>
 
-              {/* Rewind */}
               <div
                 className={styles.rewind_icon_container}
                 style={{

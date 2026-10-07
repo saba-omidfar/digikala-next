@@ -1,28 +1,3 @@
-// import mongoose from "mongoose";
-
-// const PriceFeedbackSchema = new mongoose.Schema(
-//   {
-//     productId: {
-//       type: String,
-//       required: true,
-//     },
-
-//     userId: {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "User",
-//       required: true,
-//     },
-//   },
-//   {
-//     timestamps: true,
-//   },
-// );
-
-// PriceFeedbackSchema.index({ productId: 1, userId: 1 }, { unique: true });
-
-// export default mongoose.models.PriceFeedback ||
-//   mongoose.model("PriceFeedback", PriceFeedbackSchema);
-
 import mongoose from "mongoose";
 
 const PriceFeedbackSchema = new mongoose.Schema(

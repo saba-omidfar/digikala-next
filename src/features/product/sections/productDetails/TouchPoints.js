@@ -27,6 +27,12 @@ function TouchPoints() {
     });
   };
 
+  if (
+    !productDetails?.default_variant &&
+    !Array.isArray(productDetails?.default_variant)
+  )
+    return null;
+
   return (
     <div className={styles.touch_points}>
       <div className={styles.touch_points_container}>
@@ -64,10 +70,10 @@ function TouchPoints() {
                     </svg>
                   </div>
                 </div>
-                <div className={styles.active_plan_container}>
+                <div className={styles.active_plan_header}>
                   <div className="d-flex align-items-center flex-grow-1">
                     <p className={styles.active_plan_title}>
-                      <span className="position-relative">پلاس</span>
+                      <span className="position-relative">{`${activePlan.title} پلاس`}</span>
                     </p>
                   </div>
 

@@ -112,7 +112,7 @@ function NextCart() {
                       <div className={styles.slide_header}>
                         <div className={styles.slide_header_title_container}>
                           <span className={styles.slide_header_title}>
-                            {toPersianDigits(nextPurchaseBasket.length)} کالا
+                            {toPersianDigits(nextPurchaseBasket?.length)} کالا
                           </span>
                           <div
                             className="d-flex"
@@ -148,7 +148,7 @@ function NextCart() {
                         >
                           <img
                             className={styles.empty_cart_img}
-                            src="/images/svg/cart/empty-next-basket.svg"
+                            src="/images/svg/cart/empty-next-basket?.svg"
                             alt="empty-next-cart"
                             title=""
                           />
@@ -206,7 +206,7 @@ function NextCart() {
                         >
                           <img
                             className={styles.empty_cart_img}
-                            src="/images/svg/cart/empty-next-basket.svg"
+                            src="/images/svg/cart/empty-next-basket?.svg"
                             alt="empty-next-cart"
                             title=""
                           />

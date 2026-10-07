@@ -1,4 +1,4 @@
-import api from "../Configs/config";
+import api from "@/services/axios/Configs/config";
 
 export async function getFeedbacks({ targetId, targetType }) {
   const res = await api.get(`/feedbacks/${targetType}/${targetId}`);

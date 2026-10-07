@@ -23,9 +23,9 @@ export async function POST(req) {
     if (accessToken) {
       const user = await UserModel.findOne({
         "auth.accessToken": accessToken,
-      }).select("_id");
+      });
 
-      if (!user) {
+      if (!user?.is_logged_in) {
         return Response.json(
           {
             success: false,

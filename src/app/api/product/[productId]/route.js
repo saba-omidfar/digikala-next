@@ -6,7 +6,7 @@ export async function GET(req, { params }) {
   try {
     const { productId } = await params;
 
-    const path = `/v2/product/${productId}/?_rch=9fd46e644c8e`;
+    const path = `/product/v1/products/${productId}/?_rch=9fd46e644c8e`;
 
     const data = await digikalaFetch({
       path,

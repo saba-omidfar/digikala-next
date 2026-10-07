@@ -31,12 +31,14 @@ export default function ProductListing({
     <div
       className={styles.container}
       style={{
-        paddingTop: (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)
-          ?.length
+        paddingTop: (
+          topMegaMenuBanners?.desktop?.length ||
+          topMegaMenuBanners?.mobile?.length
+        )?.length
           ? isSmallScreen
             ? 0
             : 168
-          : 0,
+          : 108,
       }}
     >
       {(promotionId || isPoromotionSearchPage) && (

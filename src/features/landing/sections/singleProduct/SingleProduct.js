@@ -28,10 +28,12 @@ function SingleProduct({ data }) {
     loadingVariantId,
     setLoadingVariantId,
   } = useCartContext();
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
 
   const maxLimit = product?.default_variant?.price?.order_limit || Infinity;
   const isMaxReached = productQuantity === maxLimit;
+
+  const guestCartId = localStorage.getItem("guestCartId");
 
   const addProductToCartHandler = () => {
     setLoadingVariantId(product?.default_variant?.id);
@@ -46,7 +48,7 @@ function SingleProduct({ data }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
         },

@@ -18,11 +18,11 @@ export default function LazyLoad({
         const entry = entries[0];
         if (entry.isIntersecting) {
           setIsVisible(true);
-          onVisible && onVisible(); // فقط یکبار اجرا میشه
+          onVisible && onVisible();
           observer.disconnect();
         }
       },
-      { root: null, rootMargin, threshold: 0 }
+      { root: null, rootMargin, threshold: 0 },
     );
 
     observer.observe(ref.current);

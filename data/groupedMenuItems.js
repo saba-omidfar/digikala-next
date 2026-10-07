@@ -20,15 +20,6 @@ const groupedMenuItems = [
       CROId: "header-main-menu",
       target: "_self",
     },
-    // {
-    //   title: "سوپرمارکت",
-    //   isMegamenu: false,
-    //   url: "/fresh/",
-    //   icon: "cube-badge-fresh",
-    //   iconCode: "EB5E",
-    //   CROId: "header-main-menu",
-    //   target: "_self",
-    // },
     {
       title: "پرفروش‌ترین‌ها",
       isMegamenu: false,

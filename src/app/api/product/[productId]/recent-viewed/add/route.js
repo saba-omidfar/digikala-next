@@ -3,21 +3,35 @@ import { cookies } from "next/headers";
 import dbConnect from "@/configs/db";
 import UserModel from "@/models/User";
 
-const MAX_ITEMS = 15;
-const EXPIRE_DAYS = 30;
+const MAX_ITEMS = 10;
+const EXPIRE_DAYS = 5;
 
 export async function POST(req, { params }) {
   try {
     await dbConnect();
 
     const { productId } = await params;
+    const numericProductId = Number(productId);
+
+    if (!Number.isFinite(numericProductId)) {
+      return Response.json(
+        {
+          success: false,
+          message: "شناسه محصول نامعتبر است",
+        },
+        { status: 400 },
+      );
+    }
 
     const cookiesStore = await cookies();
     const accessToken = cookiesStore.get("access_token")?.value;
 
     if (!accessToken) {
       return Response.json(
-        { success: false, message: "کاربر لاگین نیست" },
+        {
+          success: false,
+          message: "کاربر لاگین نیست",
+        },
         { status: 401 },
       );
     }
@@ -26,38 +40,37 @@ export async function POST(req, { params }) {
       "auth.accessToken": accessToken,
     });
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json(
-        { success: false, message: "کاربر یافت نشد" },
+        {
+          success: false,
+          message: "کاربر یافت نشد",
+        },
         { status: 404 },
       );
     }
 
-    if (!Array.isArray(user.viewed_products)) {
-      user.viewed_products = [];
+    if (!Array.isArray(user.recent_viewed_products)) {
+      user.recent_viewed_products = [];
     }
 
     const expireDate = new Date();
     expireDate.setDate(expireDate.getDate() - EXPIRE_DAYS);
 
-    // حذف آیتم‌های منقضی شده
-    user.viewed_products = user.viewed_products.filter(
+    user.recent_viewed_products = user.recent_viewed_products.filter(
       (item) => new Date(item.viewedAt) > expireDate,
     );
 
-    // حذف اگر قبلا وجود داشته
-    user.viewed_products = user.viewed_products.filter(
-      (item) => Number(item.productId) !== Number(productId),
+    user.recent_viewed_products = user.recent_viewed_products.filter(
+      (item) => Number(item.productId) !== numericProductId,
     );
 
-    // افزودن جدید
-    user.viewed_products.push({
-      productId: Number(productId),
+    user.recent_viewed_products.push({
+      productId: numericProductId,
       viewedAt: new Date(),
     });
 
-    // نگه داشتن آخرین 15 مورد
-    user.viewed_products = user.viewed_products.slice(-MAX_ITEMS);
+    user.recent_viewed_products = user.recent_viewed_products.slice(-MAX_ITEMS);
 
     await user.save();
 
@@ -65,17 +78,13 @@ export async function POST(req, { params }) {
       success: true,
       message: "محصول به بازدیدهای اخیر اضافه شد",
     });
-  } catch (err) {
-    console.error("add recent viewed error =>", err);
-
+  } catch (error) {
     return Response.json(
       {
         success: false,
-        message: err.message,
+        message: error.message,
       },
-      {
-        status: 500,
-      },
+      { status: 500 },
     );
   }
 }

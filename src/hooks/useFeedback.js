@@ -12,7 +12,7 @@ export function useGetFeedback({ targetId, targetType }) {
       staleTime: 1000 * 60,
       refetchOnWindowFocus: false,
       enabled: !!targetId && !!targetType,
-    }
+    },
   );
 }
 
@@ -24,13 +24,11 @@ export function usePostFeedback() {
       postFeedback({ targetId, targetType, type }),
     {
       onSuccess: (data, variables) => {
-        // آپدیت cache خود Feedback
         queryClient.setQueryData(
           ["Feedback", variables.targetType, variables.targetId],
-          data
+          data,
         );
 
-        // اگر کامنت‌ها رو cache کرده بودی
         if (variables.targetType === "comment") {
           const allCommentsKeys = queryClient
             .getQueryCache()
@@ -54,8 +52,8 @@ export function usePostFeedback() {
                       userLiked: data.userLiked,
                       userDisliked: data.userDisliked,
                     }
-                  : comment
-              )
+                  : comment,
+              ),
             );
           });
         }
@@ -63,6 +61,6 @@ export function usePostFeedback() {
       onError: (err) => {
         console.error("Error updating feedback:", err);
       },
-    }
+    },
   );
 }

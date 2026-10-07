@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from "react";
 
 import { useProductContext } from "@/contexts/ProductContext";
@@ -17,7 +19,7 @@ import styles from "./insuranceModal.module.css";
 function InsuranceModal({ product, cartItem }) {
   const { closeModal } = useModal();
   const { showSnackbar } = useSnackbar();
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
   const { activeVariant } = useProductContext();
   const { redirectToLogin } = useLoginRedirect();
 
@@ -27,6 +29,8 @@ function InsuranceModal({ product, cartItem }) {
     addProductToCartIsLoading,
     toggleInsurance,
   } = useCartContext();
+
+  const guestCartId = localStorage.getItem("guestCartId");
 
   const variantId = cartItem?.variant?.id ?? activeVariant?.id;
 
@@ -48,7 +52,7 @@ function InsuranceModal({ product, cartItem }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 
@@ -177,7 +181,7 @@ function InsuranceModal({ product, cartItem }) {
           </div>
           <div className={styles.modal_content_details}>
             <h2>{product?.default_variant?.insurance?.description}</h2>
-            <ul>
+            <ul className="m-0 p-0">
               {product?.default_variant?.insurance?.covers?.map(
                 (cover, index) => (
                   <li key={index} className={styles.modal_content_details_item}>

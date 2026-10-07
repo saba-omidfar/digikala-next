@@ -80,56 +80,34 @@ function FilterMobileContent() {
         </form>
       ) : null}
 
-      {/* Selected Items By User */}
       {filterExtra?.filterOptions.length > 10 && selectedItems?.length ? (
         <>
           <div className={styles.selected_items_title}>انتخاب‌های شما</div>
           <div className={styles.selected_items_container}>
-            {selectedItems?.map(
-              (filter) => (
-                <div
-                  key={filter.id}
-                  className={styles.selected_item}
-                  onClick={() => {
-                    filterCheckboxChangeHandler({
-                      key: filter.key || filterExtra.filterKey,
-                      id: filter.id,
-                      title: filter?.title_fa || filter?.title,
-                      checked: !isChecked(filter),
-                    });
-                  }}
-                >
-                  <div className="position-relative">
-                    <div className={styles.selected_item_chip}>
-                      <span>{filter?.title_fa || filter?.title}</span>
-                    </div>
+            {selectedItems?.map((filter) => (
+              <div
+                key={filter.id}
+                className={styles.selected_item}
+                onClick={() => {
+                  filterCheckboxChangeHandler({
+                    key: filter.key || filterExtra.filterKey,
+                    id: filter.id,
+                    title: filter?.title_fa || filter?.title,
+                    checked: !isChecked(filter),
+                  });
+                }}
+              >
+                <div className="position-relative">
+                  <div className={styles.selected_item_chip}>
+                    <span>{filter?.title_fa || filter?.title}</span>
                   </div>
                 </div>
-              ),
-              // <CustomCheckBox
-              //   key={index}
-              //   id={filter?.id}
-              //   label={filter?.title_fa || filter?.title}
-              //   engLabel={
-              //     filterExtra?.filterKey === "brands" ? filter?.title_en : ""
-              //   }
-              //   isLast={index === filterExtra?.filterOptions?.length - 1}
-              //   checked={isChecked(filter)}
-              //   changeHandler={(checked) =>
-              //     filterCheckboxChangeHandler({
-              //       key: filter.key || filterExtra.filterKey,
-              //       id: filter.id,
-              //       title: filter.title,
-              //       checked,
-              //     })
-              //   }
-              // />
-            )}
+              </div>
+            ))}
           </div>
         </>
       ) : null}
 
-      {/* All items */}
       {filterExtra?.filterOptions?.length > 10 && params[key] ? (
         <div className={styles.selected_items_title}>
           همه‌ی {filterExtra.filterTitle}ها

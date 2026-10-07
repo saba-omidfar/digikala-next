@@ -7,7 +7,7 @@ import { useUserContext } from "@/contexts/UserContext";
 
 import styles from "./plusModal.module.css";
 
-export default function PlusModal() {
+export default function PlusModal({ isProfilePage }) {
   const { closeModal } = useModal();
   const { guestCartId } = useUserContext();
   const { data, isLoading } = usePlans();
@@ -300,7 +300,7 @@ export default function PlusModal() {
               onClick={addPlanToCart}
             >
               <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
-                افزودن به سبد خرید
+                {isProfilePage ? "خرید اشتراک" : "افزودن به سبد خرید"}
               </div>
             </button>
             <div className="d-flex flex-column align-items-end">

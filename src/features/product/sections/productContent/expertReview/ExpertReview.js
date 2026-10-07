@@ -40,7 +40,6 @@ function ExpertReview() {
                 </div>
                 {reviewSection?.sections?.map((section, index) => (
                   <div key={index}>
-                    {/* Text */}
                     {section.template === "text" && (
                       <div className={styles.review_section_text_content}>
                         <div className="mb-4">
@@ -55,7 +54,6 @@ function ExpertReview() {
                       </div>
                     )}
 
-                    {/* Image-Text */}
                     {section.template === "image-text" && (
                       <div className={styles.review_section_img_content}>
                         <div className="d-flex justify-content-center">
@@ -86,7 +84,6 @@ function ExpertReview() {
                       </div>
                     )}
 
-                    {/* Text-Image */}
                     {section.template === "text-image" && (
                       <div className={styles.review_section_img_content}>
                         <div className="d-flex justify-content-center">
@@ -117,7 +114,6 @@ function ExpertReview() {
                       </div>
                     )}
 
-                    {/* Image */}
                     {section.template === "image" && (
                       <div className="d-flex justify-content-center mb-4">
                         <div

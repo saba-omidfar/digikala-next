@@ -64,15 +64,6 @@ const InfoRow = ({
             ) : (
               ""
             )}
-            {/* {isTrustedBadge && (
-              <>
-                <span
-                  className={`${styles.badge_container} ${styles.trusted_badge}`}
-                >
-                  رسمی
-                </span>
-              </>
-            )} */}
           </div>
         )}
         {children}

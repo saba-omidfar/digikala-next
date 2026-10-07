@@ -1,0 +1,58 @@
+.popover {
+  position: absolute;
+  display: block;
+  padding: 8px;
+  z-index: 3;
+}
+
+.popover_content {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px #0003;
+  overflow: hidden;
+}
+
+.menu_btns_container {
+  padding: 8px 0;
+  margin: 0;
+}
+
+.menu_btn {
+  cursor: pointer;
+}
+
+.menu_btn:hover {
+  background-color: #f0f0f1;
+}
+
+.menu_btn_content {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+.icon_container {
+  display: flex;
+  margin-left: 16px;
+  color: #3f4064;
+}
+
+.icon,
+.delete_icon {
+  width: 24px;
+  height: 24px;
+}
+
+.icon {
+  fill: #424750;
+}
+
+.delete_icon {
+  fill: #d32f2f;
+}
+
+.menu_title {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 2.15;
+}

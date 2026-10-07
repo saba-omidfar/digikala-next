@@ -1,0 +1,149 @@
+.loading_container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.favorite_list_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.favorite_list {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  column-gap: 20px;
+}
+
+.favorites_list_header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e2;
+}
+
+.favorites_list_header_title {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #3f4064;
+  white-space: nowrap;
+  margin-left: 20px;
+}
+
+.sort_icon_container {
+  display: flex;
+  margin-left: 8px;
+}
+
+.sort_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+}
+
+.sort_options {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+  column-gap: 16px;
+  white-space: nowrap;
+  display: flex;
+}
+
+.sort_option {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.sort_option_active {
+  font-weight: 700;
+  color: #ef394e;
+}
+
+.favorite_list_count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+}
+
+.list_empty_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 80px;
+  margin-bottom: 120px;
+}
+
+.list_empty_img_container {
+  display: block;
+  width: 180px;
+  height: 135px;
+  line-height: 0;
+  margin-bottom: 8px;
+}
+
+.list_empty_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.list_empty_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #0c0c0c;
+  margin-bottom: 32px;
+}
+
+@media screen and (max-width: 1024px) {
+  .list_empty_container {
+    margin: 0;
+    padding: 80px 0;
+  }
+
+  .list_empty_title {
+    font-size: 12px;
+  }
+
+  .favorite_list_count {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .list_empty_title {
+    font-size: 9.6px;
+  }
+
+  .favorite_list_count {
+    font-size: 8.8px;
+  }
+
+  .favorites_list_header_title,
+  .sort_option {
+    font-size: 9.6px;
+  }
+}

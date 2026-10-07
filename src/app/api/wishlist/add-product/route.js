@@ -25,7 +25,7 @@ export async function PUT(req) {
       "auth.accessToken": accessToken,
     });
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json(
         {
           success: false,
@@ -34,11 +34,11 @@ export async function PUT(req) {
         { status: 404 },
       );
     }
-
     const body = await req.json();
 
     const wishlistId = String(body?.wishlistId || "").trim();
     const productId = Number(body?.productId);
+    const imageUrl = String(body?.imageUrl || "").trim();
 
     if (!wishlistId || !Number.isFinite(productId)) {
       return Response.json(
@@ -88,6 +88,20 @@ export async function PUT(req) {
       productId,
       addedAt: new Date(),
     });
+
+    if (imageUrl) {
+      if (!Array.isArray(wishlist.product_images)) {
+        wishlist.product_images = [];
+      }
+
+      wishlist.product_images.push({
+        storage_ids: [],
+        url: [imageUrl],
+        thumbnail_url: null,
+        temporary_id: null,
+        webp_url: null,
+      });
+    }
 
     wishlist.product_on_list = true;
 

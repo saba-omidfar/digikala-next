@@ -41,7 +41,7 @@ export async function POST(req) {
       "auth.accessToken": accessToken,
     });
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json(
         {
           success: false,
@@ -113,9 +113,9 @@ export async function GET(req) {
 
     const user = await UserModel.findOne({
       "auth.accessToken": accessToken,
-    }).select("favorite_products");
+    });
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json(
         {
           success: false,

@@ -1,0 +1,266 @@
+.mobile_content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: #fff;
+}
+
+.profile_container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 16px;
+  padding-top: 16px;
+  padding-bottom: 24px;
+}
+
+.order_details {
+  border-bottom: 1px solid #e0e0e2;
+  margin-bottom: 8px;
+}
+
+.profile_user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 16px 12px;
+}
+
+.user_name,
+.user_phone {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #23254e;
+}
+
+.user_verified_phone {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #a1a3a8;
+  margin-top: -8px;
+}
+
+.edit_icon {
+  width: 20px;
+  height: 20px;
+  fill: #1672dd;
+}
+
+.profile_header_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.order_details_header_container {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e2;
+  padding: 16px 12px;
+  margin-bottom: 8px;
+}
+
+.profile_header {
+  padding: 12px 0;
+  overflow-wrap: break-word;
+}
+
+.profile_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  flex-grow: 1;
+}
+
+.profile_title__line_red {
+  width: 70px;
+  height: 2px;
+  background-color: #ef394e;
+  margin-top: 8px;
+}
+
+.profile_link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #1672dd;
+  cursor: pointer;
+}
+
+.chevron_icon {
+  width: 18px;
+  height: 18px;
+  fill: #1672dd;
+}
+
+.page_header_container {
+  position: relative;
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f1;
+  margin-bottom: 16px;
+}
+
+.page_header_container:not(:last-child):before {
+  content: "";
+  width: 100%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.page_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.page_header_title_container {
+  padding-bottom: 12px;
+  overflow-wrap: break-word;
+}
+
+.page_header_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.order_details_icon_container {
+  cursor: pointer;
+}
+
+.page_header_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+}
+
+.page_header_title {
+  flex-grow: 1;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+}
+
+.order_details_header_title {
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  margin-right: 8px;
+}
+
+.page_content_container {
+  position: relative;
+  background-color: #fff;
+  margin-bottom: 16px;
+}
+
+.add_new_address {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile_title {
+    font-size: 14px;
+  }
+
+  .add_new_address {
+    position: fixed;
+    bottom: 56px;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0 20px 16px;
+  }
+
+  .add_new_address_btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 2.15;
+    color: #fff;
+    white-space: nowrap;
+    background-color: #ef4056;
+    padding: 12px 16px;
+    border-radius: 25px;
+    box-shadow: 0px 1px 5px #0003;
+  }
+
+  .add_new_address_btn_text {
+    margin-left: 8px;
+  }
+
+  .add_new_address_icon {
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+  }
+}
+
+.sticky_header_container {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.sticky_header {
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 64px;
+  background-color: #fff;
+  padding: 16px 20px;
+}
+
+.header_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 360px) {
+  .profile_header_container {
+    padding: 0 16px;
+  }
+
+  .order_details_header_title {
+    font-size: 12.8px;
+  }
+
+  .page_header_title,
+  .profile_title,
+  .user_phone,
+  .user_name,
+  .add_new_address_btn {
+    font-size: 11.2px;
+  }
+
+  .profile_link,
+  .user_verified_phone {
+    font-size: 9.6px;
+  }
+}

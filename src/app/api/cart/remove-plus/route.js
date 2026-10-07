@@ -26,7 +26,6 @@ export async function DELETE(req) {
       );
     }
 
-    // حذف پلن
     cart.temporary_plus_subscription = null;
 
     await cart.save();

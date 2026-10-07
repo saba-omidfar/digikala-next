@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
-import { useRouter } from "nextjs-toploader/app";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -17,18 +16,19 @@ import useScreenStatus from "@/hooks/useScreenStatus";
 
 import styles from "./cartItem.module.css";
 
-function CartItem({ item }) {
-  const router = useRouter();
+export default function CartItem({ item }) {
   const { openMobileModal, openModal } = useModal();
   const { isSmallScreen } = useScreenStatus();
 
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
   const { userCart, toggleInsurance, addProductToCart, removeProductFromCart } =
     useCartContext();
 
   const [productQuantity, setProductQuantity] = useState(0);
   const [showAddToCartSuccess, setShowAddToCartSuccess] = useState(false);
   const [loadingState, setLoadingState] = useState(null);
+
+  const guestCartId = localStorage.getItem("guestCartId");
 
   const addProductToCartHandler = ({ variantId }) => {
     setLoadingState({
@@ -45,7 +45,7 @@ function CartItem({ item }) {
       },
       {
         onSuccess: (res) => {
-          if (!user?._id && res.guestCartId) {
+          if (!user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 
@@ -162,7 +162,7 @@ function CartItem({ item }) {
                   </picture>
                 </div>
                 <div className={styles.cart_item_imageQuantity}>
-                  {item?.quantity.toLocaleString("fa-IR")}
+                  {item?.quantity?.toLocaleString("fa-IR")}
                 </div>
               </Link>
             </div>
@@ -694,5 +694,3 @@ function CartItem({ item }) {
     </>
   );
 }
-
-export default CartItem;

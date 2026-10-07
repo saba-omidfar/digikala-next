@@ -201,7 +201,6 @@ function SizeBox() {
             })}
         </div>
 
-        {/* Size Guide && True To Size */}
         {productDetails?.has_size_guide ? (
           <button className={styles.size_btn} onClick={() => openSizeModal(1)}>
             <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
@@ -216,7 +215,7 @@ function SizeBox() {
         ) : (
           ""
         )}
-        {/* True To Size */}
+
         {productDetails?.has_true_to_size ? (
           trueToSize?.total_count !== 0 && !sizeGuide?.table?.length ? (
             <button

@@ -1,5 +1,8 @@
+import { cookies } from "next/headers";
+
 import dbConnect from "@/configs/db";
 
+import UserModel from "@/models/User";
 import QuestionModel from "@/models/Question";
 
 export async function POST(req, { params }) {
@@ -7,6 +10,16 @@ export async function POST(req, { params }) {
     await dbConnect();
 
     const { productId } = await params;
+
+    if (!productId) {
+      return Response.json(
+        {
+          success: false,
+          message: "محصول پیدا نشد.",
+        },
+        { status: 404 },
+      );
+    }
 
     const body = await req.json();
 
@@ -32,20 +45,40 @@ export async function POST(req, { params }) {
       );
     }
 
-    if (!productId) {
+    const cookiesStore = await cookies();
+
+    const accessToken = cookiesStore.get("access_token")?.value;
+
+    if (!accessToken) {
       return Response.json(
         {
           success: false,
-          message: "محصول پیدا نشد.",
+          message: "ابتدا وارد حساب کاربری شوید.",
         },
-        { status: 404 },
+        { status: 401 },
+      );
+    }
+
+    const user = await UserModel.findOne({
+      "auth.accessToken": accessToken,
+    });
+
+    if (!user?.is_logged_in) {
+      return Response.json(
+        {
+          success: false,
+          message: "کاربر پیدا نشد.",
+        },
+        { status: 401 },
       );
     }
 
     const newQuestion = await QuestionModel.create({
       source: "local",
-      productId,
-      text,
+      productId: Number(productId),
+      user_id: user._id,
+      text: text.trim(),
+      status: "pending",
     });
 
     return Response.json(
@@ -57,8 +90,6 @@ export async function POST(req, { params }) {
       { status: 201 },
     );
   } catch (err) {
-    console.error(err);
-
     return Response.json(
       {
         success: false,

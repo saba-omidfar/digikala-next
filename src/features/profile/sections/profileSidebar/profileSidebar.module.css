@@ -1,0 +1,156 @@
+.profile_sidebar {
+  grid-column: span 2 / span 2;
+}
+
+.profile_sidebar_container {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.profile_sidebar_user {
+  background-color: #fff;
+  padding: 16px 0;
+  margin: 0 16px;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.profile_user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 16px 12px;
+}
+
+.user_name,
+.user_phone {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #23254e;
+}
+
+.user_verified_phone {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: #a1a3a8;
+  margin-top: -8px;
+}
+
+.edit_icon {
+  width: 20px;
+  height: 20px;
+  fill: #1672dd;
+}
+
+.profile_menu {
+  background-color: #fff;
+  padding-bottom: 8px;
+}
+
+.menu_item {
+  position: relative;
+  padding: 0 20px;
+}
+
+.menu_item:hover {
+  background-color: #f2f2f2;
+}
+
+.menu_item__selected_line {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  border-radius: 2px 0 0 2px;
+  width: 4px;
+  height: calc(100% - 16px);
+  background-color: #ef394e;
+}
+
+.menu_item_link {
+  display: block;
+  overflow-wrap: break-word;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.menu_item_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.menu_item_icon,
+.menu_item_plus_icon {
+  width: 24px;
+  height: 24px;
+}
+
+.menu_item_plus_icon {
+  fill: #b12ba4;
+}
+
+.menu_item_text {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #3f4064;
+  text-align: right;
+}
+
+.menu_item_active_text {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 2.15;
+  color: #3f4064;
+  text-align: right;
+}
+
+.profile_content {
+  grid-column: span 5 / span 5;
+}
+
+.menu_item_chevron_icon_container {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile_sidebar_user {
+    display: none;
+  }
+
+  .profile_sidebar_container {
+    border: none;
+  }
+
+  .menu_item:not(:last-child) {
+    border-bottom: 1px solid #f0f0f1 !important;
+  }
+
+  .menu_item_text {
+    font-size: 12px;
+  }
+
+  .menu_item_chevron_icon_container {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 16px;
+    cursor: pointer;
+  }
+
+  .menu_item_chevron_icon {
+    width: 24px;
+    height: 24px;
+    fill: #a1a3a8;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .menu_item_text {
+    font-size: 9.6px;
+  }
+}

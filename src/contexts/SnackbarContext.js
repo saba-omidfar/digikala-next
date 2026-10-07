@@ -15,8 +15,8 @@ export function SnackbarProvider({ children }) {
     });
   }, []);
 
-  const showSnackbar = (message, duration) => {
-    snackbarRef.current?.show(message, duration);
+  const showSnackbar = (message, duration, action) => {
+    snackbarRef.current?.show(message, duration, action);
   };
 
   return (

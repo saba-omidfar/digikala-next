@@ -16,7 +16,6 @@ if (!cached) {
 }
 
 const dbConnect = async () => {
-  // قبلاً وصل شده
   if (cached.conn) {
     console.log("🟢 MONGO CACHED CONNECTION");
     return cached.conn;

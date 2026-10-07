@@ -12,22 +12,30 @@ import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useCartContext } from "@/contexts/CartContext";
 import { useModal } from "@/contexts/modalContext";
+import { useSnackbar } from "@/contexts/SnackbarContext";
 import toPersianDigits from "@/utils/toPersianDigits";
+import { useRemoveObservedProduct } from "@/features/profile/hooks/useLists";
+
+import AmazingNotifModal from "@/features/product/modals/amazingNotifModal/AmazingNotifModal";
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import styles from "./stickyMobileFooter.module.css";
 
 export default function StickyMobileFooter() {
-  const { guestCartId } = useUserContext();
+  const guestCartId = localStorage.getItem("guestCartId");
 
   const [productQuantity, setProductQuantity] = useState(0);
   const [showVerticalSlider, setShowVeticalSlider] = useState(false);
   const [showAddToCartSuccess, setShowAddToCartSuccess] = useState(false);
 
-  const { openMobileModal } = useModal();
+  const { openModal, openMobileModal } = useModal();
+  const { showSnackbar } = useSnackbar();
+  const { redirectToLogin } = useLoginRedirect();
 
+  const { user } = useUserContext();
   const { productDetails, activeVariant, lowestPrice, uniqueVariants } =
     useProductContext();
-  const { user } = useUserContext();
+
   const {
     userCart,
     addProductToCart,
@@ -37,11 +45,46 @@ export default function StickyMobileFooter() {
     setLoadingVariantId,
   } = useCartContext();
 
-  const rrp_price = activeVariant?.price?.rrp_price;
-  const selling_price = activeVariant?.price?.selling_price;
-  const discount_percent = activeVariant?.price?.discount_percent;
-  const maxLimit = activeVariant?.price?.min_order_limit || Infinity;
-  const isMaxReached = productQuantity === maxLimit;
+  const {
+    mutate: removeObservedProduct,
+    isLoading: isLoadingRemoveObservedProduct,
+  } = useRemoveObservedProduct();
+
+  const isObserved = user?.observed_products?.some(
+    (item) => String(item.productId) === String(productDetails?.id),
+  );
+
+  const notifeMeHandler = () => {
+    if (isLoadingRemoveObservedProduct) return;
+
+    if (!user?.is_logged_in) {
+      redirectToLogin();
+      return;
+    }
+
+    if (!isObserved) {
+      return openModal(
+        <AmazingNotifModal title="موجود" productId={productDetails?.id} />,
+        {
+          name: "amazing-notification",
+          className: "rounded-medium",
+        },
+      );
+    }
+
+    removeObservedProduct(
+      {
+        productId: productDetails?.id,
+      },
+      {
+        onSuccess: ({ success }) => {
+          if (!success) return;
+
+          showSnackbar("اطلاع‌رسانی برای موجود شدن غیرفعال شد.");
+        },
+      },
+    );
+  };
 
   const addProductToCartHandler = () => {
     setLoadingVariantId(activeVariant?.id);
@@ -56,7 +99,7 @@ export default function StickyMobileFooter() {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 
@@ -91,6 +134,12 @@ export default function StickyMobileFooter() {
   const handleAddToCartSuccess = () => {
     setShowAddToCartSuccess(true);
   };
+
+  const rrp_price = activeVariant?.price?.rrp_price;
+  const selling_price = activeVariant?.price?.selling_price;
+  const discount_percent = activeVariant?.price?.discount_percent;
+  const maxLimit = activeVariant?.price?.min_order_limit || Infinity;
+  const isMaxReached = productQuantity === maxLimit;
 
   useEffect(() => {
     setShowVeticalSlider(false);
@@ -162,90 +211,114 @@ export default function StickyMobileFooter() {
           ""
         )}
         <div style={{ padding: "12px 16px" }}>
-          {productDetails?.product_badges?.length ? (
-            <span
-              className={styles.mobile_content_verticalSlider_animation}
-              style={{ maxHeight: showVerticalSlider ? "36px" : "0" }}
-            >
-              <VerticalSlider
-                transform={36}
-                isStickyFooter
-                badges={productDetails?.product_badges}
-              />
-            </span>
-          ) : (
-            ""
-          )}
-
-          <div className={styles.add_to_cart_btn_container}>
-            <CartActionBox
-              isStickyFooter
-              quantityBoxClassName={styles.quantity_box}
-              productQuantity={productQuantity}
-              isMaxReached={isMaxReached}
-              addProductToCartHandler={addProductToCartHandler}
-              removeProductFromCartHandler={removeProductFromCartHandler}
-              isLoading={loadingVariantId === activeVariant?.id}
-            />
-            <div className={styles.mobile_footer_price_container}>
-              <div className={styles.discount_container}>
-                {discount_percent !== 0 && (
-                  <span className={styles.discount_percent}>
-                    {toPersianDigits(discount_percent)}٪
-                  </span>
-                )}
-                <div className={styles.rrp_price}>
-                  {(rrp_price / 10).toLocaleString("fa-IR")}
-                </div>
-              </div>
-              <div className={styles.price_container}>
-                {(cart?.has_insurance || selectedInsurance) && (
-                  <div className={styles.insurance_container}>
-                    <div>
+          {productDetails?.default_variant &&
+          !Array.isArray(productDetails?.default_variant) ? (
+            <>
+              {productDetails?.product_badges?.length ? (
+                <span
+                  className={styles.mobile_content_verticalSlider_animation}
+                  style={{ maxHeight: showVerticalSlider ? "36px" : "0" }}
+                >
+                  <VerticalSlider
+                    transform={36}
+                    isStickyFooter
+                    badges={productDetails?.product_badges}
+                  />
+                </span>
+              ) : (
+                ""
+              )}
+              <div className={styles.add_to_cart_btn_container}>
+                <CartActionBox
+                  isStickyFooter
+                  quantityBoxClassName={styles.quantity_box}
+                  productQuantity={productQuantity}
+                  isMaxReached={isMaxReached}
+                  addProductToCartHandler={addProductToCartHandler}
+                  removeProductFromCartHandler={removeProductFromCartHandler}
+                  isLoading={loadingVariantId === activeVariant?.id}
+                />
+                <div className={styles.mobile_footer_price_container}>
+                  <div className={styles.discount_container}>
+                    {discount_percent !== 0 && (
+                      <span className={styles.discount_percent}>
+                        {toPersianDigits(discount_percent)}٪
+                      </span>
+                    )}
+                    <div className={styles.rrp_price}>
+                      {(rrp_price / 10).toLocaleString("fa-IR")}
+                    </div>
+                  </div>
+                  <div className={styles.price_container}>
+                    {(cart?.has_insurance || selectedInsurance) && (
+                      <div className={styles.insurance_container}>
+                        <div>
+                          <div
+                            className={styles.insurance_tooltip}
+                            data-popper-reference-hidden="false"
+                            data-popper-escaped="false"
+                            data-popper-placement="top"
+                            data-tooltip-id="favorite"
+                            data-tooltip-content={`افزایش ۶,۱۶۳,۳۰۰ تومان برای بیمه`}
+                            data-tooltip-place="left"
+                          >
+                            <div
+                              className="d-flex justify-content-center align-items-center"
+                              aria-hidden="false"
+                            >
+                              <div
+                                className={`${styles.insurance_icon} cube-font-icon`}
+                                data-icon-name="cube-shop-insurance"
+                                data-icon=""
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <div className="position-relative">
                       <div
-                        className={styles.insurance_tooltip}
-                        data-popper-reference-hidden="false"
-                        data-popper-escaped="false"
-                        data-popper-placement="top"
-                        data-tooltip-id="favorite"
-                        data-tooltip-content={`افزایش ۶,۱۶۳,۳۰۰ تومان برای بیمه`}
-                        data-tooltip-place="left"
+                        className={styles.price}
+                        data-theme-animation="price-container"
                       >
+                        {(selling_price / 10).toLocaleString("fa-IR")}
                         <div
                           className="d-flex justify-content-center align-items-center"
                           aria-hidden="false"
                         >
                           <div
-                            className={`${styles.insurance_icon} cube-font-icon`}
-                            data-icon-name="cube-shop-insurance"
-                            data-icon=""
+                            className={`${styles.price_icon} cube-font-icon`}
+                            data-icon-name="cube-value-toman"
+                            data-icon="&#xE953;"
                           ></div>
                         </div>
                       </div>
                     </div>
                   </div>
-                )}
-                <div className="position-relative">
-                  <div
-                    className={styles.price}
-                    data-theme-animation="price-container"
-                  >
-                    {(selling_price / 10).toLocaleString("fa-IR")}
-                    <div
-                      className="d-flex justify-content-center align-items-center"
-                      aria-hidden="false"
-                    >
-                      <div
-                        className={`${styles.price_icon} cube-font-icon`}
-                        data-icon-name="cube-value-toman"
-                        data-icon="&#xE953;"
-                      ></div>
-                    </div>
-                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </>
+          ) : (
+            <button
+              className={`${isObserved ? styles.dont_notife_me_btn : styles.notife_me_btn}`}
+              onClick={notifeMeHandler}
+              id="pdp-not-found-cta"
+            >
+              <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
+                <div
+                  className={styles.notification_icon_container}
+                  aria-hidden="false"
+                >
+                  <svg
+                    className={`${isObserved ? styles.dont_notification_icon : styles.notification_icon}`}
+                  >
+                    <use href="#notificationOffOutline"></use>
+                  </svg>
+                </div>
+                {isObserved ? "دیگر لازم نیست خبرم کنید" : "موجود شد خبرم کنید"}
+              </div>
+            </button>
+          )}
         </div>
       </div>
     </>

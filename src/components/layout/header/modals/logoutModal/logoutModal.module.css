@@ -49,6 +49,7 @@
   display: flex;
   align-items: center;
   flex-grow: 1;
+  width: 100%;
   padding: 20px 0;
 }
 
@@ -90,4 +91,54 @@
   background-color: transparent !important;
   color: #ef4056;
   border: 1px solid #ef4056;
+}
+
+@media screen and (max-width: 1024px) {
+  .modal_layout {
+    min-width: 100%;
+  }
+
+  .modal_header_title {
+    font-size: 14px;
+  }
+
+  .modal_content {
+    padding-bottom: 12px;
+  }
+
+  .modal_content_description {
+    font-size: 12px;
+  }
+
+  .modal_footer {
+    padding-top: 12px;
+    flex-direction: row-reverse;
+    box-shadow:
+      0 -1px 1px #00000024,
+      0 -2px 2px #0000000d;
+  }
+
+  .modal_btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .modal_layout {
+    padding-top: 57px;
+  }
+
+  .modal_header {
+    height: 57px;
+  }
+
+  .modal_header_title {
+    font-size: 11.2px;
+  }
+
+  .modal_content_description,
+  .modal_btn {
+    font-size: 9.6px;
+  }
 }

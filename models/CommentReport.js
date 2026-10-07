@@ -1,5 +1,3 @@
-// models/CommentReport.js
-
 import mongoose from "mongoose";
 
 const CommentReportSchema = new mongoose.Schema(

@@ -9,7 +9,7 @@ export const getScoreClass = (score) => {
 export const getScoreLabel = (label) => {
   if (label === "عالی") return "color-rating-4-5";
   if (label === "خیلی خوب" || label === "خوب") return "color-rating-2-3";
-  // if (label === "خوب") return "color-rating-0-2";
+
   if (label === "خیلی ضعیف") return "color-hint-text-error";
   return "خیلی ضعیف";
 };

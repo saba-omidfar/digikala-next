@@ -27,7 +27,7 @@ function AIBuyerReviewsSummary() {
   const togglefeedbacksHandler = (type) => {
     const wasLiked = feedbacks?.userLiked;
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       showSnackbar("ابتدا وارد شوید.");
       return;
     }

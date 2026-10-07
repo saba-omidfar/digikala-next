@@ -1,0 +1,105 @@
+.layout {
+  display: flex;
+  max-width: 100vw;
+  height: 100%;
+  padding-top: 48px;
+  overflow-y: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  padding: 0 20px;
+  background-color: #fff;
+}
+
+.header_title_container {
+  padding: 12px 0;
+  flex-grow: 1;
+  overflow-wrap: break-word;
+}
+
+.header_title {
+  font-size: 11.2px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+}
+
+.close_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+  cursor: pointer;
+}
+
+.content_container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 16px 20px;
+}
+
+.content {
+  width: 100%;
+  padding: 12px 0;
+}
+
+.setting_item_link {
+  display: block;
+  overflow-wrap: break-word;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.setting_item_link:not(:last-child) {
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.setting_item_icon_container {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.setting_item_icon {
+  width: 24px;
+  height: 24px;
+  fill: #a1a3a8;
+}
+
+.setting_item_title {
+  font-size: 10.4px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #3f4064;
+}
+
+.see_more_btn {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.see_more_btn_icon {
+  width: 24px;
+  height: 24px;
+  fill: #424750;
+}
+
+.logout_icon {
+  width: 24px;
+  height: 24px;
+  fill: #ef4056;
+}
+
+.logout_title {
+  font-size: 10.4px;
+  font-weight: 700;
+  line-height: 2.15;
+  color: #ef4056;
+}

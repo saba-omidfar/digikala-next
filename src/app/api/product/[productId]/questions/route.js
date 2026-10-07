@@ -6,86 +6,120 @@ import { digikalaFetch } from "@/lib/digikala";
 import formatPersianDate from "@/utils/formatPersianDate";
 
 export async function GET(req, { params }) {
-  await dbConnect();
+  try {
+    await dbConnect();
 
-  const { productId } = await params;
+    const { productId } = await params;
 
-  const page = Number(req.nextUrl.searchParams.get("page") || 1);
-  const sort = req.nextUrl.searchParams.get("sort") || "created_at";
+    const page = Math.max(Number(req.nextUrl.searchParams.get("page")) || 1, 1);
 
-  const path = `/v1/product/${productId}/questions/?page=${page}&sort=${sort}`;
+    const sort = req.nextUrl.searchParams.get("sort") || "created_at";
 
-  const [dkRes, localQuestions] = await Promise.all([
-    digikalaFetch({
-      path,
-    }),
-    QuestionModel.find({ productId }),
-  ]);
+    const path = `/v1/product/${productId}/questions/?page=${page}&sort=${sort}`;
 
-  const digikalaData = dkRes?.data ?? {};
-  const digikalaQuestions = digikalaData.questions ?? [];
+    const [dkRes, localQuestions] = await Promise.all([
+      digikalaFetch({
+        path,
+      }),
 
-  const localMap = new Map(localQuestions.map((q) => [Number(q.id), q]));
+      QuestionModel.find({
+        productId: Number(productId),
+        status: "accepted",
+      }).sort({
+        created_at: -1,
+      }),
+    ]);
 
-  const digikalaIds = new Set(digikalaQuestions.map((q) => Number(q.id)));
+    const digikalaData = dkRes?.data ?? {};
+    const digikalaQuestions = digikalaData.questions ?? [];
 
-  const mergedQuestions = digikalaQuestions.map((question) => {
-    const local = localMap.get(Number(question.id));
+    const localMap = new Map(
+      localQuestions.map((question) => [Number(question.id), question]),
+    );
 
-    return {
-      ...question,
-      source: "digikala",
-      answers: [
-        ...(question.answers ?? []),
-        ...(local?.answers?.map((answer) => ({
+    const digikalaIds = new Set(
+      digikalaQuestions.map((question) => Number(question.id)),
+    );
+
+    const mergedQuestions = digikalaQuestions.map((question) => {
+      const local = localMap.get(Number(question.id));
+
+      const localAnswers =
+        local?.answers?.map((answer) => ({
           ...answer.toObject(),
           created_at: formatPersianDate(answer.created_at),
-        })) ?? []),
-      ],
-      answer_count:
-        (question.answer_count ?? 0) + (local?.answers?.length ?? 0),
-    };
-  });
+        })) ?? [];
 
-  const localOnlyQuestions = localQuestions
-    .filter((q) => !digikalaIds.has(Number(q.id)))
-    .map((q) => q.toObject())
-    .sort((a, b) => {
-      switch (sort) {
-        case "answers":
-          return (b.answers?.length || 0) - (a.answers?.length || 0);
+      return {
+        ...question,
 
-        case "created_at":
-        default:
-          return new Date(b.created_at) - new Date(a.created_at);
-      }
-    })
-    .map((question) => ({
-      ...question,
-      source: "local",
-      created_at: formatPersianDate(question.created_at),
-      answers:
-        question.answers?.map((answer) => ({
-          ...answer,
-          created_at: formatPersianDate(answer.created_at),
-        })) ?? [],
-    }));
+        source: "digikala",
 
-  let questions = mergedQuestions;
+        answers: [...(question.answers ?? []), ...localAnswers],
 
-  if (page === 1) {
-    questions = [...localOnlyQuestions, ...mergedQuestions];
-  }
+        answer_count: (question.answer_count ?? 0) + localAnswers.length,
+      };
+    });
 
-  return Response.json({
-    data: {
-      ...digikalaData,
-      questions,
-      pager: {
-        ...digikalaData.pager,
-        total_items:
-          (digikalaData.pager?.total_items ?? 0) + localOnlyQuestions.length,
+    const localOnlyQuestions = localQuestions
+      .filter((question) => !digikalaIds.has(Number(question.id)))
+      .map((question) => question.toObject())
+      .sort((a, b) => {
+        switch (sort) {
+          case "answers":
+            return (b.answers?.length || 0) - (a.answers?.length || 0);
+
+          case "created_at":
+          default:
+            return (
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+            );
+        }
+      })
+      .map((question) => ({
+        ...question,
+
+        source: "local",
+
+        created_at: formatPersianDate(question.created_at),
+
+        answers:
+          question.answers?.map((answer) => ({
+            ...answer,
+            created_at: formatPersianDate(answer.created_at),
+          })) ?? [],
+
+        answer_count: question.answerCount ?? question.answers?.length ?? 0,
+      }));
+
+    let questions = mergedQuestions;
+
+    if (page === 1) {
+      questions = [...localOnlyQuestions, ...mergedQuestions];
+    }
+
+    return Response.json({
+      data: {
+        ...digikalaData,
+
+        questions,
+
+        pager: {
+          ...digikalaData.pager,
+
+          total_items:
+            (digikalaData.pager?.total_items ?? 0) + localOnlyQuestions.length,
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    return Response.json(
+      {
+        success: false,
+        message: "خطا در دریافت پرسش‌ها.",
+      },
+      { status: 500 },
+    );
+  }
 }

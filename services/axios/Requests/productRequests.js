@@ -1,68 +1,13 @@
-import api from "../Configs/config";
+import api from "@/services/axios/Configs/config";
 
-export async function addIncredibleNotification({
-  productId,
-  send_sms,
-  send_email,
-  send_notification,
-}) {
-  const res = await api.post(`/product/${productId}/observe/add`, {
-    send_sms,
-    send_email,
-    send_notification,
-  });
-
-  return res.data;
-}
-
-export async function removeIncredibleNotification(productId) {
-  const res = await api.post(`/product/${productId}/observe/remove`);
-
-  return res.data;
-}
-
-export async function getIncredibleNotificationStatus({ productId }) {
-  const res = await api.get(`/product/${productId}/observe/status`, {
-    data: {
-      productId,
-    },
-  });
-
-  return res.data;
-}
-
-export async function addFavorite({ productId }) {
-  const res = await api.post(`/product/${productId}/favorite/add`, {
-    productId,
-  });
-
-  return res.data;
-}
-
-export async function removeFavorite(productId) {
-  const res = await api.post(`/product/${productId}/favorite/remove`);
-
-  return res.data;
-}
-
-export async function getFavoriteStatus({ productId }) {
-  const res = await api.get(`/product/${productId}/favorite/status`, {
-    data: {
-      productId,
-    },
-  });
-
-  return res.data;
-}
-
-export async function addToRecentViewed({ productId }) {
+export async function addRecentViewedProduct(productId) {
   const res = await api.post(`/product/${productId}/recent-viewed/add`);
   return res.data;
 }
 
-export async function getRecentViewed() {
-  const res = await api.get("/products/recent-viewed");
-  return res.data.data;
+export async function removeRecentViewedProduct(productId) {
+  const res = await api.post(`/product/${productId}/recent-viewed/remove`);
+  return res.data;
 }
 
 export async function postComment(productId, comment) {
@@ -73,6 +18,25 @@ export async function postComment(productId, comment) {
   return res;
 }
 
+export async function updateComment(productId, commentId, comment) {
+  const res = await api.patch(`/rate-review/products/${productId}/update/`, {
+    ...comment,
+    comment_id: commentId,
+  });
+
+  return res;
+}
+
+export async function removeComment(productId, commentId) {
+  const res = await api.delete(`/rate-review/products/${productId}/remove/`, {
+    data: {
+      comment_id: commentId,
+    },
+  });
+
+  return res;
+}
+
 export async function postQuestion(productId, text) {
   const res = await api.post(`/product/${productId}/questions/add/`, text);
   return res;
@@ -80,5 +44,6 @@ export async function postQuestion(productId, text) {
 
 export async function postAnswer(questionId, body) {
   const res = await api.post(`/questions/${questionId}/answer/add/`, body);
+
   return res;
 }

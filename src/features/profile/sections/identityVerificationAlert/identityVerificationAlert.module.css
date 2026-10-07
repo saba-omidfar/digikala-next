@@ -1,0 +1,67 @@
+.identity_verification_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 12px 20px;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.info_icon_container {
+  display: flex;
+  margin-top: 4px;
+}
+
+.info_icon {
+  width: 18px;
+  height: 18px;
+  fill: #f9a825;
+}
+
+.identity_verification_title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #f57f17;
+  margin-right: 8px;
+}
+
+.identity_verification_btn {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-end;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #1672dd;
+  cursor: pointer;
+}
+
+.chevron_icon {
+  width: 18px;
+  height: 18px;
+  fill: #1672dd;
+}
+
+@media screen and (max-width: 1024px) {
+  .identity_verification_container {
+    flex-direction: column;
+    margin: 0 20px 16px;
+  }
+
+  .identity_verification_title {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .identity_verification_title {
+    font-size: 8.8px;
+  }
+
+  .identity_verification_btn {
+    font-size: 9.6px;
+  }
+}

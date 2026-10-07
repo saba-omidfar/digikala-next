@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 import { useModal } from "@/contexts/modalContext";
 import { useUserContext } from "@/contexts/UserContext";
@@ -20,7 +20,7 @@ function NextCartModal() {
   const { addProductToCart, removeFromNextCart } = useCartContext();
 
   const moveAllProuctsToBasket = () => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }
@@ -43,7 +43,7 @@ function NextCartModal() {
   };
 
   const removeAllProductFromBasket = () => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }

@@ -1,7 +1,7 @@
 "use client";
 
-import CartMobile from "@/features/cart/mobile/CartMobile";
-import CartDesktop from "@/features/cart/desktop/CartDesktop";
+import CartMobile from "@/features/cart/mobile/cartMobile/CartMobile";
+import CartDesktop from "@/features/cart/desktop/cartDesktop/CartDesktop";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
 

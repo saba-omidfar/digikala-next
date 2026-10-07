@@ -11,7 +11,7 @@ import toPersianDigits from "@/utils/toPersianDigits";
 
 import styles from "./commentQuestionSection.module.css";
 
-function QuestionSection() {
+export default function QuestionSection() {
   const { productDetails, questionsData } = useProductContext();
   const { openModal } = useModal();
 
@@ -20,7 +20,7 @@ function QuestionSection() {
       <hr className="line-8" />
       <div>
         <section>
-          <div id="questionSection">
+          <div>
             <InfoSection
               id="question"
               title="پرسش و پاسخ"
@@ -113,5 +113,3 @@ function QuestionSection() {
     </section>
   );
 }
-
-export default QuestionSection;

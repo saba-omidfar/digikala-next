@@ -61,7 +61,7 @@ export async function PATCH(req, { params }) {
     return Response.json({ message: "Unauthorized" }, { status: 401 });
 
   const user = await UserModel.findOne({ "auth.accessToken": accessToken });
-  if (!user)
+  if (!user?.is_logged_in)
     return Response.json({ message: "User not found" }, { status: 401 });
 
   const userId = user._id.toString();

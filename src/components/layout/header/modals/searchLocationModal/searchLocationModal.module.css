@@ -121,3 +121,14 @@
   line-height: 2.17;
   color: #81858b;
 }
+
+@media screen and (max-width: 360px) {
+  .input,
+  .location_address_title {
+    font-size: 10.4px;
+  }
+
+  .location_address {
+    font-size: 8.8px;
+  }
+}

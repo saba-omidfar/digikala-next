@@ -20,20 +20,3 @@ export async function GET() {
     });
   }
 }
-
-// export async function POST(req) {
-//   try {
-//     await dbConnect();
-
-//     const body = await req.json();
-
-//     const newPalette = await ColorPalette.create(body);
-
-//     return Response.json(
-//       { message: "palette created successfully", data: newPalette },
-//       { status: 201 }
-//     );
-//   } catch (err) {
-//     return Response.json({ message: err.message }, { status: 500 });
-//   }
-// }

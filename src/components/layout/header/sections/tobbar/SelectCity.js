@@ -17,6 +17,7 @@ function SelectCity() {
   const modalClickHandler = () => {
     !locations.length
       ? openModal(<SelectLocationModal />, {
+          name: "select-location",
           className: "modal__select_location rounded-large",
         })
       : openModal(<LocationModal />, {

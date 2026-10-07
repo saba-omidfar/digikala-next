@@ -18,7 +18,7 @@ export async function POST(req) {
 
       let user = await UserModel.findOne({
         "auth.accessToken": accessToken,
-      }).select("_id");
+      });
 
       const cart = await CartModel.findOne({ userId: user._id });
 
@@ -40,6 +40,8 @@ export async function POST(req) {
         payable_price: payable,
         discount: plan.price - plan.total_payable_price,
       };
+
+      user.digiplus.is_activated = true;
 
       await cart.save();
 

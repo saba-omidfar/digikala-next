@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Link from "next/link";
 
@@ -10,8 +12,6 @@ import { useUserContext } from "@/contexts/UserContext";
 import { useCartContext } from "@/contexts/CartContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 
-import useLoginRedirect from "@/hooks/useLoginRedirect";
-
 import styles from "./nextCartMobileItem.module.css";
 
 function NextCartMobileItem({ item, isNextCartItem }) {
@@ -20,6 +20,15 @@ function NextCartMobileItem({ item, isNextCartItem }) {
   const { addProductToCart, removeFromNextCart, setLoadingVariantId } =
     useCartContext();
 
+  const { mutate: removeFavorite, isLoading: isLoadingRemoveFavorite } =
+    useRemoveFavoriteProduct();
+  const { mutate: addFavorite, isLoading: isLoadingAddFavorite } =
+    useAddFavoriteProduct();
+
+  const isFavorite = user?.favorite_products?.includes(
+    String(item?.product?.id),
+  );
+
   const [showAddToCartSuccess, setShowAddToCartSuccess] = useState(false);
   const [loadingState, setLoadingState] = useState(null);
 
@@ -27,7 +36,7 @@ function NextCartMobileItem({ item, isNextCartItem }) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }
@@ -49,37 +58,34 @@ function NextCartMobileItem({ item, isNextCartItem }) {
     );
   };
 
-  const favoriteHandler = (e) => {
-    if (isLoadingFavoriteStatus || isLoadingAddFavorite) return;
+  const favoriteHandler = () => {
+    if (isLoadingAddFavorite || isLoadingRemoveFavorite) return;
 
-    e.preventDefault();
-    e.stopPropagation();
-
-    setLoadingVariantId(product?.variant?.id);
-
-    if (!user) {
+    if (!user?.is_logged_in || !guestCartId) {
       redirectToLogin();
       return;
     }
 
-    if (!favotiteStatus?.is_favorite) {
-      addFavorite(
-        {
-          productId: product?.id,
+    e.preventDefault();
+    e.stopPropagation();
+
+    setLoadingVariantId(item?.product?.variant?.id);
+
+    if (isFavorite) {
+      removeFavorite(item?.product?.id);
+    } else {
+      addFavorite(item?.product?.id, {
+        onSuccess: ({ success }) => {
+          if (success) {
+            showSnackbar("کالا به علاقه‌مندی‌ها اضافه شد");
+          }
         },
-        {
-          onSuccess: ({ success }) => {
-            if (success) {
-              showSnackbar(`کالا در لیست علاقه‌مندی‌ها ذخیره شد`);
-            }
-          },
-        },
-      );
+      });
     }
   };
 
   const moveProductToBasket = ({ variantId }) => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }
@@ -95,7 +101,7 @@ function NextCartMobileItem({ item, isNextCartItem }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 

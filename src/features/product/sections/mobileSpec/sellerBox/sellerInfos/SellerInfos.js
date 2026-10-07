@@ -19,7 +19,6 @@ function SellerInfos() {
       className={styles.seller_link}
       href={activeVariant?.seller?.url || "#"}
     >
-      {/* Header */}
       <div className="position-relative">
         {activeVariant?.seller?.title === "دیجی‌کالا" ? (
           <div className={styles.digikala_badge_icon_container}>
@@ -52,7 +51,6 @@ function SellerInfos() {
         )}
       </div>
 
-      {/* infos */}
       <div className={styles.seller_infos}>
         <div className="d-flex justify-content-start align-items-center w-100">
           <span className={styles.seller_title}>

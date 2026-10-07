@@ -26,8 +26,13 @@ export default function CommentDetailBox({ commentDetails, isMobileView }) {
   });
 
   const togglefeedbacksHandler = ({ commentId, type }) => {
-    if (!user) {
+    if (!user?.is_logged_in) {
       showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
+    if (user._id === commentDetails?.user_id) {
+      showSnackbar("امکان رای دادن به دیدگاه خودتان وجود ندارد");
       return;
     }
 

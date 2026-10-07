@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 import ProductCard from "@/features/compare/sections/productCard/ProductCard";
 import AttributeGroup from "@/features/compare/sections/attributeGroup/AttributeGroup";

@@ -2,21 +2,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import ViewedProductItem from "@/features/cart/sections/viewedProducts/viewedProductItem/ViewedProductItem";
+import { useRecentViewedProducts } from "@/features/profile/hooks/useLists";
 
-import { useProductContext } from "@/contexts/ProductContext";
+import ViewedProductItem from "@/features/cart/sections/viewedProducts/viewedProductItem/ViewedProductItem";
 
 import styles from "./viewedProducts.module.css";
 
 function ViewedProducts() {
-  const { recentViewed } = useProductContext();
+  const { data } = useRecentViewedProducts();
 
-  if (!recentViewed?.length) return;
+  if (!data?.products?.length) return null;
 
   return (
     <div className={styles.container} id="Viewed-products">
       <div className={styles.content}>
-        <span className={styles.content_title}>بازدیدهای اخیر</span>
+        <span className={styles.content_title}>{data?.title}</span>
         <div>
           <div className="position-relative">
             <div>
@@ -32,7 +32,7 @@ function ViewedProducts() {
                   nextEl: ".next_purchase-button-next",
                 }}
               >
-                {recentViewed?.map((product) => (
+                {data?.products?.map((product) => (
                   <SwiperSlide key={product.id} className={styles.slide}>
                     <ViewedProductItem
                       product={product}

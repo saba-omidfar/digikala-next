@@ -6,12 +6,17 @@ import Loading from "@/components/modules/loading/Loading";
 
 import { useModal } from "@/contexts/modalContext";
 import { useProductContext } from "@/contexts/ProductContext";
+import { useUserContext } from "@/contexts/UserContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
+
+import useLoginRedirect from "@/hooks/useLoginRedirect";
 
 import styles from "./addQuestionModal.module.css";
 
-function AddQuestionModal() {
+export default function AddQuestionModal() {
   const { showSnackbar } = useSnackbar();
+  const { redirectToLogin } = useLoginRedirect();
+  const { user } = useUserContext();
 
   const { postQuestion, isLoadingPostQuestion, refetchQuestions } =
     useProductContext();
@@ -23,6 +28,11 @@ function AddQuestionModal() {
   const minCharsToEnable = 7;
 
   const postQuestionHandler = () => {
+    if (!user?.is_logged_in) {
+      redirectToLogin();
+      return;
+    }
+
     postQuestion(
       { text: question },
       {
@@ -121,5 +131,3 @@ function AddQuestionModal() {
     </div>
   );
 }
-
-export default AddQuestionModal;

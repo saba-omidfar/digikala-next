@@ -20,6 +20,10 @@ import shouldTruncate from "@/utils/shouldTruncate";
 
 import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useProductContext } from "@/contexts/ProductContext";
+import {
+  useAddFavoriteProduct,
+  useRemoveFavoriteProduct,
+} from "@/features/profile/hooks/useLists";
 import { useUserContext } from "@/contexts/UserContext";
 
 import useLoginRedirect from "@/hooks/useLoginRedirect";
@@ -30,16 +34,17 @@ function MobileSpec() {
   const { user } = useUserContext();
   const { showSnackbar } = useSnackbar();
   const { redirectToLogin } = useLoginRedirect();
-  const {
-    productDetails,
-    suggestionProducts,
-    activeVariant,
-    addFavorite,
-    isLoadingAddFavorite,
-    removeFavorite,
-    favotiteStatus,
-    isLoadingFavoriteStatus,
-  } = useProductContext();
+  const { productDetails, suggestionProducts, activeVariant } =
+    useProductContext();
+
+  const { mutate: removeFavorite, isLoading: isLoadingRemoveFavorite } =
+    useRemoveFavoriteProduct();
+  const { mutate: addFavorite, isLoading: isLoadingAddFavorite } =
+    useAddFavoriteProduct();
+
+  const isFavorite = user?.favorite_products?.includes(
+    String(productDetails?.id),
+  );
 
   const [isExpandTilte, setIsExpandTilte] = useState(false);
   const [showAddToCartSuccess, setShowAddToCartSuccess] = useState(false);
@@ -49,34 +54,29 @@ function MobileSpec() {
   };
 
   const favoriteHandler = () => {
-    if (isLoadingFavoriteStatus || isLoadingAddFavorite) return;
+    if (isLoadingAddFavorite || isLoadingRemoveFavorite) return;
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       redirectToLogin();
       return;
     }
 
-    if (favotiteStatus?.is_favorite) {
-      removeFavorite({
-        productId: productDetails?.id,
-      });
+    if (isFavorite) {
+      removeFavorite(productDetails.id);
     } else {
-      addFavorite(
-        {
-          productId: productDetails?.id,
+      addFavorite(productDetails?.id, {
+        onSuccess: ({ success }) => {
+          if (success) {
+            showSnackbar("کالا به علاقه‌مندی‌ها اضافه شد");
+          }
         },
-        {
-          onSuccess: ({ success }) => {
-            if (success) {
-              showSnackbar("کالا به علاقه‌مندی‌ها اضافه شد");
-            }
-          },
-        },
-      );
+      });
     }
   };
 
-  const isLong = shouldTruncate(productDetails?.title_fa, 80);
+  const title = productDetails?.test_title_fa || productDetails?.title_fa;
+
+  const isLong = shouldTruncate(title, 80);
 
   return (
     <>
@@ -101,58 +101,87 @@ function MobileSpec() {
           >
             <svg
               className={`${
-                favotiteStatus?.is_favorite
-                  ? styles.favorite_on_icon
-                  : styles.favorite_off_icon
+                isFavorite ? styles.favorite_on_icon : styles.favorite_off_icon
               }`}
             >
-              <use
-                href={
-                  favotiteStatus?.is_favorite ? "#favoriteOn" : "#favoriteOff"
-                }
-              ></use>
+              <use href={isFavorite ? "#favoriteOn" : "#favoriteOff"}></use>
             </svg>
           </div>
         </div>
         <div>
           <div className={styles.product_title_container}>
-            <div className="w-100">
-              <h1
-                className={`${styles.product_title} ${!isExpandTilte ? "ellipsis ellipsis-2" : ""}`}
-              >
-                {!isExpandTilte && productDetails?.title_fa?.length > 80
-                  ? productDetails?.title_fa.slice(0, 80)
-                  : productDetails?.title_fa}
-                {!isExpandTilte && productDetails?.title_fa?.length > 80
-                  ? "..."
-                  : ""}
+            {productDetails?.default_variant &&
+            !Array.isArray(productDetails?.default_variant) ? (
+              <div className="w-100">
+                <h1
+                  className={`${styles.product_title} ${!isExpandTilte ? "ellipsis ellipsis-2" : ""}`}
+                >
+                  {!isExpandTilte && title?.length > 122
+                    ? title.slice(0, 122)
+                    : title}
+                  {!isExpandTilte && title?.length > 122 ? "..." : ""}
 
-                {!isExpandTilte && productDetails?.title_fa?.length > 80 ? (
-                  <button
-                    className={styles.expand_btn}
-                    onClick={() => setIsExpandTilte(true)}
-                  >
-                    <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
-                      <div className="d-flex" aria-hidden="false">
-                        <div
-                          className={`${styles.chevron_icon} cube-font-icon`}
-                          data-icon-name="cube-nav-chevron-down"
-                          data-icon=""
-                        ></div>
+                  {!isExpandTilte && title?.length > 122 ? (
+                    <button
+                      className={styles.expand_btn}
+                      onClick={() => setIsExpandTilte(true)}
+                    >
+                      <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
+                        <div className="d-flex" aria-hidden="false">
+                          <div
+                            className={`${styles.chevron_icon} cube-font-icon`}
+                            data-icon-name="cube-nav-chevron-down"
+                            data-icon=""
+                          ></div>
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                ) : (
-                  ""
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </h1>
+                {productDetails?.title_en && (
+                  <h2 className={styles.product_eng_title}>
+                    {productDetails?.title_en}
+                  </h2>
                 )}
-              </h1>
-              {productDetails?.title_en && (
-                <h2 className={styles.product_eng_title}>
-                  {productDetails?.title_en}
-                </h2>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className={styles.out_of_stock_container}>
+                <span className={styles.out_of_stock_title}>
+                  محصول ناموجود است
+                </span>
+                <h1
+                  className={`${styles.product_title} ${!isExpandTilte ? "ellipsis ellipsis-2" : ""}`}
+                >
+                  {!isExpandTilte && title?.length > 122
+                    ? title.slice(0, 122)
+                    : title}
+                  {!isExpandTilte && title?.length > 122 ? "..." : ""}
+
+                  {!isExpandTilte && title?.length > 122 ? (
+                    <button
+                      className={styles.out_of_stock_expand_btn}
+                      onClick={() => setIsExpandTilte(true)}
+                    >
+                      <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
+                        <div className="d-flex" aria-hidden="false">
+                          <div
+                            className={`${styles.chevron_icon} cube-font-icon`}
+                            data-icon-name="cube-nav-chevron-down"
+                            data-icon=""
+                          ></div>
+                        </div>
+                      </div>
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </h1>
+              </div>
+            )}
           </div>
+
           <ProductReviewSection />
         </div>
 
@@ -207,7 +236,6 @@ function MobileSpec() {
         <hr className="line-8" />
         <SellerBox handleAddToCartSuccess={handleAddToCartSuccess} />
 
-        {/* کالاهای پیشنهادی */}
         {suggestionProducts?.length ? (
           <MobileRecommendationProducts data={suggestionProducts} />
         ) : (

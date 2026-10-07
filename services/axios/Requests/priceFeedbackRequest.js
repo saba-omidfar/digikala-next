@@ -1,4 +1,4 @@
-import api from "../Configs/config";
+import api from "@/services/axios/Configs/config";
 
 export const reportPriceFeedback = async ({ productId, ...data }) => {
   const res = await api.post(`/product/${productId}/price-feedback/`, data, {

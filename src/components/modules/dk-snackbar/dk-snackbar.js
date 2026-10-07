@@ -59,7 +59,7 @@ class DkSnackbar extends HTMLElement {
       <div class="snackbar_container">
         <div class="snackbar">
           <span class="message"></span>
-          <button>باشه</button>
+          <button></button>
         </div>
       </div>
     `;
@@ -69,12 +69,20 @@ class DkSnackbar extends HTMLElement {
     this.button = this.shadowRoot.querySelector("button");
 
     this.button.addEventListener("click", () => {
+      if (this.action) {
+        this.action();
+      }
+
       this.hide();
     });
   }
 
-  show(text, duration = 3000) {
+  show(text, duration = 3000, action = null) {
     this.message.textContent = text;
+
+    this.action = action?.onClick || null;
+
+    this.button.textContent = action?.text || "باشه";
 
     this.container.classList.add("show");
 
@@ -87,6 +95,7 @@ class DkSnackbar extends HTMLElement {
 
   hide() {
     this.container.classList.remove("show");
+    this.action = null;
   }
 }
 

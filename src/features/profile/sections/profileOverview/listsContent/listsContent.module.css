@@ -1,0 +1,60 @@
+.profile_content {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.profile_content::before {
+  content: "";
+  width: 100%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.profile_header_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.profile_header {
+  padding: 12px 0;
+  overflow-wrap: break-word;
+}
+
+.profile_title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2.1;
+  color: #0c0c0c;
+  flex-grow: 1;
+}
+
+.profile_title__line_red {
+  width: 70px;
+  height: 2px;
+  background-color: #ef394e;
+  margin-top: 8px;
+}
+
+.profile_link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #1672dd;
+  cursor: pointer;
+}
+
+.chevron_icon {
+  width: 18px;
+  height: 18px;
+  fill: #1672dd;
+}

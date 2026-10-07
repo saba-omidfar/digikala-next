@@ -4,7 +4,7 @@ import { useModal } from "@/contexts/modalContext";
 
 import styles from "./shareProductModal.module.css";
 
-export default function ShareProductModal() {
+export default function ShareProductModal({ title }) {
   const { closeModal } = useModal();
   const [copyProductUrl, setCopyProductUrl] = useState(false);
 
@@ -47,7 +47,7 @@ export default function ShareProductModal() {
           <div>
             <div className="pb-3">
               <p className={styles.modal_share_text}>
-                این کالا را با دوستان خود به اشتراک بگذارید!
+                این {title ? title : "کالا"} را با دوستان خود به اشتراک بگذارید!
               </p>
               <div
                 className={styles.modal_copy_btn_container}

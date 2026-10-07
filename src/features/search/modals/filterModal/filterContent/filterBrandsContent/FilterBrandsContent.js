@@ -54,7 +54,7 @@ function FilterBrandsContent() {
           </div>
         </label>
       </form>
-      {/* Sleceted Brands By User */}
+
       {params.brands?.length ? (
         <>
           <div className={styles.selected_brands_title}>انتخاب شما</div>
@@ -74,7 +74,6 @@ function FilterBrandsContent() {
         </>
       ) : null}
 
-      {/* All Brands */}
       {params.brands?.length ? (
         <div className={styles.selected_brands_title}>همه‌ی برندها</div>
       ) : null}

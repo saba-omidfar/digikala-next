@@ -9,9 +9,12 @@ import toPersianDigits from "@/utils/toPersianDigits";
 
 import { useUserContext } from "@/contexts/UserContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
-import { useProductContext } from "@/contexts/ProductContext";
-import { useGetIncredibleNotificationStatus } from "@/hooks/useProduct";
 import useLoginRedirect from "@/hooks/useLoginRedirect";
+
+import {
+  useAddObservedProduct,
+  useRemoveObservedProduct,
+} from "@/features/profile/hooks/useLists";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
 
@@ -19,29 +22,39 @@ import styles from "./productCard.module.css";
 
 export default function ProductCard({ product, lastBox, isIncrediblePage }) {
   const { isSmallScreen } = useScreenStatus();
-
   const { showSnackbar } = useSnackbar();
-  const { user } = useUserContext();
-  const { addIncredibleNotification, removeIncredibleNotification } =
-    useProductContext();
-
-  const { data: incredibleStatus, isLoading: isLoadingIncredibleStatus } =
-    useGetIncredibleNotificationStatus({ productId: product?.id });
 
   const { redirectToLogin } = useLoginRedirect();
+
+  const { user } = useUserContext();
+
+  const { mutate: addObservedProduct, isLoading: isLoadingAddObservedProduct } =
+    useAddObservedProduct();
+
+  const {
+    mutate: removeObservedProduct,
+    isLoading: isLoadingRemoveObservedProduct,
+  } = useRemoveObservedProduct();
+
+  const isObserved = user?.observed_products?.some(
+    (item) => String(item.productId) === String(product?.id),
+  );
+
+  const isLoadingNotification =
+    isLoadingAddObservedProduct || isLoadingRemoveObservedProduct;
 
   const notifeMeHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (isLoadingIncredibleStatus) return;
+    if (isLoadingNotification) return;
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       redirectToLogin();
       return;
     }
 
-    if (incredibleStatus?.is_active) {
+    if (isObserved) {
       removeNotificationHandler();
     } else {
       addNotificationHandler();
@@ -49,7 +62,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
   };
 
   const addNotificationHandler = () => {
-    addIncredibleNotification(
+    addObservedProduct(
       {
         productId: product?.id,
       },
@@ -62,12 +75,14 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
   };
 
   const removeNotificationHandler = () => {
-    removeIncredibleNotification(
+    removeObservedProduct(
       {
         productId: product?.id,
       },
       {
-        onSuccess: () => {
+        onSuccess: ({ success }) => {
+          if (!success) return;
+
           showSnackbar("اطلاع‌رسانی شگفت‌انگیز حذف شد.");
         },
       },
@@ -418,9 +433,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
 
             <button
               className={
-                incredibleStatus?.is_active
-                  ? styles.dont_notife_me_btn
-                  : styles.notife_me_btn
+                isObserved ? styles.dont_notife_me_btn : styles.notife_me_btn
               }
               onClick={notifeMeHandler}
             >
@@ -434,7 +447,7 @@ export default function ProductCard({ product, lastBox, isIncrediblePage }) {
                   </svg>
                 </div>
 
-                {incredibleStatus?.is_active ? "دیگر خبرم نکن" : "خبرم کن"}
+                {isObserved ? "دیگر خبرم نکن" : "خبرم کن"}
               </div>
             </button>
           </div>

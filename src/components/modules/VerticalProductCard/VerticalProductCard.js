@@ -1,3 +1,5 @@
+"use client";
+
 import React, { memo } from "react";
 
 import Link from "next/link";
@@ -7,10 +9,12 @@ import Timer from "../timer/Timer";
 import toPersianDigits from "@/utils/toPersianDigits";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
-import { useGetIncredibleNotificationStatus } from "@/hooks/useProduct";
 import useLoginRedirect from "@/hooks/useLoginRedirect";
+import {
+  useAddObservedProduct,
+  useRemoveObservedProduct,
+} from "@/features/profile/hooks/useLists";
 
-import { useProductContext } from "@/contexts/ProductContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useUserContext } from "@/contexts/UserContext";
 
@@ -64,24 +68,34 @@ function VerticalProductCard({
   const gradientId = `product-card-gradient-${uniqueId}`;
 
   const { user } = useUserContext();
-  const { data: incredibleStatus, isLoading: isLoadingIncredibleStatus } =
-    useGetIncredibleNotificationStatus({ productId: product?.id });
 
-  const { addIncredibleNotification, removeIncredibleNotification } =
-    useProductContext();
+  const { mutate: addObservedProduct, isLoading: isLoadingAddObservedProduct } =
+    useAddObservedProduct();
+
+  const {
+    mutate: removeObservedProduct,
+    isLoading: isLoadingRemoveObservedProduct,
+  } = useRemoveObservedProduct();
+
+  const isObserved = user?.observed_products?.some(
+    (item) => String(item.productId) === String(product?.id),
+  );
+
+  const isLoadingNotification =
+    isLoadingAddObservedProduct || isLoadingRemoveObservedProduct;
 
   const notifeMeHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (isLoadingIncredibleStatus) return;
+    if (isLoadingNotification) return;
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       redirectToLogin();
       return;
     }
 
-    if (incredibleStatus?.is_active) {
+    if (isObserved) {
       removeNotificationHandler();
     } else {
       addNotificationHandler();
@@ -89,7 +103,7 @@ function VerticalProductCard({
   };
 
   const addNotificationHandler = () => {
-    addIncredibleNotification(
+    addObservedProduct(
       {
         productId: product?.id,
       },
@@ -102,12 +116,14 @@ function VerticalProductCard({
   };
 
   const removeNotificationHandler = () => {
-    removeIncredibleNotification(
+    removeObservedProduct(
       {
         productId: product?.id,
       },
       {
-        onSuccess: () => {
+        onSuccess: ({ success }) => {
+          if (!success) return;
+
           showSnackbar("اطلاع‌رسانی شگفت‌انگیز حذف شد.");
         },
       },
@@ -427,7 +443,8 @@ function VerticalProductCard({
                       ""
                     )}
                     <div className={styles.product_final_price}>
-                      {product?.default_variant ? (
+                      {product?.default_variant &&
+                      !Array.isArray(product.default_variant) ? (
                         <>
                           <span id="price-final">
                             {(
@@ -450,7 +467,9 @@ function VerticalProductCard({
                       )}
                     </div>
                   </div>
-                  {product?.default_variant && discountPercent !== 0 ? (
+                  {product?.default_variant &&
+                  !Array.isArray(product.default_variant) &&
+                  discountPercent !== 0 ? (
                     <div className={styles.product_no_discount_price_container}>
                       <div
                         id="price-no-discount"
@@ -512,7 +531,7 @@ function VerticalProductCard({
                 )}
                 {isIncredibleTeasing && (
                   <button
-                    className={`${incredibleStatus?.is_active ? styles.dont_notife_me_btn : styles.notife_me_btn}`}
+                    className={`${isObserved ? styles.dont_notife_me_btn : styles.notife_me_btn}`}
                     onClick={notifeMeHandler}
                   >
                     <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
@@ -521,14 +540,12 @@ function VerticalProductCard({
                         aria-hidden="false"
                       >
                         <svg
-                          className={`${incredibleStatus?.is_active ? styles.dont_notification_icon : styles.notification_icon}`}
+                          className={`${isObserved ? styles.dont_notification_icon : styles.notification_icon}`}
                         >
                           <use href="#notificationOffOutline"></use>
                         </svg>
                       </div>
-                      {incredibleStatus?.is_active
-                        ? "دیگر خبرم نکن"
-                        : "خبرم کن"}
+                      {isObserved ? "دیگر خبرم نکن" : "خبرم کن"}
                     </div>
                   </button>
                 )}

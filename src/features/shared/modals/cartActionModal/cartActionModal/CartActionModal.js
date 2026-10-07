@@ -1,3 +1,5 @@
+"use client";
+
 import { BottomSheet } from "@percivel/react-spring-bottom-sheet";
 import "@percivel/react-spring-bottom-sheet/dist/style.css";
 
@@ -17,7 +19,7 @@ function CartActionModal({ type }) {
   const { addProductToCart, removeFromNextCart } = useCartContext();
 
   const moveAllProuctsToBasket = () => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }
@@ -40,7 +42,7 @@ function CartActionModal({ type }) {
   };
 
   const removeAllProductFromBasket = () => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }

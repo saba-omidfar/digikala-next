@@ -15,7 +15,7 @@ import styles from "./productCard.module.css";
 function ProductCard({ index, product, isLastIndex }) {
   let colorsRef = useRef();
   let sizesRef = useRef();
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
   const [productThemes, setProductThemes] = useState([]);
 
   const {
@@ -27,6 +27,8 @@ function ProductCard({ index, product, isLastIndex }) {
   } = useCartContext();
 
   const { activeVariant } = useProductContext();
+
+  const guestCartId = localStorage.getItem("guestCartId");
 
   const addProductToCartHandler = (e) => {
     e.preventDefault();
@@ -43,7 +45,7 @@ function ProductCard({ index, product, isLastIndex }) {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
         },
@@ -147,7 +149,6 @@ function ProductCard({ index, product, isLastIndex }) {
             />
           </div>
 
-          {/* Colors */}
           {productThemes?.find((theme) => theme.type === "colored")?.values
             ?.length > 3 ? (
             <div className={styles.product_colors_container}>
@@ -195,7 +196,6 @@ function ProductCard({ index, product, isLastIndex }) {
             ""
           )}
 
-          {/* Add To Cart Btn */}
           {productThemes?.find((theme) => theme.type === "colored")?.values
             ?.length === 1 || !productThemes?.length ? (
             <div className={styles.quantity_box_container}>
@@ -270,11 +270,7 @@ function ProductCard({ index, product, isLastIndex }) {
           ) : (
             ""
           )}
-          {/* <div class="text-body-1-180 text-neutral-650 flex gap-1 items-center">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div> */}
+
           <div className={styles.product_price_container}>
             {product?.price?.discount_percent !== 0 ? (
               <>

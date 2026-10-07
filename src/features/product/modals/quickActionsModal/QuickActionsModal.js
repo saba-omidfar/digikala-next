@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter } from "nextjs-toploader/app";
 
 import AmazingNotifModal from "@/features/product/modals/amazingNotifModal/AmazingNotifModal";
@@ -9,6 +11,8 @@ import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
 import { useModal } from "@/contexts/modalContext";
+
+import { useRemoveObservedProduct } from "@/features/profile/hooks/useLists";
 
 import useLoginRedirect from "@/hooks/useLoginRedirect";
 
@@ -25,33 +29,57 @@ export default function QuickActionsModal() {
   const { productDetails } = useProductContext();
 
   const {
-    removeIncredibleNotification,
-    incredibleStatus,
-    isLoadingIncredibleStatus,
-  } = useProductContext();
+    mutate: removeObservedProduct,
+    isLoading: isLoadingRemoveObservedProduct,
+  } = useRemoveObservedProduct();
 
-  const toggleAmazingNotifHandler = () => {
-    if (!user) {
+  const isObserved = user?.observed_products?.some(
+    (item) => String(item.productId) === String(productDetails?.id),
+  );
+
+  const notifeMeHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isLoadingRemoveObservedProduct) return;
+
+    if (!user?.is_logged_in) {
       redirectToLogin();
       return;
     }
 
-    if (!incredibleStatus?.is_active) {
+    if (!isObserved) {
       return openModal(<AmazingNotifModal productId={productDetails?.id} />, {
         name: "amazing-notification",
+        className: "rounded-medium",
       });
     }
 
-    removeIncredibleNotification(
+    removeObservedProduct(
       {
         productId: productDetails?.id,
       },
       {
-        onSuccess: () => {
+        onSuccess: ({ success }) => {
+          if (!success) return;
+
           showSnackbar("حذف اطلاع‌رسانی با موفقیت انجام شد");
         },
       },
     );
+  };
+
+  const addToListModalHandler = () => {
+    if (!user?.is_logged_in) {
+      redirectToLogin();
+      return;
+    }
+
+    openModal(<AddToListModal />, {
+      name: "add-to-list",
+      className: "modal__add_to_list rounded-medium",
+      size: "md",
+    });
   };
 
   const goToComparePage = () => {
@@ -102,11 +130,7 @@ export default function QuickActionsModal() {
             <div
               id="wishlist"
               className={styles.modal_content_item}
-              onClick={() =>
-                openModal(<AddToListModal />, {
-                  name: "add-to-list",
-                })
-              }
+              onClick={addToListModalHandler}
             >
               <div className={styles.list_icon_container} aria-hidden="false">
                 <svg className={styles.list_icon}>
@@ -115,19 +139,19 @@ export default function QuickActionsModal() {
               </div>
 
               <span className={styles.modal_content_item_title}>
-                افزودن به لیست
+                افزودن به لیست{" "}
               </span>
             </div>
             <div
               id="amazing-notification"
               className={styles.modal_content_item}
-              onClick={toggleAmazingNotifHandler}
+              onClick={notifeMeHandler}
             >
               <div className={styles.list_icon_container} aria-hidden="false">
                 <svg
                   className={`${styles.notification_icon}
                     ${
-                      incredibleStatus?.is_active
+                      isObserved
                         ? styles.notification_active
                         : styles.notification_inactive
                     }
@@ -147,10 +171,10 @@ export default function QuickActionsModal() {
                 <CustomSwitch
                   name="notifSwitch"
                   checked={
-                    isLoadingIncredibleStatus ? (
+                    isLoadingRemoveObservedProduct ? (
                       <Loading isSmall={true} />
                     ) : (
-                      incredibleStatus?.is_active
+                      isObserved
                     )
                   }
                 />

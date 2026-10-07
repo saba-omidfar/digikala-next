@@ -1,4 +1,4 @@
-import api from "../Configs/config";
+import api from "@/services/axios/Configs/config";
 
 export async function fetchFaq(page = 1, query = "") {
   const res = await api.get(`/faq/?page=${page}&q=${query}`);

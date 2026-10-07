@@ -11,33 +11,34 @@ import CartActionBox from "@/features/cart/sections/cartActionBox/CartActionBox"
 import styles from "./miniCartItem.module.css";
 
 function MiniCartItem({ isLastItem, cartItem }) {
-  const { user, guestCartId } = useUserContext();
-  const {
-    userCart,
-    loadingVariantId,
-    setLoadingVariantId,
-    addProductToCart,
-    removeProductFromCart,
-  } = useCartContext();
+  const guestCartId = localStorage.getItem("guestCartId");
+
+  const { user } = useUserContext();
+  const { userCart, addProductToCart, removeProductFromCart } =
+    useCartContext();
 
   const [productQuantity, setProductQuantity] = useState(0);
+  const [loadingState, setLoadingState] = useState(null);
 
   const maxLimit = cartItem?.variant?.price?.order_limit || Infinity;
   const isMaxReached = cartItem?.quantity === maxLimit;
 
   const addProductToCartHandler = ({ variantId }) => {
-    setLoadingVariantId(variantId);
+    setLoadingState({
+      variantId,
+      action: "add",
+    });
 
     addProductToCart(
       {
         guestCartId,
-        productId: cartItem?.product?.id,
+        productId: item?.product?.id,
         variantId,
         quantity: 1,
       },
       {
         onSuccess: (res) => {
-          if (!user?._id && res.guestCartId) {
+          if (!user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 
@@ -46,14 +47,17 @@ function MiniCartItem({ isLastItem, cartItem }) {
           }
         },
         onSettled: () => {
-          setLoadingVariantId(null);
+          setLoadingState(null);
         },
       },
     );
   };
 
   const removeProductFromCartHandler = ({ variantId }) => {
-    setLoadingVariantId(variantId);
+    setLoadingState({
+      variantId,
+      action: "remove",
+    });
 
     removeProductFromCart(
       {
@@ -62,10 +66,14 @@ function MiniCartItem({ isLastItem, cartItem }) {
       },
       {
         onSettled: () => {
-          setLoadingVariantId(null);
+          setLoadingState(null);
         },
       },
     );
+  };
+
+  const handleAddToCartSuccess = () => {
+    setShowAddToCartSuccess(true);
   };
 
   useEffect(() => {
@@ -120,7 +128,6 @@ function MiniCartItem({ isLastItem, cartItem }) {
                     <CartActionBox
                       noShadow
                       quantityBoxClassName={styles.quantity_box}
-                      isLoading={loadingVariantId === cartItem?.variant?.id}
                       productQuantity={productQuantity}
                       isMaxReached={isMaxReached}
                       addProductToCartHandler={() =>
@@ -133,6 +140,10 @@ function MiniCartItem({ isLastItem, cartItem }) {
                           variantId: cartItem?.variant?.id,
                           removeFromextPurchase: false,
                         })
+                      }
+                      isLoading={
+                        loadingState?.variantId === cartItem?.variant?.id &&
+                        ["add", "remove"].includes(loadingState?.action)
                       }
                     />
                     <div className="d-flex flex-column gap-2">

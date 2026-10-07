@@ -34,14 +34,10 @@ export default function recalcCartPrices(cart) {
   let insuranceRrpPrice = 0;
 
   for (const item of basket) {
-    const price = item._price || item.price;
+    const price = item.price;
     const qty = Number(item.quantity) || 1;
 
-    // itemsCount += qty;
     itemsCount = basket?.length;
-
-    // productsPayablePrice += (Number(item.price?.selling_price) || 0) * qty;
-    // productsRrpPrice += (Number(item.price?.rrp_price) || 0) * qty;
 
     productsPayablePrice += (Number(price?.selling_price) || 0) * qty;
     productsRrpPrice += (Number(price?.rrp_price) || 0) * qty;

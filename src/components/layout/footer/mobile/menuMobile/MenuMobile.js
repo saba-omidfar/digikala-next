@@ -2,9 +2,14 @@ import React from "react";
 
 import MenuMobileBox from "./MenuMobileBox";
 
+import { useUserContext } from "@/contexts/UserContext";
+import { useGetProfile } from "@/hooks/useUser";
+
 import styles from "./menuMobile.module.css";
 
 function MenuMobile({ activeMenu, noShadowStyle }) {
+  const { user } = useUserContext();
+
   return (
     <div className={styles.mobile_menu_container}>
       <div className={styles.container}>
@@ -38,7 +43,7 @@ function MenuMobile({ activeMenu, noShadowStyle }) {
             activeMenu={activeMenu}
             title="دیجی‌کالای من"
             iconId={activeMenu === "دیجی‌کالای من" ? "profileOn" : "profileOff"}
-            link="/users/login"
+            link={user?.is_logged_in ? "/profile" : "/users/login"}
           />
         </div>
       </div>

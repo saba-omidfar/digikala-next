@@ -11,6 +11,7 @@ import { useProductContext } from "@/contexts/ProductContext";
 
 import formatPrice from "@/utils/formatPrice";
 import { useReportPrice } from "@/hooks/useReportPrice";
+import { useGetStates } from "@/features/profile/hooks/useStates";
 
 import CustomCheckBox from "@/components/modules/checkBox/CustomCheckBox";
 import Loading from "@/components/modules/loading/Loading";
@@ -22,43 +23,10 @@ export default function PriceFeedbackDesktopModal() {
   const { productDetails } = useProductContext();
   const { closeModal } = useModal();
   const { showSnackbar } = useSnackbar();
+  const { data: states } = useGetStates();
 
   const [showStates, setShowStates] = useState(false);
   const [stateSearch, setStateSearch] = useState("");
-
-  const STATES = [
-    { id: 1, name: "آذربایجان شرقی" },
-    { id: 2, name: "آذربایجان غربی" },
-    { id: 3, name: "اردبیل" },
-    { id: 4, name: "اصفهان" },
-    { id: 5, name: "البرز" },
-    { id: 6, name: "ایلام" },
-    { id: 7, name: "بوشهر" },
-    { id: 8, name: "تهران" },
-    { id: 9, name: "چهارمحال و بختیاری" },
-    { id: 10, name: "خراسان جنوبی" },
-    { id: 11, name: "خراسان رضوی" },
-    { id: 12, name: "خراسان شمالی" },
-    { id: 13, name: "خوزستان" },
-    { id: 14, name: "زنجان" },
-    { id: 15, name: "سمنان" },
-    { id: 16, name: "سیستان و بلوچستان" },
-    { id: 17, name: "فارس" },
-    { id: 18, name: "قزوین" },
-    { id: 19, name: "قم" },
-    { id: 20, name: "کردستان" },
-    { id: 21, name: "کرمان" },
-    { id: 22, name: "کرمانشاه" },
-    { id: 23, name: "کهگیلویه و بویراحمد" },
-    { id: 24, name: "گلستان" },
-    { id: 25, name: "گیلان" },
-    { id: 26, name: "لرستان" },
-    { id: 27, name: "مازندران" },
-    { id: 28, name: "مرکزی" },
-    { id: 29, name: "هرمزگان" },
-    { id: 30, name: "همدان" },
-    { id: 31, name: "یزد" },
-  ];
 
   const { mutate: reportPriceMutation, isLoading } = useReportPrice();
 
@@ -86,9 +54,9 @@ export default function PriceFeedbackDesktopModal() {
   const selectedState = watch("physicalStoreStateId");
 
   const filteredStates = useMemo(() => {
-    if (!stateSearch.trim()) return STATES;
+    if (!stateSearch.trim()) return states;
 
-    return STATES.filter((state) => state.name.includes(stateSearch.trim()));
+    return states.filter((state) => state.name.includes(stateSearch.trim()));
   }, [stateSearch]);
 
   const handleSelectState = (state) => {
@@ -193,7 +161,6 @@ export default function PriceFeedbackDesktopModal() {
 
             <div className={styles.form_container}>
               <form onSubmit={handleSubmit(formSubmitting)}>
-                {/* PRICE */}
                 <label className="d-inline-block w-100">
                   <div className="d-flex justify-content-between align-items-center">
                     <p className={styles.content_subtitle}>
@@ -260,7 +227,6 @@ export default function PriceFeedbackDesktopModal() {
                   />
                 </label>
 
-                {/* CHECKBOX */}
                 <label className={styles.checkbox_container}>
                   <Controller
                     control={control}
@@ -277,7 +243,6 @@ export default function PriceFeedbackDesktopModal() {
                   />
                 </label>
 
-                {/* ONLINE STORE */}
                 {isOnlineStore && (
                   <label className="d-inline-block w-100">
                     <div className="d-flex justify-content-between align-items-center">
@@ -298,7 +263,6 @@ export default function PriceFeedbackDesktopModal() {
                   </label>
                 )}
 
-                {/* PHYSICAL STORE */}
                 {!isOnlineStore && (
                   <>
                     <label className="d-inline-block w-100">
@@ -416,7 +380,6 @@ export default function PriceFeedbackDesktopModal() {
                   </>
                 )}
 
-                {/* SUBMIT */}
                 <div className={styles.footer}>
                   <button
                     type="submit"

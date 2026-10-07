@@ -12,7 +12,7 @@ import { useModal } from "@/contexts/modalContext";
 
 import styles from "./searchBoxModal.module.css";
 
-function SearchBoxModal({ searchBoxRef }) {
+export default function SearchBoxModal({ searchBoxRef }) {
   const { closeModal } = useModal();
   const { searchItemValue, setSearchItemValue } = useSearchContext();
   const searchParams = useSearchParams();
@@ -146,57 +146,6 @@ function SearchBoxModal({ searchBoxRef }) {
           </div>
         </div>
       )}
-      {/* {isLoading ? (
-        <div className="d-flex flex-column flex-grow-1 overflow-y-auto">
-          <div className="d-flex flex-column flex-grow-1 hide-scrollbar">
-            <div className="pb-3"></div>
-          </div>
-        </div>
-      ) : (
-        <>
-          {searchItemValue && !isLoading ? (
-            <SearchResult searchItemValue={searchItemValue} />
-          ) : (
-            <div className={styles.results_container}>
-              <div className={styles.search_history}>
-                <div className={styles.trending_search}>
-                  <div className={styles.section_header}>
-                    <span className={styles.section_title}>
-                      جستجوهای پرطرفدار
-                    </span>
-                  </div>
-                  <div className={styles.chips_container}>
-                    {data?.trends?.map((chip) => (
-                      <Link
-                        key={chip.keyword}
-                        href={data?.url ? data?.url?.uri : "#"}
-                      >
-                        <div className={styles.chip_wrapper}>
-                          <div
-                            className={styles.trend_icon_container}
-                            aria-hidden="false"
-                          >
-                            <div
-                              className={`${styles.trend_icon} cube-font-icon`}
-                              data-icon-name="cube-content-trend-up"
-                              data-icon=""
-                            ></div>
-                          </div>
-                          <span className={styles.chip_label}>
-                            {chip.keyword}
-                          </span>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      )} */}
     </>
   );
 }
-
-export default SearchBoxModal;

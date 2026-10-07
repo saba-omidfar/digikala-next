@@ -18,10 +18,6 @@ export async function POST(req) {
 
     const { username, guestCartId } = await req.json();
 
-    // =========================
-    // VALIDATION
-    // =========================
-
     if (!username) {
       return Response.json(
         {
@@ -57,19 +53,11 @@ export async function POST(req) {
       );
     }
 
-    // =========================
-    // FIND USER
-    // =========================
-
     let user = await UserModel.findOne(query);
 
     let isNewUser = false;
 
-    // =========================
-    // CREATE USER
-    // =========================
-
-    if (!user) {
+    if (!user?.is_logged_in) {
       if (!emailRegex.test(username)) {
         return Response.json(
           {
@@ -92,26 +80,14 @@ export async function POST(req) {
       isNewUser = true;
     }
 
-    // =========================
-    // GENERATE ACCESS TOKEN
-    // =========================
-
     const accessToken = generateAccessToken({
       userId: user._id.toString(),
       username,
     });
 
-    // =========================
-    // GENERATE REFRESH TOKEN
-    // =========================
-
     const refreshToken = generateRefreshToken();
 
     const refreshTokenHash = hashRefreshToken(refreshToken);
-
-    // =========================
-    // UPDATE AUTH
-    // =========================
 
     user.is_logged_in = true;
 
@@ -124,13 +100,8 @@ export async function POST(req) {
 
     await user.save();
 
-    // =========================
-    // SET COOKIES
-    // =========================
-
     const cookieStore = await cookies();
 
-    // ACCESS TOKEN
     cookieStore.set("access_accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -139,7 +110,6 @@ export async function POST(req) {
       maxAge: 15 * 60,
     });
 
-    // REFRESH TOKEN
     cookieStore.set("refresh_accessToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -147,10 +117,6 @@ export async function POST(req) {
       path: "/",
       maxAge: 7 * 24 * 60 * 60,
     });
-
-    // =========================
-    // MERGE GUEST CART
-    // =========================
 
     if (guestCartId) {
       const guestCart = await CartModel.findById(guestCartId);
@@ -160,11 +126,7 @@ export async function POST(req) {
           userId: user._id,
         });
 
-        // -------------------------
-        // CREATE USER CART
-        // -------------------------
-
-        if (!userCart) {
+        if (!user?.is_logged_inCart) {
           userCart = await CartModel.create({
             userId: user._id,
             packages: guestCart.packages || [
@@ -174,13 +136,8 @@ export async function POST(req) {
             ],
             next_cart: guestCart.next_cart || [],
           });
-        }
-
-        // -------------------------
-        // MERGE EXISTING CART
-        // -------------------------
-        else {
-          if (!userCart.packages?.length) {
+        } else {
+          if (!user?.is_logged_inCart.packages?.length) {
             userCart.packages = [
               {
                 cart_items: [],
@@ -188,21 +145,17 @@ export async function POST(req) {
             ];
           }
 
-          if (!userCart.packages[0].cart_items) {
+          if (!user?.is_logged_inCart.packages[0].cart_items) {
             userCart.packages[0].cart_items = [];
           }
 
-          if (!userCart.next_cart) {
+          if (!user?.is_logged_inCart.next_cart) {
             userCart.next_cart = [];
           }
 
           const userItems = userCart.packages[0].cart_items;
 
           const guestItems = guestCart.packages?.[0]?.cart_items || [];
-
-          // -------------------------
-          // CART ITEMS
-          // -------------------------
 
           for (const guestItem of guestItems) {
             const existingItem = userItems.find(
@@ -216,10 +169,6 @@ export async function POST(req) {
               userItems.push(guestItem);
             }
           }
-
-          // -------------------------
-          // NEXT CART
-          // -------------------------
 
           for (const guestNextItem of guestCart.next_cart || []) {
             const existingNext = userCart.next_cart.find(
@@ -239,17 +188,9 @@ export async function POST(req) {
 
         await userCart.save();
 
-        // -------------------------
-        // DELETE GUEST CART
-        // -------------------------
-
         await CartModel.findByIdAndDelete(guestCartId);
       }
     }
-
-    // =========================
-    // RESPONSE
-    // =========================
 
     return Response.json(
       {

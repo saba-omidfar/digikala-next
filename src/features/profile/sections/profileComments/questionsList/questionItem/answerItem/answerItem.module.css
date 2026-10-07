@@ -1,0 +1,155 @@
+.answer_container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+
+.answer_top_section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.answer_bottom_section {
+  margin-right: 48px;
+}
+
+.social_profile_container {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.social_profile {
+  display: inline-block;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.answer_sender {
+  max-width: 135px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15px;
+  color: #424242;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.dot_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #e0e0e2;
+}
+
+.answer_type_badge {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  border: 1px solid #0000;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+  padding: 0 8px;
+}
+
+.buyer_badge {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #2e7b32;
+}
+
+.seller_badge {
+  background-color: rgba(211, 47, 47, 0.1);
+  color: #b2001a;
+}
+
+.answer_type_title {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 2.17;
+}
+
+.answer_text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 2.15;
+  color: rgba(92, 92, 92, 1);
+  opacity: 1;
+  margin-right: 8px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.answer_infos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: #222732;
+}
+
+.answer_created_at {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 25.5px;
+  color: #94969c;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.answer_feedbacks_container {
+  display: flex;
+  align-items: center;
+  color: #81858b;
+}
+
+.answer_feedbacks {
+  display: flex;
+  align-items: center;
+}
+
+.answer_feedback_btn {
+  position: relative;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  color: #424242;
+  padding: 0 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: 0 0;
+  border: none;
+  outline: none;
+  align-items: center;
+  transition: top 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.answer_feedback_count {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 2.17;
+}
+
+.answer_feedback_icon_container {
+  display: flex;
+  margin-right: 4px;
+}
+
+.answer_feedback_icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: normal;
+  color: #424750;
+}

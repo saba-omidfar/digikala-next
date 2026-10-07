@@ -1,14 +1,27 @@
-import { Suspense } from "react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import Header from "@/components/layout/header/desktop/Header";
-import Footer from "@/components/layout/footer/desktop/Footer";
+import ProfilePage from "@/features/profile/pages/ProfilePage";
+import ProfileOverview from "@/features/profile/sections/profileOverview/ProfileOverview";
 
-function page() {
+import { getLoginUrl } from "@/utils/getLoginUrl";
+
+export default async function Page({ searchParams }) {
+  const cookiesStore = await cookies();
+  const accessToken = cookiesStore.get("access_token")?.value;
+
+  if (!accessToken) {
+    const params = await searchParams;
+    const queryString = new URLSearchParams(params).toString();
+
+    const currentUrl = queryString ? `/profile?${queryString}` : "/profile";
+
+    redirect(getLoginUrl(currentUrl));
+  }
+
   return (
-    <Suspense fallback={null}>
-      <Header />
-      <Footer />
-    </Suspense>
+    <ProfilePage>
+      <ProfileOverview />
+    </ProfilePage>
   );
 }
-export default page;

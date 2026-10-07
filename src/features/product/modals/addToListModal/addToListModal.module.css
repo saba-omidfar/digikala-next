@@ -19,6 +19,12 @@
   z-index: 1;
 }
 
+.loading_container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
 .header_icon {
   width: 24px;
   height: 24px;
@@ -183,7 +189,7 @@
   border-radius: 8px;
   height: 40px;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 2.17;
   padding: 8px 16px;
   border: 1px solid #ef4056;
@@ -233,7 +239,7 @@
 
 .new_list_title {
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 2.15;
   color: #1672dd;
   margin-right: 8px;

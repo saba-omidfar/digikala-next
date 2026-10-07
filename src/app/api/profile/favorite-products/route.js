@@ -15,10 +15,10 @@ export async function GET(req) {
     if (!accessToken) {
       return Response.json(
         {
-          success: false,
-          data: [],
+          status: 401,
+          message: "کاربر وارد نشده است",
         },
-        { status: 200 },
+        { status: 401 },
       );
     }
 
@@ -26,51 +26,125 @@ export async function GET(req) {
       "auth.accessToken": accessToken,
     }).lean();
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json(
         {
-          success: false,
-          data: [],
+          status: 401,
+          message: "کاربر پیدا نشد",
         },
-        { status: 200 },
+        { status: 401 },
       );
     }
 
-    const favoriteProducts = user.favorite_products || [];
+    const { searchParams } = new URL(req.url);
 
-    if (!favoriteProducts.length) {
-      return Response.json({
-        success: true,
-        data: [],
-      });
-    }
+    const page = Math.max(Number(searchParams.get("page")) || 1, 1);
+
+    const sort = Number(searchParams.get("sort")) || 1;
+
+    const limit = 10;
+
+    const favoriteProducts = Array.isArray(user.favorite_products)
+      ? user.favorite_products
+      : [];
 
     const products = await Promise.all(
-      favoriteProducts.map(async (productId) => {
+      favoriteProducts.map(async (productId, index) => {
         try {
-          const data = await digikalaFetch({
-            path: `/v2/product/${productId}/?_rch=9fd46e644c8e`,
+          const response = await digikalaFetch({
+            path: `/product/v1/products/${productId}/?_rch=9fd46e644c8e`,
           });
 
-          return data?.data?.product;
-        } catch {
+          const product = response?.data?.product;
+
+          if (!product) {
+            return null;
+          }
+
+          return {
+            ...product,
+            favoriteIndex: index,
+          };
+        } catch (error) {
           return null;
         }
       }),
     );
 
+    let sortedProducts = products.filter(Boolean);
+
+    if (sort === 1) {
+      sortedProducts.sort((a, b) => b.favoriteIndex - a.favoriteIndex);
+    }
+
+    if (sort === 21) {
+      sortedProducts.sort((a, b) => {
+        const priceA = a?.default_variant?.price?.selling_price || 0;
+
+        const priceB = b?.default_variant?.price?.selling_price || 0;
+
+        return priceB - priceA;
+      });
+    }
+
+    if (sort === 20) {
+      sortedProducts.sort((a, b) => {
+        const priceA = a?.default_variant?.price?.selling_price || 0;
+
+        const priceB = b?.default_variant?.price?.selling_price || 0;
+
+        return priceA - priceB;
+      });
+    }
+
+    const totalItems = sortedProducts.length;
+
+    const totalPages = Math.max(Math.ceil(totalItems / limit), 1);
+
+    const skip = (page - 1) * limit;
+
+    const paginatedProducts = sortedProducts
+      .slice(skip, skip + limit)
+      .map(({ favoriteIndex, ...product }) => product);
+
     return Response.json({
-      success: true,
-      data: products
-        .filter((product) => !Array.isArray(product?.default_variant))
-        .filter(Boolean),
+      status: 200,
+
+      data: {
+        products: paginatedProducts,
+
+        pager: {
+          current_page: page,
+          total_pages: totalPages,
+          total_items: totalItems,
+        },
+
+        sort_options: [
+          {
+            id: 1,
+            title_fa: "جدیدترین",
+          },
+          {
+            id: 21,
+            title_fa: "گران‌ترین",
+          },
+          {
+            id: 20,
+            title_fa: "ارزان‌ترین",
+          },
+        ],
+
+        sort,
+
+        is_notification_active: false,
+      },
     });
   } catch (err) {
     console.error("get favorite products error =>", err);
 
     return Response.json(
       {
-        success: false,
+        status: 500,
         message: err.message,
       },
       {

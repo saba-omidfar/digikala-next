@@ -1,9 +1,34 @@
 import mongoose from "mongoose";
 
-const wishListImageSchema = new mongoose.Schema({
-  imageSrc: { type: String, required: true },
-  imageUrl: { type: String, required: true },
-});
+const wishListImageSchema = new mongoose.Schema(
+  {
+    storage_ids: {
+      type: [String],
+      default: [],
+    },
+
+    url: {
+      type: [String],
+      default: [],
+    },
+
+    thumbnail_url: {
+      type: String,
+      default: null,
+    },
+
+    temporary_id: {
+      type: String,
+      default: null,
+    },
+
+    webp_url: {
+      type: String,
+      default: null,
+    },
+  },
+  { _id: false },
+);
 
 const wishListItemSchema = new mongoose.Schema(
   {
@@ -11,6 +36,7 @@ const wishListItemSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+
     addedAt: {
       type: Date,
       default: Date.now,
@@ -53,10 +79,15 @@ const wishListSchema = new mongoose.Schema(
       default: false,
     },
 
-    product_images: [wishListImageSchema],
+    product_images: {
+      type: [wishListImageSchema],
+      default: [],
+    },
 
-    // ✅ Hybrid products
-    item_product: [wishListItemSchema],
+    item_product: {
+      type: [wishListItemSchema],
+      default: [],
+    },
 
     size: {
       type: Number,
@@ -66,7 +97,6 @@ const wishListSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// 🧠 اتوماتیک size
 wishListSchema.pre("save", function (next) {
   this.size = this.item_product.length;
   next();

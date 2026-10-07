@@ -63,3 +63,9 @@
   font-weight: normal;
   color: #fff;
 }
+
+@media screen and (max-width: 360px) {
+  .not_found_btn {
+    font-size: 9.6px;
+  }
+}

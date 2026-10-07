@@ -1,7 +1,7 @@
 .title {
   width: 100%;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.5;
   margin-bottom: 16px;
   color: #0c0c0c;
@@ -28,10 +28,10 @@
 
 @media screen and (max-width: 360px) {
   .title {
-    font-size: 12px;
+    font-size: 12.8px;
   }
 
   .title_text {
-    font-size: 9px;
+    font-size: 8.8px;
   }
 }

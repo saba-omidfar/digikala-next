@@ -84,6 +84,33 @@
   padding: 0 16px;
 }
 
+.out_of_stock_container {
+  width: 100%;
+  background-color: #ba2d2b1f;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.out_of_stock_title {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 28.8px;
+  color: #d32f2f;
+}
+
+.out_of_stock_expand_btn {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2.17;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f6e5e5 61.96%, #f6e5e51a 100%) !important;
+  padding: 2px 18px 2px 2px;
+}
+
 .product_title {
   position: relative;
   font-size: 16px;
@@ -325,5 +352,10 @@
   .shipping_today_subtext {
     font-size: 9.6px;
     line-height: 12px;
+  }
+
+  .out_of_stock_title {
+    font-size: 12.8px;
+    line-height: 23.04px;
   }
 }

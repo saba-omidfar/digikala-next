@@ -36,7 +36,7 @@ function MenuMobileBox({ activeMenu, isBasketMenu, title, iconId, link }) {
               <use href={`#${iconId}`}></use>
             </svg>
           </div>
-          {isBasketMenu && basket.length && !isLoadingUserCart ? (
+          {isBasketMenu && basket?.length && !isLoadingUserCart ? (
             <div className={styles.cart_count_badge}>
               <span className={styles.cart_count_badge_text}>
                 {toPersianDigits(cart?.items_count)}

@@ -6,6 +6,7 @@ import CartModel from "@/models/Cart";
 import UserModel from "@/models/User";
 
 import { digikalaFetch } from "@/lib/digikala";
+import recalcCartPrices from "@/utils/recalcCartPrices";
 
 async function hydrateItems(items = []) {
   if (!items?.length) return [];
@@ -13,22 +14,40 @@ async function hydrateItems(items = []) {
   const hydrated = await Promise.all(
     items.map(async (item) => {
       try {
+        const productId = item.product?.id;
+        const variantId = item.variant?.id;
+
+        if (!productId || !variantId) {
+          return {
+            ...item,
+            unavailable: true,
+          };
+        }
+
         const data = await digikalaFetch({
-          path: `/v2/product/${item.product.id}/`,
+          path: `/product/v1/products/${productId}/`,
         });
 
         const product = data?.data?.product;
 
         if (!product) {
-          return null;
+          return {
+            ...item,
+            unavailable: true,
+          };
         }
 
-        const variant = product.variants?.find(
-          (v) => Number(v.id) === Number(item.variant.id),
-        );
+        const variant =
+          product.variants?.find((v) => Number(v.id) === Number(variantId)) ||
+          (Number(product.default_variant?.id) === Number(variantId)
+            ? product.default_variant
+            : null);
 
         if (!variant) {
-          return null;
+          return {
+            ...item,
+            unavailable: true,
+          };
         }
 
         return {
@@ -36,13 +55,7 @@ async function hydrateItems(items = []) {
 
           unavailable: false,
 
-          product: {
-            ...product,
-            title_fa: product.title_fa,
-            images: product.images,
-            url: product.url,
-            variants: product.variants,
-          },
+          product,
 
           variant,
 
@@ -57,14 +70,31 @@ async function hydrateItems(items = []) {
           },
         };
       } catch (error) {
-        console.error(error);
-        return null;
+        console.error("HYDRATE ITEM ERROR:", error);
+
+        return {
+          ...item,
+          unavailable: true,
+        };
       }
     }),
   );
 
-  return hydrated.filter(Boolean);
+  return hydrated;
 }
+
+const toStoredItem = (item) => ({
+  product: {
+    id: item.product?.id,
+  },
+  variant: {
+    id: item.variant?.id,
+  },
+  quantity: Number(item.quantity) || 1,
+  has_insurance: Boolean(item.has_insurance),
+  is_next_cart_button_available: item.is_next_cart_button_available ?? true,
+  e_gift_card_properties: item.e_gift_card_properties ?? null,
+});
 
 export async function GET(req) {
   try {
@@ -79,106 +109,115 @@ export async function GET(req) {
     let cart = null;
     let clearGuestCartId = false;
 
-    /* ---------------- USER ---------------- */
     if (accessToken) {
       const user = await UserModel.findOne({
         "auth.accessToken": accessToken,
-      }).select("_id");
+      });
 
       if (!user) {
         return Response.json(
-          { success: false, message: "کاربر یافت نشد" },
+          {
+            success: false,
+            message: "کاربر یافت نشد",
+          },
           { status: 404 },
         );
       }
 
       cart = await CartModel.findOne({
         userId: user._id,
-      }).lean();
+      });
 
       if (!cart) {
-        const createdCart = await CartModel.create({
+        cart = await CartModel.create({
           userId: user._id,
           packages: [{ cart_items: [] }],
           next_cart: [],
         });
-
-        cart = createdCart.toObject();
       }
 
-      /* merge guest */
       if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
         const guestCart = await CartModel.findById(guestCartId);
 
         if (guestCart) {
-          const userItems = cart.packages?.[0]?.cart_items || [];
+          const packageRef = cart.packages?.[0];
+
+          if (!packageRef) {
+            cart.packages = [{ cart_items: [] }];
+          }
+
+          const userItems = cart.packages[0].cart_items || [];
           const guestItems = guestCart.packages?.[0]?.cart_items || [];
 
-          for (const g of guestItems) {
-            const ex = userItems.find(
-              (i) => Number(i.variant?.id) === Number(g.variant?.id),
+          for (const guestItem of guestItems) {
+            const existingIndex = userItems.findIndex(
+              (item) =>
+                Number(item.variant?.id) === Number(guestItem.variant?.id),
             );
 
-            if (ex) ex.quantity += g.quantity;
-            else userItems.push(g);
+            if (existingIndex > -1) {
+              userItems[existingIndex].quantity += guestItem.quantity;
+            } else {
+              userItems.push(guestItem);
+            }
           }
 
           cart.packages[0].cart_items = userItems;
 
-          cart.next_cart = [
-            ...(cart.next_cart || []),
-            ...(guestCart.next_cart || []),
-          ];
+          const userNextCart = cart.next_cart || [];
+          const guestNextCart = guestCart.next_cart || [];
 
+          for (const guestItem of guestNextCart) {
+            const existingIndex = userNextCart.findIndex(
+              (item) =>
+                Number(item.variant?.id) === Number(guestItem.variant?.id),
+            );
+
+            if (existingIndex > -1) {
+              userNextCart[existingIndex].quantity += guestItem.quantity;
+            } else {
+              userNextCart.push(guestItem);
+            }
+          }
+
+          cart.next_cart = userNextCart;
+
+          await cart.save();
           await guestCart.deleteOne();
+
           clearGuestCartId = true;
         }
       }
 
+      const rawCart = cart.toObject();
+
       const [cartItems, nextCart] = await Promise.all([
-        hydrateItems(cart.packages?.[0]?.cart_items),
-        hydrateItems(cart.next_cart),
+        hydrateItems(rawCart.packages?.[0]?.cart_items || []),
+        hydrateItems(rawCart.next_cart || []),
       ]);
 
-      if (
-        cartItems.length !== cart.packages?.[0]?.cart_items.length ||
-        nextCart.length !== cart.next_cart.length
-      ) {
-        await CartModel.updateOne(
-          { _id: cart._id },
-          {
-            $set: {
-              "packages.0.cart_items": cartItems.map((item) => ({
-                product: {
-                  id: item.product.id,
-                },
-                variant: {
-                  id: item.variant.id,
-                },
-                quantity: item.quantity,
-                insurance: item.insurance,
-              })),
-              next_cart: nextCart.map((item) => ({
-                product: item.product,
-                variant: item.variant,
-                quantity: item.quantity,
-                insurance: item.insurance,
-              })),
-            },
-          },
-        );
-      }
-
       const responseCart = {
-        ...cart,
+        ...rawCart,
 
-        packages: cart.packages.map((pkg, index) => ({
+        packages: (rawCart.packages || []).map((pkg, index) => ({
           ...pkg,
-          cart_items: index === 0 ? cartItems : pkg.cart_items,
+          cart_items: index === 0 ? cartItems : pkg.cart_items || [],
         })),
 
         next_cart: nextCart,
       };
+
+      recalcCartPrices(responseCart);
+
+      cart.items_count = responseCart.items_count;
+      cart.payable_price = responseCart.payable_price;
+      cart.rrp_price = responseCart.rrp_price;
+      cart.rrp_price_total = responseCart.rrp_price_total;
+      cart.items_discount = responseCart.items_discount;
+      cart.total_discount = responseCart.total_discount;
+      cart.insurance = responseCart.insurance;
+
+      await cart.save();
 
       return Response.json({
         success: true,
@@ -187,70 +226,57 @@ export async function GET(req) {
       });
     }
 
-    /* ---------------- GUEST ---------------- */
-
     if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
-      cart = await CartModel.findById(guestCartId).lean();
+      cart = await CartModel.findById(guestCartId);
     }
 
     if (!cart) {
-      return Response.json({ success: true, cart: null });
+      return Response.json({
+        success: true,
+        cart: null,
+      });
     }
+
+    const rawCart = cart.toObject();
 
     const [cartItems, nextCart] = await Promise.all([
-      hydrateItems(cart.packages?.[0]?.cart_items),
-      hydrateItems(cart.next_cart),
+      hydrateItems(rawCart.packages?.[0]?.cart_items || []),
+      hydrateItems(rawCart.next_cart || []),
     ]);
 
-    if (
-      cartItems.length !== cart.packages?.[0]?.cart_items?.length ||
-      nextCart.length !== cart.next_cart?.length
-    ) {
-      await CartModel.updateOne(
-        { _id: cart._id },
-        {
-          $set: {
-            "packages.0.cart_items": cartItems.map((item) => ({
-              product: {
-                id: item.product.id,
-              },
-              variant: {
-                id: item.variant.id,
-              },
-              quantity: item.quantity,
-              insurance: item.insurance,
-            })),
-            next_cart: nextCart.map((item) => ({
-              product: item.product,
-              variant: item.variant,
-              quantity: item.quantity,
-              insurance: item.insurance,
-            })),
-          },
-        },
-      );
-    }
-
     const responseCart = {
-      ...cart,
+      ...rawCart,
 
-      packages: cart.packages.map((pkg, index) => ({
+      packages: (rawCart.packages || []).map((pkg, index) => ({
         ...pkg,
-        cart_items: index === 0 ? cartItems : pkg.cart_items,
+        cart_items: index === 0 ? cartItems : pkg.cart_items || [],
       })),
 
       next_cart: nextCart,
     };
+
+    recalcCartPrices(responseCart);
+
+    cart.items_count = responseCart.items_count;
+    cart.payable_price = responseCart.payable_price;
+    cart.rrp_price = responseCart.rrp_price;
+    cart.rrp_price_total = responseCart.rrp_price_total;
+    cart.items_discount = responseCart.items_discount;
+    cart.total_discount = responseCart.total_discount;
+    cart.insurance = responseCart.insurance;
+
+    await cart.save();
 
     return Response.json({
       success: true,
       cart: responseCart,
     });
   } catch (err) {
-    console.error("GET cart error =>", err);
-
     return Response.json(
-      { success: false, message: err.message },
+      {
+        success: false,
+        message: err.message,
+      },
       { status: 500 },
     );
   }

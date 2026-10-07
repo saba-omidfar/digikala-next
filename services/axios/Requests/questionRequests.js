@@ -1,4 +1,4 @@
-import api from "../Configs/config";
+import api from "@/services/axios/Configs/config";
 
 export async function postQuestion(productId, question) {
   const res = await api.post(`/questions/${productId}`, question);

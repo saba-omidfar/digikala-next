@@ -2,10 +2,7 @@ import { cookies } from "next/headers";
 
 import dbConnect from "@/configs/db";
 import UserModel from "@/models/User";
-
 import { digikalaFetch } from "@/lib/digikala";
-
-const EXPIRE_DAYS = 30;
 
 export async function GET(req) {
   try {
@@ -17,72 +14,97 @@ export async function GET(req) {
     if (!accessToken) {
       return Response.json(
         {
-          success: false,
-          data: [],
+          status: 401,
+          message: "کاربر وارد نشده است",
         },
-        { status: 200 },
+        { status: 401 },
       );
     }
 
     const user = await UserModel.findOne({
       "auth.accessToken": accessToken,
-    }).lean();
+    });
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json(
         {
-          success: false,
-          data: [],
+          status: 401,
+          message: "کاربر پیدا نشد",
         },
-        { status: 200 },
+        { status: 401 },
       );
     }
 
-    const expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() - EXPIRE_DAYS);
+    const { searchParams } = new URL(req.url);
 
-    const viewedProducts = (user.viewed_products || [])
-      .filter((item) => new Date(item.viewedAt) > expireDate)
-      .sort((a, b) => new Date(b.viewedAt) - new Date(a.viewedAt));
+    const productIds = [];
 
-    if (!viewedProducts.length) {
-      return Response.json({
-        success: true,
-        data: [],
-      });
+    for (const [key, value] of searchParams.entries()) {
+      if (key.startsWith("product_ids[")) {
+        const id = Number(value);
+
+        if (Number.isFinite(id)) {
+          productIds.push(id);
+        }
+      }
+    }
+
+    const recentViewed = user.recent_viewed_products || [];
+
+    let selectedProducts;
+
+    if (productIds.length > 0) {
+      const requestedIds = new Set(productIds);
+
+      selectedProducts = recentViewed
+        .filter((item) => requestedIds.has(Number(item.productId)))
+        .sort((a, b) => new Date(b.viewedAt) - new Date(a.viewedAt));
+    } else {
+      selectedProducts = [...recentViewed].sort(
+        (a, b) => new Date(b.viewedAt) - new Date(a.viewedAt),
+      );
     }
 
     const products = await Promise.all(
-      viewedProducts.map(async ({ productId }) => {
+      selectedProducts.map(async (item) => {
         try {
           const data = await digikalaFetch({
-            path: `/v2/product/${productId}/?_rch=9fd46e644c8e`,
+            path: `/product/v1/products/${item.productId}/?_rch=9fd46e644c8e`,
           });
 
-          return data?.data?.product;
+          return data?.data?.product || null;
         } catch {
           return null;
         }
       }),
     );
 
+    const validProducts = products.filter(Boolean);
+
     return Response.json({
-      success: true,
-      data: products
-        .filter((product) => !Array.isArray(product?.default_variant))
-        .filter(Boolean),
+      status: 200,
+      data: {
+        recent_viewed_products: {
+          title: "بازدیدهای اخیر",
+          discount_percent: null,
+          see_more_url: null,
+          products: validProducts,
+          background: null,
+          icon: null,
+          products_count: null,
+          data_layer: null,
+        },
+      },
     });
   } catch (err) {
-    console.error("get recent viewed error =>", err);
+    console.error("Get recent viewed products error:", err);
 
     return Response.json(
       {
-        success: false,
+        status: 500,
         message: err.message,
       },
-      {
-        status: 500,
-      },
+      { status: 500 },
     );
   }
 }

@@ -72,7 +72,6 @@ export default function AmazingSliderDesktop({ incredibbleOffers }) {
                 </div>
               </SwiperSlide>
 
-              {/* Amazing Products */}
               {incredibbleOffers?.products?.map((product, index) => (
                 <SwiperSlide key={product?.id} className={styles.amazing_slide}>
                   <VerticalProductCard
@@ -90,7 +89,6 @@ export default function AmazingSliderDesktop({ incredibbleOffers }) {
                 </SwiperSlide>
               ))}
 
-              {/* See More Link */}
               <SwiperSlide className={styles.amazing_last_slide}>
                 <div className="h-100">
                   <div className={styles.show_all_card_btn}>

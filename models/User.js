@@ -1,11 +1,40 @@
 import mongoose from "mongoose";
 
+const addressSchema = new mongoose.Schema(
+  {
+    id: Number,
+    name: String,
+    full_name: String,
+    address: String,
+    postal_code: String,
+    telephone: String,
+    mobile: String,
+    city_id: Number,
+    city_name: String,
+    state_id: Number,
+    state_name: String,
+    district_id: Number,
+    is_default: Boolean,
+    latitude: Number,
+    longitude: Number,
+    building_number: String,
+    unit: String,
+    drop_off_address_id: Number,
+    is_usable: Boolean,
+    is_general_location_jet_eligible: Boolean,
+    is_accurate: Boolean,
+    type: String,
+  },
+  { _id: false },
+);
+
 const userSchema = new mongoose.Schema(
   {
     is_logged_in: {
       type: Boolean,
       default: false,
     },
+
     auth: {
       accessToken: {
         type: String,
@@ -26,12 +55,33 @@ const userSchema = new mongoose.Schema(
         type: Date,
         default: null,
       },
+
+      passwordHash: {
+        type: String,
+        default: null,
+      },
+
+      resetPasswordTokenHash: {
+        type: String,
+        default: null,
+      },
+
+      resetPasswordTokenExpiresAt: {
+        type: Date,
+        default: null,
+      },
     },
+
     digiclub: {
       is_digiclub_activated: { type: Boolean, default: false },
       points: { type: Number, default: 0 },
       reward_url_threshold: { type: Number, default: 0 },
       claimable_points: { type: Number, default: 0 },
+    },
+    digiplus: {
+      subscription_remaining_days: { type: Number, default: null },
+      is_activated: { type: Boolean, default: false },
+      user_state: { type: String, default: "lead" },
     },
     notification: {
       count: {
@@ -113,11 +163,23 @@ const userSchema = new mongoose.Schema(
         default: "",
       },
     },
+    is_email_verified: {
+      type: Boolean,
+      default: false,
+    },
 
+    is_phone_verified: {
+      type: Boolean,
+      default: false,
+    },
+
+    is_verified: {
+      type: Boolean,
+      default: false,
+    },
     default_address: {
       id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Address",
+        type: Number,
         default: null,
       },
       name: {
@@ -160,19 +222,54 @@ const userSchema = new mongoose.Schema(
         type: String,
         default: "",
       },
-      is_default: { type: Boolean, default: false },
-      latitude: { type: Number, default: 0 },
-      longitude: { type: Number, default: 0 },
-      building_number: { type: String, default: "" },
-      unit: { type: String, default: "" },
-      drop_off_address_id: {
-        type: mongoose.Schema.Types.ObjectId,
+      district_id: {
+        type: Number,
         default: null,
       },
-      is_usable: { type: Boolean, default: false },
-      is_general_location_jet_eligible: { type: Boolean, default: false },
-      is_accurate: { type: Boolean, default: false },
-      type: { type: String, default: "address" },
+      is_default: {
+        type: Boolean,
+        default: false,
+      },
+      latitude: {
+        type: Number,
+        default: 0,
+      },
+      longitude: {
+        type: Number,
+        default: 0,
+      },
+      building_number: {
+        type: String,
+        default: "",
+      },
+      unit: {
+        type: String,
+        default: "",
+      },
+      drop_off_address_id: {
+        type: Number,
+        default: null,
+      },
+      is_usable: {
+        type: Boolean,
+        default: false,
+      },
+      is_general_location_jet_eligible: {
+        type: Boolean,
+        default: false,
+      },
+      is_accurate: {
+        type: Boolean,
+        default: false,
+      },
+      type: {
+        type: String,
+        default: "address",
+      },
+    },
+    addresses: {
+      type: [addressSchema],
+      default: [],
     },
     city: {
       id: {
@@ -230,11 +327,44 @@ const userSchema = new mongoose.Schema(
         discount: { type: Number, default: 0 },
       },
     },
+    cart_items: {
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
+    },
     favorite_products: {
       type: [String],
       default: [],
     },
-    viewed_products: [
+
+    observed_products: {
+      type: [
+        {
+          productId: {
+            type: Number,
+            required: true,
+          },
+          type: {
+            type: String,
+            default: "on_incredible_offer",
+          },
+          send_sms: {
+            type: Boolean,
+            default: false,
+          },
+          send_email: {
+            type: Boolean,
+            default: false,
+          },
+          send_notification: {
+            type: Boolean,
+            default: false,
+          },
+        },
+      ],
+      default: [],
+    },
+
+    recent_viewed_products: [
       {
         productId: {
           type: Number,

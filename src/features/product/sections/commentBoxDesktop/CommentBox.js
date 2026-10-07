@@ -23,7 +23,7 @@ import MobileCommentPopover from "@/features/product/modals/mobileCommentPopover
 
 import styles from "./commentBox.module.css";
 
-function commentBox({ comment }) {
+export default function commentBox({ comment }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [anchorOpen, setAnchorOpen] = useState(false);
 
@@ -48,8 +48,13 @@ function commentBox({ comment }) {
   }, [groups]);
 
   const togglefeedbacksHandler = ({ commentId, type }) => {
-    if (!user) {
+    if (!user?.is_logged_in) {
       showSnackbar("ابتدا وارد شوید.");
+      return;
+    }
+
+    if (user._id === comment?.user_id) {
+      showSnackbar("امکان رای دادن به دیدگاه خودتان وجود ندارد");
       return;
     }
 
@@ -74,7 +79,7 @@ function commentBox({ comment }) {
         className: "modal__comment_popover bottomSheet__content--border-lg",
       });
     } else {
-      setAnchorOpen((p) => !p);
+      setAnchorOpen(true);
     }
   };
 
@@ -175,13 +180,6 @@ function commentBox({ comment }) {
                   {!isExpanded ? body.slice(0, limit) : body}
                   {!isExpanded && isLong ? "..." : ""}
                 </p>
-                {/* <p
-                  className={`${styles.comment_body} ${!isSmallScreen && comment?.body?.length > 480 && !isExpanded ? "ellipsis ellipsis-4" : ""}`}
-                >
-                  {!isExpanded
-                    ? `${comment?.body?.slice(0, isSmallScreen ? 150 : 480)} ...`
-                    : comment?.body}
-                </p> */}
                 {!isExpanded &&
                 comment?.body?.length > (isSmallScreen ? 150 : 480) ? (
                   <span
@@ -236,24 +234,19 @@ function commentBox({ comment }) {
                 <div className="d-flex justify-content-start align-items-center flex-wrap">
                   {comment?.files?.length
                     ? comment.files.map((file, fileIndex) => {
-                        // همه گروه‌های کامنتی
                         const commentGroups =
                           groups?.filter((g) => g.type === "COMMENTS") || [];
 
-                        // پیدا کردن ایندکس گروه این کامنت
                         const groupIndex = commentGroups.findIndex(
                           (g) => g.commentId === comment.id,
                         );
 
-                        // اگر پیدا نشد، ادامه نده
                         if (groupIndex === -1) return null;
 
-                        // تعداد عکس‌های قبل از این کامنت
                         const allPreviousItems = commentGroups
                           .slice(0, groupIndex)
                           .reduce((acc, g) => acc + (g.items?.length || 0), 0);
 
-                        // ایندکس نهایی
                         const slideIndex =
                           totalMainItemsLength + allPreviousItems + fileIndex;
 
@@ -316,7 +309,6 @@ function commentBox({ comment }) {
               </p>
             </Link>
 
-            {/* Size */}
             {productDetails?.has_true_to_size ? (
               <>
                 <div className="d-flex mx-1" aria-hidden="false">
@@ -427,5 +419,3 @@ function commentBox({ comment }) {
     </article>
   );
 }
-
-export default commentBox;

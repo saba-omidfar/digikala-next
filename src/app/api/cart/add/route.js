@@ -1,226 +1,3 @@
-// import mongoose from "mongoose";
-// import { cookies } from "next/headers";
-
-// import dbConnect from "@/configs/db";
-// import CartModel from "@/models/Cart";
-// import UserModel from "@/models/User";
-
-// import recalcCartPrices from "@/utils/recalcCartPrices";
-// import syncUserCart from "@/utils/syncUserCart";
-// import { digikalaFetch } from "@/lib/digikala";
-
-// export async function POST(req) {
-//   try {
-//     await dbConnect();
-
-//     const cookiesStore = await cookies();
-//     const accessToken = cookiesStore.get("access_token")?.value;
-
-//     const {
-//       guestCartId = null,
-//       productId = null,
-//       variantId = null,
-//       quantity = 1,
-//       hasInsurance = false,
-//       fromNextCart = false,
-//       moveAll = false,
-//     } = await req.json();
-
-//     let cart;
-
-//     const user = await UserModel.findOne({
-//       "auth.accessToken": accessToken,
-//     }).select("_id");
-
-//     if (user) {
-//       cart = await CartModel.findOne({
-//         userId: user._id,
-//       });
-//     } else if (guestCartId && mongoose.Types.ObjectId.isValid(guestCartId)) {
-//       cart = await CartModel.findById(guestCartId);
-//     }
-
-//     if (!cart) {
-//       cart = await CartModel.create({
-//         userId: user?._id || null,
-//         packages: [{ cart_items: [] }],
-//         next_cart: [],
-//       });
-//     }
-
-//     const packageRef = cart.packages?.[0];
-
-//     let cartProduct = null;
-//     let cartVariant = null;
-
-//     if (fromNextCart && moveAll) {
-//       for (const item of cart.next_cart) {
-//         const idx = packageRef.cart_items.findIndex(
-//           (ci) => Number(ci.variant?.id) === Number(item.variant?.id),
-//         );
-
-//         if (idx > -1) {
-//           packageRef.cart_items[idx].quantity += item.quantity;
-//         } else {
-//           packageRef.cart_items.push(item);
-//         }
-//       }
-
-//       cart.next_cart = [];
-//       cart.updatedAt = new Date();
-
-//       recalcCartPrices(cart);
-//       await cart.save();
-
-//       if (cart.userId) {
-//         const dbUser = await UserModel.findById(cart.userId);
-//         if (dbUser) {
-//           await syncUserCart(dbUser, cart);
-//           await dbUser.save();
-//         }
-//       }
-
-//       return Response.json({ success: true, cart }, { status: 200 });
-//     }
-
-//     if (!fromNextCart && moveAll) {
-//       for (const item of packageRef.cart_items) {
-//         const idx = cart.next_cart.findIndex(
-//           (ci) => Number(ci.variant?.id) === Number(item.variant?.id),
-//         );
-
-//         if (idx > -1) {
-//           cart.next_cart[idx].quantity += item.quantity;
-//         } else {
-//           cart.next_cart.push(item);
-//         }
-//       }
-
-//       packageRef.cart_items = [];
-//       cart.updatedAt = new Date();
-
-//       recalcCartPrices(cart);
-//       await cart.save();
-
-//       if (cart.userId) {
-//         const dbUser = await UserModel.findById(cart.userId);
-//         if (dbUser) {
-//           await syncUserCart(dbUser, cart);
-//           await dbUser.save();
-//         }
-//       }
-
-//       return Response.json({ success: true, cart }, { status: 200 });
-//     }
-
-//     if (fromNextCart) {
-//       const nextItem = cart.next_cart.find(
-//         (item) => Number(item.variant?.id) === Number(variantId),
-//       );
-
-//       if (!nextItem) {
-//         return Response.json(
-//           { success: false, message: "محصول در خرید بعدی پیدا نشد" },
-//           { status: 404 },
-//         );
-//       }
-
-//       cartProduct = nextItem.product;
-//       cartVariant = nextItem.variant;
-
-//       cart.next_cart = cart.next_cart.filter(
-//         (item) => Number(item.variant?.id) !== Number(variantId),
-//       );
-//     } else {
-//       const data = await digikalaFetch({
-//         path: `/v2/product/${productId}/`,
-//       });
-
-//       const product = data?.data?.product;
-
-//       if (!product) {
-//         return Response.json(
-//           { success: false, message: "محصول پیدا نشد" },
-//           { status: 404 },
-//         );
-//       }
-
-//       const variant =
-//         product.variants?.find((v) => Number(v.id) === Number(variantId)) ||
-//         product.default_variant;
-
-//       if (!variant) {
-//         return Response.json(
-//           { success: false, message: "واریانت نامعتبر است" },
-//           { status: 400 },
-//         );
-//       }
-
-//       cartProduct = product;
-//       cartVariant = variant;
-//     }
-
-//     cart.next_cart = cart.next_cart.filter(
-//       (item) => Number(item.variant?.id) !== Number(cartVariant.id),
-//     );
-
-//     const existingIndex = packageRef.cart_items.findIndex(
-//       (item) => Number(item.variant?.id) === Number(cartVariant.id),
-//     );
-
-//     if (existingIndex > -1) {
-//       const existingItem = packageRef.cart_items[existingIndex];
-
-//       if (
-//         existingItem.quantity + quantity >
-//         (cartVariant?.price?.order_limit || Infinity)
-//       ) {
-//         return Response.json(
-//           { success: false, message: "حداکثر تعداد مجاز رسیدی" },
-//           { status: 400 },
-//         );
-//       }
-
-//       existingItem.quantity += quantity;
-//       existingItem.has_insurance = Boolean(hasInsurance);
-//     } else {
-//       packageRef.cart_items.push({
-//         id: Math.floor(Math.random() * 1e9),
-//         cart_id: cart._id,
-//         quantity,
-//         product: { ...cartProduct },
-//         variant: { ...cartVariant },
-//         has_insurance: Boolean(hasInsurance),
-//       });
-//     }
-
-//     cart.updatedAt = new Date();
-
-//     recalcCartPrices(cart);
-//     await cart.save();
-
-//     if (cart.userId) {
-//       const dbUser = await UserModel.findById(cart.userId);
-//       if (dbUser) {
-//         await syncUserCart(dbUser, cart);
-//         await dbUser.save();
-//       }
-//     }
-
-//     return Response.json(
-//       { success: true, cart, guestCartId: !user?.id ? cart._id : null },
-//       { status: 201 },
-//     );
-//   } catch (err) {
-//     console.error("Cart error:", err);
-
-//     return Response.json(
-//       { success: false, message: err.message },
-//       { status: 500 },
-//     );
-//   }
-// }
-
 import mongoose from "mongoose";
 import { cookies } from "next/headers";
 
@@ -228,16 +5,18 @@ import dbConnect from "@/configs/db";
 import CartModel from "@/models/Cart";
 import UserModel from "@/models/User";
 
+import { digikalaFetch } from "@/lib/digikala";
+
 import recalcCartPrices from "@/utils/recalcCartPrices";
 import syncUserCart from "@/utils/syncUserCart";
-import { digikalaFetch } from "@/lib/digikala";
+import hydrateItems from "@/utils/hydrateCartItems";
 
 const syncCartWithUser = async (cart) => {
   if (!cart.userId) return;
 
   const user = await UserModel.findById(cart.userId);
 
-  if (!user) return;
+  if (!user?.is_logged_in) return;
 
   await syncUserCart(user, cart);
   await user.save();
@@ -246,7 +25,6 @@ const syncCartWithUser = async (cart) => {
 const saveCart = async (cart) => {
   cart.updatedAt = new Date();
 
-  recalcCartPrices(cart);
   await cart.save();
 
   await syncCartWithUser(cart);
@@ -324,7 +102,7 @@ const moveCartToNextCart = (cart) => {
 
 const getProductAndVariant = async ({ productId, variantId }) => {
   const data = await digikalaFetch({
-    path: `/v2/product/${productId}/`,
+    path: `/product/v1/products/${productId}/`,
   });
 
   const product = data?.data?.product;
@@ -351,11 +129,9 @@ export async function POST(req) {
   try {
     await dbConnect();
 
-    // AUTH
     const cookiesStore = await cookies();
     const accessToken = cookiesStore.get("access_token")?.value;
 
-    // REQUEST BODY
     const body = await req.json();
 
     const {
@@ -368,7 +144,6 @@ export async function POST(req) {
       moveAll = false,
     } = body;
 
-    // USER
     let user = null;
 
     if (accessToken) {
@@ -377,7 +152,6 @@ export async function POST(req) {
       }).select("_id");
     }
 
-    // CA
     let cart = await getCart({
       user,
       guestCartId,
@@ -399,7 +173,6 @@ export async function POST(req) {
       );
     }
 
-    // MOVE NEXT CART → CART
     if (fromNextCart && moveAll) {
       moveNextCartToCart(cart);
 
@@ -414,8 +187,6 @@ export async function POST(req) {
       );
     }
 
-    // MOVE CART → NEXT CART
-
     if (!fromNextCart && moveAll) {
       moveCartToNextCart(cart);
 
@@ -429,8 +200,6 @@ export async function POST(req) {
         { status: 200 },
       );
     }
-
-    // PRODUCT / VARIANT
 
     let cartProduct;
     let cartVariant;
@@ -466,19 +235,13 @@ export async function POST(req) {
       cartVariant = result.variant;
     }
 
-    // REMOVE FROM NEXT CART
-
     cart.next_cart = cart.next_cart.filter(
       (item) => Number(item.variant?.id) !== Number(cartVariant.id),
     );
 
-    // FIND EXISTING ITEM
-
     const existingIndex = packageRef.cart_items.findIndex(
       (item) => Number(item.variant?.id) === Number(cartVariant.id),
     );
-
-    // UPDATE EXISTING ITEM
 
     if (existingIndex > -1) {
       const existingItem = packageRef.cart_items[existingIndex];
@@ -499,32 +262,44 @@ export async function POST(req) {
 
       existingItem.quantity = newQuantity;
       existingItem.has_insurance = Boolean(hasInsurance);
-    }
-
-    // ADD NEW ITEM
-    else {
+    } else {
       packageRef.cart_items.push({
         id: Math.floor(Math.random() * 1e9),
-        cart_id: cart._id,
+        cart_id: cart._id.toString(),
         quantity,
         product: {
-          ...cartProduct,
+          id: cartProduct.id,
         },
         variant: {
-          ...cartVariant,
+          id: cartVariant.id,
         },
         has_insurance: Boolean(hasInsurance),
       });
     }
+    const responseCart = cart.toObject();
 
-    // SAVE
+    const hydratedItems = await hydrateItems(
+      responseCart.packages?.[0]?.cart_items || [],
+    );
+
+    responseCart.packages[0].cart_items = hydratedItems;
+
+    recalcCartPrices(responseCart);
+
+    cart.items_count = responseCart.items_count;
+    cart.payable_price = responseCart.payable_price;
+    cart.rrp_price = responseCart.rrp_price;
+    cart.rrp_price_total = responseCart.rrp_price_total;
+    cart.items_discount = responseCart.items_discount;
+    cart.total_discount = responseCart.total_discount;
+    cart.insurance = responseCart.insurance;
+
     await saveCart(cart);
-
     return Response.json(
       {
         success: true,
-        cart,
-        guestCartId: !user?.id ? cart._id : null,
+        cart: responseCart,
+        guestCartId: !user ? cart._id.toString() : null,
       },
       { status: 201 },
     );

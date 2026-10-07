@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 import { useModal } from "@/contexts/modalContext";
 import { useSearchCompare } from "@/hooks/useCompare";

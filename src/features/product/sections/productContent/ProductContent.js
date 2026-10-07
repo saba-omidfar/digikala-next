@@ -23,13 +23,19 @@ export default function ProductContent() {
 
       if (currentScroll < lastScrollY) {
         setTopOffset(
-          (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+          (
+            topMegaMenuBanners?.desktop?.length ||
+            topMegaMenuBanners?.mobile?.length
+          )?.length
             ? 234
             : 173,
         );
       } else {
         setTopOffset(
-          (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+          (
+            topMegaMenuBanners?.desktop?.length ||
+            topMegaMenuBanners?.mobile?.length
+          )?.length
             ? 188
             : 173,
         );

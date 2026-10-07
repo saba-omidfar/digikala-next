@@ -6,10 +6,14 @@ import dbConnect from "@/configs/db";
 import UserModel from "@/models/User";
 import OTPModel from "@/models/Otp";
 import CartModel from "@/models/Cart";
+import GuestLocationModel from "@/models/GuestLocation";
 
 import generateAccessToken, { generateRefreshToken } from "@/utils/auth";
 
 import recalcCartPrices from "@/utils/recalcCartPrices";
+
+const OTP_MAX_ATTEMPTS = 5;
+const OTP_BLOCK_SECONDS = 5 * 60;
 
 function hashRefreshToken(token) {
   return crypto.createHash("sha256").update(token).digest("hex");
@@ -24,7 +28,7 @@ export async function POST(req) {
     if (!username || !code) {
       return Response.json(
         {
-          message: "شماره همراه و کد تایید الزامی است.",
+          message: "ایمیل یا شماره همراه و کد تایید الزامی است.",
         },
         {
           status: 400,
@@ -35,25 +39,34 @@ export async function POST(req) {
     const phoneRegex = /^(\+98|0)?9\d{9}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    let query = {};
+    const normalizedUsername = username.trim();
 
-    if (phoneRegex.test(username)) {
-      query = {
-        "user.phone": username,
-      };
-    } else if (emailRegex.test(username)) {
-      query = {
-        "user.email": username,
-      };
-    } else {
+    const isPhone = phoneRegex.test(normalizedUsername);
+    const isEmail = emailRegex.test(normalizedUsername);
+
+    if (!isPhone && !isEmail) {
       return Response.json(
         {
-          message: "فرمت ورودی نادرست است.",
+          message: "فرمت ایمیل یا شماره همراه نادرست است.",
         },
         {
           status: 400,
         },
       );
+    }
+
+    const normalizedEmail = isEmail ? normalizedUsername.toLowerCase() : null;
+
+    let query = {};
+
+    if (isPhone) {
+      query = {
+        "user.phone": normalizedUsername,
+      };
+    } else {
+      query = {
+        "user.email": normalizedEmail,
+      };
     }
 
     const user = await UserModel.findOne(query);
@@ -86,10 +99,13 @@ export async function POST(req) {
       );
     }
 
-    if (otpRecord.blockedUntil && otpRecord.blockedUntil > new Date()) {
+    const now = new Date();
+
+    if (otpRecord.blockedUntil && otpRecord.blockedUntil > now) {
       return Response.json(
         {
           message: "به دلیل تلاش‌های ناموفق، موقتاً امکان ورود وجود ندارد.",
+          blockedUntil: otpRecord.blockedUntil,
         },
         {
           status: 429,
@@ -97,7 +113,7 @@ export async function POST(req) {
       );
     }
 
-    if (otpRecord.expiresAt <= new Date()) {
+    if (otpRecord.expiresAt <= now) {
       await OTPModel.deleteMany({
         userId: user._id,
       });
@@ -105,6 +121,7 @@ export async function POST(req) {
       return Response.json(
         {
           message: "کد تایید منقضی شده است. لطفاً کد جدید دریافت کنید.",
+          expired: true,
         },
         {
           status: 400,
@@ -115,8 +132,10 @@ export async function POST(req) {
     if (String(otpRecord.code) !== String(code)) {
       otpRecord.attempts = (otpRecord.attempts || 0) + 1;
 
-      if (otpRecord.attempts >= 5) {
-        otpRecord.blockedUntil = new Date(Date.now() + 5 * 60 * 1000);
+      if (otpRecord.attempts >= OTP_MAX_ATTEMPTS) {
+        otpRecord.blockedUntil = new Date(
+          Date.now() + OTP_BLOCK_SECONDS * 1000,
+        );
       }
 
       await otpRecord.save();
@@ -124,7 +143,7 @@ export async function POST(req) {
       return Response.json(
         {
           message:
-            otpRecord.attempts >= 5
+            otpRecord.attempts >= OTP_MAX_ATTEMPTS
               ? "تعداد تلاش‌های مجاز تمام شده است."
               : "کد تایید اشتباه است.",
           attempts: otpRecord.attempts,
@@ -135,13 +154,50 @@ export async function POST(req) {
       );
     }
 
+    if (isPhone) {
+      user.is_phone_verified = true;
+    }
+
+    if (isEmail) {
+      user.is_email_verified = true;
+    }
+
     await OTPModel.deleteMany({
       userId: user._id,
     });
 
+    let guestLocation = null;
+
+    if (guestCartId) {
+      guestLocation = await GuestLocationModel.findOne({
+        guestCartId,
+      }).lean();
+    }
+
+    if (otpRecord.purpose === "reset_password") {
+      const resetToken = crypto.randomBytes(32).toString("hex");
+
+      const resetTokenHash = hashRefreshToken(resetToken);
+
+      user.auth.resetPasswordTokenHash = resetTokenHash;
+
+      user.auth.resetPasswordTokenExpiresAt = new Date(
+        Date.now() + 10 * 60 * 1000,
+      );
+
+      await user.save();
+
+      return Response.json({
+        success: true,
+        message: "کد تایید صحیح است.",
+        resetPassword: true,
+        resetToken,
+      });
+    }
+
     const accessToken = generateAccessToken({
       userId: user._id.toString(),
-      username,
+      username: normalizedUsername,
     });
 
     const refreshToken = generateRefreshToken();
@@ -150,12 +206,28 @@ export async function POST(req) {
 
     user.is_logged_in = true;
 
-    user.auth = {
-      accessToken,
-      refreshTokenHash,
-      accessTokenCreatedAt: new Date(),
-      refreshTokenCreatedAt: new Date(),
-    };
+    user.auth.accessToken = accessToken;
+    user.auth.refreshTokenHash = refreshTokenHash;
+    user.auth.accessTokenCreatedAt = new Date();
+    user.auth.refreshTokenCreatedAt = new Date();
+
+    if (guestLocation?.default_address) {
+      const guestAddress = guestLocation.default_address;
+
+      const currentAddresses = Array.isArray(user.addresses)
+        ? user.addresses
+        : [];
+
+      const alreadyExists = currentAddresses.some(
+        (address) => Number(address.id) === Number(guestAddress.id),
+      );
+
+      if (!alreadyExists) {
+        user.addresses = [...currentAddresses, guestAddress];
+      }
+
+      user.default_address = guestAddress;
+    }
 
     await user.save();
 
@@ -188,11 +260,13 @@ export async function POST(req) {
         if (!userCart) {
           userCart = await CartModel.create({
             userId: user._id,
+
             packages: guestCart.packages || [
               {
                 cart_items: [],
               },
             ],
+
             next_cart: guestCart.next_cart || [],
           });
 
@@ -255,24 +329,28 @@ export async function POST(req) {
 
         await CartModel.findByIdAndDelete(guestCartId);
       }
+
+      if (guestLocation?.default_address) {
+        await GuestLocationModel.deleteOne({
+          guestCartId,
+        });
+      }
     }
 
     return Response.json({
       success: true,
+
       message: "کد تایید صحیح است و ورود با موفقیت انجام شد.",
+
       user: {
         id: user._id,
         phone: user.user?.phone,
         email: user.user?.email,
       },
+
       clearGuestCartId: Boolean(guestCartId),
     });
   } catch (err) {
-    console.error("❌ verifyCode ERROR");
-    console.error("name:", err?.name);
-    console.error("message:", err?.message);
-    console.error("stack:", err?.stack);
-
     return Response.json(
       {
         success: false,

@@ -35,7 +35,10 @@ export default function IncredibleContent({ categoryId }) {
       style={{
         paddingTop: isSmallScreen
           ? 0
-          : (topMegaMenuBanners?.desktop || topMegaMenuBanners?.mobile)?.length
+          : (
+                topMegaMenuBanners?.desktop?.length ||
+                topMegaMenuBanners?.mobile?.length
+              )?.length
             ? 168
             : 108,
       }}

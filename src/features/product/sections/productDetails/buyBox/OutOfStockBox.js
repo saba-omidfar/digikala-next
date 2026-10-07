@@ -1,10 +1,11 @@
-import { useRouter } from "nextjs-toploader/app";
+"use client";
 
 import AmazingNotifModal from "@/features/product/modals/amazingNotifModal/AmazingNotifModal";
 
 import { useModal } from "@/contexts/modalContext";
 import { useProductContext } from "@/contexts/ProductContext";
 import { useUserContext } from "@/contexts/UserContext";
+import { useRemoveObservedProduct } from "@/features/profile/hooks/useLists";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 
 import useLoginRedirect from "@/hooks/useLoginRedirect";
@@ -12,24 +13,33 @@ import useLoginRedirect from "@/hooks/useLoginRedirect";
 import styles from "./outOfStockBox.module.css";
 
 function outOfStockBox() {
-  const router = useRouter();
   const { openModal } = useModal();
   const { showSnackbar } = useSnackbar();
   const { redirectToLogin } = useLoginRedirect();
 
-  const { productDetails, removeIncredibleNotification, incredibleStatus } =
-    useProductContext();
+  const { productDetails } = useProductContext();
   const { user } = useUserContext();
 
-  const toggleAmazingNotifHandler = () => {
-    if (!user) {
+  const {
+    mutate: removeObservedProduct,
+    isLoading: isLoadingRemoveObservedProduct,
+  } = useRemoveObservedProduct();
+
+  const isObserved = user?.observed_products?.some(
+    (item) => String(item.productId) === String(productDetails?.id),
+  );
+
+  const notifeMeHandler = () => {
+    if (isLoadingRemoveObservedProduct) return;
+
+    if (!user?.is_logged_in) {
       redirectToLogin();
       return;
     }
 
-    if (!incredibleStatus?.is_active) {
+    if (!isObserved) {
       return openModal(
-        <AmazingNotifModal productId={productDetails?.id} title="موجود" />,
+        <AmazingNotifModal title="موجود" productId={productDetails?.id} />,
         {
           name: "amazing-notification",
           className: "rounded-medium",
@@ -37,13 +47,15 @@ function outOfStockBox() {
       );
     }
 
-    removeIncredibleNotification(
+    removeObservedProduct(
       {
         productId: productDetails?.id,
       },
       {
-        onSuccess: () => {
-          showSnackbar("حذف اطلاع‌رسانی با موفقیت انجام شد");
+        onSuccess: ({ success }) => {
+          if (!success) return;
+
+          showSnackbar("اطلاع‌رسانی برای موجود شدن غیرفعال شد.");
         },
       },
     );
@@ -65,7 +77,7 @@ function outOfStockBox() {
               <button
                 className={styles.not_found_btn}
                 id="pdp-not-found-cta"
-                onClick={toggleAmazingNotifHandler}
+                onClick={notifeMeHandler}
               >
                 <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
                   <div
@@ -78,7 +90,7 @@ function outOfStockBox() {
                       className={`${styles.notification_icon} cube-font-icon`}
                     ></div>
                   </div>
-                  {incredibleStatus?.is_active
+                  {isObserved
                     ? "دیگر لازم نیست خبرم کنید"
                     : "موجود شد خبرم کنید"}
                 </div>

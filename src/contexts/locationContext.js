@@ -1,5 +1,7 @@
 "use client";
 
+import { useQueryClient } from "react-query";
+
 import {
   createContext,
   useCallback,
@@ -10,10 +12,17 @@ import {
   useState,
 } from "react";
 
+import {
+  getGuestId,
+  saveGuestLocation,
+  saveUserLocation,
+} from "@/services/axios/Requests/userRequests";
+
 import { fromLonLat } from "ol/proj";
 
 import { useGeoMap, useReversGeoMap } from "@/hooks/useMap";
 import { useModal } from "@/contexts/modalContext";
+import { useUserContext } from "./UserContext";
 
 const DEFAULT_LOCATION = {
   lng: 51.389,
@@ -24,10 +33,13 @@ const DEFAULT_LOCATION = {
 const LocationContext = createContext(null);
 
 export const LocationProvider = ({ children }) => {
+  const queryClient = useQueryClient();
+
   const debounceRef = useRef(null);
   const mapRef = useRef(null);
 
   const { closeModal } = useModal();
+  const { user } = useUserContext();
 
   const {
     data: geo = [],
@@ -113,10 +125,105 @@ export const LocationProvider = ({ children }) => {
     };
 
     updateLocation(location);
+
+    const address = {
+      ...location,
+      id: Date.now(),
+      name: "موقعیت انتخابی",
+      full_name: "",
+      postal_code: "",
+      telephone: "",
+      mobile: "",
+      city_id: location.city_id || null,
+      city_name: location.city_name || location.city || "",
+      state_id: location.state_id || null,
+      state_name: location.state_name || location.state || "",
+      district_id: null,
+      support_fmcg: true,
+      is_default: true,
+      building_number: "",
+      unit: "",
+      drop_off_address_id: null,
+      is_usable: true,
+      is_general_location_jet_eligible: true,
+      is_accurate: false,
+      type: "location",
+    };
+
+    if (user?.is_logged_in) {
+      await saveUserLocation({
+        address: location.address,
+        cityId: location.city_id,
+        cityName: location.city_name || location.city,
+        stateId: location.state_id,
+        stateName: location.state_name || location.state,
+        latitude: location.latitude,
+        longitude: location.longitude,
+      });
+    } else {
+      const guestCartId = await getGuestId();
+
+      await saveGuestLocation({
+        guestCartId,
+        address,
+      });
+    }
+
+    await queryClient.invalidateQueries({
+      queryKey: ["me"],
+    });
+
     closeModal();
 
     return location;
-  }, [mapCenter, searchReverseGeo, updateLocation]);
+  }, [
+    mapCenter,
+    searchReverseGeo,
+    updateLocation,
+    user,
+    queryClient,
+    closeModal,
+  ]);
+
+  const handleSubmitAddress = useCallback(
+    async ({ address, city, state }) => {
+      try {
+        const params = new URLSearchParams({
+          address,
+          city,
+          state,
+        });
+
+        const res = await fetch(`/api/map/geo?${params.toString()}`);
+
+        if (!res.ok) {
+          throw new Error("خطا در دریافت مختصات آدرس");
+        }
+
+        const result = await res.json();
+
+        const location = result?.data?.addresses?.[0];
+
+        if (!location) return null;
+
+        const selectedAddress = {
+          ...location,
+          address,
+          city,
+          state,
+        };
+
+        updateLocation(selectedAddress);
+
+        return selectedAddress;
+      } catch (error) {
+        console.error("Geo address error:", error);
+
+        return null;
+      }
+    },
+    [updateLocation],
+  );
 
   useEffect(() => {
     return () => {
@@ -142,6 +249,7 @@ export const LocationProvider = ({ children }) => {
       handleSearchLocation,
       handleSelectLocation,
       handleSubmitLocation,
+      handleSubmitAddress,
       clearLocation,
     }),
     [
@@ -154,6 +262,7 @@ export const LocationProvider = ({ children }) => {
       handleSearchLocation,
       handleSelectLocation,
       handleSubmitLocation,
+      handleSubmitAddress,
       clearLocation,
     ],
   );

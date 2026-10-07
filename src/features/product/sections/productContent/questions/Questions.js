@@ -40,7 +40,7 @@ export default function Questions({ topOffset }) {
 
   return (
     <div className="lazyload-wrapper">
-      <div id="questionSection" ref={questionsRef}>
+      <div id="QUESTIONS" ref={questionsRef}>
         <section className={styles.product_content__section_border}>
           <ProductContentTitle title="پرسش‌ها" />
           <div className="d-flex justify-content-start align-items-start mt-3">

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -24,14 +26,19 @@ export default function VerificationForm({
   setCode,
   username,
   onSubmit,
+  onPasswordSubmit,
   loginWithPassword,
   setLoginWithPassword,
+  setStep,
+  onBackToOtp,
   resendSection,
   verifyLoading,
-  onVerify,
+  setIsResetPassword,
+  isNewPhone,
 }) {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
-    register: registerOtp,
     handleSubmit: handleOtpSubmit,
     formState: { errors: otpErrors },
   } = useForm({
@@ -48,6 +55,18 @@ export default function VerificationForm({
     mode: "onSubmit",
   });
 
+  const handleCodeChange = (e) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 5);
+
+    setCode(value);
+
+    if (value.length === 5) {
+      onSubmit(value);
+    }
+  };
+
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username || "");
+
   return (
     <>
       <h1 className={styles.title}>
@@ -55,42 +74,49 @@ export default function VerificationForm({
       </h1>
 
       {!loginWithPassword && (
-        <p className={styles.verification_code_sending}>
-          کد تایید برای شماره{" "}
-          <span className={styles.verification_code_text_strong}>
-            {toPersianDigits(username?.toLocaleString("fa-IR"))}
-          </span>{" "}
-          پیامک شد
-        </p>
+        <>
+          {isNewPhone ? (
+            <p className={styles.verification_code_sending}>
+              حساب کاربری با شماره موبایل{" "}
+              <span className={styles.verification_code_text_strong}>
+                {toPersianDigits(username?.toLocaleString("fa-IR"))}
+              </span>{" "}
+              وجود ندارد. برای ساخت حساب جدید، کد تایید برای این شماره ارسال
+              گردید.
+            </p>
+          ) : (
+            <p className={styles.verification_code_sending}>
+              کد تایید برای {isEmail ? "ایمیل" : "شماره"}{" "}
+              <span className={styles.verification_code_text_strong}>
+                {isEmail
+                  ? username
+                  : toPersianDigits(username?.toLocaleString("fa-IR"))}
+              </span>{" "}
+              {isEmail ? "ارسال شد" : "پیامک شد"}
+            </p>
+          )}
+        </>
       )}
 
       <form
         className={styles.form}
         onSubmit={
           loginWithPassword
-            ? handlePasswordSubmit(onSubmit)
-            : handleOtpSubmit(onSubmit)
+            ? handlePasswordSubmit(onPasswordSubmit)
+            : handleOtpSubmit(() => onSubmit(code))
         }
       >
-        {!loginWithPassword ? (
+        {!loginWithPassword && (
           <>
             <div className={styles.form_group}>
               <div
                 className={`${styles.input_wrapper} ${
-                  otpErrors.code && styles.input_wrapper_error
+                  otpErrors.code ? styles.input_wrapper_error : ""
                 }`}
               >
                 <input
                   value={code}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, "").slice(0, 5);
-
-                    setCode(value);
-
-                    if (value.length === 5) {
-                      onVerify(value);
-                    }
-                  }}
+                  onChange={handleCodeChange}
                   type="text"
                   id="code"
                   name="code"
@@ -132,23 +158,25 @@ export default function VerificationForm({
               >
                 ورود با رمز عبور
                 <svg className={styles.chevron_icon} aria-hidden="true">
-                  <use href="#chevron-left"></use>
+                  <use href="#chevronLeft"></use>
                 </svg>
               </button>
             </div>
 
             {resendSection}
           </>
-        ) : (
+        )}
+
+        {loginWithPassword && (
           <div className={styles.form_group}>
-            <div className={styles.input_group} dir="ltr">
+            <div className={styles.input_group}>
               <input
                 {...registerPassword("password")}
                 tabIndex="1"
                 id="password"
-                className={styles.input}
+                className={styles.password_input}
                 name="password"
-                type="text"
+                type={showPassword ? "text" : "password"}
                 autoComplete="off"
                 autoFocus
                 data-error-message=" "
@@ -157,27 +185,18 @@ export default function VerificationForm({
               <button
                 className={`${styles.password_toggle_btn} ${styles.password_visible}`}
                 type="button"
-                aria-label="Hide password"
+                aria-label="نمایش رمز عبور"
                 aria-controls="password"
-                data-password-toggle=""
-                data-label-show="Show password"
-                data-label-hide="Hide password"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  setShowPassword((prev) => !prev);
+                }}
               >
                 <div className="d-flex">
-                  <svg
-                    className={`${styles.visibility_icon} ${styles.icon_visibility_off}`}
-                    aria-hidden="true"
-                  >
-                    <use href="#visibility-off"></use>
-                  </svg>
-                </div>
-
-                <div className="d-flex">
-                  <svg
-                    className={`${styles.visibility_icon} ${styles.icon_visibility_on}`}
-                    aria-hidden="true"
-                  >
-                    <use href="#visibility-on"></use>
+                  <svg className={styles.visibility_icon} aria-hidden="true">
+                    <use
+                      href={`${showPassword ? "#visibilityOff" : "#visibilityOn"}`}
+                    ></use>
                   </svg>
                 </div>
               </button>
@@ -209,12 +228,12 @@ export default function VerificationForm({
                   id="otp-button"
                   className={styles.otp_button}
                   data-otp-submit=""
-                  onClick={() => setLoginWithPassword(false)}
+                  onClick={onBackToOtp}
                 >
                   ورود با رمز یک‌بار‌مصرف
                   <div className="d-flex">
                     <svg className={styles.chevron_icon} aria-hidden="true">
-                      <use href="#chevron-left"></use>
+                      <use href="#chevronLeft"></use>
                     </svg>
                   </div>
                 </button>
@@ -223,6 +242,11 @@ export default function VerificationForm({
               <div
                 id="forgot-password-option"
                 className={styles.forgot_password_option}
+                onClick={() => {
+                  setIsResetPassword(true);
+                  setLoginWithPassword(false);
+                  setStep("forgotPassword");
+                }}
               >
                 <span tabIndex="3" className={styles.forgot_password_text}>
                   فراموشی رمز عبور
@@ -230,33 +254,33 @@ export default function VerificationForm({
 
                 <div className="d-flex">
                   <svg className={styles.chevron_icon} aria-hidden="true">
-                    <use href="#chevron-left"></use>
+                    <use href="#chevronLeft"></use>
                   </svg>
                 </div>
               </div>
             </div>
           </div>
         )}
-      </form>
 
-      <div className={styles.form_group}>
-        <div id="form-buttons" className={styles.form_buttons}>
-          {verifyLoading ? (
-            <button className={styles.button}>
-              <div className={styles.spinner}>
-                <Spinner size={16} color="rgb(237, 25, 68)" />
-              </div>
-            </button>
-          ) : (
-            <input
-              className={styles.button}
-              type="submit"
-              value="تایید"
-              tabIndex="2"
-            />
-          )}
+        <div className={styles.form_group}>
+          <div id="form-buttons" className={styles.form_buttons}>
+            {verifyLoading ? (
+              <button type="button" className={styles.button} disabled>
+                <div className={styles.spinner}>
+                  <Spinner size={16} color="rgb(237, 25, 68)" />
+                </div>
+              </button>
+            ) : (
+              <input
+                className={styles.button}
+                type="submit"
+                value="تایید"
+                tabIndex="2"
+              />
+            )}
+          </div>
         </div>
-      </div>
+      </form>
     </>
   );
 }

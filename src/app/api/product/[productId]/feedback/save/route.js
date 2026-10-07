@@ -22,7 +22,7 @@ export async function POST(req, { params }) {
       "auth.accessToken": accessToken,
     });
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json({ message: "User not found" }, { status: 401 });
     }
 

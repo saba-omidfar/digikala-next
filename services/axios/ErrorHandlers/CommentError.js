@@ -1,4 +1,4 @@
-import api from "../Configs/config";
+import api from "@/services/axios/Configs/config";
 
 export async function fetchComments(productId) {
   const res = await api.get(`/comments/${productId}`);

@@ -24,7 +24,7 @@ export default function CommentPopover({
   const { mutate, isLoading } = useReportComment();
 
   const reportHandler = () => {
-    if (!user) {
+    if (!user?.is_logged_in) {
       showSnackbar("ابتدا وارد شوید.");
       onClose();
       return;

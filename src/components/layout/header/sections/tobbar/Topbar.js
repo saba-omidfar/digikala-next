@@ -65,7 +65,7 @@ export default function Topbar() {
                   className={`${styles.mini_profile_skeleton} skeleton_no_animation`}
                 ></div>
               </div>
-            ) : user ? (
+            ) : user?.is_logged_in ? (
               <div
                 ref={miniProfileBtnRef}
                 className={styles.mini_profile__button_container}

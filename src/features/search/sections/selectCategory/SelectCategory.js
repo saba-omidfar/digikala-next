@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 import { useAutocomplete } from "@/hooks/useAutocomplete";
 import { useListing } from "@/contexts/ListingContext";

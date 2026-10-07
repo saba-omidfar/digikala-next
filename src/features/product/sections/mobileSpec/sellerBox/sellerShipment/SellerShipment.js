@@ -62,7 +62,7 @@ function SellerShipment() {
             ></div>
           </div>
         </div>
-        <ul>
+        <ul className="m-0 p-0">
           {activeVariant?.shipment_methods?.providers?.map((method, index) => {
             const currentMode =
               shippingModes[method.type] || shippingModes.digikala;

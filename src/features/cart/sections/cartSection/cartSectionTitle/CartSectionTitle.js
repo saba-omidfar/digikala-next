@@ -70,11 +70,11 @@ export default function CartSectionTitle() {
                         <div className={styles.subtitle_container}>
                           <span className={styles.subtitle_bold}>سبد خرید</span>
 
-                          {user ? (
+                          {user?.is_logged_in ? (
                             <>
-                              {basket.length !== 0 ? (
+                              {basket?.length !== 0 ? (
                                 <span className={styles.subtitle}>
-                                  {toPersianDigits(basket.length)} کالا
+                                  {toPersianDigits(basket?.length)} کالا
                                 </span>
                               ) : (
                                 ""
@@ -88,7 +88,7 @@ export default function CartSectionTitle() {
                     </span>
                   </div>
 
-                  {user ? (
+                  {user?.is_logged_in ? (
                     <div className={styles.left_section}>
                       <div
                         className="position-relative"
@@ -123,14 +123,14 @@ export default function CartSectionTitle() {
                               className={styles.next_cart_images_contianer}
                               aria-hidden="true"
                             >
-                              {nextPurchaseBasket.map((item, index) => (
+                              {nextPurchaseBasket?.map((item, index) => (
                                 <div
                                   key={index}
                                   className={`${styles.next_cart_image_chip} ${styles.animate_chip}`}
                                   style={{
                                     "--offset": `${index * 24}px`,
                                     "--next-cart-image-delay": `${index * 150}ms`,
-                                    zIndex: nextPurchaseBasket.length - index,
+                                    zIndex: nextPurchaseBasket?.length - index,
                                   }}
                                 >
                                   <div
@@ -168,7 +168,7 @@ export default function CartSectionTitle() {
                         </div>
                       </div>
 
-                      {basket.length ? (
+                      {basket?.length ? (
                         <div>
                           <button
                             type="button"

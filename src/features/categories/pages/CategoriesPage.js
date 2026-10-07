@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 import SearchStickyInput from "@/components/layout/header/sections/searchStickyInput/SearchStickyInput";
 import CategoriesContent from "@/features/categories/sections/categoriesContent/CategoriesContent";

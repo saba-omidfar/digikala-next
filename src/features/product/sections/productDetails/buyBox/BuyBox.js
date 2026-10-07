@@ -62,7 +62,8 @@ function BuyBox() {
           width="375px"
         />
       )}
-      {productDetails?.default_variant ? (
+      {productDetails?.default_variant &&
+      !Array.isArray(productDetails?.default_variant) ? (
         <div className={styles.buy_box_area}>
           <div className={styles.buy_box_container}>
             <div className={styles.buy_box}>

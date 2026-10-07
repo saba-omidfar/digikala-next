@@ -2,11 +2,10 @@
 
 import React, { useRef, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
-import toPersianDigits from "@/utils/toPersianDigits";
 import { useModal } from "@/contexts/modalContext";
-import { useGetMe } from "@/hooks/useUser";
+import { useGetProfile } from "@/hooks/useUser";
+import toPersianDigits from "@/utils/toPersianDigits";
 
 import LogoutModal from "@/components/layout/header/modals/logoutModal/LogoutModal";
 
@@ -19,7 +18,7 @@ function MiniProfileMenu({
 }) {
   const miniProfileRef = useRef(null);
   const { openModal } = useModal();
-  const { data: userInfo } = useGetMe();
+  const { data: profile } = useGetProfile();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -44,13 +43,15 @@ function MiniProfileMenu({
     <div className={styles.menu} ref={miniProfileRef}>
       <Link
         data-cro-id="header-profile-detail"
-        href="/profile/notification/"
+        href="/profile/"
         className={styles.menu_link}
       >
         <div className={styles.menu_content}>
           <div className="d-flex justify-content-between align-items-center w-100">
             <span className={styles.user_name}>
-              {toPersianDigits(userInfo?.user?.phone)}
+              {profile?.is_verified
+                ? `${profile?.first_name} ${profile?.last_name}`
+                : toPersianDigits(profile?.phone_number)}
             </span>
 
             <div className={styles.arrow_icon_container}>
@@ -64,8 +65,8 @@ function MiniProfileMenu({
         </div>
       </Link>
       <ul className="p-0 m-0">
-        <li className={styles.menu_item} id="header-digiclub">
-          <Link className={styles.menu_item_link} href="#">
+        <li className={styles.menu_item} data-cro-id="plus-mini-profile-lead">
+          <Link className={styles.menu_item_link} href="/plus/landing/">
             <div className={styles.menu_item_icon_container}>
               <div className="d-flex">
                 <div
@@ -90,8 +91,8 @@ function MiniProfileMenu({
             </div>
           </Link>
         </li>
-        <li className={styles.menu_item} id="header-digiclub">
-          <Link className={styles.menu_item_link} href="#">
+        <li className={styles.menu_item} data-cro-id="header-my-orders">
+          <Link className={styles.menu_item_link} href="/profile/orders/">
             <div className={styles.menu_item_icon_container}>
               <div className="d-flex">
                 <div
@@ -106,8 +107,8 @@ function MiniProfileMenu({
             </div>
           </Link>
         </li>
-        <li className={styles.menu_item} id="header-digiclub">
-          <Link className={styles.menu_item_link} href="#">
+        <li className={styles.menu_item}>
+          <Link className={styles.menu_item_link} href="/profile/addresses/">
             <div className={styles.menu_item_icon_container}>
               <div className="d-flex">
                 <div
@@ -122,8 +123,8 @@ function MiniProfileMenu({
             </div>
           </Link>
         </li>
-        <li className={styles.menu_item} id="header-digiclub">
-          <Link className={styles.menu_item_link} href="#">
+        <li className={styles.menu_item} data-cro-id="header-lists">
+          <Link className={styles.menu_item_link} href="/profile/lists">
             <div className={styles.menu_item_icon_container}>
               <div className="d-flex">
                 <div
@@ -138,8 +139,8 @@ function MiniProfileMenu({
             </div>
           </Link>
         </li>
-        <li className={styles.menu_item} id="header-digiclub">
-          <Link className={styles.menu_item_link} href="#">
+        <li className={styles.menu_item} data-cro-id="header-comments">
+          <Link className={styles.menu_item_link} href="/profile/comments/">
             <div className={styles.menu_item_icon_container}>
               <div className="d-flex">
                 <div
@@ -155,6 +156,7 @@ function MiniProfileMenu({
           </Link>
         </li>
         <li
+          data-cro-id="header-logout"
           className={styles.menu_item}
           onClick={() =>
             openModal(<LogoutModal />, {
@@ -163,7 +165,7 @@ function MiniProfileMenu({
             })
           }
         >
-          <Link className={styles.menu_item_link} href="#">
+          <span className={styles.menu_item_link}>
             <div className={styles.menu_item_icon_container}>
               <div className="d-flex">
                 <div
@@ -176,7 +178,7 @@ function MiniProfileMenu({
             <div className={styles.menu_item_text_container}>
               <span className={styles.menu_item_text}>خروج از حساب کاربری</span>
             </div>
-          </Link>
+          </span>
         </li>
       </ul>
     </div>

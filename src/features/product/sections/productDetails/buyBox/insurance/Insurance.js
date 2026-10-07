@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from "react";
 import { useRouter } from "nextjs-toploader/app";
 
@@ -28,7 +30,7 @@ function Insurance() {
     useCartContext();
 
   const toggleInsuranceHandler = (checked) => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }
@@ -45,9 +47,7 @@ function Insurance() {
       {
         onSuccess: () => {
           if (checked) {
-            // فقط وقتی ایتم تو سبد هست و بیمه تازه اضافه شده
             if (cart) {
-              // اگر قبلاً بیمه نداشت
               if (!cart.has_insurance) {
                 showSnackbar("بیمه به کالا اضافه شد");
               }

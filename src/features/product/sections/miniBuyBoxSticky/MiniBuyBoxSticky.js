@@ -23,7 +23,7 @@ function MiniBuyBoxSticky() {
   const [showAddToCartSuccess, setShowAddToCartSuccess] = useState(false);
 
   const { data: topMegaMenuBanners } = useGetUniversal();
-  const { user, guestCartId } = useUserContext();
+  const { user } = useUserContext();
   const { productDetails, activeVariant } = useProductContext();
   const {
     userCart,
@@ -52,6 +52,8 @@ function MiniBuyBoxSticky() {
   const insuranceSelected = selectedInsurance;
   const showInsuranceBadge = cartHasInsurance || insuranceSelected;
 
+  const guestCartId = localStorage.getItem("guestCartId");
+
   const addProductToCartHandler = () => {
     setLoadingVariantId(activeVariant?.id);
 
@@ -64,7 +66,7 @@ function MiniBuyBoxSticky() {
       },
       {
         onSuccess: (res) => {
-          if (!guestCartId && !user?._id && res.guestCartId) {
+          if (!guestCartId && !user?.is_logged_in && res.guestCartId) {
             localStorage.setItem("guestCartId", res.guestCartId);
           }
 
@@ -99,10 +101,6 @@ function MiniBuyBoxSticky() {
 
   const handleAddToCartSuccess = () => {
     setShowAddToCartSuccess(true);
-
-    // setTimeout(() => {
-    //   setShowAddToCartSuccess(false);
-    // }, 5000);
   };
 
   useEffect(() => {
@@ -122,7 +120,11 @@ function MiniBuyBoxSticky() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  if (Array.isArray(productDetails?.default_variant)) return null;
+  if (
+    !productDetails?.default_variant &&
+    !Array.isArray(productDetails?.default_variant)
+  )
+    return null;
 
   return (
     <>
@@ -291,18 +293,6 @@ function MiniBuyBoxSticky() {
                           {activeVariant?.insurance?.title}
                         </span>
                       </div>
-                      {/* <div className={styles.insurance_price}>
-                        {(
-                          activeVariant?.insurance?.total_premium / 10
-                        )?.toLocaleString("fa-IR")}
-                        <div className="d-flex" aria-hidden={false}>
-                          <div
-                            data-icon-name="cube-toman"
-                            data-icon="&#xE953;"
-                            className={`${styles.price_icon} cube-font-icon`}
-                          ></div>
-                        </div>
-                      </div> */}
                     </div>
                   ) : (
                     ""

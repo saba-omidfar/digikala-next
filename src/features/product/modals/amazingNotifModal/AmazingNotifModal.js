@@ -5,14 +5,14 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useModal } from "@/contexts/modalContext";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useUserContext } from "@/contexts/UserContext";
-import { useProductContext } from "@/contexts/ProductContext";
+import { useAddObservedProduct } from "@/features/profile/hooks/useLists";
 
 import toPersianDigits from "@/utils/toPersianDigits";
 
 import useScreenStatus from "@/hooks/useScreenStatus";
 
 import CustomCheckBox from "@/components/modules/checkBox/CustomCheckBox";
-import LoadingModal from "@/features/shared/modals/loadingModal/LoadingModal";
+import Loading from "@/components/modules/loading/Loading";
 
 import styles from "./amazingNotifModal.module.css";
 
@@ -32,8 +32,9 @@ function AmazingNotifModal({ productId, title = "شگفت‌انگیز" }) {
   const { closeModal } = useModal();
   const { isSmallScreen } = useScreenStatus();
 
-  const { addIncredibleNotification, isLoadingAddIncredibleNotification } =
-    useProductContext();
+  const { mutate: addObservedProduct, isLoading: isLoadingAddObservedProduct } =
+    useAddObservedProduct();
+
   const { user } = useUserContext();
   const userData = user?.user;
 
@@ -60,7 +61,9 @@ function AmazingNotifModal({ productId, title = "شگفت‌انگیز" }) {
   }, [closeModal]);
 
   const onSubmit = useCallback(() => {
-    addIncredibleNotification(
+    if (isLoadingAddObservedProduct || isButtonDisabled) return;
+
+    addObservedProduct(
       {
         productId,
         send_sms: checkedItems.sms,
@@ -68,14 +71,25 @@ function AmazingNotifModal({ productId, title = "شگفت‌انگیز" }) {
         send_notification: checkedItems.notification,
       },
       {
-        onSuccess: () => {
-          showSnackbar("اطلاع‌رسانی شگفت‌انگیز ثبت شد");
+        onSuccess: ({ success }) => {
+          if (!success) return;
 
+          title === "موجود"
+            ? showSnackbar("در صورت موجود شدن به شما اطلاع می‌دهیم")
+            : showSnackbar("اطلاع‌رسانی شگفت‌انگیز ثبت شد");
           closeHandler();
         },
       },
     );
-  }, [checkedItems, productId, closeHandler]);
+  }, [
+    addObservedProduct,
+    checkedItems,
+    closeHandler,
+    isButtonDisabled,
+    isLoadingAddObservedProduct,
+    productId,
+    showSnackbar,
+  ]);
 
   return (
     <div
@@ -108,87 +122,84 @@ function AmazingNotifModal({ productId, title = "شگفت‌انگیز" }) {
       </div>
 
       <div className="w-100 flex-grow-1 d-flex flex-column overflow-y-auto">
-        <div className={styles.content_container}>
-          <div className={styles.content}>
-            <p className={styles.modal_content_title}>
-              اگر کالا {title} شد، چطور به شما اطلاع دهیم؟
-            </p>
+        <div className={styles.content}>
+          <p className={styles.modal_content_title}>
+            اگر کالا {title} شد، چطور به شما اطلاع دهیم؟
+          </p>
 
-            {isLoadingAddIncredibleNotification ? (
-              <div className={styles.loading_container}>
-                <div className="d-flex align-items-center justify-content-center">
-                  <LoadingModal />
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={(e) => e.preventDefault()}>
-                <CustomCheckBox
-                  id="sendSms"
-                  checked={checkedItems.sms}
-                  label={`ارسال پیامک به ${toPersianDigits(
-                    userData?.phone || "",
-                  )}`}
-                  customStyle={CHECKBOX_STYLE}
-                  marginTop="12px"
-                  titleClassName={styles.modal_checkbox_text}
-                  color="#0d4485"
-                  changeHandler={(checked) =>
-                    checkboxChangeHandler("sms", checked)
-                  }
-                />
+          <form onSubmit={(e) => e.preventDefault()}>
+            <CustomCheckBox
+              id="sendSms"
+              checked={checkedItems.sms}
+              label={`ارسال پیامک به ${toPersianDigits(userData?.phone || "")}`}
+              customStyle={CHECKBOX_STYLE}
+              marginTop="12px"
+              titleClassName={styles.modal_checkbox_text}
+              color="#0d4485"
+              changeHandler={(checked) => checkboxChangeHandler("sms", checked)}
+            />
 
-                {!!userData?.email && (
-                  <CustomCheckBox
-                    id="sendEmail"
-                    checked={checkedItems.email}
-                    label={`ارسال ایمیل به ${userData.email}`}
-                    customStyle={CHECKBOX_STYLE}
-                    marginTop="12px"
-                    titleClassName={styles.modal_checkbox_text}
-                    color="#0d4485"
-                    changeHandler={(checked) =>
-                      checkboxChangeHandler("email", checked)
-                    }
-                  />
+            {!!user?.is_logged_inData?.email && (
+              <CustomCheckBox
+                id="sendEmail"
+                checked={checkedItems.email}
+                label={`ارسال ایمیل به ${userData.email}`}
+                customStyle={CHECKBOX_STYLE}
+                marginTop="12px"
+                titleClassName={styles.modal_checkbox_text}
+                color="#0d4485"
+                changeHandler={(checked) =>
+                  checkboxChangeHandler("email", checked)
+                }
+              />
+            )}
+
+            <CustomCheckBox
+              id="sendNotification"
+              checked={checkedItems.notification}
+              label="سیستم پیام شخصی دیجی‌کالا"
+              customStyle={CHECKBOX_STYLE}
+              marginTop="12px"
+              titleClassName={styles.modal_checkbox_text}
+              color="#0d4485"
+              changeHandler={(checked) =>
+                checkboxChangeHandler("notification", checked)
+              }
+            />
+
+            <div className={styles.modal_content_btn_container}>
+              <button
+                type="button"
+                onClick={onSubmit}
+                disabled={isButtonDisabled || isLoadingAddObservedProduct}
+                className={`${
+                  isSmallScreen ? "w-100" : ""
+                } ${styles.modal_content_submit_btn} ${
+                  !isButtonDisabled && !isLoadingAddObservedProduct
+                    ? styles.modal_content_submit_btn__active
+                    : ""
+                }`}
+              >
+                {isLoadingAddObservedProduct ? (
+                  <div className={styles.loading_active}>
+                    <Loading isSmall />
+                  </div>
+                ) : (
+                  ""
                 )}
 
-                <CustomCheckBox
-                  id="sendNotification"
-                  checked={checkedItems.notification}
-                  label="سیستم پیام شخصی دیجی‌کالا"
-                  customStyle={CHECKBOX_STYLE}
-                  marginTop="12px"
-                  titleClassName={styles.modal_checkbox_text}
-                  color="#0d4485"
-                  changeHandler={(checked) =>
-                    checkboxChangeHandler("notification", checked)
-                  }
-                />
-
-                <div className={styles.modal_content_btn_container}>
-                  <button
-                    type="button"
-                    onClick={onSubmit}
-                    disabled={
-                      isButtonDisabled || isLoadingAddIncredibleNotification
-                    }
-                    className={`
-                    ${isSmallScreen ? "w-100" : ""}
-                    ${
-                      isButtonDisabled
-                        ? styles.modal_content_submit_disabled_btn
-                        : styles.modal_content_submit_btn
-                    }
-                  `}
-                  >
-                    <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
-                      ثبت
-                    </div>
-                  </button>
+                <div
+                  className={`${
+                    isLoadingAddObservedProduct
+                      ? styles.btn_content_loading
+                      : ""
+                  } d-flex align-items-center justify-content-center position-relative flex-grow-1`}
+                >
+                  ثبت
                 </div>
-              </form>
-            )}
-          </div>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

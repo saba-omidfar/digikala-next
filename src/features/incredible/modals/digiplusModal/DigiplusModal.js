@@ -3,7 +3,7 @@ import { useRouter } from "nextjs-toploader/app";
 
 import styles from "./digiplusModal.module.css";
 
-function DigiplusModal() {
+export default function DigiplusModal() {
   const router = useRouter();
   const { closeModal } = useModal();
 
@@ -56,4 +56,3 @@ function DigiplusModal() {
     </div>
   );
 }
-export default DigiplusModal;

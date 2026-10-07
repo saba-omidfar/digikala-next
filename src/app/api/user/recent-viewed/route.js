@@ -21,15 +21,18 @@ export async function POST(req) {
       );
     }
 
-    const user = await UserModel.findOne({ "auth.accessToken": accessToken });
-    if (!user) {
+    const user = await UserModel.findOne({
+      "auth.accessToken": accessToken,
+    }).lean();
+
+    if (!user?.is_logged_in) {
       return Response.json(
         { success: false, message: "کاربر یافت نشد" },
         { status: 404 },
       );
     }
 
-    if (!user?._id || !productId) {
+    if (!user?.is_logged_in || !productId) {
       return Response.json(
         { success: false, message: "شناسه کاربر یا محصول نامعتبر است" },
         { status: 400 },
@@ -87,7 +90,7 @@ export async function GET(req) {
       "auth.accessToken": accessToken,
     }).lean();
 
-    if (!user) {
+    if (!user?.is_logged_in) {
       return Response.json(
         { success: false, message: "کاربر یافت نشد" },
         { status: 404 },

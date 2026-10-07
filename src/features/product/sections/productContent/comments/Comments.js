@@ -1,5 +1,6 @@
+"use client";
+
 import { useRef } from "react";
-import { useRouter } from "next/navigation";
 
 import ProductContentTitle from "@/features/product/sections/productContent/productContentTitle/ProductContentTitle";
 import AddCommentModal from "@/features/product/modals/addCommentModal/AddCommentModal";

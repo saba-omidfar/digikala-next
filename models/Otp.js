@@ -12,8 +12,13 @@ const otpSchema = new mongoose.Schema(
     blockedUntil: { type: Date, default: null },
     expiresAt: { type: Date, required: true },
     verified: { type: Boolean, default: false },
+    purpose: {
+      type: String,
+      enum: ["login", "reset_password"],
+      default: "login",
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const OTPModel = mongoose.models.OTP || mongoose.model("OTP", otpSchema);

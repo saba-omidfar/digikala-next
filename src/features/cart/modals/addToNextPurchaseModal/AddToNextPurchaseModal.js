@@ -29,7 +29,7 @@ export default function AddToNextPurchaseModal() {
   const { mutate: addProductToCart } = useAddProductToCart();
 
   const handleMoveAllToNextPurchase = () => {
-    if (!user && !guestCartId) {
+    if (!user?.is_logged_in && !guestCartId) {
       redirectToLogin();
       return;
     }

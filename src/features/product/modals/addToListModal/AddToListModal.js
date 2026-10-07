@@ -1,4 +1,7 @@
+"use client";
+
 import { useEffect, useState } from "react";
+import { useRouter } from "nextjs-toploader/app";
 import Image from "next/image";
 
 import { useForm } from "react-hook-form";
@@ -11,10 +14,17 @@ import Loading from "@/components/modules/loading/Loading";
 
 import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useModal } from "@/contexts/modalContext";
-import { useUserContext } from "@/contexts/UserContext";
 import { useProductContext } from "@/contexts/ProductContext";
 
+import {
+  useCreateWishlist,
+  useAddProductToWishlist,
+  useRemoveWishlistProduct,
+  useGetUserWishlists,
+} from "@/features/profile/hooks/useLists";
+
 import styles from "./addToListModal.module.css";
+import { useUserContext } from "@/contexts/UserContext";
 
 const schema = yup.object().shape({
   title: yup
@@ -26,37 +36,54 @@ const schema = yup.object().shape({
 });
 
 export default function AddToListModal() {
+  const router = useRouter();
   const { closeModal } = useModal();
+
   const [step, setStep] = useState(1);
   const [creatingNewList, setCreatingNewList] = useState(false);
-  const [checkedLists, setCheckedLists] = useState({});
+  const [checkedLists, setCheckedLists] = useState();
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
 
   const { showSnackbar } = useSnackbar();
   const { productDetails } = useProductContext();
-  const {
-    createWishlist,
-    addProductToWishlist,
-    userLists,
-    userListsIsLoading,
-  } = useUserContext();
+  const { user } = useUserContext();
+
+  const { createWishlist, isCreating } = useCreateWishlist();
+  const { addProductToWishlist, isAdding } = useAddProductToWishlist();
+  const { userLists, userListsIsLoading } = useGetUserWishlists();
+  const { removeWishlistProduct, isRemoving } = useRemoveWishlistProduct();
 
   useEffect(() => {
     if (userLists?.length) {
       const initial = {};
+
       userLists.forEach((list) => {
-        initial[list._id] = { title: list.title, checked: true };
+        const hasProduct = list.item_product?.some(
+          (item) => Number(item?.productId) === Number(productDetails?.id),
+        );
+
+        initial[list._id] = {
+          id: list._id,
+          title: list.title,
+          code: list.code,
+          checked: hasProduct,
+          initiallyChecked: hasProduct,
+        };
       });
+
       setCheckedLists(initial);
       setStep(2);
+    } else {
+      setStep(1);
     }
-  }, [userLists]);
+  }, [userLists, userListsIsLoading, productDetails?.id]);
 
   const toggleList = (id) => {
     setCheckedLists((prev) => ({
       ...prev,
       [id]: {
         ...prev[id],
-        checked: !prev[id].checked,
+        checked: !prev[id]?.checked,
       },
     }));
   };
@@ -75,38 +102,68 @@ export default function AddToListModal() {
     mode: "onBlur",
   });
 
-  const handleConfirm = () => {
-    const selectedLists = Object.keys(checkedLists).filter(
-      (listId) => checkedLists[listId].checked,
-    );
-
-    if (!selectedLists.length) {
-      showSnackbar("لطفاً حداقل یک لیست را انتخاب کنید.");
+  const handleConfirm = async () => {
+    if (!productDetails?.id) {
+      showSnackbar("اطلاعات کالا پیدا نشد.");
       return;
     }
 
-    // اضافه کردن همه محصولات به لیست‌ها
-    Promise.all(
-      selectedLists.map((listId) =>
-        addProductToWishlist({
-          wishlistId: listId,
-          productId: productDetails?.id,
-        }),
-      ),
-    )
-      .then(() => {
-        // بعد از اضافه شدن همه، فقط یک توست نمایش می‌دیم
-        if (selectedLists.length > 1) {
-          showSnackbar(`کالا در لیست‌های انتخاب شده ذخیره شد.`);
+    const lists = Object.values(checkedLists);
+
+    const listsToAdd = lists.filter(
+      (list) => list.checked && !list.initiallyChecked,
+    );
+
+    const listsToRemove = lists.filter(
+      (list) => !list.checked && list.initiallyChecked,
+    );
+
+    const imageUrl = productDetails?.images?.main?.url?.[0];
+
+    try {
+      setIsAddingProduct(true);
+
+      await Promise.all([
+        ...listsToAdd.map((list) =>
+          addProductToWishlist({
+            wishlistId: list.id,
+            productId: productDetails.id,
+            imageUrl,
+          }),
+        ),
+
+        ...listsToRemove.map((list) =>
+          removeWishlistProduct({
+            wishlistId: list.id,
+            productId: productDetails.id,
+          }),
+        ),
+      ]);
+
+      console.log("listsToAdd=>", listsToAdd);
+
+      if (listsToAdd.length > 0) {
+        if (listsToAdd.length > 1) {
+          showSnackbar("کالا در لیست‌های انتخاب شده ذخیره شد.", 5000);
         } else {
-          const title = checkedLists[selectedLists[0]].title;
-          showSnackbar(`کالا در لیست "${title}" ذخیره شد.`);
+          const title = listsToAdd[0]?.title;
+          const code = listsToAdd[0]?.code;
+
+          showSnackbar(`کالا در لیست "${title}" ذخیره شد.`, 5000, {
+            text: "مشاهده لیست",
+            onClick: () => router.push(`/profile/lists/${code}`),
+          });
         }
-        closeModal();
-      })
-      .catch((error) => {
-        showSnackbar(error.message);
-      });
+      }
+
+      closeModal("add-to-list");
+    } catch (error) {
+      console.error("UPDATE WISHLIST PRODUCT ERROR:", error);
+
+      showSnackbar(error?.message || "خطا در بروزرسانی لیست‌های محصول");
+    } finally {
+      setIsAddingProduct(false);
+    }
   };
 
   const onSubmit = (data) => {
@@ -117,28 +174,61 @@ export default function AddToListModal() {
 
     createWishlist(
       {
-        title: data.title,
-        description: data.description,
+        title: data.title.trim(),
+        description: data.description?.trim() || null,
+        color_or_size: data.color_or_size || null,
       },
       {
-        onSuccess: () => {
+        onSuccess: (response) => {
+          const newList = response?.data;
+
+          if (!newList?._id) {
+            showSnackbar("لیست ساخته شد اما اطلاعات آن دریافت نشد.");
+            return;
+          }
+
+          setCheckedLists((prev) => ({
+            ...prev,
+            [newList._id]: {
+              title: newList.title,
+              code: newList.code,
+              checked: false,
+            },
+          }));
+
           setCreatingNewList(false);
+          setStep(2);
         },
-        onError: () => {
-          showSnackbar("خطا در شبکه");
+
+        onError: (error) => {
+          console.error("CREATE LIST ERROR:", error);
+
+          showSnackbar(error?.message || "خطا در ساخت لیست");
         },
       },
     );
   };
 
   const renderContent = () => {
-    if (userListsIsLoading) return <Loading isSmall={true} />;
+    if (userListsIsLoading) {
+      return (
+        <div className={styles.loading_container}>
+          <Loading isSmall={true} />
+        </div>
+      );
+    }
 
     if (step === 1) {
       return (
         <div style={{ padding: "0 20px" }}>
           <div className="d-flex flex-column align-items-center justify-content-center">
-            <div style={{ width: "160px", height: "120px", lineHeight: "0px" }}>
+            <div
+              style={{
+                width: "160px",
+                height: "120px",
+                lineHeight: "0px",
+              }}
+            >
               <Image
                 className="w-100 d-inline-block"
                 src="/images/svg/wish-list.svg"
@@ -148,31 +238,42 @@ export default function AddToListModal() {
                 style={{ objectFit: "contain" }}
               />
             </div>
+
             <p className={styles.wishlist_title}>هنوز لیست نساخته‌اید</p>
+
             <p className={styles.wishlist_subtitle}>
               می‌توانید از پیشنهادهای زیر استفاده کنید یا لیست جدید بسازید
             </p>
           </div>
+
           <div className={styles.wishlists_container}>
             <IdeaBox
               imgSrc="/images/svg/wish-list-wedding.svg"
               title="پیشنهاد به دوستان"
             />
+
             <IdeaBox
               imgSrc="/images/svg/wish-list-birthday.svg"
               title="هدیه‌ها"
             />
+
             <IdeaBox
               imgSrc="/images/svg/wish-list-home.svg"
               title="خرید ماهانه منزل"
             />
+
             <IdeaBox imgSrc="/images/svg/wish-list-birth.svg" title="آرزوها" />
           </div>
+
           <div
             className={styles.addtolist_btn_container}
             onClick={() => setStep(2)}
           >
-            <button className={styles.addtolist_btn} id="add-new-list">
+            <button
+              className={styles.addtolist_btn}
+              id="add-new-list"
+              type="button"
+            >
               <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
                 افزودن به لیست جدید
               </div>
@@ -183,14 +284,15 @@ export default function AddToListModal() {
     }
 
     if (step === 2) {
-      if (creatingNewList || !userLists?.length) {
+      if (creatingNewList || !user?.is_logged_inLists?.length) {
         return (
           <div>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <label className="w-100 d-inline-block">
                 <p className={styles.list_title}>
                   عنوان لیست<span>*</span>
                 </p>
+
                 <div
                   className={styles.list_input_container}
                   style={{ height: "48px" }}
@@ -201,21 +303,32 @@ export default function AddToListModal() {
                     {...register("title")}
                   />
                 </div>
+
+                {errors.title && (
+                  <p className={styles.error}>{errors.title.message}</p>
+                )}
               </label>
+
               <label
                 className="w-100 d-inline-block"
                 style={{ marginTop: "16px" }}
               >
                 <p className={styles.list_title}>توضیحات</p>
+
                 <div className={styles.list_input_container}>
                   <textarea
                     className={styles.list_textarea}
                     rows="4"
                     {...register("description")}
-                  ></textarea>
+                  />
                 </div>
+
+                {errors.description && (
+                  <p className={styles.error}>{errors.description.message}</p>
+                )}
               </label>
             </form>
+
             <div
               className="d-flex align-items-center justify-content-between"
               style={{ marginTop: "16px" }}
@@ -224,19 +337,25 @@ export default function AddToListModal() {
                 <button
                   type="button"
                   className={styles.list_btn}
-                  onClick={() => closeModal()}
+                  onClick={() => closeModal("add-to-list")}
                 >
                   <div className="d-flex align-items-center justify-content-center flex-grow-1">
                     انصراف
                   </div>
                 </button>
+
                 <button
-                  type="submit"
+                  type="button"
                   className={`${styles.list_btn} ${styles.list_confirm_btn}`}
                   onClick={handleSubmit(onSubmit)}
+                  disabled={isSubmitting || isCreating}
                 >
                   <div className="d-flex align-items-center justify-content-center flex-grow-1">
-                    {isSubmitting ? <Loading isSmall={true} /> : "تایید"}
+                    {isSubmitting || isCreating ? (
+                      <Loading isSmall={true} bgColor="rgb(255,255,255)" />
+                    ) : (
+                      "تایید"
+                    )}
                   </div>
                 </button>
               </div>
@@ -250,6 +369,7 @@ export default function AddToListModal() {
           <p className={styles.list_created_title}>
             کالا را به کدام لیست اضافه می‌کنید؟
           </p>
+
           <div
             className={styles.new_list_container}
             onClick={() => setCreatingNewList(true)}
@@ -259,27 +379,32 @@ export default function AddToListModal() {
                 <use href="#addSimple"></use>
               </svg>
             </div>
+
             <p className={styles.new_list_title}>لیست جدید</p>
           </div>
+
           <form>
-            {userLists?.map((list) => (
-              <div key={list._id} className={styles.other_list_container}>
-                <CustomCheckBox
-                  id={list._id}
-                  checked={checkedLists[list._id]?.checked || false}
-                  label={list?.title}
-                  titleClassName={styles.prev_list_title}
-                  isList
-                  changeHandler={() => toggleList(list._id)}
-                  customStyle={{
-                    border: "none",
-                    padding: "0",
-                    marginLeft: "0",
-                    gap: "20px",
-                  }}
-                />
-              </div>
-            ))}
+            {Object.values(checkedLists)
+              ?.reverse()
+              ?.map((list) => (
+                <div key={list.id} className={styles.other_list_container}>
+                  <CustomCheckBox
+                    id={list.id}
+                    checked={checkedLists[list.id]?.checked || false}
+                    label={list?.title}
+                    titleClassName={styles.prev_list_title}
+                    isList
+                    changeHandler={() => toggleList(list.id)}
+                    customStyle={{
+                      border: "none",
+                      padding: "0",
+                      marginLeft: "0",
+                      gap: "20px",
+                    }}
+                    color="#0d4485"
+                  />
+                </div>
+              ))}
           </form>
         </>
       );
@@ -289,12 +414,16 @@ export default function AddToListModal() {
   return (
     <div
       className={styles.modal_layout}
-      style={{ paddingBottom: userLists?.length ? "72px" : "0px" }}
+      style={{
+        paddingBottom: userLists?.length ? "72px" : "0px",
+      }}
     >
       <div className={styles.modal_header} style={{ height: "58px" }}>
         <div
           className="d-flex align-items-center h-100"
-          style={{ borderBottom: "1px solid #e0e0e2" }}
+          style={{
+            borderBottom: "1px solid #e0e0e2",
+          }}
         >
           <div className={styles.modal_header_title_container}>
             <div className="d-flex align-items-center flex-grow-1">
@@ -303,10 +432,11 @@ export default function AddToListModal() {
               </p>
             </div>
           </div>
+
           <div
             className="d-flex"
             aria-hidden="false"
-            onClick={() => closeModal()}
+            onClick={() => closeModal("add-to-list")}
           >
             <svg
               data-test-id="close-modal-icon-button"
@@ -317,28 +447,36 @@ export default function AddToListModal() {
           </div>
         </div>
       </div>
+
       <div className="flex-grow-1 d-flex flex-column overflow-y-auto">
         <div className={styles.modal_content}>{renderContent()}</div>
       </div>
+
       {!creatingNewList && userLists?.length > 0 && (
         <div className={styles.modal_footer}>
           <div className={styles.list_btns_container}>
             <button
               type="button"
               className={styles.list_btn}
-              onClick={() => closeModal()}
+              onClick={() => closeModal("add-to-list")}
             >
               <div className="d-flex align-items-center justify-content-center flex-grow-1">
                 انصراف
               </div>
             </button>
+
             <button
-              type="submit"
+              type="button"
               className={`${styles.list_btn} ${styles.list_confirm_btn}`}
               onClick={handleConfirm}
+              disabled={isAddingProduct}
             >
               <div className="d-flex align-items-center justify-content-center flex-grow-1">
-                {isSubmitting ? <Loading isSmall={true} /> : "تایید"}
+                {isAddingProduct ? (
+                  <Loading isSmall={true} bgColor="rgb(255,255,255)" />
+                ) : (
+                  "تایید"
+                )}
               </div>
             </button>
           </div>

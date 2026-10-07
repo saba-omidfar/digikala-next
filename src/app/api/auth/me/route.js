@@ -16,7 +16,7 @@ export async function GET() {
       );
 
     const user = await UserModel.findOne({ "auth.accessToken": accessToken });
-    if (!user)
+    if (!user?.is_logged_in)
       return Response.json(
         { success: false, message: "کاربر یافت نشد" },
         { status: 404 },

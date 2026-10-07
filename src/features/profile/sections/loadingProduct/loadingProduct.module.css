@@ -1,0 +1,29 @@
+.product_loading_container {
+  width: calc(50% + 0px);
+  margin-bottom: 0px;
+  margin-left: 0px;
+  border-bottom: 1px solid #e0e0e2;
+}
+
+.product_loading_container:hover {
+  z-index: 1;
+  filter: drop-shadow(0 1px 5px #0003);
+}
+
+.product_loading_container:nth-child(odd) {
+  border-left: 1px solid #e0e0e2;
+}
+
+.product_loading_container:nth-child(even) {
+  border-left: none;
+}
+
+.product_loading {
+  position: relative;
+  display: block;
+  height: 100%;
+  background-color: #fff;
+  padding: 12px 8px;
+  outline-color: #000;
+  cursor: pointer;
+}

@@ -27,7 +27,7 @@ function QuestionAnswerBox({ question, answer, isAnswer }) {
   });
 
   const toggleFeedbackHandler = ({ answerId, type }) => {
-    if (!user) {
+    if (!user?.is_logged_in) {
       showSnackbar("ابتدا وارد شوید.");
       return;
     }
@@ -70,7 +70,7 @@ function QuestionAnswerBox({ question, answer, isAnswer }) {
           <div>
             <div className="d-flex align-items-center gap-1">
               <span className={styles.question_answerInfo_author}>
-                {answer?.sender}
+                {toPersianDigits(answer?.sender)}
               </span>
               {answer?.type !== "user" ? (
                 <>
@@ -153,7 +153,7 @@ function QuestionAnswerBox({ question, answer, isAnswer }) {
                       {
                         name: "question-answer-media",
                         className:
-                          "modal__question-answer-media rounded-medium",
+                          "modal__question_answer_media rounded-medium",
                       },
                     )
                   }

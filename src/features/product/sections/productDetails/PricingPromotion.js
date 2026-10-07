@@ -76,7 +76,7 @@ function PricingPromotion({
         )}
       </div>
       <div className="d-flex align-items-center justify-content-end flex-grow-1">
-        {variant?.price?.sold_percentage && (
+        {variant?.price?.sold_percentage ? (
           <>
             <div className={styles.promotion_sold_container}>
               <div className={styles.promotion_sold_percent_container}>
@@ -103,6 +103,8 @@ function PricingPromotion({
             </div>
             <span className={styles.space}></span>
           </>
+        ) : (
+          ""
         )}
 
         {showTimer && variant?.price?.timer && (

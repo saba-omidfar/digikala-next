@@ -18,11 +18,10 @@ const UserMediaSchema = new mongoose.Schema(
     comment: { type: mongoose.Schema.Types.Mixed },
     productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const UserMedia =
-  mongoose.models.UserMediaSchema ||
-  mongoose.model("UserMedia", UserMediaSchema);
+  mongoose.models.UserMedia || mongoose.model("UserMedia", UserMediaSchema);
 
 export default UserMedia;

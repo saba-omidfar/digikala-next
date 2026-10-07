@@ -1,0 +1,308 @@
+.profile_content {
+  position: relative;
+  border: 1px solid #e0e0e2;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.personal_content_container {
+  min-width: 0;
+  background-color: #fff;
+  flex: 1 1 0%;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+}
+
+.personal_content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
+
+.personal_info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.personal_info_section_title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0px;
+  line-height: 27px;
+  color: #1f1f1f;
+  margin: 0;
+}
+
+.personal_info_verify_badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 18.75px;
+  color: #2e7b32;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  background-color: rgba(61, 170, 88, 0.12);
+  margin-right: 8px;
+  margin-left: auto;
+}
+
+.personal_info_not_verify_badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 18.75px;
+  color: rgb(147 76 14 / 1);
+  background-color: rgba(245, 127, 23, 0.12);
+  padding: 2px 6px;
+  border-radius: 9999px;
+  margin-right: 8px;
+  margin-left: auto;
+}
+
+.personal_info_edit_btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.personal_info_edit_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.personal_info_edit_btn_text {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 17.5px;
+  color: #1f1f1f;
+}
+
+.personal_info_content_item {
+  position: relative;
+  border-bottom: 1px solid #e0e0e2;
+}
+
+.personal_info_item_inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 14px;
+  padding: 8px 16px 8px 0;
+  cursor: pointer;
+}
+
+.personal_info_item_title {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 28.8px;
+  color: #1f1f1f;
+  margin: 0;
+}
+
+.personal_info_item_value {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 25.2px;
+  color: #848484;
+  text-align: right;
+}
+
+.personal_info_verify_badge_container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 16px;
+}
+
+.personal_info_item_verify_badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 13.75px;
+  color: #2e7b32;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  background-color: rgba(61, 170, 88, 0.12);
+}
+
+.personal_info_chevron_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #1f1f1f;
+}
+
+.personal_info_item_not_verify_badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 13.75px;
+  color: rgb(147 76 14 / 1);
+  padding: 2px 6px;
+  border-radius: 9999px;
+  background-color: rgba(245, 127, 23, 0.12);
+}
+
+.personal_info_item_input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.delete_account_info {
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.delete_account_section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-right: 16px;
+  cursor: pointer;
+}
+
+.delete_icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #ef394e;
+}
+
+.delete_account_section_content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 14px;
+  padding: 16px 0;
+}
+
+.delete_account_section_title {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  line-height: 28.8px;
+  color: #1f1f1f;
+  margin: 0;
+}
+
+.chevron_icon_container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 16px;
+}
+
+@media screen and (min-width: 1024px) {
+  .personal_info_content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border: 1px solid #efefef;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .personal_info_content_item:nth-child(odd) {
+    border-left: 1px solid #e0e0e2;
+  }
+
+  .personal_info_content_item:nth-child(3),
+  .personal_info_content_item:nth-child(4) {
+    border-bottom: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .personal_info_content {
+    border: 1px solid #efefef;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .personal_content_container,
+  .profile_content {
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+
+  .identity_verification_text {
+    font-size: 12px;
+  }
+
+  .personal_info_verify_btn {
+    line-height: 13.75px;
+  }
+
+  .personal_info_section_title,
+  .delete_account_section_title {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .personal_info_verify_badge,
+  .personal_info_item_not_verify_badge {
+    font-size: 10px;
+  }
+
+  .personal_info_item_title {
+    font-size: 14px;
+    line-height: 25.2px;
+  }
+
+  .personal_info_item_value {
+    font-size: 12px;
+    line-height: 21.6px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .identity_verification_text,
+  .personal_info_verify_badge,
+  .personal_info_item_verify_badge,
+  .personal_info_item_not_verify_badge {
+    font-size: 8.8px;
+  }
+
+  .personal_info_verify_btn {
+    font-size: 9.6px;
+  }
+
+  .personal_info_section_title {
+    font-size: 13px;
+  }
+
+  .personal_info_edit_btn_text {
+    font-size: 12px;
+  }
+
+  .personal_info_item_title {
+    font-size: 12px;
+    line-height: 21px;
+  }
+
+  .personal_info_item_value {
+    font-size: 10px;
+  }
+
+  .delete_account_section_title {
+    font-size: 13px;
+  }
+}
