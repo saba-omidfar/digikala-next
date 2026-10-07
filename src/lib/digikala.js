@@ -5,8 +5,8 @@ export async function digikalaFetch({
 }) {
   const start = Date.now();
 
-  //const url = `https://desktop-9a6leca.tailaf0a21.ts.net${path}`;
-  const url = `https://api.digikala.com${path}`;
+  const url = `https://desktop-9a6leca.tailaf0a21.ts.net${path}`;
+  // const url = `https://api.digikala.com${path}`;
 
   console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
   console.log("🟡 DIGIKALA REQUEST");
