@@ -17,6 +17,10 @@
   padding: 80px 0;
 }
 
+.mobile_search_container {
+  display: none;
+}
+
 .search_input_container {
   position: relative;
   display: flex;
@@ -283,14 +287,14 @@
   border-top: 1px solid #e0e0e2;
 }
 
-.mobile_search_container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-}
-
 @media screen and (max-width: 1024px) {
+  .mobile_search_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+
   .profile_content {
     border: none;
   }
