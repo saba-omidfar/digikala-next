@@ -29,6 +29,9 @@ export default function SpecialCarouselWidget({
     shouldFetchExternalWidget ? widgetIdFromUrl : undefined,
   );
 
+  console.log("widgetIdFromUrl->", widgetIdFromUrl);
+  console.log("data->", data);
+
   switch (widget?.widget_id) {
     case 8571:
       return <AmazingSlider incredibbleOffers={data?.data?.carousel} />;
@@ -44,6 +47,9 @@ export default function SpecialCarouselWidget({
           />
         </div>
       );
+
+    case 30003:
+      return <AmazingSlider incredibbleOffers={data?.data?.data?.carousel} />;
 
     case 20017:
       return <AmazingSlider incredibbleOffers={data?.data?.data?.carousel} />;

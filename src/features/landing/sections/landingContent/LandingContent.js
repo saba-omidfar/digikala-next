@@ -14,6 +14,8 @@ export default function LandingContent({ id }) {
   const { data: topMegaMenuBanners } = useGetUniversal();
 
   const widgets = data?.widgets?.slice()?.sort((a, b) => a.sort - b.sort) || [];
+  const hasTopMegaMenuBanners =
+    topMegaMenuBanners?.desktop?.length || topMegaMenuBanners?.mobile?.length;
 
   const systemColor = data?.design_system_color;
 
@@ -23,10 +25,7 @@ export default function LandingContent({ id }) {
     <div
       className={styles.layout_Desktop__container}
       style={{
-        paddingTop: (
-          topMegaMenuBanners?.desktop?.length ||
-          topMegaMenuBanners?.mobile?.length
-        )?.length
+        paddingTop: hasTopMegaMenuBanners?.length
           ? isSmallScreen
             ? 0
             : 168
