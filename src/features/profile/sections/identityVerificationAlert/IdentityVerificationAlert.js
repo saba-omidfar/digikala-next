@@ -9,7 +9,6 @@ import styles from "./identityVerificationAlert.module.css";
 
 export default function IdentityVerificationAlert() {
   const { openModal } = useModal();
-  const { isSmallScreen } = useScreenStatus();
 
   return (
     <div className={styles.identity_verification_container}>
@@ -21,8 +20,7 @@ export default function IdentityVerificationAlert() {
             </svg>
           </div>
           <span className={styles.identity_verification_title}>
-            با تایید هویت می‌توانید‌ امنیت حساب کاربری‌تان را افزایش دهید و از
-            امکان «خرید اعتباری» نیز استفاده کنید
+            با تایید هویت می‌توانید‌ امنیت حساب کاربری‌تان را افزایش دهید
           </span>
         </div>
       </div>
