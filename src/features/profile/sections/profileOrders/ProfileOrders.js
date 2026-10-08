@@ -129,22 +129,18 @@ export default function ProfileOrders() {
                   />
                 </div>
 
-                {searchValue ? (
-                  <div
-                    className="d-flex"
-                    aria-hidden="false"
-                    onClick={() => {
-                      setIsSearchOpen(false);
-                      setSearchValue("");
-                    }}
-                  >
-                    <svg className={styles.clear_icon}>
-                      <use href="#clear"></use>
-                    </svg>
-                  </div>
-                ) : (
-                  ""
-                )}
+                <div
+                  className="d-flex"
+                  aria-hidden="false"
+                  onClick={() => {
+                    setIsSearchOpen(false);
+                    setSearchValue("");
+                  }}
+                >
+                  <svg className={styles.clear_icon}>
+                    <use href="#clear"></use>
+                  </svg>
+                </div>
               </div>
             </label>
           </div>

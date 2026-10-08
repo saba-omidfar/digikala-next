@@ -22,15 +22,12 @@ export default function SpecialCarouselWidget({
   const widgetIdFromUrl = widgetUrl?.split("/")?.filter(Boolean)?.pop();
 
   const shouldFetchExternalWidget = [
-    8571, 8573, 20017, 8496, 4707, 14569, 7242, 9491, 16286,
+    30003, 8571, 8573, 20017, 8496, 4707, 14569, 7242, 9491, 16286,
   ].includes(widget?.widget_id);
 
   const { data } = useGetWidgetIdLanding(
     shouldFetchExternalWidget ? widgetIdFromUrl : undefined,
   );
-
-  console.log("widgetIdFromUrl->", widgetIdFromUrl);
-  console.log("data->", data);
 
   switch (widget?.widget_id) {
     case 8571:

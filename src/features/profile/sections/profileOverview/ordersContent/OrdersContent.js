@@ -8,7 +8,7 @@ import toPersianDigits from "@/utils/toPersianDigits";
 import styles from "./ordersContent.module.css";
 
 export default function OrdersContent() {
-  const { data: tabs } = useOrdersTabs();
+  const { data: tabs, isLoading } = useOrdersTabs();
 
   const orderStatuses = [
     {
@@ -24,6 +24,8 @@ export default function OrdersContent() {
       icon: "https://www.digikala.com/statics/img/svg/status-returned.svg",
     },
   ];
+
+  if (!isLoading) return null;
 
   return (
     <div className={styles.profile_content}>
