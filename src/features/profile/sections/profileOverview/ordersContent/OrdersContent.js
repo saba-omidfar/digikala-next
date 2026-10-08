@@ -25,7 +25,7 @@ export default function OrdersContent() {
     },
   ];
 
-  if (!isLoading) return null;
+  if (isLoading) return null;
 
   return (
     <div className={styles.profile_content}>
