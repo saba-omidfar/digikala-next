@@ -22,7 +22,7 @@ export default function Header({ isBrandLandingPage }) {
       {isOpenMegamenu && (
         <div
           className="overlay"
-          style={{ top: topMegaMenuBanners?.desktop?.length ? 108 : 0 }}
+          style={{ top: topMegaMenuBanners?.desktop?.length ? 168 : 108 }}
         />
       )}
 
