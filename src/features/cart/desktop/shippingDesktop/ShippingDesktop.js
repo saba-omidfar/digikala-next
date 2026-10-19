@@ -48,9 +48,9 @@ export default function ShippingDesktop() {
 
   useEffect(() => {
     if (!selectedLocation) {
-      openModal(<LocationModal />, {
+      openModal(<LocationModal isConformAddress />, {
         name: "location",
-        className: "modal__location rounded-large",
+        className: "modal__location rounded-medium",
         size: "md",
       });
     } else if (selectedLocation?.is_default) {
@@ -98,136 +98,138 @@ export default function ShippingDesktop() {
               </a>
             </div>
           </div>
-          <div className={styles.content_container}>
-            <section className={styles.content_section}>
-              <div className={styles.addresses_container}>
-                <div className={styles.address_container}>
-                  <div className="d-flex justify-content-between w-100 flex-column">
-                    <div className="d-flex justify-content-start align-items-center w-100">
-                      <div className={styles.address}>
-                        <div
-                          className={styles.delivery_icon_container}
-                          aria-hidden="false"
-                        >
-                          <svg className={styles.delivery_icon}>
-                            <use href="#deliveryHeavy"></use>
-                          </svg>
-                        </div>
-                        <div className="w-100">
-                          <div className="d-flex justify-content-between w-100">
-                            <div className={styles.address_content_title}>
-                              ارسال به آدرس انتخاب شده
-                            </div>
-                            <div className="me-auto">
-                              <span
-                                className={styles.change_address}
-                                data-cro-id="shipping-change-address"
-                                onClick={() =>
-                                  openModal(
-                                    <LocationModal isConformAddress />,
-                                    {
-                                      name: "location",
-                                      className:
-                                        "modal__location rounded-large",
-                                      size: "md",
-                                    },
-                                  )
-                                }
-                              >
-                                <span>تغییر آدرس</span>
-                                <div className="d-flex" aria-hidden="false">
-                                  <svg className={styles.change_address_icon}>
-                                    <use href="#chevronLeft"></use>
-                                  </svg>
-                                </div>
-                              </span>
-                            </div>
-                          </div>
 
-                          <div className={styles.address_title}>
-                            {defaultAddress?.address}
+          {selectedLocation ? (
+            <div className={styles.content_container}>
+              <section className={styles.content_section}>
+                <div className={styles.addresses_container}>
+                  <div className={styles.address_container}>
+                    <div className="d-flex justify-content-between w-100 flex-column">
+                      <div className="d-flex justify-content-start align-items-center w-100">
+                        <div className={styles.address}>
+                          <div
+                            className={styles.delivery_icon_container}
+                            aria-hidden="false"
+                          >
+                            <svg className={styles.delivery_icon}>
+                              <use href="#deliveryHeavy"></use>
+                            </svg>
+                          </div>
+                          <div className="w-100">
+                            <div className="d-flex justify-content-between w-100">
+                              <div className={styles.address_content_title}>
+                                ارسال به آدرس انتخاب شده
+                              </div>
+                              <div className="me-auto">
+                                <span
+                                  className={styles.change_address}
+                                  data-cro-id="shipping-change-address"
+                                  onClick={() =>
+                                    openModal(
+                                      <LocationModal isConformAddress />,
+                                      {
+                                        name: "location",
+                                        className:
+                                          "modal__location rounded-large",
+                                        size: "md",
+                                      },
+                                    )
+                                  }
+                                >
+                                  <span>تغییر آدرس</span>
+                                  <div className="d-flex" aria-hidden="false">
+                                    <svg className={styles.change_address_icon}>
+                                      <use href="#chevronLeft"></use>
+                                    </svg>
+                                  </div>
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className={styles.address_title}>
+                              {defaultAddress?.address}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className={styles.content_bottom_section}>
-                <div className={styles.digiplus_content_container}>
-                  <div className={styles.digiplus_content}>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div className={styles.digiplus}>
-                        <div
-                          className="d-flex flex-shrink-0"
-                          aria-hidden="false"
-                        >
+                <div className={styles.content_bottom_section}>
+                  <div className={styles.digiplus_content_container}>
+                    <div className={styles.digiplus_content}>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className={styles.digiplus}>
                           <div
-                            className={`${styles.digiplus_icon} cube-font-icon`}
-                            data-icon-name="cube-badge-plus"
-                            data-icon=""
-                          ></div>
-                        </div>
-                        <dds-text variant="label-2" color="content/1">
-                          {activePlan
-                            ? `${activePlan?.title} پلاس افزوده شد!`
-                            : "هر ماه ۱۰ ارسال رایگان با ‌پلاس!"}
-                        </dds-text>
-                      </div>
-                      {activePlan ? (
-                        <div
-                          className={styles.remove_plan_btn}
-                          aria-hidden="false"
-                          onClick={removePlanHandler}
-                        >
-                          {isLoadingRemovePlan ? (
-                            <Loading isSmall bgColor="rgb(166, 52, 137)" />
-                          ) : (
-                            <svg className={styles.remove_plan_icon}>
-                              <use href="#delete"></use>
-                            </svg>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="d-flex align-items-center justify-content-end flex-shrink-0 whitespace-nowrap">
-                          <div
-                            className={styles.digiplus_btn}
-                            onClick={() =>
-                              openModal(<PlusModal />, {
-                                name: "plus",
-                                className: "modal__plus rounded-medium",
-                              })
-                            }
+                            className="d-flex flex-shrink-0"
+                            aria-hidden="false"
                           >
-                            <dds-text variant="label-xs">افزودن</dds-text>
-                            <div className="d-flex" aria-hidden="false">
-                              <div
-                                className={`${styles.digiplus_btn_icon} cube-font-icon`}
-                                data-icon-name="cube-nav-chevron-left"
-                                data-icon=""
-                              ></div>
+                            <div
+                              className={`${styles.digiplus_icon} cube-font-icon`}
+                              data-icon-name="cube-badge-plus"
+                              data-icon=""
+                            ></div>
+                          </div>
+                          <dds-text variant="label-2" color="content/1">
+                            {activePlan
+                              ? `${activePlan?.title} پلاس افزوده شد!`
+                              : "هر ماه ۱۰ ارسال رایگان با ‌پلاس!"}
+                          </dds-text>
+                        </div>
+                        {activePlan ? (
+                          <div
+                            className={styles.remove_plan_btn}
+                            aria-hidden="false"
+                            onClick={removePlanHandler}
+                          >
+                            {isLoadingRemovePlan ? (
+                              <Loading isSmall bgColor="rgb(166, 52, 137)" />
+                            ) : (
+                              <svg className={styles.remove_plan_icon}>
+                                <use href="#delete"></use>
+                              </svg>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="d-flex align-items-center justify-content-end flex-shrink-0 whitespace-nowrap">
+                            <div
+                              className={styles.digiplus_btn}
+                              onClick={() =>
+                                openModal(<PlusModal />, {
+                                  name: "plus",
+                                  className: "modal__plus rounded-medium",
+                                })
+                              }
+                            >
+                              <dds-text variant="label-xs">افزودن</dds-text>
+                              <div className="d-flex" aria-hidden="false">
+                                <div
+                                  className={`${styles.digiplus_btn_icon} cube-font-icon`}
+                                  data-icon-name="cube-nav-chevron-left"
+                                  data-icon=""
+                                ></div>
+                              </div>
                             </div>
                           </div>
+                        )}
+                      </div>
+
+                      {activePlan ? (
+                        <div className={styles.active_plan_text}>
+                          هزینه ارسال سفارش‌های دارای شرایط پلاس رایگان می‌شود
+                        </div>
+                      ) : (
+                        <div className={styles.digiplus_footer_text}>
+                          ۴ ارسال دیجی‌کالا | ۲ ارسال هایپرمارکت | ۴ ارسال
+                          سوپرمارکت
                         </div>
                       )}
                     </div>
-
-                    {activePlan ? (
-                      <div className={styles.active_plan_text}>
-                        هزینه ارسال سفارش‌های دارای شرایط پلاس رایگان می‌شود
-                      </div>
-                    ) : (
-                      <div className={styles.digiplus_footer_text}>
-                        ۴ ارسال دیجی‌کالا | ۲ ارسال هایپرمارکت | ۴ ارسال
-                        سوپرمارکت
-                      </div>
-                    )}
                   </div>
-                </div>
 
-                {/* JET SHIPPING */}
-                {/* <div className="d-flex flex-column">
+                  {/* JET SHIPPING */}
+                  {/* <div className="d-flex flex-column">
                   <div className={styles.jet_shipping_container}>
                     <div className={styles.jet_shipping_title_section}>
                       <div className={styles.jet_shipping_header}>
@@ -289,61 +291,61 @@ export default function ShippingDesktop() {
                   </div>
                 </div> */}
 
-                {/* NORMAL SHIPPING */}
-                <div className={styles.normal_shipping_container}>
-                  <div>
-                    <div className={styles.normal_shipping_header}>
-                      <div className={styles.normal_shipping_icon}>
-                        <div
-                          role="img"
-                          aria-hidden="false"
-                          aria-label="ارسال عادی"
-                          className={styles.normal_shipping_img_container}
-                        >
-                          <picture>
-                            <source
-                              type="image/webp"
-                              srcSet="https://dkstatics-public.digikala.com/delivery-submit-type/16060530.png?x-oss-process=image/resize,m_fill,h_48,w_48/quality,q_80/format,webp"
-                            />
-                            <source
-                              type="image/jpeg"
-                              srcSet="https://dkstatics-public.digikala.com/delivery-submit-type/16060530.png?x-oss-process=image/resize,m_fill,h_48,w_48/quality,q_90"
-                            />
-                            <img
-                              width="36"
-                              height="36"
-                              alt="ارسال عادی"
-                              title=""
-                              src="https://dkstatics-public.digikala.com/delivery-submit-type/16060530.png?x-oss-process=image/resize,m_fill,h_48,w_48/quality,q_90"
-                              className={styles.normal_shipping_img}
-                            />
-                          </picture>
-                        </div>
-                      </div>
-
-                      <div className="flex-grow-1 d-flex flex-wrap justify-content-between align-items-start">
-                        <div>
+                  {/* NORMAL SHIPPING */}
+                  <div className={styles.normal_shipping_container}>
+                    <div>
+                      <div className={styles.normal_shipping_header}>
+                        <div className={styles.normal_shipping_icon}>
                           <div
-                            className={styles.normal_shipping_title_container}
+                            role="img"
+                            aria-hidden="false"
+                            aria-label="ارسال عادی"
+                            className={styles.normal_shipping_img_container}
                           >
-                            <span className={styles.normal_shipping_title}>
-                              ارسال عادی
-                            </span>
-                            <span className={styles.normal_shipping_subtitle}>
-                              {toPersianDigits(cart?.items_count)} کالا
-                            </span>
+                            <picture>
+                              <source
+                                type="image/webp"
+                                srcSet="https://dkstatics-public.digikala.com/delivery-submit-type/16060530.png?x-oss-process=image/resize,m_fill,h_48,w_48/quality,q_80/format,webp"
+                              />
+                              <source
+                                type="image/jpeg"
+                                srcSet="https://dkstatics-public.digikala.com/delivery-submit-type/16060530.png?x-oss-process=image/resize,m_fill,h_48,w_48/quality,q_90"
+                              />
+                              <img
+                                width="36"
+                                height="36"
+                                alt="ارسال عادی"
+                                title=""
+                                src="https://dkstatics-public.digikala.com/delivery-submit-type/16060530.png?x-oss-process=image/resize,m_fill,h_48,w_48/quality,q_90"
+                                className={styles.normal_shipping_img}
+                              />
+                            </picture>
                           </div>
-                          <div className={styles.normal_shipping_text}>
-                            ۱ روز
+                        </div>
+
+                        <div className="flex-grow-1 d-flex flex-wrap justify-content-between align-items-start">
+                          <div>
+                            <div
+                              className={styles.normal_shipping_title_container}
+                            >
+                              <span className={styles.normal_shipping_title}>
+                                ارسال عادی
+                              </span>
+                              <span className={styles.normal_shipping_subtitle}>
+                                {toPersianDigits(cart?.items_count)} کالا
+                              </span>
+                            </div>
+                            <div className={styles.normal_shipping_text}>
+                              ۱ روز
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <Orders />
+                      <Orders />
 
-                    {/* Shipping time */}
-                    {/* <div className={styles.shipping_time_container}>
+                      {/* Shipping time */}
+                      {/* <div className={styles.shipping_time_container}>
                       <section>
                         <div>
                           <div className="d-flex align-items-center">
@@ -422,16 +424,19 @@ export default function ShippingDesktop() {
                         </div>
                       </section>
                     </div> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
-            <PaymentSidebar
-              cart={cart}
-              itemsCount={userCart?.cart?.items_count}
-              activePlan={activePlan}
-            />
-          </div>
+              </section>
+              <PaymentSidebar
+                cart={cart}
+                itemsCount={userCart?.cart?.items_count}
+                activePlan={activePlan}
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
