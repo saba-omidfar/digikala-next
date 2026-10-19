@@ -12,7 +12,6 @@ import MainMenuItem from "@/features/categories/sections/mainMenuItem/MainMenuIt
 import MegamenuContent from "@/features/categories/sections/megamenuContent/MegamenuContent";
 
 import { useGetMegamenu } from "@/hooks/useMegamenu";
-import { useGetUniversal } from "@/hooks/useGetUniversal";
 
 import styles from "./categoriesContent.module.css";
 
@@ -23,7 +22,6 @@ function CategoriesContent() {
   const [expandedItems, setExpandedItems] = useState({});
 
   const { data, isLoading: categoriesIsLoading } = useGetMegamenu();
-  const { data: topMegaMenuBanners } = useGetUniversal();
 
   const categoriesMap = useMemo(() => {
     if (!data?.length) return new Map();
@@ -81,10 +79,7 @@ function CategoriesContent() {
   if (categoriesIsLoading) {
     return (
       <div className={styles.mega_menu}>
-        <div
-          className="overlay"
-          style={{ top: topMegaMenuBanners?.desktop?.length ? 108 : 0 }}
-        />
+        <div className="overlay" />
       </div>
     );
   }

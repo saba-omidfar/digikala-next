@@ -32,6 +32,9 @@ export async function digikalaFetch({
 
   const fetchStart = Date.now();
 
+  console.log("NODE_ENV:", process.env.NODE_ENV);
+  console.log("FETCH URL:", url);
+
   const res = await fetch(url, options);
 
   const fetchTime = Date.now() - fetchStart;

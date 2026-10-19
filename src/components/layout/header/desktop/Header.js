@@ -19,12 +19,7 @@ export default function Header({ isBrandLandingPage }) {
 
   return (
     <>
-      {isOpenMegamenu && (
-        <div
-          className="overlay"
-          style={{ top: topMegaMenuBanners?.desktop?.length ? 168 : 108 }}
-        />
-      )}
+      {isOpenMegamenu && <div className="overlay" />}
 
       <div
         className={`${!isBrandLandingPage ? (topMegaMenuBanners?.desktop?.length ? styles.banner_header_container : styles.header_container) : styles.header_landing_container} ${hideMenuOnTop ? (topMegaMenuBanners?.desktop?.length ? styles.header_banner_fixed_container : styles.header_fixed_container) : ""} ${isOpenMegamenu ? styles.padding_right : ""}`}

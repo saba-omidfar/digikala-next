@@ -10,7 +10,6 @@ import React, {
 import Link from "next/link";
 
 import { useGetMegamenu } from "@/hooks/useMegamenu";
-import { useGetUniversal } from "@/hooks/useGetUniversal";
 
 import styles from "./megamenu.module.css";
 
@@ -21,7 +20,6 @@ function Megamenu() {
   const [maxHeight, setMaxHeight] = useState("600px");
 
   const { data, isLoading: categoriesIsLoading } = useGetMegamenu();
-  const { data: topMegaMenuBanners } = useGetUniversal();
 
   useEffect(() => {
     if (!data?.length) return;
@@ -89,10 +87,7 @@ function Megamenu() {
   if (categoriesIsLoading) {
     return (
       <div className={styles.mega_menu}>
-        <div
-          className="overlay"
-          style={{ top: topMegaMenuBanners?.desktop?.length ? 108 : 0 }}
-        />
+        <div className="overlay" />
       </div>
     );
   }

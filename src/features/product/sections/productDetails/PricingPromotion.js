@@ -48,7 +48,7 @@ function PricingPromotion({
       }}
     >
       <div className="d-flex align-items-center justify-content-center">
-        {isIncredible ? (
+        {/* {isIncredible ? (
           <div
             className={styles.logo_img_container}
             aria-hidden="true"
@@ -65,7 +65,7 @@ function PricingPromotion({
           </div>
         ) : (
           ""
-        )}
+        )} */}
 
         {isPromotion ? (
           <div style={{ color: `rgb(${bg})` }}>
