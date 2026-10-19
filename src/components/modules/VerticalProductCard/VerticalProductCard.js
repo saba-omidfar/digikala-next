@@ -452,12 +452,10 @@ function VerticalProductCard({
                               10
                             ).toLocaleString("fa-IR")}
                           </span>
-                          <div className="d-flex">
-                            <div
-                              className={`${styles.product_price_icon} cube-font-icon`}
-                              data-icon-name="cube-value-toman"
-                              data-icon="&#xE953;"
-                            ></div>
+                          <div className="d-flex" aria-hidden="false">
+                            <svg className={styles.product_price_icon}>
+                              <use href="#toman"></use>
+                            </svg>
                           </div>
                         </>
                       ) : (

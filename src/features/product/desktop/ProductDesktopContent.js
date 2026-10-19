@@ -17,15 +17,21 @@ import Footer from "@/components/layout/footer/desktop/Footer";
 
 import InfoSectionRight from "@/features/product/sections/productDetails/InfoSectionRight";
 import InfoSectionLeft from "@/features/product/sections/productDetails/InfoSectionLeft";
+import LoadingModal from "@/features/shared/modals/loadingModal/LoadingModal";
 
 import { useProductContext } from "@/contexts/ProductContext";
-import { useProductRecommendation } from "@/hooks/useProduct";
+import {
+  useGetProductDetails,
+  useProductRecommendation,
+} from "@/hooks/useProduct";
 
 import styles from "./productDesktopContent.module.css";
 
-export default function ProductDesktopContent() {
-  const { productDetails, uniqueVariants, suggestionProducts } =
-    useProductContext();
+export default function ProductDesktopContent({ productId }) {
+  const { uniqueVariants, suggestionProducts } = useProductContext();
+
+  const { data: productDetails, isLoading: isLoadingProductDetails } =
+    useGetProductDetails(productId);
 
   const similarProductsRef = useRef(null);
   const [isTabsSticky, setIsTabsSticky] = useState(false);
@@ -64,6 +70,16 @@ export default function ProductDesktopContent() {
 
     return () => tabsTrigger.kill();
   }, []);
+
+  if (isLoadingProductDetails) {
+    return (
+      <div className="cart_overlay">
+        <div className="page_loading_container">
+          <LoadingModal />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="d-flex align-items-center flex-column h-100 bg-white">

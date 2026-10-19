@@ -10,9 +10,10 @@ import { useListing } from "@/contexts/ListingContext";
 
 import styles from "./breadcrumb.module.css";
 
-function Breadcrumb({ desktopNavClassname }) {
+export default function Breadcrumb({ desktopNavClassname }) {
   const { brand } = useParams();
   const { data, isLoading } = useListing();
+  console.log("data in Breadcrumb=>", data);
 
   const breadcrumbs = brand ? data?.breadcrumb : data?.breadcrumb?.slice(0, -1);
 
@@ -58,5 +59,3 @@ function Breadcrumb({ desktopNavClassname }) {
     </nav>
   );
 }
-
-export default Breadcrumb;

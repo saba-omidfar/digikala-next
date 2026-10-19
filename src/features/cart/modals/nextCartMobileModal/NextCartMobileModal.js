@@ -188,8 +188,8 @@ export default function NextCartMobileModal() {
                           >
                             <img
                               className={styles.empty_cart_img}
-                              src="/images/svg/cart/empty-next-basket?.svg"
-                              alt="empty-next-cart"
+                              src="https://www.digikala.com/statics/img/svg/cart/empty-next-basket.svg"
+                              at="empty-next-cart"
                               title=""
                             />
                           </div>
@@ -249,7 +249,7 @@ export default function NextCartMobileModal() {
                           >
                             <img
                               className={styles.empty_cart_img}
-                              src="/images/svg/cart/empty-next-basket?.svg"
+                              src="https://www.digikala.com/statics/img/svg/cart/empty-next-basket.svg"
                               alt="empty-next-cart"
                               title=""
                             />

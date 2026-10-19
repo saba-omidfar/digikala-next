@@ -99,7 +99,7 @@ export default function SearchBoxModal({ searchBoxRef }) {
                   <Link
                     key={chip.keyword}
                     href={
-                      chip.url.url.replace("https://www.digikala.com/", "/") ||
+                      chip.url.url.replace("https://www.digikala.com", "") ||
                       "#"
                     }
                     onClick={() => {

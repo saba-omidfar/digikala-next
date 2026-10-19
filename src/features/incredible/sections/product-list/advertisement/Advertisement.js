@@ -23,7 +23,7 @@ function Advertisement({ advertisement }) {
     ? advertisement
     : (sponsoredBrands?.products ?? []);
 
-  if (sellerCode || (!advertisementItems.length && !sponsoredBrands)) {
+  if (sellerCode || !advertisementItems.length) {
     return null;
   }
 

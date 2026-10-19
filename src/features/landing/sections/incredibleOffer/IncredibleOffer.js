@@ -7,7 +7,7 @@ import useScreenStatus from "@/hooks/useScreenStatus";
 
 import styles from "./incredibleOffer.module.css";
 
-function IncredibleOffer({ data }) {
+export default function IncredibleOffer({ data }) {
   const { isSmallScreen } = useScreenStatus();
   const router = useRouter();
 
@@ -163,5 +163,3 @@ function IncredibleOffer({ data }) {
     </div>
   );
 }
-
-export default IncredibleOffer;

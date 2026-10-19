@@ -5,7 +5,7 @@ import { useProductTabularRecommendation } from "@/hooks/useProduct";
 
 import styles from "./suggestion.module.css";
 
-function Suggestion() {
+export default function Suggestion() {
   const { productDetails } = useProductContext();
   const { data: recommendationData } = useProductTabularRecommendation(
     productDetails?.id,
@@ -34,5 +34,3 @@ function Suggestion() {
     </section>
   );
 }
-
-export default Suggestion;

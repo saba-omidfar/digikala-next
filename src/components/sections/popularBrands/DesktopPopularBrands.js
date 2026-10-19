@@ -35,7 +35,7 @@ function DesktopPopularBrands({ brands, isHomePage, isLandingPage }) {
             <div className={isLandingPage ? styles.landing_link_container : ""}>
               <Link
                 className={`${isLandingPage ? "" : styles.brand_link}`}
-                href={isHomePage && isSmallScreen ? "" : brand?.url?.uri}
+                href={isHomePage && isSmallScreen ? "" : brand?.url?.url}
               >
                 <div
                   className={`${isLandingPage ? styles.landing_brand_img_container : styles.brand_img_container}`}

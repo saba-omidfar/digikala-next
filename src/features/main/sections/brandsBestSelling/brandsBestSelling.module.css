@@ -1,0 +1,167 @@
+.brands_container {
+  background-color: #fff;
+  border: 1px solid #dedfe0;
+  border-radius: 16px;
+  padding-bottom: 24px;
+  box-shadow:
+    0 2px 8px -2px #0000000a,
+    0 1px 2px -1px #0000000a;
+  overflow: hidden;
+}
+
+.brands_title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 150%;
+  padding: 16px 24px 0;
+}
+
+.brands_content {
+  padding-top: 16px;
+}
+
+.brand_slide {
+  width: auto !important;
+  height: auto !important;
+}
+
+.edge {
+  display: block;
+  width: 12px;
+}
+
+.brand_link {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 90px;
+  gap: 6px;
+  background-color: #fff;
+  border: 1px solid #f0f0f1;
+  border-radius: 8px;
+  padding-bottom: 8px;
+  overflow: hidden;
+}
+
+.brand_img_container {
+  width: 88px;
+  height: 88px;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.brand_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.brand_title {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 21.6px;
+  color: #424750;
+  padding: 0 8px;
+  margin: 0;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.slider :global(.brands-swiper-button-prev),
+.slider :global(.brands-swiper-button-next) {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background-color: #fff !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  color: #e0e0e2 !important;
+  font-size: 12px !important;
+  z-index: 4;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: opacity 0.3 ease-in-out;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+.slider :global(.brands-swiper-button-prev) {
+  right: 8px !important;
+}
+
+.slider :global(.brands-swiper-button-next) {
+  left: 8px !important;
+}
+
+.slider :global(.brands-swiper-button-prev):hover .swiper_btn_icon,
+.slider :global(.brands-swiper-button-next):hover .swiper_btn_icon {
+  opacity: 1;
+}
+
+.slider :global(.brands-swiper-button-prev.swiper-button-disabled),
+.slider :global(.brands-swiper-button-next.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .edge {
+    width: 0;
+  }
+
+  .brands_container {
+    border: none;
+    padding-bottom: 10px;
+  }
+
+  .brands_content {
+    padding: 0;
+  }
+
+  .brands_title {
+    font-size: 16px;
+    padding: 20px 16px 12px;
+  }
+
+  .brand_img_container {
+    width: 90px;
+    height: 90px;
+  }
+
+  .brand_title {
+    width: 90px;
+  }
+
+  .brand_link {
+    padding-bottom: 6px;
+  }
+
+  .slider :global(.brands-swiper-button-prev),
+  .slider :global(.brands-swiper-button-next) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .brand_title {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+}

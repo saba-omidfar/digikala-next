@@ -165,7 +165,7 @@
 }
 
 .price {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0px;
   line-height: 28.8px;
@@ -795,7 +795,7 @@
 }
 
 .old_price_text {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: 0px;
   line-height: 21.6px;

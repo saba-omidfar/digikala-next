@@ -46,7 +46,9 @@ export async function GET(req, { params }) {
       const webSearchParams = new URLSearchParams(searchParams);
       webSearchParams.delete("productList");
 
-      path = `/v1/categories/${categoryCode}/search/?_rch=9fd46e644c8e&${webSearchParams.toString()}`;
+      // path = `/v1/categories/${categoryCode}/search/?_rch=9fd46e644c8e&${webSearchParams.toString()}`;
+
+      path = `/discovery/api/v2/categories/${categoryCode}/products?_rch=9fd46e644c8e&${webSearchParams.toString()}`;
     }
 
     const data = await digikalaFetch({

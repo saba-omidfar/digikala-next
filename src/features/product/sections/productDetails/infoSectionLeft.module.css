@@ -5,9 +5,12 @@
 
 .info_section_left {
   display: grid;
-  grid-template-columns: minmax(300px, auto) minmax(300px, 345px);
-  grid-template-rows: auto 0fr auto 1fr;
-  grid-template-areas: "variant-info buy-box" "fidibo-audio-preview buy-box" "spec buy-box" "touchPoints buy-box";
+  grid-template:
+    "title title"
+    "variant-info buy-box"
+    "fidibo-audio-preview buy-box" 0fr
+    "spec buy-box"
+    "touchPoints buy-box" 1fr / minmax(350px, auto) minmax(350px, 390px);
 }
 
 @media screen and (max-width: 1024px) {

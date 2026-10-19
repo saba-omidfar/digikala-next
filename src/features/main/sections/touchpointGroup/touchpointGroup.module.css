@@ -1,0 +1,152 @@
+.touchpoints_title_container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.touchpoints_title {
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 37.8px;
+  padding-bottom: 32px;
+}
+
+.touchpoints_slide {
+  width: auto !important;
+  height: auto !important;
+}
+
+.touchpoint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.touchpoint_link {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: max-content;
+}
+
+.touchpoint_img_container {
+  width: 100px;
+  height: 100px;
+  line-height: 0;
+  margin-bottom: 4px;
+}
+
+.touchpoint_img {
+  display: inline-block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.touchpoint_title {
+  height: 36px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #0c0c0c;
+  margin: 0;
+  text-align: center;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.slider :global(.touchpoints-swiper-button-prev),
+.slider :global(.touchpoints-swiper-button-next) {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background-color: #fff !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  color: #e0e0e2 !important;
+  font-size: 12px !important;
+  z-index: 4;
+}
+
+.swiper_btn_icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: opacity 0.3 ease-in-out;
+}
+
+.swiper_btn_icon:hover {
+  opacity: 1;
+}
+
+.slider :global(.touchpoints-swiper-button-prev) {
+  right: 8px !important;
+}
+
+.slider :global(.touchpoints-swiper-button-next) {
+  left: 8px !important;
+}
+
+.slider :global(.touchpoints-swiper-button-prev):hover .swiper_btn_icon,
+.slider :global(.touchpoints-swiper-button-next):hover .swiper_btn_icon {
+  opacity: 1;
+}
+
+.slider :global(.touchpoints-swiper-button-prev.swiper-button-disabled),
+.slider :global(.touchpoints-swiper-button-next.swiper-button-disabled) {
+  opacity: 0 !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .edge {
+    width: 0;
+  }
+
+  .touchpoints_container {
+    border: none;
+    padding-bottom: 10px;
+  }
+
+  .touchpoints_content {
+    padding: 0;
+  }
+
+  .touchpoints_title {
+    font-size: 16px;
+    padding: 20px 16px 12px;
+  }
+
+  .touchpoints_img_container {
+    width: 90px;
+    height: 90px;
+  }
+
+  .touchpoints_title {
+    width: 90px;
+  }
+
+  .touchpoints_link {
+    padding-bottom: 6px;
+  }
+
+  .slider :global(.touchpoints-swiper-button-prev),
+  .slider :global(.touchpoints-swiper-button-next) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .touchpoints_title {
+    font-size: 9.6px;
+    line-height: 17.28px;
+  }
+}

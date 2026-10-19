@@ -148,7 +148,7 @@ function NextCart() {
                         >
                           <img
                             className={styles.empty_cart_img}
-                            src="/images/svg/cart/empty-next-basket?.svg"
+                            src="https://www.digikala.com/statics/img/svg/cart/empty-next-basket.svg"
                             alt="empty-next-cart"
                             title=""
                           />
@@ -206,7 +206,7 @@ function NextCart() {
                         >
                           <img
                             className={styles.empty_cart_img}
-                            src="/images/svg/cart/empty-next-basket?.svg"
+                            src="https://www.digikala.com/statics/img/svg/cart/empty-next-basket.svg"
                             alt="empty-next-cart"
                             title=""
                           />

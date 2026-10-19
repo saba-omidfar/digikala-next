@@ -8,7 +8,7 @@ import useScreenStatus from "@/hooks/useScreenStatus";
 
 import styles from "./popularBrands.module.css";
 
-function PopularBrands({
+export default function PopularBrands({
   icon,
   title,
   brands,
@@ -87,5 +87,3 @@ function PopularBrands({
     </>
   );
 }
-
-export default PopularBrands;

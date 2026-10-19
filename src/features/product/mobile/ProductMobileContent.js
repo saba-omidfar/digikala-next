@@ -16,15 +16,27 @@ import StickyMobileFooter from "@/features/product/sections/stickyMobileFooter/S
 import StickyPromoBanner from "@/features/product/sections/stickyPromoBanner/StickyPromoBanner";
 import Dkp from "@/features/product/sections/dkp/Dkp";
 import Suggestion from "@/features/product/sections/suggestion/Suggestion";
+import LoadingModal from "@/features/shared/modals/loadingModal/LoadingModal";
 
-import { useProductContext } from "@/contexts/ProductContext";
+import { useGetProductDetails } from "@/hooks/useProduct";
 
 import styles from "./productMobileContent.module.css";
 
-export default function ProductMobileContent() {
-  const { productDetails } = useProductContext();
+export default function ProductMobileContent({ productId }) {
+  const { data: productDetails, isLoading: isLoadingProductDetails } =
+    useGetProductDetails(productId);
 
   const [showSearchBox, setShowSearchBox] = useState(false);
+
+  if (isLoadingProductDetails) {
+    return (
+      <div className="cart_overlay">
+        <div className="page_loading_container">
+          <LoadingModal />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="d-flex flex-column flex-grow-1" aria-hidden="true">

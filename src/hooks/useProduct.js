@@ -39,6 +39,7 @@ function useGetProductDetails(productId) {
 
   return { data, isLoading, refetch };
 }
+
 function useGetSuggestionProducts(productId) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

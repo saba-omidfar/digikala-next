@@ -262,9 +262,7 @@
 .product_price_icon {
   width: 16px;
   height: 16px;
-  font-size: 16px;
-  font-weight: normal;
-  color: #424750;
+  fill: #424750;
 }
 
 .product_no_discount_price_container {

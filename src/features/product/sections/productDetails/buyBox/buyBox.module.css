@@ -14,11 +14,7 @@
 }
 
 .buy_box {
-  border-top: 1px solid;
-  border-color: #e0e0e2;
-  background:
-    linear-gradient(0deg, hsla(240, 3%, 94%, 0.5), hsla(240, 3%, 94%, 0.5)),
-    #fff;
+  background: linear-gradient(#f0f0f180, #f0f0f180), #fff;
   border: 1px solid #e0e0e2;
   border-radius: 8px;
 }

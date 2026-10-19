@@ -97,7 +97,7 @@ function BuyBox() {
               <ShipmentBox />
               <ShippingBox />
               <GiftBox />
-              <ScoreBox />
+              {/* <ScoreBox />  */}
               <div className={styles.buy_box_footer}></div>
             </div>
             <Link

@@ -8,7 +8,7 @@ export async function GET(req, { params }) {
     const url = new URL(req.url);
     const searchParams = url.searchParams;
 
-    const path = `/v1/categories/${categoryCode}/?_rch=9fd46e644c8e&${searchParams.toString()}`;
+    const path = `/discovery/api/v1/category-container/${categoryCode}?${searchParams.toString()}`;
 
     const data = await digikalaFetch({
       path,

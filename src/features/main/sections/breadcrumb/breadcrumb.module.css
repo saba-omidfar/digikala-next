@@ -1,0 +1,46 @@
+.nav_container {
+  width: 100%;
+  padding: 16px 0;
+}
+
+.breadcrumb_slide {
+  width: auto !important;
+  height: auto !important;
+}
+
+.breadcrumb_link {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.17;
+  color: #81858b;
+}
+
+.divider {
+  margin: 0 12px;
+}
+
+.breadcrumb_title {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 2.17;
+  color: #424242;
+  margin: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .nav_container {
+    padding: 8px 0;
+  }
+
+  .breadcrumb_link,
+  .breadcrumb_title {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .breadcrumb_link,
+  .breadcrumb_title {
+    font-size: 8.8px;
+  }
+}

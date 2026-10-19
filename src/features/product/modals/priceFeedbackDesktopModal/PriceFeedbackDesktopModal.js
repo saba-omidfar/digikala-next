@@ -277,7 +277,7 @@ export default function PriceFeedbackDesktopModal() {
                           <input
                             className={styles.input}
                             type="text"
-                            placeholder="نام فروشگاه"
+                            placeholder="نام فروشگاهی که کالا را با این قیمت در آن دیده‌اید"
                             autoComplete="off"
                             {...register("physicalStoreName", {
                               required: "اینجا را خالی نگذارید.",

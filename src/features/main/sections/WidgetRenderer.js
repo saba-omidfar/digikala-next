@@ -1,37 +1,33 @@
-import Banner from "@/components/sections/banner/Banner";
-import SimpleCarousel from "@/features/main/sections/simpleCarousel/SimpleCarousel";
-import BestSellingProductsSlider from "@/components/sections/bestSellingProductsSlider/BestSellingProductsSlider";
-import Description from "@/features/landing/sections/description/Description";
-import ImagesRow from "@/features/landing/sections/imagesRow/ImagesRow";
+import ChildCategories from "./childCategories/ChildCategories";
+import BrandsBestSelling from "./brandsBestSelling/BrandsBestSelling";
+import FilterTouchpoint from "./filterTouchpoint/FilterTouchpoint";
+import HorizontalProducts from "./horizontalProduts/HorizontalProducts";
+import CartBasedProducts from "./cartBasedProducts/CartBasedProducts";
+import TouchpointGroup from "./touchpointGroup/TouchpointGroup";
+import FilterableProducts from "./filterableProducts/FilterableProducts";
 
 export default function WidgetRenderer({ widget }) {
-  switch (widget?.widget_type) {
-    case "banner":
-      return <Banner banners={widget?.data} />;
+  switch (widget?.type) {
+    case "child_categories":
+      return <ChildCategories data={widget?.data} />;
 
-    case "special_carousel":
-      return (
-        <SimpleCarousel
-          data={widget?.data?.carousel}
-          title={widget?.data?.title}
-          titleLineColor="#ef394e"
-        />
-      );
+    case "filter":
+      return <FilterTouchpoint data={widget?.data?.filters?.[0]} />;
 
-    case "description":
-      return <Description data={widget} />;
+    case "brands_carousel":
+      return <BrandsBestSelling data={widget?.data} />;
 
-    case "images_row":
-      return <ImagesRow widget={widget} />;
+    case "horizontal_products":
+      return <HorizontalProducts data={widget?.data} />;
 
-    case "best_selling":
-      return (
-        <BestSellingProductsSlider
-          title="پرطرفدارترین‌ها"
-          products={widget?.data?.products}
-          url={widget?.data?.see_more_url?.uri}
-        />
-      );
+    case "cart_based_products":
+      return <CartBasedProducts data={widget?.data} />;
+
+    case "touchpoint_group":
+      return <TouchpointGroup data={widget?.data} />;
+
+    case "filterable_products":
+      return <FilterableProducts data={widget?.data} />;
 
     default:
       return null;

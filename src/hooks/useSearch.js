@@ -73,6 +73,17 @@ export function useSearch({
   };
 
   const buildUrl = (pageNumber, searchTerm) => {
+    console.log("facetCode =>", facetCode);
+    console.log("brandCode =>", brandCode);
+    console.log("facetCategoryCode =>", facetCategoryCode);
+    console.log("categoryId->", categoryId);
+    console.log("categoryCode->", categoryCode);
+    console.log("sellerCode->", sellerCode);
+    console.log("tagCategory->", tagCategory);
+    console.log("searchTerm->", searchTerm);
+    console.log("promotionId->", promotionId);
+    console.log("incredibleCategoryId->", incredibleCategoryId);
+
     const query = buildQueryString(pageNumber, searchTerm);
     const queryString = query.toString();
 
