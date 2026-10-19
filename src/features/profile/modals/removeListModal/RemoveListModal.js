@@ -22,7 +22,7 @@ export default function RemoveListModal({ wishlist }) {
 
     removeWishlist(wishlist.code, {
       onSuccess: () => {
-        closeModal("remove-wishlist");
+        closeModal("remove-list");
         router.push("/profile/lists/?activeTab=public");
       },
       onError: (error) => {

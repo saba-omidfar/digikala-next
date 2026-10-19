@@ -45,7 +45,9 @@ export default function PublicList() {
       <div
         className={`${data?.public_list?.length ? styles.create_public_with_list : styles.create_public_list}`}
       >
-        <div className={styles.create_public_list_header}>
+        <div
+          className={`${data?.public_list?.length ? styles.create_public_list_header_with_list : styles.create_public_list_header}`}
+        >
           <p className={styles.create_public_list_title}>
             لیستی از کالاهای دلخواه بسازید!
           </p>
@@ -174,36 +176,41 @@ export default function PublicList() {
           </div>
         )}
       </div>
-      <div className={styles.list_suggestions_container}>
-        <span className={styles.list_suggestions_header}>
-          می‌توانید از لیست‌های زیر اﺳﺘﻔﺎده ﮐﻨﯿﺪ یا لیست خلاقانه خود را بسازید.
-        </span>
-        <div className={styles.list_suggestions}>
-          {listSuggestions?.map((list) => (
-            <div key={list.title} className={styles.list_suggestion_item}>
-              <div
-                role="img"
-                aria-hidden="false"
-                aria-label={list.title}
-                className={styles.list_suggestion_item_img_container}
-              >
-                <img
-                  className={styles.list_suggestion_item_img}
-                  alt={list.title}
-                  title=""
-                  src={list.img}
-                />
+      {!data?.public_list?.length ? (
+        <div className={styles.list_suggestions_container}>
+          <span className={styles.list_suggestions_header}>
+            می‌توانید از لیست‌های زیر اﺳﺘﻔﺎده ﮐﻨﯿﺪ یا لیست خلاقانه خود را
+            بسازید.
+          </span>
+          <div className={styles.list_suggestions}>
+            {listSuggestions?.map((list) => (
+              <div key={list.title} className={styles.list_suggestion_item}>
+                <div
+                  role="img"
+                  aria-hidden="false"
+                  aria-label={list.title}
+                  className={styles.list_suggestion_item_img_container}
+                >
+                  <img
+                    className={styles.list_suggestion_item_img}
+                    alt={list.title}
+                    title=""
+                    src={list.img}
+                  />
+                </div>
+                <span className={styles.list_suggestion_item_title}>
+                  {list.title}
+                </span>
+                <span className={styles.list_suggestion_item_subtitle}>
+                  {list.subtitle}
+                </span>
               </div>
-              <span className={styles.list_suggestion_item_title}>
-                {list.title}
-              </span>
-              <span className={styles.list_suggestion_item_subtitle}>
-                {list.subtitle}
-              </span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </li>
   );
 }

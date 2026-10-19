@@ -9,7 +9,10 @@ export default function OrderItem({ order }) {
   console.log("orderItems=>", order);
 
   return (
-    <Link href={`/profile/orders/${order?.id}`} className={styles.link}>
+    <Link
+      href={`/profile/orders/${order?.order_code || order?.id}`}
+      className={styles.link}
+    >
       <div className={styles.header}>
         <div className="d-flex align-items-start justify-content-between">
           <div className="d-flex flex-column">

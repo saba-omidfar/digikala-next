@@ -22,8 +22,6 @@ export default function WishlistDetails({ wishlistCode }) {
   const { data, isLoading, sort, setSort, refetch } =
     useGetWishlistDetails(wishlistCode);
 
-  console.log("DATA ->", data);
-
   return (
     <div className={styles.profile_content_container}>
       <div className={styles.profile_content}>

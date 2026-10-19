@@ -13,7 +13,6 @@ import styles from "./breadcrumb.module.css";
 export default function Breadcrumb({ desktopNavClassname }) {
   const { brand } = useParams();
   const { data, isLoading } = useListing();
-  console.log("data in Breadcrumb=>", data);
 
   const breadcrumbs = brand ? data?.breadcrumb : data?.breadcrumb?.slice(0, -1);
 

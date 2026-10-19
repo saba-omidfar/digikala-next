@@ -140,8 +140,6 @@ export default function AddToListModal() {
         ),
       ]);
 
-      console.log("listsToAdd=>", listsToAdd);
-
       if (listsToAdd.length > 0) {
         if (listsToAdd.length > 1) {
           showSnackbar("کالا در لیست‌های انتخاب شده ذخیره شد.", 5000);
@@ -151,7 +149,7 @@ export default function AddToListModal() {
 
           showSnackbar(`کالا در لیست "${title}" ذخیره شد.`, 5000, {
             text: "مشاهده لیست",
-            onClick: () => router.push(`/profile/lists/${code}`),
+            onClick: () => router.push(`/profile/wishlist/${code}/details`),
           });
         }
       }
@@ -196,8 +194,8 @@ export default function AddToListModal() {
             },
           }));
 
-          setCreatingNewList(false);
           setStep(2);
+          setCreatingNewList(false);
         },
 
         onError: (error) => {
@@ -284,7 +282,7 @@ export default function AddToListModal() {
     }
 
     if (step === 2) {
-      if (creatingNewList || !user?.is_logged_inLists?.length) {
+      if (creatingNewList || !userLists?.length) {
         return (
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
