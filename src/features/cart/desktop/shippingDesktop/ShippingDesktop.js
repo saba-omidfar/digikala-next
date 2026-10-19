@@ -47,7 +47,13 @@ export default function ShippingDesktop() {
   };
 
   useEffect(() => {
-    if (!data?.addresses?.length || selectedLocation?.is_default) {
+    if (!selectedLocation) {
+      openModal(<LocationModal />, {
+        name: "location",
+        className: "modal__location rounded-large",
+        size: "md",
+      });
+    } else if (selectedLocation?.is_default) {
       openModal(
         <CompleteAddressModal
           isDefaultSelectedLocation={selectedLocation?.is_default}
