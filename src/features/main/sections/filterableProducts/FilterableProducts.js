@@ -17,7 +17,6 @@ export default function FilterableProducts({ data }) {
 
   const products = data?.products ?? [];
 
-  // تقسیم محصولات به ردیف‌های چهارتایی
   const rows = useMemo(() => {
     const result = [];
 
@@ -28,7 +27,6 @@ export default function FilterableProducts({ data }) {
     return result;
   }, [products]);
 
-  // محاسبه موقعیت لیست در صفحه
   useLayoutEffect(() => {
     const updateScrollMargin = () => {
       if (!feedRef.current) return;
