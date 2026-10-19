@@ -73,8 +73,6 @@ export default function AddToListModal() {
 
       setCheckedLists(initial);
       setStep(2);
-    } else {
-      setStep(1);
     }
   }, [userLists, userListsIsLoading, productDetails?.id]);
 
@@ -188,9 +186,11 @@ export default function AddToListModal() {
           setCheckedLists((prev) => ({
             ...prev,
             [newList._id]: {
+              id: newList._id,
               title: newList.title,
               code: newList.code,
               checked: false,
+              initiallyChecked: false,
             },
           }));
 
@@ -282,7 +282,7 @@ export default function AddToListModal() {
     }
 
     if (step === 2) {
-      if (creatingNewList || !userLists?.length) {
+      if (creatingNewList || !Object.values(checkedLists || {}).length) {
         return (
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -450,7 +450,7 @@ export default function AddToListModal() {
         <div className={styles.modal_content}>{renderContent()}</div>
       </div>
 
-      {!creatingNewList && userLists?.length > 0 && (
+      {!creatingNewList && Object.values(checkedLists || {}).length > 0 && (
         <div className={styles.modal_footer}>
           <div className={styles.list_btns_container}>
             <button
