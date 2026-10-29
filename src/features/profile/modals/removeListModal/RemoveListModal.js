@@ -23,6 +23,7 @@ export default function RemoveListModal({ wishlist }) {
     removeWishlist(wishlist.code, {
       onSuccess: () => {
         closeModal("remove-list");
+        closeModal("create-list");
         router.push("/profile/lists/?activeTab=public");
       },
       onError: (error) => {
@@ -40,7 +41,7 @@ export default function RemoveListModal({ wishlist }) {
           <div
             className="d-flex"
             aria-hidden="false"
-            onClick={() => closeModal("remove-wishlist")}
+            onClick={() => closeModal("remove-list")}
           >
             <svg
               data-test-id="close-modal-icon-button"
@@ -64,7 +65,7 @@ export default function RemoveListModal({ wishlist }) {
               <button
                 type="button"
                 className={styles.cancle_btn}
-                onClick={() => closeModal("remove-wishlist")}
+                onClick={() => closeModal("remove-list")}
                 disabled={isRemoving}
               >
                 <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">

@@ -375,13 +375,12 @@
   .modal__logout,
   .modal__select_location.rounded-large,
   .modal__insurance,
-  .modal__remove_wishlist,
+  .modal__remove_list,
   .modal__create_list,
   .modal__share_product,
   .modal__add_new_address,
   .modal__remove_notification,
-  .modal__remove_user_history,
-  .modal__remove_notification {
+  .modal__remove_user_history {
     border-radius: 0;
   }
 

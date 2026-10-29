@@ -1,7 +1,7 @@
 "use client";
 
 import FavoriteProduct from "@/features/profile/sections/profileLists/favoriteList/favoriteProduct/FavoriteProduct";
-import ListLoading from "@/features/profile/sections/listLoading/ListLoading";
+import FavoriteListLoading from "./FavoriteListLoading";
 
 import { useFavoriesProducts } from "@/features/profile/hooks/useLists";
 
@@ -16,36 +16,13 @@ export default function FavoriteList() {
     <li>
       {isLoading ? (
         <div className={styles.loading_container}>
-          <ListLoading />
+          <FavoriteListLoading />
         </div>
       ) : (
         <div className={styles.favorite_list_content}>
           {data?.products?.length ? (
             <div id="plpLayoutContainer" className={styles.favorite_list}>
               <section className="w-100 flex-grow-1 position-relative">
-                {/* <div className="flex justify-between items-center p-3 border-complete-b-200">
-                        <div>
-                          <div className="d-flex align-items-center">
-                            <div className="d-flex" aria-hidden="false">
-                              <svg>
-                                <use href="#notificationOffOutline"></use>
-                              </svg>
-                            </div>
-                            <span class="mr-2 text-subtitle-strong">
-                              اطلاع رسانی ها
-                            </span>
-                          </div>
-                          <div className="text-caption text-neutral-500">
-                            اطلاع رسانی تخفیف و روبه اتمام بودن موجودی این
-                            کالاها
-                          </div>
-                        </div>
-                        <label className="inline-block relative cursor-pointer styles-module-scss-module__sVaCka__switchInput">
-                          <input className="hidden absolute" type="checkbox" />
-                          <span className="block bg-neutral-400 absolute rounded-circle styles-module-scss-module__sVaCka__switchInput__slider"></span>
-                          <span className="block w-full relative h-full styles-module-scss-module__sVaCka__switchInput__track styles-module-scss-module__sVaCka__switchInput__track--border--secondary-700"></span>
-                        </label>
-                      </div> */}
                 <div>
                   <div className={styles.favorites_list_header}>
                     <div className={styles.favorites_list_header_title}>

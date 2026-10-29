@@ -71,11 +71,7 @@ export default function WishlistDetails({ wishlistCode }) {
         </div>
 
         {isLoading ? (
-          <div className="d-flex flex-wrap">
-            {[...Array(6)].map((_, index) => (
-              <LoadingProduct key={index} />
-            ))}
-          </div>
+          <LoadingProduct />
         ) : (
           <>
             {data?.products?.length ? (

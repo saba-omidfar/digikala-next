@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import CreateListModal from "@/features/profile/modals/createListModal/CreateListModal";
 import ShareProductModal from "@/features/product/modals/shareProductModal/ShareProductModal";
-import ListLoading from "@/features/profile/sections/listLoading/ListLoading";
+import LoadingProduct from "../../loadingProduct/LoadingProduct";
 import ListItem from "./listItem/ListItem";
 
 import { useGetPublicList } from "@/features/profile/hooks/useLists";
@@ -37,8 +37,6 @@ const listSuggestions = [
 export default function PublicList() {
   const { openModal } = useModal();
   const { data, isLoading } = useGetPublicList();
-
-  if (isLoading) return null;
 
   return (
     <li className={styles.create_public_list_container}>
@@ -76,82 +74,71 @@ export default function PublicList() {
           </button>
         </div>
 
-        {data?.public_list?.length ? (
+        {isLoading ? (
+          <LoadingProduct />
+        ) : data?.public_list?.length > 0 ? (
           <div className={styles.public_list_container}>
-            {isLoading ? (
-              <ListLoading />
-            ) : (
-              <>
-                {data?.public_list?.length > 0
-                  ? data?.public_list?.map((list) => (
-                      <Link
-                        className={styles.list_link}
-                        href={`/profile/wishlist/${list?.code}/details/`}
-                        key={list.code}
-                      >
-                        {!list?.product_images?.length ? (
-                          <div className={styles.empty_list_card}>
-                            <div
-                              role="img"
-                              aria-hidden="false"
-                              aria-label="Empty list"
-                              className={styles.empty_list_img_container}
-                            >
-                              <img
-                                className={styles.empty_list_img}
-                                alt="Empty list"
-                                title=""
-                                src="https://www.digikala.com/statics/img/svg/wish-list.svg"
-                              />
-                            </div>
-                            این لیست خالی است!
-                          </div>
-                        ) : (
-                          <div className={styles.list_card}>
-                            {list?.product_images?.map((image, index) => (
-                              <ListItem key={index} image={image} />
-                            ))}
-                          </div>
-                        )}
+            {data?.public_list?.map((list) => (
+              <Link
+                className={styles.list_link}
+                href={`/profile/wishlist/${list?.code}/details/`}
+                key={list.code}
+              >
+                {!list?.product_images?.length ? (
+                  <div className={styles.empty_list_card}>
+                    <div
+                      role="img"
+                      aria-hidden="false"
+                      aria-label="Empty list"
+                      className={styles.empty_list_img_container}
+                    >
+                      <img
+                        className={styles.empty_list_img}
+                        alt="Empty list"
+                        title=""
+                        src="https://www.digikala.com/statics/img/svg/wish-list.svg"
+                      />
+                    </div>
+                    این لیست خالی است!
+                  </div>
+                ) : (
+                  <div className={styles.list_card}>
+                    {list?.product_images?.map((image, index) => (
+                      <ListItem key={index} image={image} />
+                    ))}
+                  </div>
+                )}
 
-                        <div className={styles.list_card_details}>
-                          <div className={styles.list_card_details_header}>
-                            <div
-                              className={styles.list_card_details_description}
-                            >
-                              {list?.title}
-                            </div>
-                            <div
-                              className="d-flex"
-                              aria-hidden="false"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                e.preventDefault();
+                <div className={styles.list_card_details}>
+                  <div className={styles.list_card_details_header}>
+                    <div className={styles.list_card_details_description}>
+                      {list?.title}
+                    </div>
+                    <div
+                      className="d-flex"
+                      aria-hidden="false"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
 
-                                openModal(<ShareProductModal title="لیست" />, {
-                                  name: "share-product",
-                                  className:
-                                    "modal__share_product rounded-medium",
-                                });
-                              }}
-                            >
-                              <svg className={styles.share_icon}>
-                                <use href="#share"></use>
-                              </svg>
-                            </div>
-                          </div>
-                          <div className={styles.list_card_details_content}>
-                            <div
-                              className={styles.list_card_details_count}
-                            ></div>
-                            <div>{toPersianDigits(list?.size_list)} کالا</div>
-                          </div>
-                        </div>
-                      </Link>
-                    ))
-                  : ""}
-              </>
-            )}
+                        openModal(<ShareProductModal title="لیست" />, {
+                          name: "share-product",
+                          className: "modal__share_product rounded-medium",
+                        });
+                      }}
+                    >
+                      <svg className={styles.share_icon}>
+                        <use href="#share"></use>
+                      </svg>
+                    </div>
+                  </div>
+                  <div className={styles.list_card_details_content}>
+                    <div className={styles.list_card_details_count}></div>
+                    <div>{toPersianDigits(list?.size_list)} کالا</div>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         ) : (
           <div className={styles.list_empty_container}>
@@ -176,7 +163,8 @@ export default function PublicList() {
           </div>
         )}
       </div>
-      {!data?.public_list?.length ? (
+
+      {!isLoading && !data?.public_list?.length ? (
         <div className={styles.list_suggestions_container}>
           <span className={styles.list_suggestions_header}>
             می‌توانید از لیست‌های زیر اﺳﺘﻔﺎده ﮐﻨﯿﺪ یا لیست خلاقانه خود را

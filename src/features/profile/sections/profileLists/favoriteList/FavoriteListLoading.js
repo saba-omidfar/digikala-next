@@ -1,4 +1,4 @@
-export default function ListLoading() {
+export default function FavoriteListLoading() {
   return Array.from({ length: 6 }).map((_, i) => (
     <svg
       key={i}

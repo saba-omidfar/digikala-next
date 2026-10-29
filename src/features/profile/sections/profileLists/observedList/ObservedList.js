@@ -1,5 +1,5 @@
 import ObservedProduct from "@/features/profile/sections/observedProduct/ObservedProduct";
-import ListLoading from "@/features/profile/sections/listLoading/ListLoading";
+import ObservedListLoading from "./ObservedListLoading";
 
 import { useObservedProducts } from "@/features/profile/hooks/useLists";
 
@@ -12,7 +12,7 @@ export default function ObservedList() {
     <li>
       {isLoading ? (
         <div className={styles.loading_container}>
-          <ListLoading />
+          <ObservedListLoading />
         </div>
       ) : (
         <div className={styles.observed_list_content}>

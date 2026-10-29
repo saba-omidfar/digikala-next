@@ -1,4 +1,4 @@
-import ListLoading from "@/features/profile/sections/listLoading/ListLoading";
+import LoadingProduct from "../../loadingProduct/LoadingProduct";
 import CommentItem from "./commentItem/CommentItem";
 
 import { useComments } from "@/features/profile/hooks/useComments";
@@ -11,9 +11,7 @@ export default function CommentsList() {
   return (
     <li>
       {isLoading ? (
-        <div className={styles.loading_container}>
-          <ListLoading />
-        </div>
+        <LoadingProduct />
       ) : (
         <div>
           {!data?.reviews?.length ? (

@@ -37,12 +37,7 @@ export default function ProfileOrderDetails({ orderId }) {
   };
 
   if (isSmallScreen)
-    return (
-      <MobileProfileOrderDetails
-        order={order}
-        reorderItemsHandler={reorderItemsHandler}
-      />
-    );
+    return <MobileProfileOrderDetails order={order} isLoading={isLoading} />;
 
   if (isLoading) return null;
 

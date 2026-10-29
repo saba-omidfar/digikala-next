@@ -52,7 +52,7 @@ function MobileStickyHeader({
             aria-hidden="false"
             onClick={() => {
               closeModal();
-              router.push("/");
+              router.back();
             }}
           >
             <svg className={styles.arrow_icon}>

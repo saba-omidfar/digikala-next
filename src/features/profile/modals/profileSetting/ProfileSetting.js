@@ -2,8 +2,9 @@ import Link from "next/link";
 
 import { useModal } from "@/contexts/modalContext";
 
-import styles from "./profileSetting.module.css";
 import LogoutModal from "@/components/layout/header/modals/logoutModal/LogoutModal";
+
+import styles from "./profileSetting.module.css";
 
 export default function ProfileSetting() {
   const { openModal, closeModal } = useModal();
@@ -39,7 +40,11 @@ export default function ProfileSetting() {
         <div className={styles.content_container}>
           <div className="d-flex flex-column align-items-center justify-content-between">
             <div className={styles.content}>
-              <Link className={styles.setting_item_link} href="/faq/">
+              <Link
+                className={styles.setting_item_link}
+                href="/faq/"
+                onClick={() => closeModal("profile-setting")}
+              >
                 <div className="d-flex justify-content-between align-items-center">
                   <div
                     className={styles.setting_item_icon_container}

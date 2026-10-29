@@ -20,11 +20,7 @@ export default function FaqContent({
   return (
     <>
       {!isHeaderLoading ? (
-        <HeaderInfo
-          headerInfo={headerInfo}
-          hasSearch={hasSearch}
-          mainQuestion={mainQuestion}
-        />
+        <HeaderInfo headerInfo={headerInfo} mainQuestion={mainQuestion} />
       ) : (
         <LoadingModal />
       )}

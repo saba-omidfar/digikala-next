@@ -9,7 +9,7 @@ import Link from "next/link";
 
 import styles from "./headerInfo.module.css";
 
-function HeaderInfo({ headerInfo, hasSearch, mainQuestion }) {
+export default function HeaderInfo({ headerInfo, mainQuestion }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -22,13 +22,23 @@ function HeaderInfo({ headerInfo, hasSearch, mainQuestion }) {
   useEffect(() => {
     if (pathname !== "/faq") return;
 
+    const value = searchInput.trim();
+    const currentQuery = query.trim();
+
+    if (value === currentQuery) return;
+
     const timeout = setTimeout(() => {
-      const value = searchInput.trim();
-      router.push(value ? `/faq/?q=${encodeURIComponent(value)}` : "/faq");
-    }, 350);
+      const nextUrl = value ? `/faq?q=${encodeURIComponent(value)}` : "/faq";
+
+      router.replace(nextUrl, { scroll: false });
+    }, 500);
 
     return () => clearTimeout(timeout);
-  }, [searchInput, pathname, router]);
+  }, [searchInput, query, pathname, router]);
+
+  useEffect(() => {
+    setSearchInput(query);
+  }, [query]);
 
   return (
     <div className="w-100" id="base_layout_desktop_static_header">
@@ -43,6 +53,12 @@ function HeaderInfo({ headerInfo, hasSearch, mainQuestion }) {
                 src={headerInfo?.icon}
                 alt={headerInfo?.title}
               />
+            ) : headerInfo?.title === "نتایج جستجو" ? (
+              <div className="d-flex" aria-hidden="false">
+                <svg className={styles.faq_icon}>
+                  <use href="#searchSearch"></use>
+                </svg>
+              </div>
             ) : (
               <div className="d-flex" aria-hidden="false">
                 <svg className={styles.faq_icon}>
@@ -77,6 +93,11 @@ function HeaderInfo({ headerInfo, hasSearch, mainQuestion }) {
                     isFocused ? styles.header_layout__input_focused : ""
                   }`}
                 >
+                  <div className="d-flex" aria-hidden="false">
+                    <svg className={styles.search_input_icon}>
+                      <use href="#searchSearch"></use>
+                    </svg>
+                  </div>
                   <input
                     className={styles.header_layout__input}
                     type="text"
@@ -86,6 +107,19 @@ function HeaderInfo({ headerInfo, hasSearch, mainQuestion }) {
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                   />
+                  {searchInput ? (
+                    <div
+                      className="d-flex"
+                      aria-hidden="false"
+                      onClick={() => setSearchInput("")}
+                    >
+                      <svg className={styles.clear_input_icon}>
+                        <use href="#clear"></use>
+                      </svg>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </label>
             </div>
@@ -95,5 +129,3 @@ function HeaderInfo({ headerInfo, hasSearch, mainQuestion }) {
     </div>
   );
 }
-
-export default HeaderInfo;

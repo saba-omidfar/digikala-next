@@ -11,7 +11,6 @@ import useScreenStatus from "@/hooks/useScreenStatus";
 import LocationModal from "@/components/layout/header/modals/locationModal/LocationModal";
 import SelectLocationModal from "@/components/layout/header/modals/selectLocationModal/SelectLocationModal";
 import Megamenu from "@/components/layout/header/sections/megamenu/Megamenu";
-
 import NavItem from "./NavItem";
 
 import groupedMenuItems from "@/data/groupedMenuItems";
@@ -59,14 +58,6 @@ function Navbar({ hideMenuOnTop, isOpenMegamenu, setIsOpenMegamenu }) {
 
   const defaultAddress = data?.addresses?.find((address) => address.is_default);
 
-  useEffect(() => {
-    if (isOpenMegamenu) {
-      document.body.classList.add("lock-body-scroll");
-    } else {
-      document.body.classList.remove("lock-body-scroll");
-    }
-  }, [isOpenMegamenu]);
-
   const navStyle = useMemo(
     () => ({
       transform: hideMenuOnTop ? "translateY(-100%)" : "translateY(0)",
@@ -94,6 +85,14 @@ function Navbar({ hideMenuOnTop, isOpenMegamenu, setIsOpenMegamenu }) {
       className: "modal__select_location rounded-large",
     });
   };
+
+  useEffect(() => {
+    if (isOpenMegamenu) {
+      document.body.classList.add("lock-body-scroll");
+    } else {
+      document.body.classList.remove("lock-body-scroll");
+    }
+  }, [isOpenMegamenu]);
 
   return (
     <nav className={`${styles.navbar}`} style={navStyle}>

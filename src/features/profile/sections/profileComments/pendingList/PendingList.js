@@ -1,16 +1,14 @@
 import { usePendingComments } from "@/features/profile/hooks/usePendingComments";
-import ListLoading from "@/features/profile/sections/listLoading/ListLoading";
+import LoadingProduct from "../../loadingProduct/LoadingProduct";
 
 import styles from "./pendingList.module.css";
 
 export default function PendingList() {
-  const { data, refetch, isLoading, sort, setSort } = usePendingComments();
+  const { data, isLoading } = usePendingComments();
   return (
     <li>
       {isLoading ? (
-        <div className={styles.loading_container}>
-          <ListLoading />
-        </div>
+        <LoadingProduct />
       ) : (
         <div>
           {!data?.reviews?.length ? (

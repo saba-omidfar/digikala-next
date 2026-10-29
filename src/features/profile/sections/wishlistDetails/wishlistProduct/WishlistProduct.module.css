@@ -353,6 +353,16 @@
     font-size: 11px;
   }
 
+  .product_img_section {
+    margin-bottom: 0;
+    margin-left: 12px;
+  }
+
+  .product_img_container {
+    width: 118px;
+    height: 118px;
+  }
+
   .product_price_container {
     font-size: 14px;
   }
@@ -371,7 +381,8 @@
     font-size: 8.8px;
   }
 
-  .product_shipment_text {
+  .product_shipment_text,
+  .product_payload_text {
     font-size: 8px;
   }
 

@@ -225,7 +225,7 @@ export default function WishlistProduct({ list, product, refetch }) {
                       refetch={refetch}
                     />,
                     {
-                      name: "remove-wishlist",
+                      name: "remove-list",
                       className: "modal__remove_wishlist rounded-medium",
                     },
                   );

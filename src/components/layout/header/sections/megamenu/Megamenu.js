@@ -20,6 +20,8 @@ function Megamenu() {
   const [maxHeight, setMaxHeight] = useState("600px");
 
   const { data, isLoading: categoriesIsLoading } = useGetMegamenu();
+  console.log("data in megamneu ->", data);
+  console.log("categoriesIsLoading ->", categoriesIsLoading);
 
   useEffect(() => {
     if (!data?.length) return;

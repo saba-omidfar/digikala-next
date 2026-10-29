@@ -6,7 +6,6 @@ import styles from "./orderItem.module.css";
 
 export default function OrderItem({ order }) {
   const items = order?.product_images || order?.items;
-  console.log("orderItems=>", order);
 
   return (
     <Link

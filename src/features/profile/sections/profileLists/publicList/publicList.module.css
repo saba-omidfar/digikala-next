@@ -279,8 +279,7 @@
   }
 
   .create_public_list_header {
-    margin: 0;
-    border: none;
+    margin: 0 16px;
   }
 
   .public_list_container {
@@ -312,10 +311,6 @@
     font-size: 11px;
   }
 
-  .list_suggestions_container {
-    display: none;
-  }
-
   .empty_list_card {
     font-size: 10px;
   }
@@ -332,5 +327,10 @@
 
   .empty_list_card {
     font-size: 8px;
+  }
+
+  .list_suggestion_item_title,
+  .list_suggestion_item_subtitle {
+    font-size: 8.8px;
   }
 }

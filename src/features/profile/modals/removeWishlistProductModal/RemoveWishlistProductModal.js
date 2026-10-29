@@ -20,7 +20,7 @@ export default function RemoveWishlistProductModal({ list, product, refetch }) {
       },
       {
         onSuccess: () => {
-          closeModal("remove-wishlist");
+          closeModal("remove-list");
           showSnackbar("کالا با موفقیت از لیست حذف شد.");
           refetch();
         },
@@ -37,7 +37,7 @@ export default function RemoveWishlistProductModal({ list, product, refetch }) {
           <div
             className="d-flex"
             aria-hidden="false"
-            onClick={() => closeModal("remove-wishlist")}
+            onClick={() => closeModal("remove-list")}
           >
             <svg
               data-test-id="close-modal-icon-button"
@@ -59,7 +59,7 @@ export default function RemoveWishlistProductModal({ list, product, refetch }) {
             <div className={styles.content_btns_container}>
               <button
                 className={styles.cancle_btn}
-                onClick={() => closeModal("remove-wishlist")}
+                onClick={() => closeModal("remove-list")}
                 disabled={isRemoving}
               >
                 <div className="d-flex align-items-center justify-content-center position-relative flex-grow-1">
